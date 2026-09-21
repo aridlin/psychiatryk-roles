@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psychiatryk — Consultant Item Console</title>
+  <style>
+    :root { color-scheme: dark; --bg:#08110d; --panel:#101c16; --line:#284536; --ink:#edf8f0; --muted:#98b4a3; --lime:#7ef29a; --amber:#ffc857; --red:#ff6b6b; }
+    * { box-sizing:border-box } body { margin:0; background:radial-gradient(circle at 15% 0,#183326 0,transparent 35%),var(--bg); color:var(--ink); font:15px/1.5 system-ui,sans-serif }
+    main { width:min(1120px,calc(100% - 32px)); margin:48px auto 80px }
+    header { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:26px }
+    h1 { margin:0; font-size:clamp(32px,6vw,64px); line-height:.95; letter-spacing:-.05em }
+    h1 span { color:var(--lime) } .eyebrow { color:var(--lime); text-transform:uppercase; letter-spacing:.16em; font-weight:800; font-size:12px }
+    .status { border:1px solid var(--line); border-radius:999px; padding:8px 13px; color:var(--muted); white-space:nowrap }
+    .status b { color:var(--lime) }
+    .grid { display:grid; grid-template-columns:1.25fr .75fr; gap:18px } .card { background:color-mix(in srgb,var(--panel) 94%,transparent); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:0 18px 50px #0005 }
+    h2 { margin:0 0 16px; font-size:20px } h3 { margin:24px 0 8px; font-size:14px; color:var(--lime); text-transform:uppercase; letter-spacing:.08em }
+    label { display:block; color:var(--muted); font-size:12px; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:.08em }
+    input,select { width:100%; background:#09130e; border:1px solid var(--line); color:var(--ink); border-radius:10px; padding:11px 12px; outline:none }
+    input:focus,select:focus { border-color:var(--lime); box-shadow:0 0 0 3px #7ef29a22 }
+    .fields { display:grid; grid-template-columns:1fr 1fr; gap:14px } .wide { grid-column:1/-1 }
+    .chips { display:flex; flex-wrap:wrap; gap:7px; margin-top:9px } button { font:inherit; cursor:pointer }
+    .chip { color:var(--muted); border:1px solid var(--line); background:#0a1510; border-radius:999px; padding:5px 9px; font-size:12px }
+    .chip:hover { color:var(--ink); border-color:var(--lime) }
+    .output { margin-top:18px; background:#050a07; border:1px solid #355b46; border-radius:13px; padding:15px; display:flex; gap:12px; align-items:center }
+    code { color:var(--lime); overflow-wrap:anywhere; flex:1 }
+    .copy { border:0; border-radius:9px; padding:9px 13px; background:var(--lime); color:#07110b; font-weight:850 }
+    .note { color:var(--muted); font-size:13px } .warning { color:var(--amber) }
+    table { width:100%; border-collapse:collapse } td,th { border-bottom:1px solid var(--line); padding:9px 6px; text-align:left; vertical-align:top } th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em }
+    .recipe { display:grid; grid-template-columns:repeat(3,30px); gap:3px; margin:8px 0 } .slot { height:30px; display:grid; place-items:center; background:#08110d; border:1px solid var(--line); border-radius:4px; font-weight:800 }
+    .S { color:#d2a679 }.C { color:#aaa }.empty { color:#31483a }
+    .hidden { display:none } footer { margin-top:18px; color:var(--muted); text-align:center; font-size:12px }
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.wide{grid-column:auto}header{align-items:start;flex-direction:column}}
+  </style>
+</head>
+<body><main>
+  <header><div><div class="eyebrow">Psychiatryk operator tools</div><h1>Consultant Item <span>Console</span></h1></div><div class="status"><b>●</b> Forge 1.20.1</div></header>
+  <div class="grid">
+    <section class="card">
+      <h2>Command builder</h2>
+      <div class="fields">
+        <div><label for="player">Recipient</label><input id="player" value="GamerulVerdeLLL" spellcheck="false"></div>
+        <div><label for="item">Base item ID</label><input id="item" value="minecraft:feather" spellcheck="false"></div>
+        <div><label for="action">Permission</label><select id="action">
+          <option value="take">Take from containers</option><option value="pickup">Pick up drops</option>
+          <option value="attack">Attack — held tool</option><option value="mine">Mine — held tool</option><option value="place">Place — offhand token</option>
+          <option value="attack-amulet">Attack — inventory amulet</option><option value="mine-amulet">Mine — inventory amulet</option><option value="place-amulet">Place — inventory amulet</option>
+        </select></div>
+        <div><label for="condition">Proximity condition</label><select id="condition"><option value="none">None</option><option value="player">Named player</option><option value="patients">Any patient</option></select></div>
+        <div id="anchorWrap" class="hidden"><label for="anchor">Anchor player</label><input id="anchor" value="aridlin"></div>
+        <div id="radiusWrap" class="hidden"><label for="radius">Maximum blocks</label><input id="radius" type="number" min="1" max="512" value="16"></div>
+        <div id="targetsWrap" class="wide hidden"><label for="targets">Targets — comma separated</label><input id="targets" value="rock" spellcheck="false"><div class="chips" id="presetChips"></div></div>
+      </div>
+      <div class="output"><code id="command"></code><button class="copy" id="copy">Copy</button></div>
+      <p class="note">Use <code>*</code> for everything, a registry ID such as <code>minecraft:zombie</code>, or a tag such as <code>#minecraft:logs</code>.</p>
+    </section>
+    <aside class="card">
+      <h2>How permissions work</h2>
+      <table><tr><th>Type</th><th>Requirement</th></tr>
+        <tr><td>take / pickup</td><td>Token anywhere in inventory</td></tr>
+        <tr><td>attack / mine</td><td>Permission item in main hand</td></tr>
+        <tr><td>place</td><td>Permission token in offhand, block in main hand</td></tr>
+        <tr><td>*-amulet</td><td>Token anywhere in inventory; use a normal tool</td></tr>
+      </table>
+      <p class="note warning">A proximity permission switches off when its anchor is offline, in another dimension, or outside the radius. Use <code>patients</code> to accept any online Pacjent.</p>
+    </aside>
+    <section class="card">
+      <h2>Built-in presets</h2>
+      <table><tr><th>Blocks</th><th>Includes</th></tr>
+        <tr><td><code>rock</code></td><td>Stone, cobblestone, deepslate, andesite, granite, diorite, tuff, calcite, blackstone, basalt, end stone and netherrack</td></tr>
+        <tr><td><code>ores</code></td><td>All <code>*_ore</code> blocks and ancient debris</td></tr>
+        <tr><td><code>logs</code></td><td>All blocks in the vanilla logs tag</td></tr>
+        <tr><td><code>dirt</code>, <code>sand</code></td><td>Vanilla dirt and sand tag families</td></tr>
+      </table>
+      <table><tr><th>Entities</th><th>Includes</th></tr>
+        <tr><td><code>hostile</code></td><td>Hostile mobs</td></tr><tr><td><code>passive</code>, <code>animals</code></td><td>Friendly mobs or animals only</td></tr>
+        <tr><td><code>villagers</code>, <code>players</code></td><td>The named entity groups</td></tr>
+        <tr><td><code>undead</code>, <code>arthropods</code>, <code>aquatic</code></td><td>Mob-type families</td></tr>
+        <tr><td><code>illagers</code>, <code>mobs</code>, <code>bosses</code></td><td>Raiders, all mobs, or dragon/wither</td></tr>
+      </table>
+    </section>
+    <section class="card">
+      <h2>Utility recipes</h2>
+      <h3>Importer — reusable</h3><div class="recipe"><i class="slot S">S</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot S">S</i></div>
+      <p class="note">Main hand: Importer. Offhand: ordinary item. Right-click to move and mark it as owned/droppable.</p>
+      <h3>Extractor — one use</h3><div class="recipe"><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i></div>
+      <p class="note">Removes marked consultant items. Defaults return on the next login.</p>
+      <h3>Travel staff</h3><div class="recipe"><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i></div>
+      <p class="note">Right-click or drop it to swap worlds. Both last positions persist. First entry uses the second world's spawn.</p>
+      <h3>Mirror of Returning — consultants can craft</h3><div class="recipe"><i class="slot empty">·</i><i class="slot">G</i><i class="slot empty">·</i><i class="slot empty">·</i><i class="slot S">S</i><i class="slot empty">·</i><i class="slot empty">·</i><i class="slot empty">·</i><i class="slot empty">·</i></div>
+      <p class="note">Use once for a valid personal respawn point. Use again within three seconds for overworld spawn. <b>G</b> = glass.</p>
+      <p class="note"><b>S</b> = stick, <b>C</b> = cobblestone.</p>
+      <p class="note warning">Patients and operators craft these items for consultants. A consultant's own crafting attempt is rejected.</p>
+    </section>
+    <section class="card">
+      <h2>Consultant world</h2>
+      <p><code>psychiatryk_roles:konsultanci</code> is a separate overworld-style dimension generated from vanilla biomes and terrain.</p>
+      <p class="note">Consultants remain in Survival mode. Inside this dimension they can build, fight, use containers and entities, mount vehicles, pick up items, and drop items normally. The staff returns them to their saved position in the original dimension.</p>
+      <p class="note">The dimension uses server-synchronized vanilla data and adds no client-side mod requirement.</p>
+      <p class="note">Dynmap detects it as <code>psychiatryk_roles_konsultanci</code> and exposes three map layers.</p>
+    </section>
+    <section class="card">
+      <h2>Language and maintenance</h2>
+      <p><code>/polski</code> and <code>/english</code> save the player's language, refresh their consultant item display, and replay the consultant explainer every time.</p>
+      <p><code>/konsultant-item clear &lt;name&gt;</code> removes marked consultant items from an online or offline player's inventory and Ender Chest.</p>
+      <p class="note">Ordinary items can always be dropped. A consultant can pick their own dropped stack back up; protected consultant equipment remains undroppable in the restricted world.</p>
+      <p class="note warning">Pending next restart: consultants are excluded from the overworld sleep requirement, protected items are undroppable in every dimension, and container menus reject deposits of protected items.</p>
+    </section>
+  </div>
+  <footer>Local operator reference · no network dependencies</footer>
+  <script>
+    const $=id=>document.getElementById(id), actionsWithTargets=new Set(['attack','mine','place','attack-amulet','mine-amulet','place-amulet']);
+    const presets={attack:['hostile','passive','animals','villagers','players','undead','arthropods','aquatic','illagers','mobs','bosses','*'],mine:['rock','ores','logs','dirt','sand','*'],place:['logs','dirt','sand','*']};
+    function baseAction(){return $('action').value.replace('-amulet','')}
+    function render(){const action=$('action').value, needsTargets=actionsWithTargets.has(action), condition=$('condition').value;
+      $('targetsWrap').classList.toggle('hidden',!needsTargets); $('anchorWrap').classList.toggle('hidden',condition!=='player'); $('radiusWrap').classList.toggle('hidden',condition==='none');
+      $('presetChips').innerHTML=(presets[baseAction()]||[]).map(x=>`<button class="chip" type="button" data-v="${x}">${x}</button>`).join('');
+      document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('targets').value=b.dataset.v;render()});
+      let cmd=`/konsultant-item give ${$('player').value||'<player>'} ${$('item').value||'<item>'} ${action}`;
+      if(condition!=='none') cmd+=` near ${condition==='patients'?'patients':($('anchor').value||'<anchor>')} ${$('radius').value||16}`;
+      if(needsTargets) cmd+=` ${$('targets').value||'*'}`; $('command').textContent=cmd;
+    }
+    document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',render));
+    $('copy').onclick=async()=>{await navigator.clipboard.writeText($('command').textContent);$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy',1000)}; render();
+  </script>
+</main></body></html>

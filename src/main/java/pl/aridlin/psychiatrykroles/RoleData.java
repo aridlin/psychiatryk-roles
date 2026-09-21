@@ -1,0 +1,187 @@
+package pl.aridlin.psychiatrykroles;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.saveddata.SavedData;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+final class RoleData extends SavedData {
+    private static final String FILE_NAME = "psychiatryk_roles";
+    private final Set<UUID> patients = new LinkedHashSet<>();
+    private final Set<String> codes = new LinkedHashSet<>();
+    private final Map<UUID, TravelPosition> mainPositions = new LinkedHashMap<>();
+    private final Map<UUID, TravelPosition> freedomPositions = new LinkedHashMap<>();
+    private final Set<UUID> englishPlayers = new LinkedHashSet<>();
+    private final Set<UUID> languagePlayers = new LinkedHashSet<>();
+    private int baseSleepPercentage = -1;
+
+    record TravelPosition(String dimension, double x, double y, double z, float yaw, float pitch) {}
+
+    static RoleData get(MinecraftServer server) {
+        return server.overworld().getDataStorage().computeIfAbsent(RoleData::load, RoleData::new, FILE_NAME);
+    }
+
+    static RoleData load(CompoundTag tag) {
+        RoleData data = new RoleData();
+        ListTag patientTags = tag.getList("Patients", Tag.TAG_STRING);
+        for (Tag value : patientTags) {
+            try {
+                data.patients.add(UUID.fromString(value.getAsString()));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        ListTag codeTags = tag.getList("Codes", Tag.TAG_STRING);
+        for (Tag value : codeTags) {
+            data.codes.add(value.getAsString());
+        }
+        loadPositions(tag.getList("MainPositions", Tag.TAG_COMPOUND), data.mainPositions);
+        loadPositions(tag.getList("FreedomPositions", Tag.TAG_COMPOUND), data.freedomPositions);
+        ListTag englishTags = tag.getList("EnglishPlayers", Tag.TAG_STRING);
+        for (Tag value : englishTags) {
+            try {
+                data.englishPlayers.add(UUID.fromString(value.getAsString()));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        ListTag languageTags = tag.getList("LanguagePlayers", Tag.TAG_STRING);
+        for (Tag value : languageTags) {
+            try {
+                data.languagePlayers.add(UUID.fromString(value.getAsString()));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        if (tag.contains("BaseSleepPercentage", Tag.TAG_INT)) {
+            data.baseSleepPercentage = tag.getInt("BaseSleepPercentage");
+        }
+        return data;
+    }
+
+    private static void loadPositions(ListTag tags, Map<UUID, TravelPosition> destination) {
+        for (Tag raw : tags) {
+            CompoundTag value = (CompoundTag) raw;
+            try {
+                destination.put(UUID.fromString(value.getString("Player")), new TravelPosition(
+                    value.getString("Dimension"), value.getDouble("X"), value.getDouble("Y"), value.getDouble("Z"),
+                    value.getFloat("Yaw"), value.getFloat("Pitch")
+                ));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+    }
+
+    boolean isPatient(UUID playerId) {
+        return patients.contains(playerId);
+    }
+
+    void addPatient(UUID playerId) {
+        if (patients.add(playerId)) {
+            setDirty();
+        }
+    }
+
+    void addCode(String code) {
+        if (codes.add(code)) {
+            setDirty();
+        }
+    }
+
+    boolean consumeCode(String code) {
+        boolean removed = codes.remove(code.toLowerCase());
+        if (removed) {
+            setDirty();
+        }
+        return removed;
+    }
+
+    Set<String> codes() {
+        return Collections.unmodifiableSet(codes);
+    }
+
+    TravelPosition mainPosition(UUID playerId) {
+        return mainPositions.get(playerId);
+    }
+
+    TravelPosition freedomPosition(UUID playerId) {
+        return freedomPositions.get(playerId);
+    }
+
+    void setMainPosition(UUID playerId, TravelPosition position) {
+        mainPositions.put(playerId, position);
+        setDirty();
+    }
+
+    void setFreedomPosition(UUID playerId, TravelPosition position) {
+        freedomPositions.put(playerId, position);
+        setDirty();
+    }
+
+    boolean isEnglish(UUID playerId) {
+        return englishPlayers.contains(playerId);
+    }
+
+    boolean hasLanguage(UUID playerId) {
+        return languagePlayers.contains(playerId);
+    }
+
+    void setEnglish(UUID playerId, boolean english) {
+        boolean changed = languagePlayers.add(playerId);
+        changed |= english ? englishPlayers.add(playerId) : englishPlayers.remove(playerId);
+        if (changed) {
+            setDirty();
+        }
+    }
+
+    int baseSleepPercentage(int currentValue) {
+        if (baseSleepPercentage < 0) {
+            baseSleepPercentage = currentValue;
+            setDirty();
+        }
+        return baseSleepPercentage;
+    }
+
+    private static ListTag savePositions(Map<UUID, TravelPosition> positions) {
+        ListTag tags = new ListTag();
+        positions.forEach((player, position) -> {
+            CompoundTag value = new CompoundTag();
+            value.putString("Player", player.toString());
+            value.putString("Dimension", position.dimension());
+            value.putDouble("X", position.x());
+            value.putDouble("Y", position.y());
+            value.putDouble("Z", position.z());
+            value.putFloat("Yaw", position.yaw());
+            value.putFloat("Pitch", position.pitch());
+            tags.add(value);
+        });
+        return tags;
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag tag) {
+        ListTag patientTags = new ListTag();
+        patients.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(patientTags::add);
+        tag.put("Patients", patientTags);
+
+        ListTag codeTags = new ListTag();
+        codes.stream().sorted().map(StringTag::valueOf).forEach(codeTags::add);
+        tag.put("Codes", codeTags);
+        tag.put("MainPositions", savePositions(mainPositions));
+        tag.put("FreedomPositions", savePositions(freedomPositions));
+        ListTag englishTags = new ListTag();
+        englishPlayers.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(englishTags::add);
+        tag.put("EnglishPlayers", englishTags);
+        ListTag languageTags = new ListTag();
+        languagePlayers.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(languageTags::add);
+        tag.put("LanguagePlayers", languageTags);
+        tag.putInt("BaseSleepPercentage", baseSleepPercentage);
+        return tag;
+    }
+}

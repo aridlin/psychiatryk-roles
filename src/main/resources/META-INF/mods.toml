@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="psychiatryk_roles"
+version="${file.jarVersion}"
+displayName="Psychiatryk Roles"
+authors="aridlin"
+description='''Server-side roles, admission codes, and consultant protections.'''
+
+[[dependencies.psychiatryk_roles]]
+modId="forge"
+mandatory=true
+versionRange="[47.4.10,)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.psychiatryk_roles]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.20.2)"
+ordering="NONE"
+side="SERVER"

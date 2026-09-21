@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "G",
+    "S"
+  ],
+  "key": {
+    "G": { "item": "minecraft:glass" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "minecraft:echo_shard"
+  },
+  "show_notification": true
+}
