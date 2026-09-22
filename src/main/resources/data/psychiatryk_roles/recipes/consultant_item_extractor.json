@@ -10,7 +10,8 @@
     "S": { "item": "minecraft:stick" }
   },
   "result": {
-    "item": "minecraft:shears"
+    "item": "minecraft:shears",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykExtractor:1b}"
   },
   "show_notification": true
 }

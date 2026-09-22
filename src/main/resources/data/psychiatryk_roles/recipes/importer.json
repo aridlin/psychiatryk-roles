@@ -10,7 +10,8 @@
     "S": { "item": "minecraft:stick" }
   },
   "result": {
-    "item": "minecraft:recovery_compass"
+    "item": "minecraft:recovery_compass",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykImporter:1b}"
   },
   "show_notification": true
 }

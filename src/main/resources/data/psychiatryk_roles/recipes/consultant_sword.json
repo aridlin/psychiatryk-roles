@@ -11,7 +11,8 @@
     "C": { "item": "minecraft:cobblestone" }
   },
   "result": {
-    "item": "minecraft:stone_sword"
+    "item": "minecraft:stone_sword",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b}"
   },
   "show_notification": true
 }

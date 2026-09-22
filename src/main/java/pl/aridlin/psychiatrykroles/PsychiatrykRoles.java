@@ -934,27 +934,6 @@ public final class PsychiatrykRoles {
             .withStyle(ChatFormatting.YELLOW), true);
     }
 
-    private static int countItem(net.minecraft.world.Container inventory, net.minecraft.world.item.Item item) {
-        int count = 0;
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-            ItemStack stack = inventory.getItem(slot);
-            if (stack.is(item)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private static int countAllItems(net.minecraft.world.Container inventory) {
-        int count = 0;
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-            if (!inventory.getItem(slot).isEmpty()) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     private static boolean hasSpruceSign(Player player) {
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
             if (isSpruceSignItem(player.getInventory().getItem(slot))) {
@@ -1342,9 +1321,6 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickItem event) {
-        if (!isConsultant(event.getEntity())) {
-            return;
-        }
         ItemStack stack = event.getItemStack();
         if (isTravelStaff(stack) && event.getEntity() instanceof ServerPlayer player) {
             useTravelStaff(player);
@@ -1356,6 +1332,9 @@ public final class PsychiatrykRoles {
             useReturnMirror(player);
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+        if (!isConsultant(event.getEntity())) {
             return;
         }
         if (isExtractor(stack) && event.getEntity() instanceof ServerPlayer player) {
@@ -1535,37 +1514,22 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        int sticks = countItem(event.getInventory(), Items.STICK);
-        int cobblestone = countItem(event.getInventory(), Items.COBBLESTONE);
-        int glass = countItem(event.getInventory(), Items.GLASS);
-        int total = countAllItems(event.getInventory());
-        boolean customRecipe = false;
-        if (event.getCrafting().is(Items.STONE_SWORD) && sticks == 2 && cobblestone == 1 && total == 3) {
-            customRecipe = true;
-            if (!isConsultant(event.getEntity())) makeConsultantSword(event.getCrafting(), event.getEntity());
-        } else if (event.getCrafting().is(Items.STONE_PICKAXE) && sticks == 3 && cobblestone == 2 && total == 5) {
-            customRecipe = true;
-            if (!isConsultant(event.getEntity())) makeConsultantPickaxe(event.getCrafting(), event.getEntity());
-        } else if (event.getCrafting().is(Items.SHEARS) && sticks == 5 && total == 5) {
-            customRecipe = true;
-            if (!isConsultant(event.getEntity())) makeExtractor(event.getCrafting(), event.getEntity());
-        } else if (event.getCrafting().is(Items.RECOVERY_COMPASS) && sticks == 8 && total == 8) {
-            customRecipe = true;
-            if (!isConsultant(event.getEntity())) makeImporter(event.getCrafting(), event.getEntity());
-        } else if (event.getCrafting().is(Items.BLAZE_ROD)) {
-            customRecipe = true;
-            if (!isConsultant(event.getEntity())) event.getCrafting().setTag(makeTravelStaff(event.getEntity()).getTag());
-        } else if (event.getCrafting().is(Items.ECHO_SHARD)) {
-            makeReturnMirror(event.getCrafting(), event.getEntity());
+        ItemStack crafted = event.getCrafting();
+        if (!isConsultantEquipment(crafted)) {
+            return;
         }
-        if (customRecipe && isConsultant(event.getEntity())) {
+        String craftedId = BuiltInRegistries.ITEM.getKey(crafted.getItem()).toString();
+        if (isConsultant(event.getEntity()) && !isReturnMirror(crafted)) {
             event.getCrafting().setCount(0);
             event.getEntity().displayClientMessage(Component.literal(tr(event.getEntity(),
                 "Przedmioty konsultanta musi wytworzyć i przekazać Pacjent lub Ordynator.",
                 "A Patient or Director must craft and hand over protected consultant items."
             )).withStyle(ChatFormatting.RED), true);
-            auditDenied(event.getEntity(), "DENY_CRAFT", BuiltInRegistries.ITEM.getKey(event.getCrafting().getItem()).toString());
+            auditDenied(event.getEntity(), "DENY_CRAFT", craftedId);
+            return;
         }
+        localizeConsultantItem(crafted, event.getEntity(), true);
+        audit(event.getEntity(), "CONSULTANT_ITEM_CRAFTED", craftedId);
     }
 
     @SubscribeEvent

@@ -10,7 +10,8 @@
     "S": { "item": "minecraft:stick" }
   },
   "result": {
-    "item": "minecraft:blaze_rod"
+    "item": "minecraft:blaze_rod",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykTravelStaff:1b,Unbreakable:1b}"
   },
   "show_notification": true
 }

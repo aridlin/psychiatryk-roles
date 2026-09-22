@@ -10,7 +10,8 @@
     "S": { "item": "minecraft:stick" }
   },
   "result": {
-    "item": "minecraft:echo_shard"
+    "item": "minecraft:echo_shard",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b}"
   },
   "show_notification": true
 }

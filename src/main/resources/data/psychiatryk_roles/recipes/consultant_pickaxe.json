@@ -11,7 +11,8 @@
     "C": { "item": "minecraft:cobblestone" }
   },
   "result": {
-    "item": "minecraft:stone_pickaxe"
+    "item": "minecraft:stone_pickaxe",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantPickaxe:1b,CanDestroy:[\"minecraft:stone\",\"minecraft:cobblestone\"]}"
   },
   "show_notification": true
 }
