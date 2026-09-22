@@ -23,7 +23,7 @@ In the normal server worlds a consultant:
 - stays in Survival mode while server-side event rules enforce Adventure-like restrictions;
 - cannot break or place ordinary blocks without an authorized tool or amulet;
 - cannot damage protected entities or other players;
-- is ignored by hostile mob targeting;
+- is treated neutrally by hostile mobs; a mob retaliates only against the consultant who provoked it, for 30 seconds;
 - cannot trample farmland or mount entities and vehicles;
 - has no player collision and receives continuous full hunger and saturation;
 - can inspect containers, but cannot modify them without a `take` permission item;
@@ -57,6 +57,7 @@ Players choose their persistent language with:
 ```
 
 Either command can be used repeatedly. Every use refreshes the current player's marked item names and lore, updates their role label, and replays the consultant explanation. Returning consultants with an assigned language also receive the explanation after joining.
+Choosing a language also gives the consultant a localized written handbook covering the role, protections, tools, travel, and core commands.
 
 ## Admission codes
 
@@ -89,6 +90,8 @@ Operators can turn any registered item into a marked permission item:
 ```text
 /konsultant-item give <player> <item> <action> [targets]
 /konsultant-item give <player> <item> <action> near <player|patients> <radius> [targets]
+/konsultant-item give-timed <player> <item> <seconds> <action> [targets]
+/konsultant-item give-timed <player> <item> <seconds> <action> near <player|patients> <radius> [targets]
 ```
 
 Actions:
@@ -119,6 +122,7 @@ Built-in entity presets:
 - `mobs`, `bosses`
 
 Proximity conditions are active only while the named anchor is online, in the same dimension, and within range. The special anchor `patients` accepts any nearby patient.
+Timed permission items persist across restarts, display their absolute expiry in lore, stop working at expiry, and are removed on the next player tick.
 
 Examples:
 
@@ -126,7 +130,18 @@ Examples:
 /konsultant-item give Alex minecraft:feather pickup
 /konsultant-item give Alex minecraft:amethyst_shard attack-amulet hostile
 /konsultant-item give Alex minecraft:flint mine-amulet near aridlin 16 rock
+/konsultant-item give-timed Alex minecraft:amethyst_shard 3600 attack-amulet hostile
 ```
+
+Ready-made presets avoid repeating the full syntax:
+
+```text
+/konsultant-item preset list
+/konsultant-item preset give <player> <preset>
+/konsultant-item preset give-timed <player> <preset> <seconds>
+```
+
+Available presets are `pickup`, `container-key`, `hostile-amulet`, `rock-amulet`, `sign`, `sign-remover`, `sword`, `pickaxe`, `importer`, `extractor`, `passage-staff`, and `return-mirror`.
 
 Remove marked items from an online or offline player's inventory and Ender Chest:
 
@@ -135,6 +150,21 @@ Remove marked items from an online or offline player's inventory and Ender Chest
 ```
 
 The clear operation recognizes explicit consultant subtypes rather than trusting a generic marker, and creates a timestamped backup of available player data before mutation.
+
+## Status and audit log
+
+Consultants inspect their effective permissions with `/konsultant status`. Operators can use `/konsultant status <player>` for another online player. Output includes role, language, world mode, targets, proximity state, and remaining expiry.
+
+The latest 1,000 audit events persist in world data and are also written to the server log. Operators can view them in game:
+
+```text
+/konsultant-log
+/konsultant-log page <page>
+/konsultant-log player <name> [page]
+/konsultant-log clear
+```
+
+The log covers login and role state, language changes, admission codes, administrative item grants and clears, travel, expirations, hostile provocation, and blocked destructive actions. Repeated identical denials are debounced for two seconds.
 
 ## Recipes and utility items
 
@@ -205,7 +235,7 @@ build/libs/psychiatryk-roles-1.0.0.jar
 4. Start the server and confirm `Done` appears without a `psychiatryk_roles` load error.
 5. Verify `/help konsultant-item`, `/help przyjecie`, and `execute in psychiatryk_roles:konsultanci run time query daytime`.
 
-Persistent role, code, language, travel-position, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`.
+Persistent role, code, language, travel-position, audit-log, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`.
 
 ## Safety notes
 
@@ -213,4 +243,3 @@ Persistent role, code, language, travel-position, and sleep-base data is stored 
 - Do not run inventory-clearing commands as a smoke test on real players.
 - The local generator binds to loopback only.
 - Server credentials, RCON passwords, SFTP details, and player data do not belong in this repository.
-

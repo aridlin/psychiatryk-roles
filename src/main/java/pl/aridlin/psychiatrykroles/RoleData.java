@@ -8,6 +8,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -23,6 +25,9 @@ final class RoleData extends SavedData {
     private final Set<UUID> englishPlayers = new LinkedHashSet<>();
     private final Set<UUID> languagePlayers = new LinkedHashSet<>();
     private int baseSleepPercentage = -1;
+    private final List<AuditEntry> auditLog = new ArrayList<>();
+
+    record AuditEntry(long time, String actor, String action, String detail) {}
 
     record TravelPosition(String dimension, double x, double y, double z, float yaw, float pitch) {}
 
@@ -61,6 +66,14 @@ final class RoleData extends SavedData {
         }
         if (tag.contains("BaseSleepPercentage", Tag.TAG_INT)) {
             data.baseSleepPercentage = tag.getInt("BaseSleepPercentage");
+        }
+        ListTag logTags = tag.getList("AuditLog", Tag.TAG_COMPOUND);
+        for (Tag raw : logTags) {
+            CompoundTag value = (CompoundTag) raw;
+            data.auditLog.add(new AuditEntry(
+                value.getLong("Time"), value.getString("Actor"),
+                value.getString("Action"), value.getString("Detail")
+            ));
         }
         return data;
     }
@@ -148,6 +161,23 @@ final class RoleData extends SavedData {
         return baseSleepPercentage;
     }
 
+    void addAudit(String actor, String action, String detail) {
+        auditLog.add(new AuditEntry(System.currentTimeMillis(), actor, action, detail));
+        while (auditLog.size() > 1000) {
+            auditLog.remove(0);
+        }
+        setDirty();
+    }
+
+    List<AuditEntry> auditLog() {
+        return List.copyOf(auditLog);
+    }
+
+    void clearAudit() {
+        auditLog.clear();
+        setDirty();
+    }
+
     private static ListTag savePositions(Map<UUID, TravelPosition> positions) {
         ListTag tags = new ListTag();
         positions.forEach((player, position) -> {
@@ -182,6 +212,16 @@ final class RoleData extends SavedData {
         languagePlayers.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(languageTags::add);
         tag.put("LanguagePlayers", languageTags);
         tag.putInt("BaseSleepPercentage", baseSleepPercentage);
+        ListTag logTags = new ListTag();
+        for (AuditEntry entry : auditLog) {
+            CompoundTag value = new CompoundTag();
+            value.putLong("Time", entry.time());
+            value.putString("Actor", entry.actor());
+            value.putString("Action", entry.action());
+            value.putString("Detail", entry.detail());
+            logTags.add(value);
+        }
+        tag.put("AuditLog", logTags);
         return tag;
     }
 }

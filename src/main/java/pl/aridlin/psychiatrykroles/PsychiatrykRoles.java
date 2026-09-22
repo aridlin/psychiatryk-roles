@@ -1,10 +1,12 @@
 package pl.aridlin.psychiatrykroles;
 
+import com.mojang.logging.LogUtils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
@@ -55,6 +57,8 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
@@ -77,10 +81,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
 
 @Mod(PsychiatrykRoles.MOD_ID)
 public final class PsychiatrykRoles {
     static final String MOD_ID = "psychiatryk_roles";
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final Set<UUID> LEGACY_PATIENTS = Set.of(
         UUID.fromString("87b7287e-0c23-4913-9edb-4760f5585ccb")
     );
@@ -108,9 +116,20 @@ public final class PsychiatrykRoles {
     private static final String KILL_LOOT_OWNER = "psychiatrykKillLootOwner";
     private static final String MINE_LOOT_OWNER = "psychiatrykMineLootOwner";
     private static final String LORE_LANGUAGE = "psychiatrykLoreLanguage";
+    private static final String CONSULTANT_EXPIRES_AT = "psychiatrykConsultantExpiresAt";
+    private static final String WELCOME_BOOK_MARKER = "psychiatrykWelcomeBook";
+    private static final List<String> ITEM_PRESETS = List.of(
+        "pickup", "container-key", "hostile-amulet", "rock-amulet", "sign",
+        "sign-remover", "sword", "pickaxe", "importer", "extractor", "passage-staff", "return-mirror"
+    );
+    private static final DateTimeFormatter LOG_TIME = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
+        .withZone(ZoneId.of("Europe/Warsaw"));
     private static final Set<UUID> SUPPRESS_DEFAULT_ITEMS = ConcurrentHashMap.newKeySet();
     private static final Map<BlockDropKey, PendingBlockDrop> PENDING_BLOCK_DROPS = new ConcurrentHashMap<>();
     private static final Map<UUID, Integer> LAST_MIRROR_USE_TICK = new ConcurrentHashMap<>();
+    private static final Map<UUID, Provocation> HOSTILE_PROVOCATIONS = new ConcurrentHashMap<>();
+    private static final Map<String, Long> LAST_AUDIT = new ConcurrentHashMap<>();
+    private static final int HOSTILE_ANGER_TICKS = 20 * 30;
     private static final ResourceKey<Level> FREEDOM_DIMENSION = ResourceKey.create(
         Registries.DIMENSION, new ResourceLocation(MOD_ID, "konsultanci")
     );
@@ -171,6 +190,7 @@ public final class PsychiatrykRoles {
 
     private record BlockDropKey(ResourceKey<Level> dimension, BlockPos pos) {}
     private record PendingBlockDrop(UUID owner, long gameTime) {}
+    private record Provocation(UUID consultant, int expiresAtTick) {}
 
     public PsychiatrykRoles() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -212,6 +232,26 @@ public final class PsychiatrykRoles {
 
     private static String tr(net.minecraft.commands.CommandSourceStack source, String polish, String english) {
         return source.getEntity() instanceof Player player ? tr(player, polish, english) : polish;
+    }
+
+    private static void audit(net.minecraft.server.MinecraftServer server, String actor, String action, String detail) {
+        RoleData.get(server).addAudit(actor, action, detail);
+        LOGGER.info("[Psychiatryk Audit] {} | {} | {}", actor, action, detail);
+    }
+
+    private static void audit(Player player, String action, String detail) {
+        if (player.getServer() != null) {
+            audit(player.getServer(), player.getGameProfile().getName(), action, detail);
+        }
+    }
+
+    private static void auditDenied(Player player, String action, String detail) {
+        long now = System.currentTimeMillis();
+        String key = player.getUUID() + "|" + action + "|" + detail;
+        Long previous = LAST_AUDIT.put(key, now);
+        if (previous == null || now - previous >= 2000L) {
+            audit(player, action, detail);
+        }
     }
 
     private static boolean isSpruceBlock(BlockState state) {
@@ -328,6 +368,7 @@ public final class PsychiatrykRoles {
             || tag.getBoolean(IMPORTER_MARKER)
             || tag.getBoolean(TRAVEL_STAFF_MARKER)
             || tag.getBoolean(RETURN_MIRROR_MARKER)
+            || tag.getBoolean(WELCOME_BOOK_MARKER)
             || tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)
             || (isSpruceSignItem(stack) && tag.contains("CanPlaceOn", Tag.TAG_LIST));
     }
@@ -381,6 +422,18 @@ public final class PsychiatrykRoles {
 
     private static boolean isReturnMirror(ItemStack stack) {
         return stack.is(Items.ECHO_SHARD) && stack.hasTag() && stack.getTag().getBoolean(RETURN_MIRROR_MARKER);
+    }
+
+    private static ItemStack makeWelcomeBook(Player player) {
+        ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
+        stack.getOrCreateTag().putBoolean(WELCOME_BOOK_MARKER, true);
+        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        localizeConsultantItem(stack, player, true);
+        return stack;
+    }
+
+    private static boolean isWelcomeBook(ItemStack stack) {
+        return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(WELCOME_BOOK_MARKER);
     }
 
     private static void localizeConsultantItem(ItemStack stack, Player viewer, boolean force) {
@@ -438,6 +491,33 @@ public final class PsychiatrykRoles {
             appendLore(stack,
                 Component.literal(en ? "Use: return to your valid respawn point." : "Użycie: wróć do prawidłowego punktu odrodzenia.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Use again quickly: go to world spawn." : "Użyj ponownie szybko: wróć na spawn świata.").withStyle(ChatFormatting.GOLD));
+        } else if (isWelcomeBook(stack)) {
+            stack.setHoverName(Component.literal(en ? "Consultant Handbook" : "Poradnik Konsultanta")
+                .withStyle(ChatFormatting.GOLD));
+            appendLore(stack, Component.literal(en
+                ? "Localized guide to roles, tools, and both worlds."
+                : "Przewodnik po rolach, narzędziach i obu światach.").withStyle(ChatFormatting.GRAY));
+            tag.putString("title", en ? "Consultant Handbook" : "Poradnik Konsultanta");
+            tag.putString("author", "Psychiatryk");
+            tag.putBoolean("resolved", true);
+            ListTag pages = new ListTag();
+            String[] bookPages = en ? new String[] {
+                "WELCOME, CONSULTANT\n\nYou are in Survival while server rules protect the hospital world from destructive actions.",
+                "PROTECTION\n\nContainers are view-only. PvP, entity damage, trampling, mounting, and ordinary building need explicit permission.",
+                "TOOLS\n\nPermission items describe their action and targets. Inventory amulets work anywhere. Ordinary items may be dropped and recovered.",
+                "TRAVEL\n\nUse or drop the Passage Staff for the unrestricted world. The Mirror returns to your respawn; use it again quickly for world spawn.",
+                "HELP\n\n/english or /polski changes language.\n/konsultant status shows permissions.\n/przyjecie <code> redeems admission."
+            } : new String[] {
+                "WITAJ, KONSULTANCIE\n\nJesteś w trybie Survival, a zasady serwera chronią świat szpitala przed niszczeniem.",
+                "OCHRONA\n\nPojemniki są tylko do podglądu. PvP, krzywdzenie istot, deptanie, jazda i zwykłe budowanie wymagają uprawnienia.",
+                "NARZĘDZIA\n\nPrzedmioty opisują akcję i cele. Amulety działają w ekwipunku. Zwykłe przedmioty można wyrzucać i odzyskiwać.",
+                "PODRÓŻ\n\nUżyj lub wyrzuć Laskę Przejścia do swobodnego świata. Lustro wraca do odrodzenia, a szybko użyte ponownie na spawn świata.",
+                "POMOC\n\n/polski lub /english zmienia język.\n/konsultant status pokazuje uprawnienia.\n/przyjecie <kod> wykorzystuje kod."
+            };
+            for (String page : bookPages) {
+                pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
+            }
+            tag.put("pages", pages);
         } else if (tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)) {
             String action = tag.getString(CONSULTANT_ACTION);
             String targets = tag.getString(CONSULTANT_TARGETS);
@@ -467,6 +547,11 @@ public final class PsychiatrykRoles {
             appendLore(stack,
                 Component.literal(en ? "Consultant: placeable on any block." : "Konsultant: można postawić na dowolnym bloku.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Cannot be dropped without the Importer." : "Nie można wyrzucić bez Importera.").withStyle(ChatFormatting.DARK_GRAY));
+        }
+        long expiresAt = tag.getLong(CONSULTANT_EXPIRES_AT);
+        if (expiresAt > 0L) {
+            appendLore(stack, Component.literal((en ? "Expires: " : "Wygasa: ")
+                + LOG_TIME.format(Instant.ofEpochMilli(expiresAt))).withStyle(ChatFormatting.RED));
         }
     }
 
@@ -515,6 +600,7 @@ public final class PsychiatrykRoles {
             ? tr(player, "Powrót do ostatniej pozycji.", "Returned to your last position.")
             : tr(player, "Świat konsultantów: pełna swoboda.", "Consultant world: unrestricted mode.")
         ).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        audit(player, "TRAVEL", destination.dimension().location().toString());
     }
 
     private static void useReturnMirror(ServerPlayer player) {
@@ -549,6 +635,7 @@ public final class PsychiatrykRoles {
             ? tr(player, "Powrót na spawn świata.", "Returned to world spawn.")
             : tr(player, "Powrót do punktu odrodzenia.", "Returned to your respawn point."))
             .withStyle(ChatFormatting.AQUA), true);
+        audit(player, "RETURN_MIRROR", forceWorldSpawn ? "world_spawn" : "respawn");
     }
 
     private static ServerLevel levelFor(ServerPlayer player, String dimension) {
@@ -621,6 +708,8 @@ public final class PsychiatrykRoles {
     private static boolean hasPermissionAction(ItemStack stack, String action) {
         return stack.hasTag()
             && stack.getTag().getBoolean(CONSULTANT_ITEM_MARKER)
+            && (stack.getTag().getLong(CONSULTANT_EXPIRES_AT) <= 0L
+                || stack.getTag().getLong(CONSULTANT_EXPIRES_AT) > System.currentTimeMillis())
             && action.equals(stack.getTag().getString(CONSULTANT_ACTION));
     }
 
@@ -798,7 +887,7 @@ public final class PsychiatrykRoles {
     }
 
     private static ItemStack makePermissionItem(
-        Item item, String action, String targets, String near, int radius, Player player
+        Item item, String action, String targets, String near, int radius, Player player, long expiresAt
     ) {
         ItemStack stack = new ItemStack(item);
         CompoundTag tag = stack.getOrCreateTag();
@@ -807,6 +896,9 @@ public final class PsychiatrykRoles {
         tag.putString(CONSULTANT_TARGETS, targets);
         tag.putString(CONSULTANT_NEAR, near);
         tag.putInt(CONSULTANT_RADIUS, radius);
+        if (expiresAt > 0L) {
+            tag.putLong(CONSULTANT_EXPIRES_AT, expiresAt);
+        }
         if (action.equals("mine")) {
             ListTag canDestroy = new ListTag();
             if (List.of(targets.split(",")).stream().map(String::trim).anyMatch("*"::equals)) {
@@ -890,6 +982,15 @@ public final class PsychiatrykRoles {
         return false;
     }
 
+    private static boolean hasWelcomeBook(Player player) {
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            if (isWelcomeBook(player.getInventory().getItem(slot))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static void ensureSignRemover(ServerPlayer player) {
         if (!SUPPRESS_DEFAULT_ITEMS.contains(player.getUUID()) && !hasSignRemover(player)) {
             player.getInventory().add(makeSignRemover(player));
@@ -900,6 +1001,15 @@ public final class PsychiatrykRoles {
     private static void ensureTravelStaff(ServerPlayer player) {
         if (!SUPPRESS_DEFAULT_ITEMS.contains(player.getUUID()) && !hasTravelStaff(player)) {
             player.getInventory().add(makeTravelStaff(player));
+            player.inventoryMenu.broadcastChanges();
+        }
+    }
+
+    private static void ensureWelcomeBook(ServerPlayer player) {
+        if (!SUPPRESS_DEFAULT_ITEMS.contains(player.getUUID())
+            && RoleData.get(player.getServer()).hasLanguage(player.getUUID())
+            && !hasWelcomeBook(player)) {
+            player.getInventory().add(makeWelcomeBook(player));
             player.inventoryMenu.broadcastChanges();
         }
     }
@@ -975,6 +1085,8 @@ public final class PsychiatrykRoles {
 
     private static int setLanguage(ServerPlayer player, boolean english) {
         RoleData.get(player.getServer()).setEnglish(player.getUUID(), english);
+        audit(player, "LANGUAGE", english ? "english" : "polski");
+        ensureWelcomeBook(player);
         refreshLocalizedInventory(player);
         player.refreshTabListName();
         player.sendSystemMessage(Component.literal(english ? "Language set to English." : "Ustawiono język polski.")
@@ -1005,8 +1117,10 @@ public final class PsychiatrykRoles {
         player.refreshTabListName();
         sendLanguagePrompt(player);
         if (RoleData.get(player.getServer()).hasLanguage(player.getUUID()) && isConsultant(player)) {
+            ensureWelcomeBook(player);
             sendConsultantWelcome(player);
         }
+        audit(player, "LOGIN", isOperator(player) ? "ordynator" : isPatient(player) ? "pacjent" : "konsultant");
     }
 
     @SubscribeEvent
@@ -1024,12 +1138,13 @@ public final class PsychiatrykRoles {
                     CONTAINER_SNAPSHOTS.put(player.getUUID(), ContainerSnapshot.capture(player));
                 } else if (snapshot.hasConsultantDeposit(player)) {
                     snapshot.restore(player);
+                    auditDenied(player, "DENY_CONTAINER_DEPOSIT", "consultant_item");
                     player.displayClientMessage(Component.literal(tr(player,
                         "Przedmiotów konsultanta nie można wkładać do pojemników.",
                         "Consultant items cannot be placed in containers."))
                         .withStyle(ChatFormatting.RED), true);
                 } else if (isRestrictedConsultant(player) && !hasPermission(player, "take")) {
-                        snapshot.restore(player);
+                    snapshot.restore(player);
                 } else {
                     CONTAINER_SNAPSHOTS.put(player.getUUID(), ContainerSnapshot.capture(player));
                 }
@@ -1051,8 +1166,19 @@ public final class PsychiatrykRoles {
             if (player.tickCount % 20 == 0) {
                 ensureSignRemover(player);
                 ensureTravelStaff(player);
+                ensureWelcomeBook(player);
                 for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
-                    localizeConsultantItem(player.getInventory().getItem(slot), player, false);
+                    ItemStack item = player.getInventory().getItem(slot);
+                    if (item.hasTag() && item.getTag().getLong(CONSULTANT_EXPIRES_AT) > 0L
+                        && item.getTag().getLong(CONSULTANT_EXPIRES_AT) <= System.currentTimeMillis()) {
+                        audit(player, "ITEM_EXPIRED", BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
+                        player.getInventory().setItem(slot, ItemStack.EMPTY);
+                        player.displayClientMessage(Component.literal(tr(player,
+                            "Wygasł przedmiot uprawnień.", "A permission item expired."))
+                            .withStyle(ChatFormatting.YELLOW), true);
+                    } else {
+                        localizeConsultantItem(item, player, false);
+                    }
                 }
                 long cleanupTime = player.level().getGameTime();
                 PENDING_BLOCK_DROPS.entrySet().removeIf(entry ->
@@ -1249,7 +1375,7 @@ public final class PsychiatrykRoles {
         if (isFreedomDimension(event.getEntity())) {
             return;
         }
-        if (!stack.isEdible() && !isSpruceSignItem(stack)) {
+        if (!stack.isEdible() && !isSpruceSignItem(stack) && !isWelcomeBook(stack)) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
         }
@@ -1259,6 +1385,7 @@ public final class PsychiatrykRoles {
     public void onFarmlandTrample(BlockEvent.FarmlandTrampleEvent event) {
         if (event.getEntity() instanceof Player player && isRestrictedConsultant(player)) {
             event.setCanceled(true);
+            auditDenied(player, "DENY_TRAMPLE", event.getPos().toShortString());
         }
     }
 
@@ -1273,6 +1400,7 @@ public final class PsychiatrykRoles {
             boolean amuletAllowed = inventoryPermitsBlock(event.getPlayer(), "mine-amulet", event.getState());
             if (!signAllowed && !stoneAllowed && !permissionAllowed && !amuletAllowed) {
                 event.setCanceled(true);
+                auditDenied(event.getPlayer(), "DENY_BREAK", BuiltInRegistries.BLOCK.getKey(event.getState().getBlock()).toString());
             } else if (event.getPlayer() instanceof ServerPlayer player) {
                 rememberBlockDrops(player, event.getPos());
             }
@@ -1300,6 +1428,7 @@ public final class PsychiatrykRoles {
             && !permitsBlock(player.getOffhandItem(), player, "place", event.getPlacedBlock())
             && !inventoryPermitsBlock(player, "place-amulet", event.getPlacedBlock())) {
             event.setCanceled(true);
+            auditDenied(player, "DENY_PLACE", BuiltInRegistries.BLOCK.getKey(event.getPlacedBlock().getBlock()).toString());
         }
     }
 
@@ -1317,6 +1446,9 @@ public final class PsychiatrykRoles {
             && inventoryPermitsEntity(attacker, "attack-amulet", event.getEntity());
         if (pvpAgainstConsultant || (attackerIsConsultant && !allowedHostileAttack && !allowedByPermission && !allowedByAmulet)) {
             event.setCanceled(true);
+            if (event.getSource().getEntity() instanceof Player attacker) {
+                auditDenied(attacker, "DENY_ATTACK", BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType()).toString());
+            }
         }
     }
 
@@ -1328,13 +1460,52 @@ public final class PsychiatrykRoles {
             && !permitsEntity(event.getEntity().getMainHandItem(), event.getEntity(), event.getTarget())
             && !inventoryPermitsEntity(event.getEntity(), "attack-amulet", event.getTarget())) {
             event.setCanceled(true);
+            auditDenied(event.getEntity(), "DENY_ATTACK", BuiltInRegistries.ENTITY_TYPE.getKey(event.getTarget().getType()).toString());
         }
     }
 
     @SubscribeEvent
     public void onMobTarget(LivingChangeTargetEvent event) {
         if (event.getNewTarget() instanceof Player player && isRestrictedConsultant(player)) {
-            event.setNewTarget(null);
+            Provocation provocation = HOSTILE_PROVOCATIONS.get(event.getEntity().getUUID());
+            int now = player.getServer() == null ? Integer.MAX_VALUE : player.getServer().getTickCount();
+            if (provocation == null
+                || !provocation.consultant().equals(player.getUUID())
+                || provocation.expiresAtTick() < now) {
+                event.setNewTarget(null);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onHostileProvoked(LivingHurtEvent event) {
+        if (event.getEntity() instanceof Enemy
+            && event.getSource().getEntity() instanceof ServerPlayer attacker
+            && isRestrictedConsultant(attacker)
+            && attacker.getServer() != null) {
+            HOSTILE_PROVOCATIONS.put(event.getEntity().getUUID(), new Provocation(
+                attacker.getUUID(), attacker.getServer().getTickCount() + HOSTILE_ANGER_TICKS
+            ));
+            audit(attacker, "HOSTILE_PROVOKED", BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType()).toString());
+        }
+    }
+
+    @SubscribeEvent
+    public void onHostileTick(LivingEvent.LivingTickEvent event) {
+        if (!(event.getEntity() instanceof Mob mob)
+            || !(mob instanceof Enemy)
+            || mob.tickCount % 20 != 0
+            || !(mob.getTarget() instanceof ServerPlayer target)
+            || !isRestrictedConsultant(target)) {
+            return;
+        }
+        Provocation provocation = HOSTILE_PROVOCATIONS.get(mob.getUUID());
+        int now = target.getServer() == null ? Integer.MAX_VALUE : target.getServer().getTickCount();
+        if (provocation == null
+            || !provocation.consultant().equals(target.getUUID())
+            || provocation.expiresAtTick() < now) {
+            HOSTILE_PROVOCATIONS.remove(mob.getUUID());
+            mob.setTarget(null);
         }
     }
 
@@ -1357,6 +1528,7 @@ public final class PsychiatrykRoles {
                 return;
             } else {
                 event.setCanceled(true);
+                auditDenied(event.getEntity(), "DENY_PICKUP", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
             }
         }
     }
@@ -1392,6 +1564,7 @@ public final class PsychiatrykRoles {
                 "Przedmioty konsultanta musi wytworzyć i przekazać Pacjent lub Ordynator.",
                 "A Patient or Director must craft and hand over protected consultant items."
             )).withStyle(ChatFormatting.RED), true);
+            auditDenied(event.getEntity(), "DENY_CRAFT", BuiltInRegistries.ITEM.getKey(event.getCrafting().getItem()).toString());
         }
     }
 
@@ -1434,6 +1607,7 @@ public final class PsychiatrykRoles {
     public void onMount(EntityMountEvent event) {
         if (event.isMounting() && event.getEntityMounting() instanceof Player player && isRestrictedConsultant(player)) {
             event.setCanceled(true);
+            auditDenied(player, "DENY_MOUNT", BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntityBeingMounted().getType()).toString());
             player.displayClientMessage(
                 Component.literal(tr(player,
                     "Konsultanci nie mogą wsiadać do pojazdów ani na wierzchowce.",
@@ -1460,6 +1634,8 @@ public final class PsychiatrykRoles {
             return;
         }
         var server = event.getServer();
+        int currentTick = server.getTickCount();
+        HOSTILE_PROVOCATIONS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick() < currentTick);
         GameRules.IntegerValue rule = server.overworld().getGameRules().getRule(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE);
         RoleData data = RoleData.get(server);
         int base = data.baseSleepPercentage(rule.get());
@@ -1517,7 +1693,60 @@ public final class PsychiatrykRoles {
                         .then(permissionTargetsCommand("place"))
                         .then(permissionTargetsCommand("attack-amulet"))
                         .then(permissionTargetsCommand("mine-amulet"))
-                        .then(permissionTargetsCommand("place-amulet"))))));
+                        .then(permissionTargetsCommand("place-amulet")))))
+            .then(Commands.literal("give-timed")
+                .then(Commands.argument("gracz", EntityArgument.player())
+                    .then(Commands.argument("item", ResourceLocationArgument.id())
+                        .then(Commands.argument("sekundy", IntegerArgumentType.integer(1, 31_536_000))
+                            .then(permissionNoTargetsCommand("take", true))
+                            .then(permissionNoTargetsCommand("pickup", true))
+                            .then(permissionTargetsCommand("attack", true))
+                            .then(permissionTargetsCommand("mine", true))
+                            .then(permissionTargetsCommand("place", true))
+                            .then(permissionTargetsCommand("attack-amulet", true))
+                            .then(permissionTargetsCommand("mine-amulet", true))
+                            .then(permissionTargetsCommand("place-amulet", true))))))
+            .then(Commands.literal("preset")
+                .then(Commands.literal("list")
+                    .executes(context -> listPresets(context.getSource())))
+                .then(Commands.literal("give")
+                    .then(Commands.argument("gracz", EntityArgument.player())
+                        .then(Commands.argument("preset", StringArgumentType.word())
+                            .suggests((context, builder) -> SharedSuggestionProvider.suggest(ITEM_PRESETS, builder))
+                            .executes(context -> givePreset(
+                                context.getSource(), EntityArgument.getPlayer(context, "gracz"),
+                                StringArgumentType.getString(context, "preset"), 0L)))))
+                .then(Commands.literal("give-timed")
+                    .then(Commands.argument("gracz", EntityArgument.player())
+                        .then(Commands.argument("preset", StringArgumentType.word())
+                            .suggests((context, builder) -> SharedSuggestionProvider.suggest(ITEM_PRESETS, builder))
+                            .then(Commands.argument("sekundy", IntegerArgumentType.integer(1, 31_536_000))
+                                .executes(context -> givePreset(
+                                    context.getSource(), EntityArgument.getPlayer(context, "gracz"),
+                                    StringArgumentType.getString(context, "preset"),
+                                    expiryFromContext(context)))))))));
+
+        event.getDispatcher().register(Commands.literal("konsultant")
+            .then(Commands.literal("status")
+                .executes(context -> showStatus(context.getSource(), context.getSource().getPlayerOrException()))
+                .then(Commands.argument("gracz", EntityArgument.player())
+                    .requires(source -> source.hasPermission(4))
+                    .executes(context -> showStatus(context.getSource(), EntityArgument.getPlayer(context, "gracz"))))));
+
+        event.getDispatcher().register(Commands.literal("konsultant-log")
+            .requires(source -> source.hasPermission(4))
+            .executes(context -> showAudit(context.getSource(), "", 1))
+            .then(Commands.literal("page")
+                .then(Commands.argument("strona", IntegerArgumentType.integer(1))
+                    .executes(context -> showAudit(context.getSource(), "", IntegerArgumentType.getInteger(context, "strona")))))
+            .then(Commands.literal("player")
+                .then(Commands.argument("gracz", StringArgumentType.word())
+                    .executes(context -> showAudit(context.getSource(), StringArgumentType.getString(context, "gracz"), 1))
+                    .then(Commands.argument("strona", IntegerArgumentType.integer(1))
+                        .executes(context -> showAudit(context.getSource(), StringArgumentType.getString(context, "gracz"),
+                            IntegerArgumentType.getInteger(context, "strona"))))))
+            .then(Commands.literal("clear")
+                .executes(context -> clearAudit(context.getSource()))));
 
         event.getDispatcher().register(Commands.literal("polski")
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), false)));
@@ -1540,6 +1769,7 @@ public final class PsychiatrykRoles {
             online.inventoryMenu.broadcastChanges();
             int finalRemoved = removed;
             source.sendSuccess(() -> Component.literal("Usunięto przedmioty konsultanta: " + finalRemoved), true);
+            audit(server, source.getTextName(), "ITEM_CLEAR", playerName + " removed=" + finalRemoved);
             return 1;
         }
         var profile = server.getProfileCache().get(playerName);
@@ -1563,6 +1793,7 @@ public final class PsychiatrykRoles {
             source.sendSuccess(() -> Component.literal(
                 "Usunięto zapisane przedmioty konsultanta gracza " + playerName + ": " + finalRemoved
             ), true);
+            audit(server, source.getTextName(), "ITEM_CLEAR_OFFLINE", playerName + " removed=" + finalRemoved);
             return 1;
         } catch (IOException exception) {
             source.sendFailure(Component.literal("Nie udało się odczytać danych gracza: " + exception.getMessage()));
@@ -1589,6 +1820,7 @@ public final class PsychiatrykRoles {
             || tag.getBoolean(IMPORTER_MARKER)
             || tag.getBoolean(TRAVEL_STAFF_MARKER)
             || tag.getBoolean(RETURN_MIRROR_MARKER)
+            || tag.getBoolean(WELCOME_BOOK_MARKER)
             || tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)
             || ((itemId.equals("minecraft:spruce_sign") || itemId.equals("minecraft:spruce_hanging_sign"))
                 && tag.contains("CanPlaceOn", Tag.TAG_LIST));
@@ -1608,28 +1840,40 @@ public final class PsychiatrykRoles {
 
     private static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack>
     permissionNoTargetsCommand(String action) {
+        return permissionNoTargetsCommand(action, false);
+    }
+
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack>
+    permissionNoTargetsCommand(String action, boolean timed) {
         return Commands.literal(action)
             .executes(context -> givePermissionItem(
                 context.getSource(), EntityArgument.getPlayer(context, "gracz"),
-                ResourceLocationArgument.getId(context, "item"), action, "", "", 0
+                ResourceLocationArgument.getId(context, "item"), action, "", "", 0,
+                timed ? expiryFromContext(context) : 0L
             ))
-            .then(permissionNearCommand(action, false));
+            .then(permissionNearCommand(action, false, timed));
     }
 
     private static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack>
     permissionTargetsCommand(String action) {
+        return permissionTargetsCommand(action, false);
+    }
+
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack>
+    permissionTargetsCommand(String action, boolean timed) {
         return Commands.literal(action)
             .then(Commands.argument("cele", StringArgumentType.greedyString())
                 .executes(context -> givePermissionItem(
                     context.getSource(), EntityArgument.getPlayer(context, "gracz"),
                     ResourceLocationArgument.getId(context, "item"), action,
-                    StringArgumentType.getString(context, "cele"), "", 0
+                    StringArgumentType.getString(context, "cele"), "", 0,
+                    timed ? expiryFromContext(context) : 0L
                 )))
-            .then(permissionNearCommand(action, true));
+            .then(permissionNearCommand(action, true, timed));
     }
 
     private static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack>
-    permissionNearCommand(String action, boolean hasTargets) {
+    permissionNearCommand(String action, boolean hasTargets, boolean timed) {
         var radius = Commands.argument("promien", IntegerArgumentType.integer(1, 512));
         if (hasTargets) {
             radius.then(Commands.argument("cele", StringArgumentType.greedyString())
@@ -1638,14 +1882,14 @@ public final class PsychiatrykRoles {
                     ResourceLocationArgument.getId(context, "item"), action,
                     StringArgumentType.getString(context, "cele"),
                     StringArgumentType.getString(context, "kotwica"),
-                    IntegerArgumentType.getInteger(context, "promien")
+                    IntegerArgumentType.getInteger(context, "promien"), timed ? expiryFromContext(context) : 0L
                 )));
         } else {
             radius.executes(context -> givePermissionItem(
                 context.getSource(), EntityArgument.getPlayer(context, "gracz"),
                 ResourceLocationArgument.getId(context, "item"), action, "",
                 StringArgumentType.getString(context, "kotwica"),
-                IntegerArgumentType.getInteger(context, "promien")
+                IntegerArgumentType.getInteger(context, "promien"), timed ? expiryFromContext(context) : 0L
             ));
         }
         return Commands.literal("near")
@@ -1659,7 +1903,8 @@ public final class PsychiatrykRoles {
         String action,
         String targets,
         String near,
-        int radius
+        int radius,
+        long expiresAt
     ) {
         Item item = ForgeRegistries.ITEMS.getValue(itemId);
         if (item == null || item == Items.AIR) {
@@ -1670,13 +1915,137 @@ public final class PsychiatrykRoles {
             source.sendFailure(Component.literal(tr(source, "Ekwipunek gracza jest pełny.", "The player's inventory is full.")));
             return 0;
         }
-        ItemStack stack = makePermissionItem(item, action, targets, near, radius, player);
+        ItemStack stack = makePermissionItem(item, action, targets, near, radius, player, expiresAt);
         player.getInventory().add(stack);
         player.inventoryMenu.broadcastChanges();
         source.sendSuccess(() -> Component.literal(
             "Nadano " + player.getGameProfile().getName() + ": " + itemId + " [" + action + "]"
                 + (near.isEmpty() ? "" : " near " + near + " (" + radius + ")")
         ).withStyle(ChatFormatting.GREEN), true);
+        audit(source.getServer(), source.getTextName(), "ITEM_GIVE",
+            player.getGameProfile().getName() + " " + itemId + " " + action
+                + (expiresAt > 0L ? " expires=" + expiresAt : ""));
+        return 1;
+    }
+
+    private static long expiryFromContext(com.mojang.brigadier.context.CommandContext<net.minecraft.commands.CommandSourceStack> context) {
+        return System.currentTimeMillis() + IntegerArgumentType.getInteger(context, "sekundy") * 1000L;
+    }
+
+    private static ItemStack presetItem(String preset, ServerPlayer player, long expiresAt) {
+        ItemStack stack = switch (preset.toLowerCase()) {
+            case "pickup" -> makePermissionItem(Items.FEATHER, "pickup", "", "", 0, player, expiresAt);
+            case "container-key" -> makePermissionItem(Items.TRIPWIRE_HOOK, "take", "", "", 0, player, expiresAt);
+            case "hostile-amulet" -> makePermissionItem(Items.AMETHYST_SHARD, "attack-amulet", "hostile", "", 0, player, expiresAt);
+            case "rock-amulet" -> makePermissionItem(Items.FLINT, "mine-amulet", "rock", "", 0, player, expiresAt);
+            case "sign" -> makePlaceableSpruceSign(player);
+            case "sign-remover" -> makeSignRemover(player);
+            case "sword" -> makeConsultantSword(new ItemStack(Items.STONE_SWORD), player);
+            case "pickaxe" -> makeConsultantPickaxe(new ItemStack(Items.STONE_PICKAXE), player);
+            case "importer" -> makeImporter(new ItemStack(Items.RECOVERY_COMPASS), player);
+            case "extractor" -> makeExtractor(new ItemStack(Items.SHEARS), player);
+            case "passage-staff" -> makeTravelStaff(player);
+            case "return-mirror" -> makeReturnMirror(new ItemStack(Items.ECHO_SHARD), player);
+            default -> ItemStack.EMPTY;
+        };
+        if (!stack.isEmpty() && expiresAt > 0L) {
+            stack.getOrCreateTag().putLong(CONSULTANT_EXPIRES_AT, expiresAt);
+            localizeConsultantItem(stack, player, true);
+        }
+        return stack;
+    }
+
+    private static int givePreset(net.minecraft.commands.CommandSourceStack source, ServerPlayer player,
+                                  String preset, long expiresAt) {
+        ItemStack stack = presetItem(preset, player, expiresAt);
+        if (stack.isEmpty()) {
+            source.sendFailure(Component.literal(tr(source, "Nieznany preset: ", "Unknown preset: ") + preset));
+            return 0;
+        }
+        if (player.getInventory().getFreeSlot() < 0) {
+            source.sendFailure(Component.literal(tr(source, "Ekwipunek gracza jest pełny.", "The player's inventory is full.")));
+            return 0;
+        }
+        player.getInventory().add(stack);
+        player.inventoryMenu.broadcastChanges();
+        source.sendSuccess(() -> Component.literal(tr(source, "Nadano preset ", "Granted preset ") + preset
+            + " -> " + player.getGameProfile().getName()).withStyle(ChatFormatting.GREEN), true);
+        audit(source.getServer(), source.getTextName(), "PRESET_GIVE", player.getGameProfile().getName() + " " + preset
+            + (expiresAt > 0L ? " expires=" + expiresAt : ""));
+        return 1;
+    }
+
+    private static int listPresets(net.minecraft.commands.CommandSourceStack source) {
+        source.sendSuccess(() -> Component.literal(tr(source, "Presety: ", "Presets: ") + String.join(", ", ITEM_PRESETS))
+            .withStyle(ChatFormatting.AQUA), false);
+        return ITEM_PRESETS.size();
+    }
+
+    private static String roleLabel(ServerPlayer player, boolean english) {
+        if (isOperator(player)) return english ? "Director" : "Ordynator";
+        if (isPatient(player)) return english ? "Patient" : "Pacjent";
+        return english ? "Consultant" : "Konsultant";
+    }
+
+    private static int showStatus(net.minecraft.commands.CommandSourceStack source, ServerPlayer player) {
+        boolean en = source.getEntity() instanceof Player viewer && isEnglish(viewer);
+        source.sendSuccess(() -> Component.literal((en ? "Consultant status: " : "Status konsultanta: ")
+            + player.getGameProfile().getName()).withStyle(ChatFormatting.AQUA), false);
+        source.sendSuccess(() -> Component.literal((en ? "Role: " : "Rola: ") + roleLabel(player, en)
+            + " | " + (en ? "language: " : "język: ") + (isEnglish(player) ? "English" : "Polski")
+            + " | " + (en ? "world: " : "świat: ")
+            + (isFreedomDimension(player) ? (en ? "unrestricted" : "swobodny") : (en ? "protected" : "chroniony"))), false);
+        int permissions = 0;
+        long now = System.currentTimeMillis();
+        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+            ItemStack stack = player.getInventory().getItem(slot);
+            if (!stack.hasTag() || !stack.getTag().contains(CONSULTANT_ACTION, Tag.TAG_STRING)) continue;
+            permissions++;
+            String action = stack.getTag().getString(CONSULTANT_ACTION);
+            String targets = stack.getTag().getString(CONSULTANT_TARGETS);
+            String near = stack.getTag().getString(CONSULTANT_NEAR);
+            long expiresAt = stack.getTag().getLong(CONSULTANT_EXPIRES_AT);
+            String expiry = expiresAt <= 0L ? (en ? "permanent" : "bezterminowy")
+                : Math.max(0L, (expiresAt - now + 999L) / 1000L) + "s";
+            boolean active = hasPermissionAction(stack, action) && permissionConditionSatisfied(stack, player);
+            source.sendSuccess(() -> Component.literal("- " + action
+                + (targets.isEmpty() ? "" : " [" + targets + "]")
+                + (near.isEmpty() ? "" : " near " + near + "/" + stack.getTag().getInt(CONSULTANT_RADIUS))
+                + " | " + expiry + " | " + (active ? (en ? "active" : "aktywne") : (en ? "inactive" : "nieaktywne")))
+                .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.YELLOW), false);
+        }
+        if (permissions == 0) {
+            source.sendSuccess(() -> Component.literal(en ? "No permission items." : "Brak przedmiotów uprawnień.")
+                .withStyle(ChatFormatting.GRAY), false);
+        }
+        return permissions;
+    }
+
+    private static int showAudit(net.minecraft.commands.CommandSourceStack source, String playerFilter, int page) {
+        List<RoleData.AuditEntry> entries = RoleData.get(source.getServer()).auditLog().stream()
+            .filter(entry -> playerFilter.isEmpty() || entry.actor().equalsIgnoreCase(playerFilter)
+                || entry.detail().toLowerCase().contains(playerFilter.toLowerCase()))
+            .toList();
+        int perPage = 10;
+        int pages = Math.max(1, (entries.size() + perPage - 1) / perPage);
+        int actual = Math.min(page, pages);
+        source.sendSuccess(() -> Component.literal("Psychiatryk audit " + actual + "/" + pages + " (" + entries.size() + ")")
+            .withStyle(ChatFormatting.GOLD), false);
+        int start = Math.max(0, entries.size() - actual * perPage);
+        int end = entries.size() - (actual - 1) * perPage;
+        for (int index = end - 1; index >= start; index--) {
+            RoleData.AuditEntry entry = entries.get(index);
+            source.sendSuccess(() -> Component.literal(LOG_TIME.format(Instant.ofEpochMilli(entry.time()))
+                + " | " + entry.actor() + " | " + entry.action() + " | " + entry.detail()).withStyle(ChatFormatting.GRAY), false);
+        }
+        return entries.size();
+    }
+
+    private static int clearAudit(net.minecraft.commands.CommandSourceStack source) {
+        RoleData.get(source.getServer()).clearAudit();
+        LOGGER.info("[Psychiatryk Audit] {} cleared the persistent audit log", source.getTextName());
+        source.sendSuccess(() -> Component.literal(tr(source, "Wyczyszczono dziennik.", "Audit log cleared."))
+            .withStyle(ChatFormatting.YELLOW), true);
         return 1;
     }
 
@@ -1703,6 +2072,7 @@ public final class PsychiatrykRoles {
         player.sendSystemMessage(Component.literal(tr(player,
             "Przyjęcie zakończone. Otrzymujesz rolę Pacjent.", "Admission complete. You now have the Patient role."))
             .withStyle(ChatFormatting.GREEN));
+        audit(player, "ADMISSION_REDEEMED", "role=pacjent");
         return 1;
     }
 
@@ -1718,6 +2088,7 @@ public final class PsychiatrykRoles {
             source.sendSuccess(() -> Component.literal(generatedCode).withStyle(ChatFormatting.GREEN), false);
         }
         source.sendSuccess(() -> Component.literal("Wygenerowano: " + count + "; aktywnych kodów: " + data.codes().size()), false);
+        audit(source.getServer(), source.getTextName(), "ADMISSION_CODES_GENERATED", "count=" + count);
         return count;
     }
 

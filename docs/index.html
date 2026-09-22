@@ -50,6 +50,7 @@
         <div id="anchorWrap" class="hidden"><label for="anchor">Anchor player</label><input id="anchor" value="aridlin"></div>
         <div id="radiusWrap" class="hidden"><label for="radius">Maximum blocks</label><input id="radius" type="number" min="1" max="512" value="16"></div>
         <div id="targetsWrap" class="wide hidden"><label for="targets">Targets — comma separated</label><input id="targets" value="rock" spellcheck="false"><div class="chips" id="presetChips"></div></div>
+        <div><label for="duration">Expiry (seconds, blank = permanent)</label><input id="duration" type="number" min="1" max="31536000" placeholder="permanent"></div>
       </div>
       <div class="output"><code id="command"></code><button class="copy" id="copy">Copy</button></div>
       <p class="note">Use <code>*</code> for everything, a registry ID such as <code>minecraft:zombie</code>, or a tag such as <code>#minecraft:logs</code>.</p>
@@ -101,10 +102,14 @@
     </section>
     <section class="card">
       <h2>Language and maintenance</h2>
+      <p><code>/konsultant status [player]</code> shows role, world mode, language, permission conditions, and expiry timers.</p>
+      <p><code>/konsultant-log [page]</code> and <code>/konsultant-log player &lt;name&gt; [page]</code> show the persistent audit log in game.</p>
+      <p><code>/konsultant-item preset list</code> lists ready-made grants. Use <code>preset give &lt;player&gt; &lt;preset&gt;</code> or <code>preset give-timed &lt;player&gt; &lt;preset&gt; &lt;seconds&gt;</code>.</p>
       <p><code>/polski</code> and <code>/english</code> save the player's language, refresh their consultant item display, and replay the consultant explainer every time.</p>
+      <p class="note">Language selection gives a localized handbook. Hostile mobs in the protected world retaliate only against the consultant who provoked them, for 30 seconds.</p>
       <p><code>/konsultant-item clear &lt;name&gt;</code> removes marked consultant items from an online or offline player's inventory and Ender Chest.</p>
       <p class="note">Ordinary items can always be dropped. A consultant can pick their own dropped stack back up; protected consultant equipment remains undroppable in the restricted world.</p>
-      <p class="note warning">Pending next restart: consultants are excluded from the overworld sleep requirement, protected items are undroppable in every dimension, and container menus reject deposits of protected items.</p>
+      <p class="note warning">The server JAR is loaded only on restart. This page may describe a staged build before the running process has restarted.</p>
     </section>
   </div>
   <footer>Local operator reference · no network dependencies</footer>
@@ -116,7 +121,8 @@
       $('targetsWrap').classList.toggle('hidden',!needsTargets); $('anchorWrap').classList.toggle('hidden',condition!=='player'); $('radiusWrap').classList.toggle('hidden',condition==='none');
       $('presetChips').innerHTML=(presets[baseAction()]||[]).map(x=>`<button class="chip" type="button" data-v="${x}">${x}</button>`).join('');
       document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('targets').value=b.dataset.v;render()});
-      let cmd=`/konsultant-item give ${$('player').value||'<player>'} ${$('item').value||'<item>'} ${action}`;
+      const duration=$('duration').value;
+      let cmd=`/konsultant-item ${duration?'give-timed':'give'} ${$('player').value||'<player>'} ${$('item').value||'<item>'}${duration?' '+duration:''} ${action}`;
       if(condition!=='none') cmd+=` near ${condition==='patients'?'patients':($('anchor').value||'<anchor>')} ${$('radius').value||16}`;
       if(needsTargets) cmd+=` ${$('targets').value||'*'}`; $('command').textContent=cmd;
     }
