@@ -51,14 +51,14 @@ Every join displays:
 Użyj /polski dla języka polskiego lub /english for English.
 ```
 
-Players choose their persistent language with:
+For a new player, the default is selected from the connection IP country (`PL` gives Polish; other countries give English). If the lookup is unavailable, the Minecraft client locale is used. The choice is persisted. Players can override it at any time with:
 
 ```text
 /polski
 /english
 ```
 
-Either command can be used repeatedly. Every use refreshes the current player's marked item names and lore, updates their role label, and replays the consultant explanation. Returning consultants with an assigned language also receive the explanation after joining.
+Either command can be used repeatedly. Every use refreshes the current player's displayed item names and lore, updates their role label, and replays the consultant explanation. Localized names, lore, expiry lines, and book pages exist only in the packet copy sent to that viewer; the real item NBT stays language-neutral in inventories and containers. Returning consultants with an assigned language also receive the explanation after joining.
 Choosing a language also gives the consultant a localized written handbook covering the role, protections, tools, travel, and core commands.
 
 ## Admission codes
@@ -179,8 +179,8 @@ Protected recipes are intended to be crafted by patients or directors and handed
 - **Passage Staff:** three vertical sticks; right-click or drop it to change between the restricted world and the consultant world.
 - **Consultant Recipe Book:** one stick in any crafting slot; opens a localized illustrated-by-text guide to every built-in recipe and its use.
 - **Escort Compass:** one compass plus string; points to the nearest online patient in the same dimension and reports their distance.
-- **Temporary Chalk:** white dye plus a stick; marks the distant block in the crosshair with a long-distance, three-dimensional particle X, a ten-second cooldown, five-marker cap, and persistent 24-hour expiry.
-- **Cleanup Bag:** five leather plus string; recalls the holder's currently loaded dropped, mined, and mob-loot entities, placing inventory overflow at their feet.
+- **Temporary Chalk:** white dye plus a stick; marks the distant block in the crosshair with a long-distance, three-dimensional particle X, a ten-second cooldown, five-marker cap, and persistent 24-hour expiry. Punching a block or entity with the Chalk removes the owner's oldest marker without damaging the target.
+- **Cleanup Bag:** five leather plus string; recalls the holder's currently loaded dropped, mined, and mob-loot entities, removes temporary ownership metadata so ordinary items stack normally, and places inventory overflow at their feet.
 
 The **Mirror of Returning** is an ordinary echo shard produced from one glass block over one stick. Consultants may craft it. One use teleports to a valid personal respawn point, falling back to overworld spawn. A second use within three seconds goes directly to overworld spawn.
 

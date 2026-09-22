@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RoleDataTest {
     @Test
@@ -26,5 +27,10 @@ class RoleDataTest {
         assertEquals(5, active.size());
         assertEquals(List.of(1.0D, 2.0D, 3.0D, 4.0D, 5.0D),
             active.stream().map(value -> value.marker().x()).toList());
+
+        assertTrue(data.removeOldestChalkMarker(owner));
+        assertEquals(List.of(2.0D, 3.0D, 4.0D, 5.0D),
+            data.activeChalkMarkers(System.currentTimeMillis()).stream()
+                .map(value -> value.marker().x()).toList());
     }
 }

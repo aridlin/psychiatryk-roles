@@ -6,12 +6,16 @@
     "S"
   ],
   "key": {
-    "G": { "item": "minecraft:glass" },
-    "S": { "item": "minecraft:stick" }
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "item": "minecraft:echo_shard",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b,display:{Name:'{\"text\":\"Lustro Powrotu\",\"color\":\"aqua\",\"italic\":false}',Lore:['{\"text\":\"Użycie: wróć do prawidłowego punktu odrodzenia.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Szybkie ponowne użycie: spawn świata.\",\"color\":\"gold\",\"italic\":false}']}}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b}"
   },
   "show_notification": true
 }

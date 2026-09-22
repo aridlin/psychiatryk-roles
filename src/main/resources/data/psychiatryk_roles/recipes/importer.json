@@ -7,11 +7,13 @@
     "SSS"
   ],
   "key": {
-    "S": { "item": "minecraft:stick" }
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "item": "minecraft:recovery_compass",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykImporter:1b,display:{Name:'{\"text\":\"Importer\",\"color\":\"green\",\"italic\":false}',Lore:['{\"text\":\"Główna ręka: Importer; druga ręka: zwykły przedmiot.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Język odświeży się po przekazaniu graczowi.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykImporter:1b}"
   },
   "show_notification": true
 }

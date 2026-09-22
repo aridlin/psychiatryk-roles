@@ -181,6 +181,26 @@ final class RoleData extends SavedData {
         setDirty();
     }
 
+    boolean removeOldestChalkMarker(UUID playerId) {
+        List<ChalkMarker> markers = chalkMarkers.get(playerId);
+        if (markers == null) {
+            return false;
+        }
+        long now = System.currentTimeMillis();
+        markers.removeIf(marker -> marker.expiresAt() <= now);
+        if (markers.isEmpty()) {
+            chalkMarkers.remove(playerId);
+            setDirty();
+            return false;
+        }
+        markers.remove(0);
+        if (markers.isEmpty()) {
+            chalkMarkers.remove(playerId);
+        }
+        setDirty();
+        return true;
+    }
+
     List<OwnedChalkMarker> activeChalkMarkers(long now) {
         boolean changed = false;
         List<OwnedChalkMarker> result = new ArrayList<>();

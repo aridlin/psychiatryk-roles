@@ -7,11 +7,13 @@
     " S "
   ],
   "key": {
-    "S": { "item": "minecraft:stick" }
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "item": "minecraft:shears",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykExtractor:1b,display:{Name:'{\"text\":\"Ekstraktor Przedmiotów\",\"color\":\"yellow\",\"italic\":false}',Lore:['{\"text\":\"PPM usuwa wszystkie przedmioty konsultanta.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Język odświeży się po przekazaniu graczowi.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykExtractor:1b}"
   },
   "show_notification": true
 }

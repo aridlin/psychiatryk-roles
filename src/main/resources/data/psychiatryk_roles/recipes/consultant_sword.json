@@ -7,12 +7,16 @@
     "C"
   ],
   "key": {
-    "S": { "item": "minecraft:stick" },
-    "C": { "item": "minecraft:cobblestone" }
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    }
   },
   "result": {
     "item": "minecraft:stone_sword",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b,display:{Name:'{\"text\":\"Miecz Konsultanta\",\"color\":\"red\",\"italic\":false}',Lore:['{\"text\":\"Pozwala atakować wyłącznie wrogie moby.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Język odświeży się po przekazaniu graczowi.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b}"
   },
   "show_notification": true
 }

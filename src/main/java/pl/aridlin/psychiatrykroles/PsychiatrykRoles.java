@@ -3,11 +3,15 @@ package pl.aridlin.psychiatrykroles;
 import com.mojang.logging.LogUtils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +24,11 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBundlePacket;
+import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
@@ -83,8 +92,16 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.InetSocketAddress;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -120,7 +137,7 @@ public final class PsychiatrykRoles {
     private static final String IMPORTED_ITEM_OWNER = "psychiatrykImportedOwner";
     private static final String KILL_LOOT_OWNER = "psychiatrykKillLootOwner";
     private static final String MINE_LOOT_OWNER = "psychiatrykMineLootOwner";
-    private static final String LORE_LANGUAGE = "psychiatrykLoreLanguage";
+    private static final String LEGACY_LORE_LANGUAGE = "psychiatrykLoreLanguage";
     private static final String CONSULTANT_EXPIRES_AT = "psychiatrykConsultantExpiresAt";
     private static final String WELCOME_BOOK_MARKER = "psychiatrykWelcomeBook";
     private static final String RECIPE_BOOK_MARKER = "psychiatrykRecipeBook";
@@ -154,6 +171,11 @@ public final class PsychiatrykRoles {
     private static final Map<UUID, Integer> LAST_MIRROR_USE_TICK = new ConcurrentHashMap<>();
     private static final Map<UUID, Provocation> HOSTILE_PROVOCATIONS = new ConcurrentHashMap<>();
     private static final Map<String, Long> LAST_AUDIT = new ConcurrentHashMap<>();
+    private static final Map<UUID, Boolean> VIEW_LANGUAGES = new ConcurrentHashMap<>();
+    private static final String LOCALIZATION_HANDLER = MOD_ID + "_localized_items";
+    private static final HttpClient GEOIP_CLIENT = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(2))
+        .build();
     private static final int HOSTILE_ANGER_TICKS = 20 * 30;
     private static final ResourceKey<Level> FREEDOM_DIMENSION = ResourceKey.create(
         Registries.DIMENSION, new ResourceLocation(MOD_ID, "konsultanci")
@@ -246,9 +268,13 @@ public final class PsychiatrykRoles {
     }
 
     private static boolean isEnglish(Player player) {
-        return player instanceof ServerPlayer serverPlayer
-            && serverPlayer.getServer() != null
-            && RoleData.get(serverPlayer.getServer()).isEnglish(player.getUUID());
+        if (!(player instanceof ServerPlayer serverPlayer) || serverPlayer.getServer() == null) {
+            return false;
+        }
+        Boolean viewLanguage = VIEW_LANGUAGES.get(player.getUUID());
+        return viewLanguage != null
+            ? viewLanguage
+            : RoleData.get(serverPlayer.getServer()).isEnglish(player.getUUID());
     }
 
     private static String tr(Player player, String polish, String english) {
@@ -321,7 +347,6 @@ public final class PsychiatrykRoles {
         CompoundTag tag = stack.getOrCreateTag();
         tag.put("CanPlaceOn", canPlaceOn);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
     }
 
     private static boolean isPlaceableSpruceSign(ItemStack stack) {
@@ -340,7 +365,6 @@ public final class PsychiatrykRoles {
         canDestroy.add(StringTag.valueOf("minecraft:spruce_hanging_sign"));
         canDestroy.add(StringTag.valueOf("minecraft:spruce_wall_hanging_sign"));
         tag.put("CanDestroy", canDestroy);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -353,7 +377,6 @@ public final class PsychiatrykRoles {
     private static ItemStack makeConsultantSword(ItemStack stack, Player player) {
         stack.getOrCreateTag().putBoolean(CONSULTANT_SWORD_MARKER, true);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -371,7 +394,6 @@ public final class PsychiatrykRoles {
         canDestroy.add(StringTag.valueOf("minecraft:stone"));
         canDestroy.add(StringTag.valueOf("minecraft:cobblestone"));
         tag.put("CanDestroy", canDestroy);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -406,7 +428,6 @@ public final class PsychiatrykRoles {
         CompoundTag tag = stack.getOrCreateTag();
         tag.putBoolean(EXTRACTOR_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -418,7 +439,6 @@ public final class PsychiatrykRoles {
         CompoundTag tag = stack.getOrCreateTag();
         tag.putBoolean(IMPORTER_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -434,7 +454,6 @@ public final class PsychiatrykRoles {
         tag.putBoolean(TRAVEL_STAFF_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
         tag.putBoolean("Unbreakable", true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -445,7 +464,6 @@ public final class PsychiatrykRoles {
     private static ItemStack makeReturnMirror(ItemStack stack, Player player) {
         stack.getOrCreateTag().putBoolean(RETURN_MIRROR_MARKER, true);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -457,7 +475,6 @@ public final class PsychiatrykRoles {
         ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
         stack.getOrCreateTag().putBoolean(WELCOME_BOOK_MARKER, true);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -494,7 +511,6 @@ public final class PsychiatrykRoles {
         ItemStack stack = new ItemStack(Items.COMPASS);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
         stack.getOrCreateTag().putBoolean(ESCORT_COMPASS_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -502,7 +518,6 @@ public final class PsychiatrykRoles {
         ItemStack stack = new ItemStack(Items.WHITE_DYE);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
         stack.getOrCreateTag().putBoolean(TEMPORARY_CHALK_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -510,20 +525,15 @@ public final class PsychiatrykRoles {
         ItemStack stack = new ItemStack(Items.RABBIT_HIDE);
         stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
         stack.getOrCreateTag().putBoolean(CLEANUP_BAG_MARKER, true);
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
-    private static void localizeConsultantItem(ItemStack stack, Player viewer, boolean force) {
+    private static void applyLocalizedPresentation(ItemStack stack, boolean en) {
         if (!isConsultantEquipment(stack)) {
             return;
         }
-        String language = isEnglish(viewer) ? "en" : "pl";
         CompoundTag tag = stack.getOrCreateTag();
-        if (!force && language.equals(tag.getString(LORE_LANGUAGE))) {
-            return;
-        }
-        tag.putString(LORE_LANGUAGE, language);
+        tag.remove(LEGACY_LORE_LANGUAGE);
         CompoundTag display = tag.getCompound("display");
         display.remove("Name");
         display.remove("Lore");
@@ -532,7 +542,6 @@ public final class PsychiatrykRoles {
         } else {
             tag.put("display", display);
         }
-        boolean en = language.equals("en");
         if (isSignRemover(stack)) {
             stack.setHoverName(Component.literal(en ? "Sign Remover" : "Usuwacz Tabliczek").withStyle(ChatFormatting.AQUA));
             appendLore(stack,
@@ -616,7 +625,7 @@ public final class PsychiatrykRoles {
                 "IMPORTER\n\n8 sticks in a ring.\n\nHold it in the main hand and an ordinary item in the offhand, then right-click.",
                 "PASSAGE STAFF\n\n3 vertical sticks.\n\nUse or drop it to switch worlds and return to the last saved position.",
                 "ESCORT COMPASS\n\nCompass + string.\n\nPoints to the nearest online Patient in the same dimension.",
-                "TEMPORARY CHALK\n\nWhite dye + stick.\n\nMarks a distant block with a 3D particle X. 10s cooldown, 5 markers, 24h lifetime.",
+                "TEMPORARY CHALK\n\nWhite dye + stick.\n\nMarks a distant block with a 3D particle X. Punch a block or entity to remove the oldest marker.",
                 "CLEANUP BAG\n\n5 leather + string: leather in the top corners and bottom row, string in the center.\n\nRecalls your loaded eligible item drops.",
                 "CRAFTING RULE\n\nPatients or Directors craft restricted tools and hand them to consultants. Consultants may craft this book, mirror, compass, and bag."
             } : new String[] {
@@ -627,7 +636,7 @@ public final class PsychiatrykRoles {
                 "IMPORTER\n\n8 patyków w pierścieniu.\n\nTrzymaj go w głównej ręce, zwykły przedmiot w drugiej i użyj PPM.",
                 "LASKA PRZEJŚCIA\n\n3 patyki pionowo.\n\nUżyj lub wyrzuć, aby zmienić świat i wrócić do ostatniej zapisanej pozycji.",
                 "KOMPAS ESKORTY\n\nKompas + nić.\n\nWskazuje najbliższego Pacjenta online w tym samym wymiarze.",
-                "TYMCZASOWA KREDA\n\nBiały barwnik + patyk.\n\nOznacza odległy blok przestrzennym X z cząsteczek. Odnowienie 10 s, 5 znaczników, czas 24 h.",
+                "TYMCZASOWA KREDA\n\nBiały barwnik + patyk.\n\nOznacza odległy blok przestrzennym X. Uderz blok lub istotę, aby usunąć najstarszy znacznik.",
                 "TORBA PORZĄDKOWA\n\n5 skór + nić: skóry w górnych rogach i dolnym rzędzie, nić pośrodku.\n\nPrzywołuje twoje wczytane uprawnione przedmioty.",
                 "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy ograniczone narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć księgę, lustro, kompas i torbę."
             };
@@ -648,6 +657,8 @@ public final class PsychiatrykRoles {
                 .withStyle(ChatFormatting.WHITE));
             appendLore(stack,
                 Component.literal(en ? "Marks the distant block with a 3D particle X." : "Oznacza odległy blok przestrzennym X z cząsteczek.")
+                    .withStyle(ChatFormatting.GRAY),
+                Component.literal(en ? "Punch a block/entity to remove the oldest marker." : "Uderz blok/istotę, aby usunąć najstarszy znacznik.")
                     .withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "10s cooldown; 5 markers; expires after 24h." : "10 s odnowienia; 5 znaczników; wygasa po 24 h.")
                     .withStyle(ChatFormatting.DARK_GRAY));
@@ -694,6 +705,72 @@ public final class PsychiatrykRoles {
             appendLore(stack, Component.literal((en ? "Expires: " : "Wygasa: ")
                 + LOG_TIME.format(Instant.ofEpochMilli(expiresAt))).withStyle(ChatFormatting.RED));
         }
+    }
+
+    private static ItemStack localizedView(ItemStack original, UUID viewerId) {
+        if (!isConsultantEquipment(original)) {
+            return original;
+        }
+        ItemStack localized = original.copy();
+        applyLocalizedPresentation(localized, VIEW_LANGUAGES.getOrDefault(viewerId, false));
+        return localized;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Object localizeOutboundPacket(Object message, UUID viewerId) {
+        if (message instanceof ClientboundBundlePacket packet) {
+            List<Packet<ClientGamePacketListener>> localized = new java.util.ArrayList<>();
+            for (Packet<ClientGamePacketListener> child : packet.subPackets()) {
+                localized.add((Packet<ClientGamePacketListener>) localizeOutboundPacket(child, viewerId));
+            }
+            return new ClientboundBundlePacket(localized);
+        }
+        if (message instanceof ClientboundContainerSetSlotPacket packet) {
+            return new ClientboundContainerSetSlotPacket(
+                packet.getContainerId(), packet.getStateId(), packet.getSlot(),
+                localizedView(packet.getItem(), viewerId)
+            );
+        }
+        if (message instanceof ClientboundContainerSetContentPacket packet) {
+            List<ItemStack> source = packet.getItems();
+            NonNullList<ItemStack> localized = NonNullList.withSize(source.size(), ItemStack.EMPTY);
+            for (int slot = 0; slot < source.size(); slot++) {
+                localized.set(slot, localizedView(source.get(slot), viewerId));
+            }
+            return new ClientboundContainerSetContentPacket(
+                packet.getContainerId(), packet.getStateId(), localized,
+                localizedView(packet.getCarriedItem(), viewerId)
+            );
+        }
+        return message;
+    }
+
+    private static void installLocalizationHandler(ServerPlayer player) {
+        var channel = player.connection.connection.channel();
+        UUID viewerId = player.getUUID();
+        channel.eventLoop().execute(() -> {
+            if (channel.pipeline().get(LOCALIZATION_HANDLER) != null) {
+                return;
+            }
+            channel.pipeline().addBefore("encoder", LOCALIZATION_HANDLER, new ChannelDuplexHandler() {
+                @Override
+                public void write(ChannelHandlerContext context, Object message, ChannelPromise promise) throws Exception {
+                    super.write(context, localizeOutboundPacket(message, viewerId), promise);
+                }
+            });
+            if (player.getServer() != null) {
+                player.getServer().execute(() -> refreshLocalizedInventory(player));
+            }
+        });
+    }
+
+    private static void removeLocalizationHandler(ServerPlayer player) {
+        var channel = player.connection.connection.channel();
+        channel.eventLoop().execute(() -> {
+            if (channel.pipeline().get(LOCALIZATION_HANDLER) != null) {
+                channel.pipeline().remove(LOCALIZATION_HANDLER);
+            }
+        });
     }
 
     private static RoleData.TravelPosition currentPosition(ServerPlayer player) {
@@ -805,6 +882,17 @@ public final class PsychiatrykRoles {
             || owner.equals(stack.getTag().getString(DROPPED_ITEM_OWNER));
     }
 
+    private static void clearTemporaryOwnership(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag == null) {
+            return;
+        }
+        OwnershipMetadata.clearTemporary(tag);
+        if (tag.isEmpty()) {
+            stack.setTag(null);
+        }
+    }
+
     private static ServerPlayer nearestPatient(ServerPlayer player) {
         if (player.getServer() == null) {
             return null;
@@ -879,6 +967,15 @@ public final class PsychiatrykRoles {
         return true;
     }
 
+    private static void removeOldestChalkMarker(ServerPlayer player) {
+        boolean removed = RoleData.get(player.getServer()).removeOldestChalkMarker(player.getUUID());
+        player.displayClientMessage(Component.literal(removed
+            ? tr(player, "Usunięto najstarszy znacznik kredowy.", "Removed your oldest chalk marker.")
+            : tr(player, "Nie masz żadnych znaczników kredowych.", "You have no chalk markers."))
+            .withStyle(removed ? ChatFormatting.GREEN : ChatFormatting.YELLOW), true);
+        audit(player, "CHALK_REMOVE_OLDEST", removed ? "removed" : "none");
+    }
+
     private static void sendChalkParticle(ServerLevel level, double x, double y, double z) {
         double visibilitySqr = CHALK_RANGE * CHALK_RANGE;
         for (ServerPlayer viewer : level.players()) {
@@ -920,12 +1017,7 @@ public final class PsychiatrykRoles {
         for (ItemEntity entity : recalled) {
             ItemStack moving = entity.getItem().copy();
             items += moving.getCount();
-            CompoundTag tag = moving.getTag();
-            if (tag != null) {
-                tag.remove(KILL_LOOT_OWNER);
-                tag.remove(MINE_LOOT_OWNER);
-                tag.remove(DROPPED_ITEM_OWNER);
-            }
+            clearTemporaryOwnership(moving);
             entity.discard();
             player.getInventory().add(moving);
             if (!moving.isEmpty()) {
@@ -1200,7 +1292,6 @@ public final class PsychiatrykRoles {
             }
             tag.put("CanDestroy", canDestroy);
         }
-        localizeConsultantItem(stack, player, true);
         return stack;
     }
 
@@ -1319,6 +1410,73 @@ public final class PsychiatrykRoles {
             .withStyle(ChatFormatting.YELLOW));
     }
 
+    private static String playerIp(ServerPlayer player) {
+        if (player.connection.connection.channel().remoteAddress() instanceof InetSocketAddress address
+            && address.getAddress() != null) {
+            return address.getAddress().getHostAddress();
+        }
+        return player.getIpAddress();
+    }
+
+    private static boolean clientLocaleIsPolish(ServerPlayer player) {
+        String language = player.getLanguage();
+        return language != null && language.toLowerCase().startsWith("pl_");
+    }
+
+    private static void chooseDefaultLanguage(ServerPlayer player) {
+        var server = player.getServer();
+        if (server == null || RoleData.get(server).hasLanguage(player.getUUID())) {
+            return;
+        }
+        UUID playerId = player.getUUID();
+        boolean fallbackEnglish = !clientLocaleIsPolish(player);
+        String ip = playerIp(player);
+        if (ip == null || ip.isBlank() || ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) {
+            finishDefaultLanguage(playerId, fallbackEnglish, "client-locale");
+            return;
+        }
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://ipwho.is/" + URLEncoder.encode(ip, StandardCharsets.UTF_8)
+                + "?fields=success,country_code"))
+            .timeout(Duration.ofSeconds(3))
+            .header("User-Agent", "PsychiatrykRoles/1.0")
+            .GET()
+            .build();
+        GEOIP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(response -> {
+                if (response.statusCode() != 200 || !response.body().contains("\"success\":true")) {
+                    return fallbackEnglish;
+                }
+                return !response.body().contains("\"country_code\":\"PL\"");
+            })
+            .exceptionally(error -> fallbackEnglish)
+            .thenAccept(english -> finishDefaultLanguage(playerId, english, "ip"));
+    }
+
+    private static void finishDefaultLanguage(UUID playerId, boolean english, String source) {
+        var currentServer = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (currentServer == null) {
+            return;
+        }
+        currentServer.execute(() -> {
+            var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+            ServerPlayer player = server == null ? null : server.getPlayerList().getPlayer(playerId);
+            if (player == null || RoleData.get(server).hasLanguage(playerId)) {
+                return;
+            }
+            RoleData.get(server).setEnglish(playerId, english);
+            VIEW_LANGUAGES.put(playerId, english);
+            refreshLocalizedInventory(player);
+            player.refreshTabListName();
+            sendLanguagePrompt(player);
+            if (isConsultant(player)) {
+                ensureWelcomeBook(player);
+                sendConsultantWelcome(player);
+            }
+            audit(player, "LANGUAGE_DEFAULT", (english ? "english" : "polski") + ":" + source);
+        });
+    }
+
     private static void sendConsultantWelcome(ServerPlayer player) {
         boolean en = isEnglish(player);
         player.sendSystemMessage(Component.literal(en
@@ -1339,14 +1497,15 @@ public final class PsychiatrykRoles {
     }
 
     private static void refreshLocalizedInventory(ServerPlayer player) {
-        for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
-            localizeConsultantItem(player.getInventory().getItem(slot), player, true);
+        player.inventoryMenu.broadcastFullState();
+        if (player.containerMenu != player.inventoryMenu) {
+            player.containerMenu.broadcastFullState();
         }
-        player.inventoryMenu.broadcastChanges();
     }
 
     private static int setLanguage(ServerPlayer player, boolean english) {
         RoleData.get(player.getServer()).setEnglish(player.getUUID(), english);
+        VIEW_LANGUAGES.put(player.getUUID(), english);
         audit(player, "LANGUAGE", english ? "english" : "polski");
         ensureWelcomeBook(player);
         refreshLocalizedInventory(player);
@@ -1364,6 +1523,11 @@ public final class PsychiatrykRoles {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
+        boolean hasLanguage = RoleData.get(player.getServer()).hasLanguage(player.getUUID());
+        VIEW_LANGUAGES.put(player.getUUID(), hasLanguage
+            ? RoleData.get(player.getServer()).isEnglish(player.getUUID())
+            : !clientLocaleIsPolish(player));
+        installLocalizationHandler(player);
         if (isPatient(player)) {
             RoleData.get(player.getServer()).addPatient(player.getUUID());
             syncPatientRank(player);
@@ -1377,8 +1541,12 @@ public final class PsychiatrykRoles {
         }
         syncCollisionRule(player);
         player.refreshTabListName();
-        sendLanguagePrompt(player);
-        if (RoleData.get(player.getServer()).hasLanguage(player.getUUID()) && isConsultant(player)) {
+        if (hasLanguage) {
+            sendLanguagePrompt(player);
+        } else {
+            chooseDefaultLanguage(player);
+        }
+        if (hasLanguage && isConsultant(player)) {
             ensureWelcomeBook(player);
             sendConsultantWelcome(player);
         }
@@ -1403,11 +1571,10 @@ public final class PsychiatrykRoles {
                         .withStyle(ChatFormatting.YELLOW), true);
                     changed = true;
                 } else if (isConsultantEquipment(item)) {
-                    localizeConsultantItem(item, player, false);
                     if (isEscortCompass(item)) {
                         updateEscortCompass(item, player);
+                        changed = true;
                     }
-                    changed = true;
                 }
             }
             if (changed) {
@@ -1486,6 +1653,8 @@ public final class PsychiatrykRoles {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            removeLocalizationHandler(player);
+            VIEW_LANGUAGES.remove(player.getUUID());
             ContainerSnapshot snapshot = CONTAINER_SNAPSHOTS.remove(player.getUUID());
             if (snapshot != null && (snapshot.hasConsultantDeposit(player)
                 || (isRestrictedConsultant(player) && !hasPermission(player, "take")))) {
@@ -1689,6 +1858,19 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
+    public void onChalkPunch(PlayerInteractEvent.LeftClickBlock event) {
+        if (event.getAction() != PlayerInteractEvent.LeftClickBlock.Action.START
+            || !isTemporaryChalk(event.getItemStack())
+            || !(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        event.setCanceled(true);
+        event.setUseBlock(net.minecraftforge.eventbus.api.Event.Result.DENY);
+        event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.DENY);
+        removeOldestChalkMarker(player);
+    }
+
+    @SubscribeEvent
     public void onBreak(BlockEvent.BreakEvent event) {
         if (isRestrictedConsultant(event.getPlayer())) {
             ItemStack held = event.getPlayer().getMainHandItem();
@@ -1755,6 +1937,12 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent event) {
+        if (isTemporaryChalk(event.getEntity().getMainHandItem())
+            && event.getEntity() instanceof ServerPlayer player) {
+            event.setCanceled(true);
+            removeOldestChalkMarker(player);
+            return;
+        }
         if (isRestrictedConsultant(event.getEntity())
             && (!(event.getTarget() instanceof Enemy)
                 || !isConsultantSword(event.getEntity().getMainHandItem()))
@@ -1818,11 +2006,7 @@ public final class PsychiatrykRoles {
             }
             ItemStack stack = event.getItem().getItem();
             if (isOwnedImportedItem(stack, event.getEntity()) || isOwnedLoot(stack, event.getEntity())) {
-                if (stack.hasTag()) {
-                    stack.getTag().remove(KILL_LOOT_OWNER);
-                    stack.getTag().remove(MINE_LOOT_OWNER);
-                    stack.getTag().remove(DROPPED_ITEM_OWNER);
-                }
+                clearTemporaryOwnership(stack);
                 return;
             } else if (isSpruceSignItem(stack)) {
                 makeSpruceSignsPlaceable(stack, event.getEntity());
@@ -1855,7 +2039,6 @@ public final class PsychiatrykRoles {
             auditDenied(event.getEntity(), "DENY_CRAFT", craftedId);
             return;
         }
-        localizeConsultantItem(crafted, event.getEntity(), true);
         audit(event.getEntity(), "CONSULTANT_ITEM_CRAFTED", craftedId);
     }
 
@@ -2270,8 +2453,7 @@ public final class PsychiatrykRoles {
         };
         if (!stack.isEmpty() && expiresAt > 0L) {
             stack.getOrCreateTag().putLong(CONSULTANT_EXPIRES_AT, expiresAt);
-            localizeConsultantItem(stack, player, true);
-        }
+            }
         return stack;
     }
 

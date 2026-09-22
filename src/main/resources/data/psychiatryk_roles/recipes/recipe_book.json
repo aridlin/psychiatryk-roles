@@ -2,11 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    { "item": "minecraft:stick" }
+    {
+      "item": "minecraft:stick"
+    }
   ],
   "result": {
     "item": "minecraft:written_book",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykRecipeBook:1b,title:\"Receptury Konsultanta\",author:\"Psychiatryk\",resolved:1b,pages:['{\"text\":\"Księga receptur. Język odświeży się po wzięciu do ekwipunku.\"}'],display:{Name:'{\"text\":\"Księga Receptur Konsultanta\",\"color\":\"gold\",\"italic\":false}',Lore:['{\"text\":\"Przewodnik po recepturach narzędzi konsultanta.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Tworzona z jednego patyka.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykRecipeBook:1b}"
   },
   "show_notification": true
 }
