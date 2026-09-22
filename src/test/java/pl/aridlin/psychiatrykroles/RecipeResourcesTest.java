@@ -34,6 +34,9 @@ class RecipeResourcesTest {
             CompoundTag resultTag = TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString());
             assertTrue(resultTag.getBoolean("psychiatrykConsultantItem"), recipe.getKey());
             assertTrue(resultTag.getBoolean(recipe.getValue()), recipe.getKey());
+            CompoundTag display = resultTag.getCompound("display");
+            assertTrue(display.contains("Name", 8), recipe.getKey() + " fallback name");
+            assertTrue(display.getList("Lore", 8).size() >= 2, recipe.getKey() + " fallback lore");
         }
     }
 

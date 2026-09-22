@@ -37,6 +37,8 @@ In the normal server worlds a consultant:
 
 Patients use normal Survival gameplay. The known legacy patient accounts remain patients. A consultant becomes a patient by redeeming a persistent, one-time admission code with `/przyjecie`.
 
+Patients can use `/pacjent status` for a localized readout of their current dimension, coordinates, respawn point, experience level, and food level.
+
 ### Ordynator / Director
 
 Minecraft operators are displayed as Ordynator/Director and retain unrestricted administrative behavior.

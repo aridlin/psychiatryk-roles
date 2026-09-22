@@ -11,7 +11,7 @@
   },
   "result": {
     "item": "minecraft:blaze_rod",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykTravelStaff:1b,Unbreakable:1b}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykTravelStaff:1b,Unbreakable:1b,display:{Name:'{\"text\":\"Laska Przejścia\",\"color\":\"light_purple\",\"italic\":false}',Lore:['{\"text\":\"PPM lub wyrzucenie: przejdź między światami.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Język odświeży się po przekazaniu graczowi.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
   },
   "show_notification": true
 }

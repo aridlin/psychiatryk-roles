@@ -11,7 +11,7 @@
   },
   "result": {
     "item": "minecraft:echo_shard",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b,display:{Name:'{\"text\":\"Lustro Powrotu\",\"color\":\"aqua\",\"italic\":false}',Lore:['{\"text\":\"Użycie: wróć do prawidłowego punktu odrodzenia.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Szybkie ponowne użycie: spawn świata.\",\"color\":\"gold\",\"italic\":false}']}}"
   },
   "show_notification": true
 }

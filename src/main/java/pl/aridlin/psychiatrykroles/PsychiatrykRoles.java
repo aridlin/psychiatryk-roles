@@ -1104,8 +1104,31 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && isConsultant(event.player)) {
-            ServerPlayer player = (ServerPlayer) event.player;
+        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) {
+            return;
+        }
+        if (player.tickCount % 20 == 0) {
+            boolean changed = false;
+            for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
+                ItemStack item = player.getInventory().getItem(slot);
+                if (item.hasTag() && item.getTag().getLong(CONSULTANT_EXPIRES_AT) > 0L
+                    && item.getTag().getLong(CONSULTANT_EXPIRES_AT) <= System.currentTimeMillis()) {
+                    audit(player, "ITEM_EXPIRED", BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
+                    player.getInventory().setItem(slot, ItemStack.EMPTY);
+                    player.displayClientMessage(Component.literal(tr(player,
+                        "Wygasł przedmiot uprawnień.", "A permission item expired."))
+                        .withStyle(ChatFormatting.YELLOW), true);
+                    changed = true;
+                } else if (isConsultantEquipment(item)) {
+                    localizeConsultantItem(item, player, false);
+                    changed = true;
+                }
+            }
+            if (changed) {
+                player.inventoryMenu.broadcastChanges();
+            }
+        }
+        if (isConsultant(player)) {
             if (player.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) {
                 player.setGameMode(GameType.SURVIVAL);
             }
@@ -1146,19 +1169,6 @@ public final class PsychiatrykRoles {
                 ensureSignRemover(player);
                 ensureTravelStaff(player);
                 ensureWelcomeBook(player);
-                for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
-                    ItemStack item = player.getInventory().getItem(slot);
-                    if (item.hasTag() && item.getTag().getLong(CONSULTANT_EXPIRES_AT) > 0L
-                        && item.getTag().getLong(CONSULTANT_EXPIRES_AT) <= System.currentTimeMillis()) {
-                        audit(player, "ITEM_EXPIRED", BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
-                        player.getInventory().setItem(slot, ItemStack.EMPTY);
-                        player.displayClientMessage(Component.literal(tr(player,
-                            "Wygasł przedmiot uprawnień.", "A permission item expired."))
-                            .withStyle(ChatFormatting.YELLOW), true);
-                    } else {
-                        localizeConsultantItem(item, player, false);
-                    }
-                }
                 long cleanupTime = player.level().getGameTime();
                 PENDING_BLOCK_DROPS.entrySet().removeIf(entry ->
                     entry.getKey().dimension().equals(player.level().dimension())
@@ -1699,6 +1709,11 @@ public final class PsychiatrykRoles {
                     .requires(source -> source.hasPermission(4))
                     .executes(context -> showStatus(context.getSource(), EntityArgument.getPlayer(context, "gracz"))))));
 
+        event.getDispatcher().register(Commands.literal("pacjent")
+            .then(Commands.literal("status")
+                .executes(context -> showPatientStatus(
+                    context.getSource(), context.getSource().getPlayerOrException()))));
+
         event.getDispatcher().register(Commands.literal("konsultant-log")
             .requires(source -> source.hasPermission(4))
             .executes(context -> showAudit(context.getSource(), "", 1))
@@ -1985,6 +2000,29 @@ public final class PsychiatrykRoles {
                 .withStyle(ChatFormatting.GRAY), false);
         }
         return permissions;
+    }
+
+    private static int showPatientStatus(net.minecraft.commands.CommandSourceStack source, ServerPlayer player) {
+        if (!isPatient(player) && !isOperator(player)) {
+            source.sendFailure(Component.literal(tr(source,
+                "Ta komenda jest przeznaczona dla Pacjentów.",
+                "This command is available to Patients.")));
+            return 0;
+        }
+        boolean en = isEnglish(player);
+        String dimension = player.level().dimension().location().toString();
+        source.sendSuccess(() -> Component.literal((en ? "Patient status: " : "Status Pacjenta: ")
+            + player.getGameProfile().getName()).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        source.sendSuccess(() -> Component.literal((en ? "Dimension: " : "Wymiar: ") + dimension
+            + " | XYZ: " + player.blockPosition().toShortString()).withStyle(ChatFormatting.GRAY), false);
+        BlockPos respawn = player.getRespawnPosition();
+        source.sendSuccess(() -> Component.literal(respawn == null
+            ? (en ? "Respawn: overworld spawn" : "Odrodzenie: spawn świata")
+            : (en ? "Respawn: " : "Odrodzenie: ") + player.getRespawnDimension().location()
+                + " " + respawn.toShortString()).withStyle(ChatFormatting.GOLD), false);
+        source.sendSuccess(() -> Component.literal((en ? "Level: " : "Poziom: ") + player.experienceLevel
+            + " | " + (en ? "Food: " : "Głód: ") + player.getFoodData().getFoodLevel() + "/20"), false);
+        return 1;
     }
 
     private static int showAudit(net.minecraft.commands.CommandSourceStack source, String playerFilter, int page) {

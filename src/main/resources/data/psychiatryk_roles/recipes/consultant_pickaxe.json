@@ -12,7 +12,7 @@
   },
   "result": {
     "item": "minecraft:stone_pickaxe",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantPickaxe:1b,CanDestroy:[\"minecraft:stone\",\"minecraft:cobblestone\"]}"
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantPickaxe:1b,CanDestroy:[\"minecraft:stone\",\"minecraft:cobblestone\"],display:{Name:'{\"text\":\"Kilof Konsultanta\",\"color\":\"gray\",\"italic\":false}',Lore:['{\"text\":\"Pozwala wydobywać kamień i bruk.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Język odświeży się po przekazaniu graczowi.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
   },
   "show_notification": true
 }
