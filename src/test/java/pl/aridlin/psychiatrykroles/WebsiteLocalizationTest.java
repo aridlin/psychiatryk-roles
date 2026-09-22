@@ -62,6 +62,8 @@ class WebsiteLocalizationTest {
         assertTrue(html.contains("/poker exchange in"));
         assertTrue(html.contains("/poker bots add"));
         assertTrue(html.contains("persistent chip wallet"));
+        assertTrue(html.contains("/poker gui"));
+        assertTrue(html.contains("Bots are free and start with 100 house chips"));
         assertTrue(html.contains("['info','items','poker','generator']"));
     }
 }

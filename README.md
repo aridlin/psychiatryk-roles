@@ -94,6 +94,7 @@ The mod includes a complete server-authoritative multiplayer poker loop presente
 Typical session:
 
 ```text
+/poker gui
 /poker create stol
 /poker join stol
 /poker exchange in [count]
@@ -115,7 +116,9 @@ Typical session:
 
 Poker uses a separate persistent chip wallet. `/poker exchange in [count]` consumes a pristine accepted stack from the main hand and credits its configured value. `/poker exchange out <item> [count]` debits that same value and creates ordinary fresh items. Named, enchanted, damaged, NBT-bearing, and consultant equipment cannot enter the exchange. `/poker buyin <chips>` moves wallet chips to the current table; `/poker cashout` moves the whole table stack back to the wallet. The minimum first table buy-in is 100 chips and blinds are 10/20. This is a deliberately simplified ProjectE-style value system: conversions conserve configured value while bulk trash remains excluded.
 
-For solo play, the table owner can use `/poker bots add <1-4>`. Each bot is funded with 100 chips taken from the owner's wallet, uses the normal validated turn/pot system, and plays automatically. `/poker bots remove` is available between hands and returns the sponsored bots' remaining chips to that owner. This keeps bot play value-backed. Bots and hands survive a process restart. Consultants can create, join, fund, and play tables through the same commands as everyone else; poker never grants world interaction permissions.
+`/poker gui` opens a six-row vanilla chest interface, so it requires no client mod. The lobby lists joinable tables and can create a personal table. At a table it renders community cards, private hole cards, seats, turn, pot, wallet, table stack, redeemable reserve, and clickable exchange-in, buy-in, cash-out, bot, start, check, call, raise, all-in, fold, and leave controls. Display items are read-only and never enter the player's inventory. Commands remain available.
+
+For solo play, the table owner can use `/poker bots add <1-4>`. Bots are free, start with 100 house chips, use the normal validated turn/pot system, and play automatically. House chips are tracked separately from the redeemable reserve funded by human buy-ins. A cash-out can never exceed that reserve, so farming free bots cannot mint exchangeable items; excess house chips expire. `/poker bots remove` removes them between hands without paying their house stack to anyone. Bots and hands survive a process restart. Consultants can use both the GUI and commands without bypassing world protections.
 
 Use `/poker values` for the authoritative in-game list. Common bulk items such as cobblestone and dirt are deliberately worth zero. Accepted per-item values are:
 

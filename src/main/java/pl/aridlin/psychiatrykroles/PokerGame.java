@@ -44,6 +44,7 @@ final class PokerGame {
     }
 
     record ShowdownEntry(UUID player, PokerHandEvaluator.HandValue hand, int payout) {}
+    record CashOut(int paid, int houseChipsExpired) {}
 
     private final String id;
     private final UUID owner;
@@ -65,6 +66,7 @@ final class PokerGame {
     private int lastRaise;
     private long handNumber;
     private String lastResult = "";
+    private int redeemableReserve;
 
     PokerGame(String id, UUID owner) { this(id, owner, 100, 10, 20); }
 
@@ -85,6 +87,7 @@ final class PokerGame {
     int currentBet() { return currentBet; }
     long handNumber() { return handNumber; }
     int minimumBuyIn() { return minimumBuyIn; }
+    int redeemableReserve() { return redeemableReserve; }
     boolean canDelete() { return phase == Phase.WAITING && players.isEmpty(); }
     String lastResult() { return lastResult; }
     void clearLastResult() { lastResult = ""; lastShowdown.clear(); }
@@ -191,17 +194,20 @@ final class PokerGame {
         if (amount <= 0 || player.chips > 10_000_000 - amount) throw new PokerException("buyin-too-large");
         if (!player.boughtIn && player.chips + amount < minimumBuyIn) throw new PokerException("below-minimum-buyin");
         player.chips += amount;
+        if (!player.bot) redeemableReserve = Math.addExact(redeemableReserve, amount);
         if (player.chips >= minimumBuyIn) player.boughtIn = true;
     }
 
-    int cashOut(UUID playerId) {
+    CashOut cashOut(UUID playerId) {
         if (phase != Phase.WAITING) throw new PokerException("hand-active");
         PlayerState player = requirePlayer(playerId);
         if (player.chips <= 0) throw new PokerException("no-chips");
         int amount = player.chips;
+        int paid = Math.min(amount, redeemableReserve);
+        redeemableReserve -= paid;
         player.chips = 0;
         player.boughtIn = false;
-        return amount;
+        return new CashOut(paid, amount - paid);
     }
 
     void reset() {
@@ -462,6 +468,7 @@ final class PokerGame {
         tag.putInt("Dealer", dealerIndex); tag.putInt("Turn", turnIndex); tag.putInt("DeckPosition", deckPosition);
         tag.putInt("CurrentBet", currentBet); tag.putInt("LastRaise", lastRaise); tag.putLong("HandNumber", handNumber);
         tag.putString("LastResult", lastResult);
+        tag.putInt("RedeemableReserve", redeemableReserve);
         tag.putIntArray("Deck", deck.stream().mapToInt(PokerCard::id).toArray());
         tag.putIntArray("Board", board.stream().mapToInt(PokerCard::id).toArray());
         ListTag playerTags = new ListTag();
@@ -485,6 +492,7 @@ final class PokerGame {
         try { game.phase = Phase.valueOf(tag.getString("Phase")); } catch (IllegalArgumentException ignored) { game.phase = Phase.WAITING; }
         game.dealerIndex = tag.getInt("Dealer"); game.turnIndex = tag.getInt("Turn"); game.deckPosition = tag.getInt("DeckPosition");
         game.currentBet = tag.getInt("CurrentBet"); game.lastRaise = tag.getInt("LastRaise"); game.handNumber = tag.getLong("HandNumber"); game.lastResult = tag.getString("LastResult");
+        game.redeemableReserve = tag.getInt("RedeemableReserve");
         for (int id : tag.getIntArray("Deck")) game.deck.add(PokerCard.fromId(id));
         for (int id : tag.getIntArray("Board")) game.board.add(PokerCard.fromId(id));
         for (Tag raw : tag.getList("Players", Tag.TAG_COMPOUND)) {
@@ -495,6 +503,8 @@ final class PokerGame {
             if (player.bot) player.connected = true;
             for (int id : value.getIntArray("Hole")) player.hole.add(PokerCard.fromId(id)); game.players.add(player);
         }
+        if (!tag.contains("RedeemableReserve")) game.redeemableReserve = game.players.stream()
+            .filter(player -> !player.bot).mapToInt(player -> player.chips + player.committedHand).sum();
         for (Tag raw : tag.getList("Acted", Tag.TAG_COMPOUND)) game.acted.add(((CompoundTag) raw).getUUID("Id"));
         for (Tag raw : tag.getList("RaiseClosed", Tag.TAG_COMPOUND)) game.raiseClosedFor.add(((CompoundTag) raw).getUUID("Id"));
         if (game.phase != Phase.WAITING && (game.deck.size() != 52 || game.turnIndex < 0 || game.turnIndex >= game.players.size())) {

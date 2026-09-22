@@ -77,7 +77,8 @@ class PokerGameTest {
         PokerGame.PokerException error = assertThrows(PokerGame.PokerException.class, () -> game.buyIn(A, 60));
         assertEquals("below-minimum-buyin", error.code);
         game.buyIn(A, 100);
-        assertEquals(100, game.cashOut(A));
+        PokerGame.CashOut out = game.cashOut(A);
+        assertEquals(100, out.paid()); assertEquals(0, out.houseChipsExpired());
         assertEquals(0, game.player(A).chips);
     }
 
@@ -92,9 +93,9 @@ class PokerGameTest {
     }
 
     @Test
-    void botsUseNormalTurnsPersistAndReturnTheirRemainingChips() {
+    void botsUseNormalTurnsPersistAndTheirHouseChipsCanBeRemoved() {
         PokerGame game = new PokerGame("solo", A); game.join(A, "A"); game.buyIn(A, 100);
-        game.addBots(A, 2, 100); assertEquals(2, game.botCount());
+        game.addBots(A, 2, 100); assertEquals(2, game.botCount()); assertEquals(100, game.redeemableReserve());
         game.start(new Random(1337));
         int guard = 0;
         while (game.phase() != PokerGame.Phase.WAITING && guard++ < 200) {
@@ -105,6 +106,17 @@ class PokerGameTest {
         PokerGame loaded = PokerGame.load(game.save()); assertEquals(2, loaded.botCount());
         int before = loaded.players().stream().filter(player -> player.bot).mapToInt(player -> player.chips).sum();
         assertEquals(before, loaded.removeBots(A)); assertEquals(0, loaded.botCount());
+    }
+
+    @Test
+    void freeBotHouseChipsNeverIncreaseRedeemableValue() {
+        PokerGame game = new PokerGame("house", A); game.join(A, "A"); game.buyIn(A, 100);
+        game.addBots(A, 4, 100);
+        assertEquals(500, game.players().stream().mapToInt(player -> player.chips).sum());
+        assertEquals(100, game.redeemableReserve());
+        PokerGame.CashOut out = game.cashOut(A);
+        assertEquals(100, out.paid()); assertEquals(0, out.houseChipsExpired());
+        assertEquals(0, game.redeemableReserve());
     }
 
     private static PokerGame fundedGame() {
