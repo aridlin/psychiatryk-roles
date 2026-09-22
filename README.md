@@ -170,13 +170,14 @@ The log covers login and role state, language changes, admission codes, administ
 
 ## Recipes and utility items
 
-Protected recipes are intended to be crafted by patients or directors and handed to consultants. Consultant crafting attempts are rejected.
+Protected recipes are intended to be crafted by patients or directors and handed to consultants. Consultant crafting attempts are rejected, except for the Recipe Book and Mirror of Returning.
 
 - **Consultant Sword:** two sticks above one cobblestone; attacks hostile mobs only.
 - **Consultant Pickaxe:** three sticks across the top, then two vertically centered cobblestone; mines stone and cobblestone.
 - **Extractor:** five sticks in a plus; removes marked consultant equipment.
 - **Importer:** eight sticks in a ring; right-click with an ordinary item in the offhand to mark and move the stack.
 - **Passage Staff:** three vertical sticks; right-click or drop it to change between the restricted world and the consultant world.
+- **Consultant Recipe Book:** one stick in any crafting slot; opens a localized illustrated-by-text guide to every built-in recipe and its use.
 
 The **Mirror of Returning** is an ordinary echo shard produced from one glass block over one stick. Consultants may craft it. One use teleports to a valid personal respawn point, falling back to overworld spawn. A second use within three seconds goes directly to overworld spawn.
 

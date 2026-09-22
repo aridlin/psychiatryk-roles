@@ -118,6 +118,7 @@ public final class PsychiatrykRoles {
     private static final String LORE_LANGUAGE = "psychiatrykLoreLanguage";
     private static final String CONSULTANT_EXPIRES_AT = "psychiatrykConsultantExpiresAt";
     private static final String WELCOME_BOOK_MARKER = "psychiatrykWelcomeBook";
+    private static final String RECIPE_BOOK_MARKER = "psychiatrykRecipeBook";
     private static final List<String> ITEM_PRESETS = List.of(
         "pickup", "container-key", "hostile-amulet", "rock-amulet", "sign",
         "sign-remover", "sword", "pickaxe", "importer", "extractor", "passage-staff", "return-mirror"
@@ -369,6 +370,7 @@ public final class PsychiatrykRoles {
             || tag.getBoolean(TRAVEL_STAFF_MARKER)
             || tag.getBoolean(RETURN_MIRROR_MARKER)
             || tag.getBoolean(WELCOME_BOOK_MARKER)
+            || tag.getBoolean(RECIPE_BOOK_MARKER)
             || tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)
             || (isSpruceSignItem(stack) && tag.contains("CanPlaceOn", Tag.TAG_LIST));
     }
@@ -434,6 +436,10 @@ public final class PsychiatrykRoles {
 
     private static boolean isWelcomeBook(ItemStack stack) {
         return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(WELCOME_BOOK_MARKER);
+    }
+
+    private static boolean isRecipeBook(ItemStack stack) {
+        return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(RECIPE_BOOK_MARKER);
     }
 
     private static void localizeConsultantItem(ItemStack stack, Player viewer, boolean force) {
@@ -513,6 +519,39 @@ public final class PsychiatrykRoles {
                 "NARZĘDZIA\n\nPrzedmioty opisują akcję i cele. Amulety działają w ekwipunku. Zwykłe przedmioty można wyrzucać i odzyskiwać.",
                 "PODRÓŻ\n\nUżyj lub wyrzuć Laskę Przejścia do swobodnego świata. Lustro wraca do odrodzenia, a szybko użyte ponownie na spawn świata.",
                 "POMOC\n\n/polski lub /english zmienia język.\n/konsultant status pokazuje uprawnienia.\n/przyjecie <kod> wykorzystuje kod."
+            };
+            for (String page : bookPages) {
+                pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
+            }
+            tag.put("pages", pages);
+        } else if (isRecipeBook(stack)) {
+            stack.setHoverName(Component.literal(en ? "Consultant Recipe Book" : "Księga Receptur Konsultanta")
+                .withStyle(ChatFormatting.GOLD));
+            appendLore(stack,
+                Component.literal(en ? "Readable crafting guide for consultant tools." : "Czytelny przewodnik po recepturach narzędzi.")
+                    .withStyle(ChatFormatting.GRAY),
+                Component.literal(en ? "Crafted from one stick." : "Tworzona z jednego patyka.")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+            tag.putString("title", en ? "Consultant Recipes" : "Receptury Konsultanta");
+            tag.putString("author", "Psychiatryk");
+            tag.putBoolean("resolved", true);
+            ListTag pages = new ListTag();
+            String[] bookPages = en ? new String[] {
+                "CONSULTANT RECIPES\n\nThis book: 1 stick.\n\nMirror of Returning: glass above a stick. Consultants may craft both.",
+                "CONSULTANT SWORD\n\nVertical column:\nstick\nstick\ncobblestone\n\nAttacks hostile mobs only.",
+                "CONSULTANT PICKAXE\n\nTop row: 3 sticks.\nMiddle: centered cobblestone.\nBottom: centered cobblestone.\n\nMines stone and cobblestone.",
+                "EXTRACTOR\n\n5 sticks in a plus.\n\nRemoves all consultant equipment. Default tools return after rejoining unless suppressed.",
+                "IMPORTER\n\n8 sticks in a ring.\n\nHold it in the main hand and an ordinary item in the offhand, then right-click.",
+                "PASSAGE STAFF\n\n3 vertical sticks.\n\nUse or drop it to switch worlds and return to the last saved position.",
+                "CRAFTING RULE\n\nPatients or Directors craft protected tools and hand them to consultants. Consultants may craft this book and the mirror."
+            } : new String[] {
+                "RECEPTURY KONSULTANTA\n\nTa księga: 1 patyk.\n\nLustro Powrotu: szkło nad patykiem. Konsultant może tworzyć oba przedmioty.",
+                "MIECZ KONSULTANTA\n\nPionowo:\npatyk\npatyk\nbruk\n\nAtakuje wyłącznie wrogie moby.",
+                "KILOF KONSULTANTA\n\nGóra: 3 patyki.\nŚrodek: bruk pośrodku.\nDół: bruk pośrodku.\n\nKopie kamień i bruk.",
+                "EKSTRAKTOR\n\n5 patyków w znak plusa.\n\nUsuwa wszystkie przedmioty konsultanta. Domyślne narzędzia wracają po ponownym wejściu, jeśli nie są wyłączone.",
+                "IMPORTER\n\n8 patyków w pierścieniu.\n\nTrzymaj go w głównej ręce, zwykły przedmiot w drugiej i użyj PPM.",
+                "LASKA PRZEJŚCIA\n\n3 patyki pionowo.\n\nUżyj lub wyrzuć, aby zmienić świat i wrócić do ostatniej zapisanej pozycji.",
+                "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy chronione narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć tę księgę oraz lustro."
             };
             for (String page : bookPages) {
                 pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
@@ -1529,7 +1568,7 @@ public final class PsychiatrykRoles {
             return;
         }
         String craftedId = BuiltInRegistries.ITEM.getKey(crafted.getItem()).toString();
-        if (isConsultant(event.getEntity()) && !isReturnMirror(crafted)) {
+        if (isConsultant(event.getEntity()) && !isReturnMirror(crafted) && !isRecipeBook(crafted)) {
             event.getCrafting().setCount(0);
             event.getEntity().displayClientMessage(Component.literal(tr(event.getEntity(),
                 "Przedmioty konsultanta musi wytworzyć i przekazać Pacjent lub Ordynator.",

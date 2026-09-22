@@ -17,13 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RecipeResourcesTest {
     @Test
     void everyConsultantRecipeCarriesFunctionalMarkersInItsResult() throws Exception {
-        Map<String, String> recipes = Map.of(
-            "consultant_sword", "psychiatrykConsultantSword",
-            "consultant_pickaxe", "psychiatrykConsultantPickaxe",
-            "consultant_item_extractor", "psychiatrykExtractor",
-            "importer", "psychiatrykImporter",
-            "travel_staff", "psychiatrykTravelStaff",
-            "return_mirror", "psychiatrykReturnMirror"
+        Map<String, String> recipes = Map.ofEntries(
+            Map.entry("recipe_book", "psychiatrykRecipeBook"),
+            Map.entry("consultant_sword", "psychiatrykConsultantSword"),
+            Map.entry("consultant_pickaxe", "psychiatrykConsultantPickaxe"),
+            Map.entry("consultant_item_extractor", "psychiatrykExtractor"),
+            Map.entry("importer", "psychiatrykImporter"),
+            Map.entry("travel_staff", "psychiatrykTravelStaff"),
+            Map.entry("return_mirror", "psychiatrykReturnMirror")
         );
 
         for (var recipe : recipes.entrySet()) {
@@ -38,6 +39,23 @@ class RecipeResourcesTest {
             assertTrue(display.contains("Name", 8), recipe.getKey() + " fallback name");
             assertTrue(display.getList("Lore", 8).size() >= 2, recipe.getKey() + " fallback lore");
         }
+    }
+
+    @Test
+    void recipeBookUsesExactlyOneStickAndHasReadableFallbackPages() throws Exception {
+        var stream = RecipeResourcesTest.class.getResourceAsStream(
+            "/data/psychiatryk_roles/recipes/recipe_book.json"
+        );
+        assertNotNull(stream);
+        JsonObject json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+        assertEquals("minecraft:crafting_shapeless", json.get("type").getAsString());
+        assertEquals(1, json.getAsJsonArray("ingredients").size());
+        assertEquals("minecraft:stick", json.getAsJsonArray("ingredients").get(0)
+            .getAsJsonObject().get("item").getAsString());
+        CompoundTag resultTag = TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString());
+        assertTrue(resultTag.getList("pages", 8).size() >= 1);
+        assertTrue(resultTag.contains("title", 8));
+        assertTrue(resultTag.contains("author", 8));
     }
 
     @Test
