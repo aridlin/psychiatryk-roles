@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Keep the public information host canonical when the bare domain is attached
+# to this Titanaxe site. The Minecraft SRV record remains independent.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?goplanska\.pl$ [NC]
+RewriteRule ^ https://info.goplanska.pl%{REQUEST_URI} [R=301,L,NE]

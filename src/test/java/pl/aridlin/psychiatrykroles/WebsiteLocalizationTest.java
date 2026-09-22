@@ -66,4 +66,12 @@ class WebsiteLocalizationTest {
         assertTrue(html.contains("Bots are free and start with 100 house chips"));
         assertTrue(html.contains("['info','items','poker','generator']"));
     }
+
+    @Test
+    void publishesTheVerifiedDynmapEndpoint() throws IOException {
+        String html = page();
+        assertTrue(html.contains("http://pl01-waw.icsv.pl:21007/"));
+        assertTrue(html.contains("OTWÓRZ MAPĘ DYNMAP"));
+        assertTrue(html.contains("OPEN DYNMAP"));
+    }
 }
