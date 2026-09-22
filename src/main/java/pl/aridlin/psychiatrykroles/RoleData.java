@@ -24,12 +24,17 @@ final class RoleData extends SavedData {
     private final Map<UUID, TravelPosition> freedomPositions = new LinkedHashMap<>();
     private final Set<UUID> englishPlayers = new LinkedHashSet<>();
     private final Set<UUID> languagePlayers = new LinkedHashSet<>();
+    private final Map<UUID, List<ChalkMarker>> chalkMarkers = new LinkedHashMap<>();
     private int baseSleepPercentage = -1;
     private final List<AuditEntry> auditLog = new ArrayList<>();
 
     record AuditEntry(long time, String actor, String action, String detail) {}
 
     record TravelPosition(String dimension, double x, double y, double z, float yaw, float pitch) {}
+
+    record ChalkMarker(String dimension, double x, double y, double z, long expiresAt) {}
+
+    record OwnedChalkMarker(UUID owner, ChalkMarker marker) {}
 
     static RoleData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(RoleData::load, RoleData::new, FILE_NAME);
@@ -50,6 +55,18 @@ final class RoleData extends SavedData {
         }
         loadPositions(tag.getList("MainPositions", Tag.TAG_COMPOUND), data.mainPositions);
         loadPositions(tag.getList("FreedomPositions", Tag.TAG_COMPOUND), data.freedomPositions);
+        ListTag markerTags = tag.getList("ChalkMarkers", Tag.TAG_COMPOUND);
+        for (Tag raw : markerTags) {
+            CompoundTag value = (CompoundTag) raw;
+            try {
+                UUID owner = UUID.fromString(value.getString("Owner"));
+                data.chalkMarkers.computeIfAbsent(owner, ignored -> new ArrayList<>()).add(new ChalkMarker(
+                    value.getString("Dimension"), value.getDouble("X"), value.getDouble("Y"),
+                    value.getDouble("Z"), value.getLong("ExpiresAt")
+                ));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
         ListTag englishTags = tag.getList("EnglishPlayers", Tag.TAG_STRING);
         for (Tag value : englishTags) {
             try {
@@ -153,6 +170,37 @@ final class RoleData extends SavedData {
         }
     }
 
+    void addChalkMarker(UUID playerId, ChalkMarker marker) {
+        long now = System.currentTimeMillis();
+        List<ChalkMarker> markers = chalkMarkers.computeIfAbsent(playerId, ignored -> new ArrayList<>());
+        markers.removeIf(existing -> existing.expiresAt() <= now);
+        while (markers.size() >= 5) {
+            markers.remove(0);
+        }
+        markers.add(marker);
+        setDirty();
+    }
+
+    List<OwnedChalkMarker> activeChalkMarkers(long now) {
+        boolean changed = false;
+        List<OwnedChalkMarker> result = new ArrayList<>();
+        var iterator = chalkMarkers.entrySet().iterator();
+        while (iterator.hasNext()) {
+            var entry = iterator.next();
+            changed |= entry.getValue().removeIf(marker -> marker.expiresAt() <= now);
+            if (entry.getValue().isEmpty()) {
+                iterator.remove();
+                changed = true;
+                continue;
+            }
+            entry.getValue().forEach(marker -> result.add(new OwnedChalkMarker(entry.getKey(), marker)));
+        }
+        if (changed) {
+            setDirty();
+        }
+        return result;
+    }
+
     int baseSleepPercentage(int currentValue) {
         if (baseSleepPercentage < 0) {
             baseSleepPercentage = currentValue;
@@ -205,6 +253,18 @@ final class RoleData extends SavedData {
         tag.put("Codes", codeTags);
         tag.put("MainPositions", savePositions(mainPositions));
         tag.put("FreedomPositions", savePositions(freedomPositions));
+        ListTag markerTags = new ListTag();
+        chalkMarkers.forEach((owner, markers) -> markers.forEach(marker -> {
+            CompoundTag value = new CompoundTag();
+            value.putString("Owner", owner.toString());
+            value.putString("Dimension", marker.dimension());
+            value.putDouble("X", marker.x());
+            value.putDouble("Y", marker.y());
+            value.putDouble("Z", marker.z());
+            value.putLong("ExpiresAt", marker.expiresAt());
+            markerTags.add(value);
+        }));
+        tag.put("ChalkMarkers", markerTags);
         ListTag englishTags = new ListTag();
         englishPlayers.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(englishTags::add);
         tag.put("EnglishPlayers", englishTags);

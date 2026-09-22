@@ -178,6 +178,9 @@ Protected recipes are intended to be crafted by patients or directors and handed
 - **Importer:** eight sticks in a ring; right-click with an ordinary item in the offhand to mark and move the stack.
 - **Passage Staff:** three vertical sticks; right-click or drop it to change between the restricted world and the consultant world.
 - **Consultant Recipe Book:** one stick in any crafting slot; opens a localized illustrated-by-text guide to every built-in recipe and its use.
+- **Escort Compass:** one compass plus string; points to the nearest online patient in the same dimension and reports their distance.
+- **Temporary Chalk:** white dye plus a stick; marks the distant block in the crosshair, with a ten-second cooldown, five-marker cap, and persistent 24-hour expiry.
+- **Cleanup Bag:** five leather plus string; recalls the holder's currently loaded dropped, mined, and mob-loot entities, placing inventory overflow at their feet.
 
 The **Mirror of Returning** is an ordinary echo shard produced from one glass block over one stick. Consultants may craft it. One use teleports to a valid personal respawn point, falling back to overworld spawn. A second use within three seconds goes directly to overworld spawn.
 

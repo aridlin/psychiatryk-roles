@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "minecraft:compass" },
+    { "item": "minecraft:string" }
+  ],
+  "result": {
+    "item": "minecraft:compass",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykEscortCompass:1b,display:{Name:'{\"text\":\"Kompas Eskorty\",\"color\":\"aqua\",\"italic\":false}',Lore:['{\"text\":\"Wskazuje najbliższego Pacjenta online.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"Pacjent musi być w tym samym wymiarze.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+  },
+  "show_notification": true
+}

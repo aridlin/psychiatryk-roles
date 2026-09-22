@@ -8,12 +8,14 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -45,6 +47,9 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.scores.Team;
@@ -119,9 +124,17 @@ public final class PsychiatrykRoles {
     private static final String CONSULTANT_EXPIRES_AT = "psychiatrykConsultantExpiresAt";
     private static final String WELCOME_BOOK_MARKER = "psychiatrykWelcomeBook";
     private static final String RECIPE_BOOK_MARKER = "psychiatrykRecipeBook";
+    private static final String ESCORT_COMPASS_MARKER = "psychiatrykEscortCompass";
+    private static final String TEMPORARY_CHALK_MARKER = "psychiatrykTemporaryChalk";
+    private static final String CLEANUP_BAG_MARKER = "psychiatrykCleanupBag";
+    private static final String DROPPED_ITEM_OWNER = "psychiatrykDroppedItemOwner";
+    private static final long CHALK_LIFETIME_MILLIS = 24L * 60L * 60L * 1000L;
+    private static final int CHALK_COOLDOWN_TICKS = 20 * 10;
+    private static final double CHALK_RANGE = 256.0D;
     private static final List<String> ITEM_PRESETS = List.of(
         "pickup", "container-key", "hostile-amulet", "rock-amulet", "sign",
-        "sign-remover", "sword", "pickaxe", "importer", "extractor", "passage-staff", "return-mirror"
+        "sign-remover", "sword", "pickaxe", "importer", "extractor", "passage-staff", "return-mirror",
+        "escort-compass", "temporary-chalk", "cleanup-bag"
     );
     private static final DateTimeFormatter LOG_TIME = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
         .withZone(ZoneId.of("Europe/Warsaw"));
@@ -371,6 +384,9 @@ public final class PsychiatrykRoles {
             || tag.getBoolean(RETURN_MIRROR_MARKER)
             || tag.getBoolean(WELCOME_BOOK_MARKER)
             || tag.getBoolean(RECIPE_BOOK_MARKER)
+            || tag.getBoolean(ESCORT_COMPASS_MARKER)
+            || tag.getBoolean(TEMPORARY_CHALK_MARKER)
+            || tag.getBoolean(CLEANUP_BAG_MARKER)
             || tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)
             || (isSpruceSignItem(stack) && tag.contains("CanPlaceOn", Tag.TAG_LIST));
     }
@@ -440,6 +456,42 @@ public final class PsychiatrykRoles {
 
     private static boolean isRecipeBook(ItemStack stack) {
         return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(RECIPE_BOOK_MARKER);
+    }
+
+    private static boolean isEscortCompass(ItemStack stack) {
+        return stack.is(Items.COMPASS) && stack.hasTag() && stack.getTag().getBoolean(ESCORT_COMPASS_MARKER);
+    }
+
+    private static boolean isTemporaryChalk(ItemStack stack) {
+        return stack.is(Items.WHITE_DYE) && stack.hasTag() && stack.getTag().getBoolean(TEMPORARY_CHALK_MARKER);
+    }
+
+    private static boolean isCleanupBag(ItemStack stack) {
+        return stack.is(Items.RABBIT_HIDE) && stack.hasTag() && stack.getTag().getBoolean(CLEANUP_BAG_MARKER);
+    }
+
+    private static ItemStack makeEscortCompass(Player player) {
+        ItemStack stack = new ItemStack(Items.COMPASS);
+        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        stack.getOrCreateTag().putBoolean(ESCORT_COMPASS_MARKER, true);
+        localizeConsultantItem(stack, player, true);
+        return stack;
+    }
+
+    private static ItemStack makeTemporaryChalk(Player player) {
+        ItemStack stack = new ItemStack(Items.WHITE_DYE);
+        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        stack.getOrCreateTag().putBoolean(TEMPORARY_CHALK_MARKER, true);
+        localizeConsultantItem(stack, player, true);
+        return stack;
+    }
+
+    private static ItemStack makeCleanupBag(Player player) {
+        ItemStack stack = new ItemStack(Items.RABBIT_HIDE);
+        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        stack.getOrCreateTag().putBoolean(CLEANUP_BAG_MARKER, true);
+        localizeConsultantItem(stack, player, true);
+        return stack;
     }
 
     private static void localizeConsultantItem(ItemStack stack, Player viewer, boolean force) {
@@ -543,6 +595,9 @@ public final class PsychiatrykRoles {
                 "EXTRACTOR\n\n5 sticks in a plus.\n\nRemoves all consultant equipment. Default tools return after rejoining unless suppressed.",
                 "IMPORTER\n\n8 sticks in a ring.\n\nHold it in the main hand and an ordinary item in the offhand, then right-click.",
                 "PASSAGE STAFF\n\n3 vertical sticks.\n\nUse or drop it to switch worlds and return to the last saved position.",
+                "ESCORT COMPASS\n\nCompass + string.\n\nPoints to the nearest online Patient in the same dimension.",
+                "TEMPORARY CHALK\n\nWhite dye + stick.\n\nMarks a distant targeted block. 10s cooldown, 5 markers, 24h lifetime.",
+                "CLEANUP BAG\n\n5 leather + string: leather in the top corners and bottom row, string in the center.\n\nRecalls your loaded eligible item drops.",
                 "CRAFTING RULE\n\nPatients or Directors craft protected tools and hand them to consultants. Consultants may craft this book and the mirror."
             } : new String[] {
                 "RECEPTURY KONSULTANTA\n\nTa księga: 1 patyk.\n\nLustro Powrotu: szkło nad patykiem. Konsultant może tworzyć oba przedmioty.",
@@ -551,12 +606,39 @@ public final class PsychiatrykRoles {
                 "EKSTRAKTOR\n\n5 patyków w znak plusa.\n\nUsuwa wszystkie przedmioty konsultanta. Domyślne narzędzia wracają po ponownym wejściu, jeśli nie są wyłączone.",
                 "IMPORTER\n\n8 patyków w pierścieniu.\n\nTrzymaj go w głównej ręce, zwykły przedmiot w drugiej i użyj PPM.",
                 "LASKA PRZEJŚCIA\n\n3 patyki pionowo.\n\nUżyj lub wyrzuć, aby zmienić świat i wrócić do ostatniej zapisanej pozycji.",
+                "KOMPAS ESKORTY\n\nKompas + nić.\n\nWskazuje najbliższego Pacjenta online w tym samym wymiarze.",
+                "TYMCZASOWA KREDA\n\nBiały barwnik + patyk.\n\nOznacza odległy wskazany blok. Odnowienie 10 s, 5 znaczników, czas 24 h.",
+                "TORBA PORZĄDKOWA\n\n5 skór + nić: skóry w górnych rogach i dolnym rzędzie, nić pośrodku.\n\nPrzywołuje twoje wczytane uprawnione przedmioty.",
                 "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy chronione narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć tę księgę oraz lustro."
             };
             for (String page : bookPages) {
                 pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
             }
             tag.put("pages", pages);
+        } else if (isEscortCompass(stack)) {
+            stack.setHoverName(Component.literal(en ? "Escort Compass" : "Kompas Eskorty")
+                .withStyle(ChatFormatting.AQUA));
+            appendLore(stack,
+                Component.literal(en ? "Points to the nearest online Patient." : "Wskazuje najbliższego Pacjenta online.")
+                    .withStyle(ChatFormatting.GRAY),
+                Component.literal(en ? "The Patient must be in the same dimension." : "Pacjent musi być w tym samym wymiarze.")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        } else if (isTemporaryChalk(stack)) {
+            stack.setHoverName(Component.literal(en ? "Temporary Chalk" : "Tymczasowa Kreda")
+                .withStyle(ChatFormatting.WHITE));
+            appendLore(stack,
+                Component.literal(en ? "Marks the distant block you are looking at." : "Oznacza odległy blok, na który patrzysz.")
+                    .withStyle(ChatFormatting.GRAY),
+                Component.literal(en ? "10s cooldown; 5 markers; expires after 24h." : "10 s odnowienia; 5 znaczników; wygasa po 24 h.")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        } else if (isCleanupBag(stack)) {
+            stack.setHoverName(Component.literal(en ? "Cleanup Bag" : "Torba Porządkowa")
+                .withStyle(ChatFormatting.GREEN));
+            appendLore(stack,
+                Component.literal(en ? "Recalls your loaded dropped, mined, and mob-loot items." : "Przywołuje twoje wczytane wyrzucone, wykopane i zdobyte przedmioty.")
+                    .withStyle(ChatFormatting.GRAY),
+                Component.literal(en ? "Inventory overflow appears safely at your feet." : "Nadmiar pojawia się bezpiecznie przy twoich stopach.")
+                    .withStyle(ChatFormatting.DARK_GRAY));
         } else if (tag.contains(CONSULTANT_ACTION, Tag.TAG_STRING)) {
             String action = tag.getString(CONSULTANT_ACTION);
             String targets = tag.getString(CONSULTANT_TARGETS);
@@ -699,7 +781,124 @@ public final class PsychiatrykRoles {
         }
         String owner = player.getUUID().toString();
         return owner.equals(stack.getTag().getString(KILL_LOOT_OWNER))
-            || owner.equals(stack.getTag().getString(MINE_LOOT_OWNER));
+            || owner.equals(stack.getTag().getString(MINE_LOOT_OWNER))
+            || owner.equals(stack.getTag().getString(DROPPED_ITEM_OWNER));
+    }
+
+    private static ServerPlayer nearestPatient(ServerPlayer player) {
+        if (player.getServer() == null) {
+            return null;
+        }
+        ServerPlayer nearest = null;
+        double nearestDistance = Double.MAX_VALUE;
+        for (ServerPlayer candidate : player.getServer().getPlayerList().getPlayers()) {
+            if (!candidate.isSpectator() && candidate.level() == player.level() && isPatient(candidate)) {
+                double distance = player.distanceToSqr(candidate);
+                if (distance < nearestDistance) {
+                    nearest = candidate;
+                    nearestDistance = distance;
+                }
+            }
+        }
+        return nearest;
+    }
+
+    private static void updateEscortCompass(ItemStack stack, ServerPlayer player) {
+        ServerPlayer patient = nearestPatient(player);
+        CompoundTag tag = stack.getOrCreateTag();
+        if (patient == null) {
+            tag.remove("LodestonePos");
+            tag.remove("LodestoneDimension");
+            tag.remove("LodestoneTracked");
+            if (player.tickCount % 40 == 0
+                && (isEscortCompass(player.getMainHandItem()) || isEscortCompass(player.getOffhandItem()))) {
+                player.displayClientMessage(Component.literal(tr(player,
+                    "Brak Pacjenta w tym wymiarze.", "No Patient is present in this dimension."))
+                    .withStyle(ChatFormatting.YELLOW), true);
+            }
+            return;
+        }
+        tag.put("LodestonePos", NbtUtils.writeBlockPos(patient.blockPosition()));
+        tag.putString("LodestoneDimension", patient.level().dimension().location().toString());
+        tag.putBoolean("LodestoneTracked", false);
+        if (player.tickCount % 40 == 0
+            && (isEscortCompass(player.getMainHandItem()) || isEscortCompass(player.getOffhandItem()))) {
+            int distance = (int) Math.round(Math.sqrt(player.distanceToSqr(patient)));
+            player.displayClientMessage(Component.literal(tr(player,
+                "Najbliższy Pacjent: " + patient.getGameProfile().getName() + " — " + distance + " bloków",
+                "Nearest Patient: " + patient.getGameProfile().getName() + " — " + distance + " blocks"
+            )).withStyle(ChatFormatting.AQUA), true);
+        }
+    }
+
+    private static boolean placeTemporaryChalk(ServerPlayer player) {
+        if (player.getCooldowns().isOnCooldown(Items.WHITE_DYE)) {
+            return false;
+        }
+        HitResult rawHit = player.pick(CHALK_RANGE, 1.0F, false);
+        if (!(rawHit instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) {
+            player.displayClientMessage(Component.literal(tr(player,
+                "Kreda nie trafiła w żaden blok.", "The chalk did not hit a block."))
+                .withStyle(ChatFormatting.RED), true);
+            return false;
+        }
+        Vec3 normal = Vec3.atLowerCornerOf(hit.getDirection().getNormal()).scale(0.08D);
+        Vec3 location = hit.getLocation().add(normal);
+        long expiresAt = System.currentTimeMillis() + CHALK_LIFETIME_MILLIS;
+        RoleData.get(player.getServer()).addChalkMarker(player.getUUID(), new RoleData.ChalkMarker(
+            player.level().dimension().location().toString(), location.x, location.y, location.z, expiresAt
+        ));
+        player.getCooldowns().addCooldown(Items.WHITE_DYE, CHALK_COOLDOWN_TICKS);
+        player.displayClientMessage(Component.literal(tr(player,
+            "Umieszczono znacznik kredowy na 24 godziny.", "Placed a chalk marker for 24 hours."))
+            .withStyle(ChatFormatting.WHITE), true);
+        audit(player, "CHALK_MARKER", hit.getBlockPos().toShortString());
+        return true;
+    }
+
+    private static void useCleanupBag(ServerPlayer player) {
+        if (player.getServer() == null) {
+            return;
+        }
+        List<ItemEntity> recalled = new java.util.ArrayList<>();
+        for (ServerLevel level : player.getServer().getAllLevels()) {
+            for (Entity entity : level.getAllEntities()) {
+                if (entity instanceof ItemEntity item
+                    && item.isAlive()
+                    && (isOwnedImportedItem(item.getItem(), player) || isOwnedLoot(item.getItem(), player))) {
+                    recalled.add(item);
+                }
+            }
+        }
+        int stacks = 0;
+        int items = 0;
+        for (ItemEntity entity : recalled) {
+            ItemStack moving = entity.getItem().copy();
+            items += moving.getCount();
+            CompoundTag tag = moving.getTag();
+            if (tag != null) {
+                tag.remove(KILL_LOOT_OWNER);
+                tag.remove(MINE_LOOT_OWNER);
+                tag.remove(DROPPED_ITEM_OWNER);
+            }
+            entity.discard();
+            player.getInventory().add(moving);
+            if (!moving.isEmpty()) {
+                moving.getOrCreateTag().putString(DROPPED_ITEM_OWNER, player.getUUID().toString());
+                ItemEntity overflow = new ItemEntity(
+                    player.level(), player.getX(), player.getY() + 0.25D, player.getZ(), moving.copy()
+                );
+                overflow.setDefaultPickUpDelay();
+                player.level().addFreshEntity(overflow);
+            }
+            stacks++;
+        }
+        player.inventoryMenu.broadcastChanges();
+        player.displayClientMessage(Component.literal(tr(player,
+            "Torba przywołała stosów: " + stacks + ", przedmiotów: " + items + ".",
+            "The bag recalled " + stacks + " stacks containing " + items + " items."
+        )).withStyle(stacks == 0 ? ChatFormatting.YELLOW : ChatFormatting.GREEN), true);
+        audit(player, "CLEANUP_BAG", "stacks=" + stacks + ",items=" + items);
     }
 
     private static void rememberBlockDrops(ServerPlayer player, BlockPos pos) {
@@ -1160,6 +1359,9 @@ public final class PsychiatrykRoles {
                     changed = true;
                 } else if (isConsultantEquipment(item)) {
                     localizeConsultantItem(item, player, false);
+                    if (isEscortCompass(item)) {
+                        updateEscortCompass(item, player);
+                    }
                     changed = true;
                 }
             }
@@ -1277,6 +1479,20 @@ public final class PsychiatrykRoles {
             event.setCancellationResult(InteractionResult.SUCCESS);
             return;
         }
+        if (isTemporaryChalk(event.getItemStack()) && event.getEntity() instanceof ServerPlayer player
+            && isConsultant(player)) {
+            placeTemporaryChalk(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+        if (isCleanupBag(event.getItemStack()) && event.getEntity() instanceof ServerPlayer player
+            && isConsultant(player)) {
+            useCleanupBag(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
         var state = event.getLevel().getBlockState(event.getPos());
         boolean isContainer = event.getLevel().getBlockEntity(event.getPos()) instanceof Container
             || state.getMenuProvider(event.getLevel(), event.getPos()) != null;
@@ -1379,6 +1595,20 @@ public final class PsychiatrykRoles {
         }
         if (isReturnMirror(stack) && event.getEntity() instanceof ServerPlayer player) {
             useReturnMirror(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+        if (isTemporaryChalk(stack) && event.getEntity() instanceof ServerPlayer player
+            && isConsultant(player)) {
+            placeTemporaryChalk(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
+        if (isCleanupBag(stack) && event.getEntity() instanceof ServerPlayer player
+            && isConsultant(player)) {
+            useCleanupBag(player);
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.SUCCESS);
             return;
@@ -1548,6 +1778,7 @@ public final class PsychiatrykRoles {
                 if (stack.hasTag()) {
                     stack.getTag().remove(KILL_LOOT_OWNER);
                     stack.getTag().remove(MINE_LOOT_OWNER);
+                    stack.getTag().remove(DROPPED_ITEM_OWNER);
                 }
                 return;
             } else if (isSpruceSignItem(stack)) {
@@ -1612,7 +1843,9 @@ public final class PsychiatrykRoles {
             event.getPlayer().inventoryMenu.broadcastChanges();
             event.setCanceled(true);
         } else if (isConsultant(event.getPlayer())) {
-            event.getEntity().getItem().getOrCreateTag().putString(KILL_LOOT_OWNER, event.getPlayer().getUUID().toString());
+            event.getEntity().getItem().getOrCreateTag().putString(
+                DROPPED_ITEM_OWNER, event.getPlayer().getUUID().toString()
+            );
         }
     }
 
@@ -1643,11 +1876,31 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || event.getServer().getTickCount() % 20 != 0) {
+        if (event.phase != TickEvent.Phase.END) {
             return;
         }
         var server = event.getServer();
         int currentTick = server.getTickCount();
+        if (currentTick % 10 == 0) {
+            long now = System.currentTimeMillis();
+            for (RoleData.OwnedChalkMarker owned : RoleData.get(server).activeChalkMarkers(now)) {
+                RoleData.ChalkMarker marker = owned.marker();
+                ResourceLocation dimension = ResourceLocation.tryParse(marker.dimension());
+                if (dimension == null) {
+                    continue;
+                }
+                ServerLevel level = server.getLevel(ResourceKey.create(Registries.DIMENSION, dimension));
+                if (level != null) {
+                    level.sendParticles(
+                        ParticleTypes.END_ROD, marker.x(), marker.y(), marker.z(),
+                        1, 0.04D, 0.04D, 0.04D, 0.0D
+                    );
+                }
+            }
+        }
+        if (currentTick % 20 != 0) {
+            return;
+        }
         HOSTILE_PROVOCATIONS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick() < currentTick);
         long auditCutoff = System.currentTimeMillis() - 60_000L;
         LAST_AUDIT.entrySet().removeIf(entry -> entry.getValue() < auditCutoff);
@@ -1966,6 +2219,9 @@ public final class PsychiatrykRoles {
             case "extractor" -> makeExtractor(new ItemStack(Items.SHEARS), player);
             case "passage-staff" -> makeTravelStaff(player);
             case "return-mirror" -> makeReturnMirror(new ItemStack(Items.ECHO_SHARD), player);
+            case "escort-compass" -> makeEscortCompass(player);
+            case "temporary-chalk" -> makeTemporaryChalk(player);
+            case "cleanup-bag" -> makeCleanupBag(player);
             default -> ItemStack.EMPTY;
         };
         if (!stack.isEmpty() && expiresAt > 0L) {

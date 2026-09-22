@@ -19,6 +19,9 @@ class RecipeResourcesTest {
     void everyConsultantRecipeCarriesFunctionalMarkersInItsResult() throws Exception {
         Map<String, String> recipes = Map.ofEntries(
             Map.entry("recipe_book", "psychiatrykRecipeBook"),
+            Map.entry("escort_compass", "psychiatrykEscortCompass"),
+            Map.entry("temporary_chalk", "psychiatrykTemporaryChalk"),
+            Map.entry("cleanup_bag", "psychiatrykCleanupBag"),
             Map.entry("consultant_sword", "psychiatrykConsultantSword"),
             Map.entry("consultant_pickaxe", "psychiatrykConsultantPickaxe"),
             Map.entry("consultant_item_extractor", "psychiatrykExtractor"),

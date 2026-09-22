@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    { "item": "minecraft:white_dye" },
+    { "item": "minecraft:stick" }
+  ],
+  "result": {
+    "item": "minecraft:white_dye",
+    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykTemporaryChalk:1b,display:{Name:'{\"text\":\"Tymczasowa Kreda\",\"color\":\"white\",\"italic\":false}',Lore:['{\"text\":\"Oznacza odległy blok, na który patrzysz.\",\"color\":\"gray\",\"italic\":false}','{\"text\":\"10 s odnowienia; 5 znaczników; wygasa po 24 h.\",\"color\":\"dark_gray\",\"italic\":false}']}}"
+  },
+  "show_notification": true
+}
