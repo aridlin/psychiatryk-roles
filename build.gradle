@@ -39,7 +39,8 @@ tasks.named('jar', Jar) {
             'Specification-Version': '1',
             'Implementation-Title': project.name,
             'Implementation-Version': project.jar.archiveVersion,
-            'Implementation-Vendor': 'aridlin'
+            'Implementation-Vendor': 'aridlin',
+            'MixinConfigs': 'psychiatryk_roles.mixins.json'
         ])
     }
     finalizedBy 'reobfJar'

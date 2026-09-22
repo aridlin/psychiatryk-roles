@@ -200,7 +200,16 @@ Consultants in the restricted overworld cannot enter beds and are excluded from 
 
 [`docs/index.html`](docs/index.html) is a dependency-free command builder and operator reference. It includes action selection, proximity conditions, presets, recipe diagrams, and maintenance notes.
 
-The public server information page source is kept in [`website/index.html`](website/index.html). Its **Przedmioty** tab documents every built-in recipe and the **Generator** tab provides the same command builder in the site's paper-and-ink design.
+The public server information page source is kept in [`website/index.html`](website/index.html). Its **Przedmioty** tab documents every built-in recipe and the **Generator** tab provides the same command builder in the site's paper-and-ink design. The entire page can be switched between Polish and English using the visible **PL** and **EN** buttons. A manual choice is stored in browser local storage. Without one, the page applies a browser-language and `Europe/Warsaw` timezone fallback immediately, then asks `ipwho.is` only for a country code with credentials, referrer, and caching disabled. Failure or blocking of that lookup leaves the local fallback in place.
+
+## Pre-login connection guidance
+
+Forge 47.4.10 rejects a vanilla client inside `ServerLifecycleHooks.handleServerLogin`, before Minecraft creates a login player and before normal Forge player/login events can run. The mod therefore uses a required server-side Mixin on that exact Forge hook and replaces both early rejection strings:
+
+- a vanilla/no-Forge client is directed to `info.goplanska.pl` for Forge 1.20.1 and the modpack;
+- an incompatible Forge network version is directed to the same setup page.
+
+The channel list in the server log identifies required mods that rejected a vanilla connection, but those mods do not compose the final vanilla-client disconnect text; Forge centralizes that text in `ServerLifecycleHooks`. Later FML handshakes are different: a Forge client with a mismatched mod/channel list receives structured mismatch data and can render its own client-side incompatibility screen. A server-only mod cannot replace UI text rendered by an unmodified client. The public setup address is therefore guaranteed at the earliest server-owned rejection, while later client-owned mismatch presentation remains bounded by Forge and the client mod loader.
 
 Run it directly:
 

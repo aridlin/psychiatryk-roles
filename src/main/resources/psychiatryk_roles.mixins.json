@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "pl.aridlin.psychiatrykroles.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ServerLifecycleHooksMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
