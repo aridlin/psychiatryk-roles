@@ -21,6 +21,7 @@ final class PokerMenu extends ChestMenu {
     private static final int SIZE = 54;
     private final SimpleContainer display;
     private final ServerPlayer viewer;
+    private String lastState = "";
 
     PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer) {
         this(containerId, inventory, viewer, new SimpleContainer(SIZE));
@@ -34,6 +35,12 @@ final class PokerMenu extends ChestMenu {
     }
 
     @Override public boolean stillValid(Player player) { return true; }
+
+    @Override public void broadcastChanges() {
+        if (viewer == null) { super.broadcastChanges(); return; }
+        String current = stateKey();
+        if (!current.equals(lastState)) refresh(); else super.broadcastChanges();
+    }
 
     @Override public void clicked(int slotId, int button, ClickType clickType, Player player) {
         if (player != viewer || slotId < 0 || slotId >= SIZE) return;
@@ -51,7 +58,20 @@ final class PokerMenu extends ChestMenu {
         display.setItem(4, icon(Items.NETHER_STAR, ChatFormatting.GOLD + (en ? "TEXAS HOLD'EM" : "TEXAS HOLD'EM")));
         display.setItem(53, icon(Items.BARRIER, ChatFormatting.RED + (en ? "Close" : "Zamknij")));
         if (game == null) renderLobby(data, en); else renderTable(game, data, en);
-        broadcastChanges();
+        lastState = stateKey();
+        super.broadcastChanges();
+    }
+
+    private String stateKey() {
+        PokerData data = PokerData.get(viewer.getServer()); PokerGame game = data.tableFor(viewer.getUUID());
+        if (game == null) return "lobby:" + data.tables().stream().map(table -> table.id() + ':' + table.phase() + ':' + table.players().size()).toList();
+        StringBuilder value = new StringBuilder(game.id()).append('|').append(game.phase()).append('|').append(game.pot())
+            .append('|').append(game.currentBet()).append('|').append(game.redeemableReserve()).append('|').append(data.balance(viewer.getUUID()))
+            .append('|').append(game.board()).append('|').append(game.turnPlayer() == null ? "-" : game.turnPlayer().id);
+        for (PokerGame.PlayerState seat : game.players()) value.append('|').append(seat.id).append(':').append(seat.chips)
+            .append(':').append(seat.committedHand).append(':').append(seat.folded).append(':').append(seat.allIn).append(':').append(seat.connected);
+        PokerGame.PlayerState self = game.player(viewer.getUUID()); if (self != null) value.append('|').append(self.hole);
+        return value.toString();
     }
 
     private void renderLobby(PokerData data, boolean en) {
