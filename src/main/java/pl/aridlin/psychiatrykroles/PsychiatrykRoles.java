@@ -589,7 +589,7 @@ public final class PsychiatrykRoles {
             tag.putBoolean("resolved", true);
             ListTag pages = new ListTag();
             String[] bookPages = en ? new String[] {
-                "CONSULTANT RECIPES\n\nThis book: 1 stick.\n\nMirror of Returning: glass above a stick. Consultants may craft both.",
+                "CONSULTANT RECIPES\n\nThis book: 1 stick.\n\nConsultants may craft this book, the mirror, Escort Compass, and Cleanup Bag.",
                 "CONSULTANT SWORD\n\nVertical column:\nstick\nstick\ncobblestone\n\nAttacks hostile mobs only.",
                 "CONSULTANT PICKAXE\n\nTop row: 3 sticks.\nMiddle: centered cobblestone.\nBottom: centered cobblestone.\n\nMines stone and cobblestone.",
                 "EXTRACTOR\n\n5 sticks in a plus.\n\nRemoves all consultant equipment. Default tools return after rejoining unless suppressed.",
@@ -598,9 +598,9 @@ public final class PsychiatrykRoles {
                 "ESCORT COMPASS\n\nCompass + string.\n\nPoints to the nearest online Patient in the same dimension.",
                 "TEMPORARY CHALK\n\nWhite dye + stick.\n\nMarks a distant targeted block. 10s cooldown, 5 markers, 24h lifetime.",
                 "CLEANUP BAG\n\n5 leather + string: leather in the top corners and bottom row, string in the center.\n\nRecalls your loaded eligible item drops.",
-                "CRAFTING RULE\n\nPatients or Directors craft protected tools and hand them to consultants. Consultants may craft this book and the mirror."
+                "CRAFTING RULE\n\nPatients or Directors craft restricted tools and hand them to consultants. Consultants may craft this book, mirror, compass, and bag."
             } : new String[] {
-                "RECEPTURY KONSULTANTA\n\nTa księga: 1 patyk.\n\nLustro Powrotu: szkło nad patykiem. Konsultant może tworzyć oba przedmioty.",
+                "RECEPTURY KONSULTANTA\n\nTa księga: 1 patyk.\n\nKonsultant może tworzyć tę księgę, lustro, Kompas Eskorty i Torbę Porządkową.",
                 "MIECZ KONSULTANTA\n\nPionowo:\npatyk\npatyk\nbruk\n\nAtakuje wyłącznie wrogie moby.",
                 "KILOF KONSULTANTA\n\nGóra: 3 patyki.\nŚrodek: bruk pośrodku.\nDół: bruk pośrodku.\n\nKopie kamień i bruk.",
                 "EKSTRAKTOR\n\n5 patyków w znak plusa.\n\nUsuwa wszystkie przedmioty konsultanta. Domyślne narzędzia wracają po ponownym wejściu, jeśli nie są wyłączone.",
@@ -609,7 +609,7 @@ public final class PsychiatrykRoles {
                 "KOMPAS ESKORTY\n\nKompas + nić.\n\nWskazuje najbliższego Pacjenta online w tym samym wymiarze.",
                 "TYMCZASOWA KREDA\n\nBiały barwnik + patyk.\n\nOznacza odległy wskazany blok. Odnowienie 10 s, 5 znaczników, czas 24 h.",
                 "TORBA PORZĄDKOWA\n\n5 skór + nić: skóry w górnych rogach i dolnym rzędzie, nić pośrodku.\n\nPrzywołuje twoje wczytane uprawnione przedmioty.",
-                "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy chronione narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć tę księgę oraz lustro."
+                "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy ograniczone narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć księgę, lustro, kompas i torbę."
             };
             for (String page : bookPages) {
                 pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
@@ -1799,7 +1799,11 @@ public final class PsychiatrykRoles {
             return;
         }
         String craftedId = BuiltInRegistries.ITEM.getKey(crafted.getItem()).toString();
-        if (isConsultant(event.getEntity()) && !isReturnMirror(crafted) && !isRecipeBook(crafted)) {
+        if (isConsultant(event.getEntity())
+            && !isReturnMirror(crafted)
+            && !isRecipeBook(crafted)
+            && !isEscortCompass(crafted)
+            && !isCleanupBag(crafted)) {
             event.getCrafting().setCount(0);
             event.getEntity().displayClientMessage(Component.literal(tr(event.getEntity(),
                 "Przedmioty konsultanta musi wytworzyć i przekazać Pacjent lub Ordynator.",

@@ -170,7 +170,7 @@ The log covers login and role state, language changes, admission codes, administ
 
 ## Recipes and utility items
 
-Protected recipes are intended to be crafted by patients or directors and handed to consultants. Consultant crafting attempts are rejected, except for the Recipe Book and Mirror of Returning.
+Protected recipes are intended to be crafted by patients or directors and handed to consultants. Consultant crafting attempts are rejected, except for the Recipe Book, Mirror of Returning, Escort Compass, and Cleanup Bag.
 
 - **Consultant Sword:** two sticks above one cobblestone; attacks hostile mobs only.
 - **Consultant Pickaxe:** three sticks across the top, then two vertically centered cobblestone; mines stone and cobblestone.
