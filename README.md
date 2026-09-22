@@ -85,6 +85,57 @@ Player redemption:
 /przyjecie <code>
 ```
 
+## Texas Hold'em poker
+
+The mod includes a complete server-authoritative multiplayer poker loop presented through vanilla chat. It requires no additional client mod. Tables support two to nine funded players, dealer/blind rotation, preflop/flop/turn/river betting, check, call, total-bet raise, fold, all-in, side pots, tied pots with deterministic odd-chip assignment, and seven-card showdown evaluation.
+
+Typical session:
+
+```text
+/poker create stol
+/poker join stol
+/poker buyin [count]
+/poker start
+/poker check
+/poker call
+/poker raise <total-bet>
+/poker fold
+/poker allin
+/poker status
+/poker cards
+/poker cashout
+/poker leave
+```
+
+Hold an accepted item in the main hand before `buyin`; omitting `count` deposits the held stack. The minimum first buy-in is 100 chips and blinds are 10/20. Deposits are removed from inventory and stored with their complete NBT in a persistent table vault. Chips exist only in the server ledger, so they cannot be duplicated as items or moved through containers. `cashout` returns only real items already held in the vault. When available item denominations cannot exactly cover a balance, the unpaid remainder stays on that player's persistent balance for a later cash-out. A player must cash out before leaving.
+
+Use `/poker values` for the authoritative in-game list. Common bulk items such as cobblestone and dirt are deliberately worth zero. Accepted per-item values are:
+
+| Value | Items |
+| ---: | --- |
+| 1000 | elytra, nether star |
+| 900 | netherite ingot |
+| 600 | enchanted golden apple |
+| 500 | totem of undying |
+| 300 | heart of the sea |
+| 250 | wither skeleton skull |
+| 225 | netherite scrap |
+| 180 | ancient debris |
+| 100 | diamond |
+| 90 | echo shard, Pigstep/Relic/Otherside music discs |
+| 80 | shulker shell |
+| 60 | nautilus shell |
+| 40 | goat horn and the other listed music discs |
+| 30 | emerald |
+| 25 | dragon's breath |
+| 20 | name tag, saddle |
+| 18 / 9 | gold ingot / iron ingot |
+| 3 / 2 / 1 | amethyst shard / gold nugget / iron nugget |
+
+`/poker list` lists public tables and `/poker help` gives localized PL/EN instructions. Operators can run `/poker admin reset <table>` to cancel an active hand and refund every committed chip to its balance. `/poker admin delete <table>` refuses to delete a table until players, balances, and escrow are empty.
+
+Tables, shuffled deck order, hole cards, board, turn state, commitments, balances, and exact escrow stacks persist in `psychiatryk_poker.dat`. A disconnected player automatically checks when no payment is owed and otherwise folds when their turn arrives. On process restart, persisted sessions are treated as offline; the first returning player triggers recovery until play reaches a connected seat or the hand settles. Consultant players use the same command-only UI, which grants no block, entity, container, or inventory-protection bypass. Consultant equipment and unbreakable protected items are rejected from buy-in.
+
 ## Permission items
 
 Operators can turn any registered item into a marked permission item:
@@ -252,7 +303,7 @@ build/libs/psychiatryk-roles-1.0.0.jar
 4. Start the server and confirm `Done` appears without a `psychiatryk_roles` load error.
 5. Verify `/help konsultant-item`, `/help przyjecie`, and `execute in psychiatryk_roles:konsultanci run time query daytime`.
 
-Persistent role, code, language, travel-position, audit-log, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`.
+Persistent role, code, language, travel-position, audit-log, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`. Poker tables, hands, balances, and item escrow are stored separately in `psychiatryk_poker.dat`.
 
 ## Safety notes
 

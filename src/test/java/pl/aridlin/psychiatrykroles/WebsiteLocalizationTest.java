@@ -50,4 +50,15 @@ class WebsiteLocalizationTest {
         String html = page();
         assertFalse(html.contains("To żartobliwy klimat serwera"));
     }
+
+    @Test
+    void pokerHasAVisibleLocalizedViewAndItemBackedRules() throws IOException {
+        String html = page();
+        assertTrue(html.contains("data-view-link=\"poker\""));
+        assertTrue(html.contains("data-view=\"poker\""));
+        assertTrue(html.contains("'/poker" ) || html.contains("/poker buyin"));
+        assertTrue(html.contains("muszle łodzika"));
+        assertTrue(html.contains("nautilus shells"));
+        assertTrue(html.contains("['info','items','poker','generator']"));
+    }
 }

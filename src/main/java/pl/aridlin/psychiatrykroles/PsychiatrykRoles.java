@@ -296,6 +296,17 @@ public final class PsychiatrykRoles {
         }
     }
 
+    static void pokerAudit(Player player, String action, String detail) { audit(player, action, detail); }
+
+    static void pokerAudit(net.minecraft.server.MinecraftServer server, String actor, String action, String detail) {
+        audit(server, actor, action, detail);
+    }
+
+    static boolean isPokerDepositAllowed(ItemStack stack) {
+        return !stack.isEmpty() && !isConsultantEquipment(stack)
+            && (!stack.hasTag() || !stack.getTag().getBoolean("Unbreakable"));
+    }
+
     private static void auditDenied(Player player, String action, String detail) {
         long now = System.currentTimeMillis();
         String key = player.getUUID() + "|" + action + "|" + detail;
@@ -1551,6 +1562,7 @@ public final class PsychiatrykRoles {
             sendConsultantWelcome(player);
         }
         audit(player, "LOGIN", isOperator(player) ? "ordynator" : isPatient(player) ? "pacjent" : "konsultant");
+        PokerCommands.onLogin(player);
     }
 
     @SubscribeEvent
@@ -1653,6 +1665,7 @@ public final class PsychiatrykRoles {
     @SubscribeEvent
     public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            PokerCommands.onLogout(player);
             removeLocalizationHandler(player);
             VIEW_LANGUAGES.remove(player.getUUID());
             ContainerSnapshot snapshot = CONTAINER_SNAPSHOTS.remove(player.getUUID());
@@ -2252,6 +2265,7 @@ public final class PsychiatrykRoles {
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), false)));
         event.getDispatcher().register(Commands.literal("english")
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), true)));
+        PokerCommands.register(event);
     }
 
     private static int clearConsultantItems(net.minecraft.commands.CommandSourceStack source, String playerName) {
