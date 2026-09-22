@@ -200,6 +200,8 @@ Consultants in the restricted overworld cannot enter beds and are excluded from 
 
 [`docs/index.html`](docs/index.html) is a dependency-free command builder and operator reference. It includes action selection, proximity conditions, presets, recipe diagrams, and maintenance notes.
 
+The public server information page source is kept in [`website/index.html`](website/index.html). Its **Przedmioty** tab documents every built-in recipe and the **Generator** tab provides the same command builder in the site's paper-and-ink design.
+
 Run it directly:
 
 ```bash
