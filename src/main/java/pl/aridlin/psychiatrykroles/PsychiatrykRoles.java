@@ -1636,6 +1636,8 @@ public final class PsychiatrykRoles {
         var server = event.getServer();
         int currentTick = server.getTickCount();
         HOSTILE_PROVOCATIONS.entrySet().removeIf(entry -> entry.getValue().expiresAtTick() < currentTick);
+        long auditCutoff = System.currentTimeMillis() - 60_000L;
+        LAST_AUDIT.entrySet().removeIf(entry -> entry.getValue() < auditCutoff);
         GameRules.IntegerValue rule = server.overworld().getGameRules().getRule(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE);
         RoleData data = RoleData.get(server);
         int base = data.baseSleepPercentage(rule.get());
