@@ -302,9 +302,10 @@ public final class PsychiatrykRoles {
         audit(server, actor, action, detail);
     }
 
-    static boolean isPokerDepositAllowed(ItemStack stack) {
-        return !stack.isEmpty() && !isConsultantEquipment(stack)
-            && (!stack.hasTag() || !stack.getTag().getBoolean("Unbreakable"));
+    static boolean isPokerExchangeInputAllowed(ItemStack stack) {
+        // Only ordinary pristine stacks enter the exchange. This prevents damaged,
+        // enchanted or named items from being laundered into fresh replacements.
+        return !stack.isEmpty() && !isConsultantEquipment(stack) && !stack.hasTag();
     }
 
     private static void auditDenied(Player player, String action, String detail) {

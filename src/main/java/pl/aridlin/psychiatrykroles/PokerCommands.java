@@ -7,9 +7,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.RegisterCommandsEvent;
 
@@ -38,11 +41,24 @@ final class PokerCommands {
             .then(Commands.literal("status").executes(context -> status(context.getSource().getPlayerOrException())))
             .then(Commands.literal("cards").executes(context -> cards(context.getSource().getPlayerOrException())))
             .then(Commands.literal("values").executes(context -> values(context.getSource().getPlayerOrException())))
-            .then(Commands.literal("buyin")
-                .executes(context -> buyIn(context.getSource().getPlayerOrException(), -1))
-                .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
-                    .executes(context -> buyIn(context.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(context, "count")))))
+            .then(Commands.literal("bank").executes(context -> bank(context.getSource().getPlayerOrException())))
+            .then(Commands.literal("exchange")
+                .then(Commands.literal("in")
+                    .executes(context -> exchangeIn(context.getSource().getPlayerOrException(), -1))
+                    .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+                        .executes(context -> exchangeIn(context.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(context, "count")))))
+                .then(Commands.literal("out").then(Commands.argument("item", ResourceLocationArgument.id())
+                    .suggests((context, builder) -> SharedSuggestionProvider.suggest(PokerItemValues.all().keySet(), builder))
+                    .executes(context -> exchangeOut(context.getSource().getPlayerOrException(), ResourceLocationArgument.getId(context, "item"), 1))
+                    .then(Commands.argument("count", IntegerArgumentType.integer(1, 2304))
+                        .executes(context -> exchangeOut(context.getSource().getPlayerOrException(), ResourceLocationArgument.getId(context, "item"), IntegerArgumentType.getInteger(context, "count")))))))
+            .then(Commands.literal("buyin").then(Commands.argument("chips", IntegerArgumentType.integer(1, 10_000_000))
+                .executes(context -> buyIn(context.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(context, "chips")))))
             .then(Commands.literal("cashout").executes(context -> cashOut(context.getSource().getPlayerOrException())))
+            .then(Commands.literal("bots")
+                .then(Commands.literal("add").then(Commands.argument("count", IntegerArgumentType.integer(1, 4))
+                    .executes(context -> addBots(context.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(context, "count")))))
+                .then(Commands.literal("remove").executes(context -> removeBots(context.getSource().getPlayerOrException()))))
             .then(Commands.literal("check").executes(context -> act(context.getSource().getPlayerOrException(), "check", PokerGame::check)))
             .then(Commands.literal("call").executes(context -> act(context.getSource().getPlayerOrException(), "call", PokerGame::call)))
             .then(Commands.literal("raise").then(Commands.argument("amount", IntegerArgumentType.integer(1))
@@ -84,18 +100,22 @@ final class PokerCommands {
         player.sendSystemMessage(Component.literal(en ? "TEXAS HOLD'EM — COMMANDS" : "TEXAS HOLD'EM — KOMENDY").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         String[] lines = en ? new String[] {
             "/poker list | create <table> | join <table> | leave",
-            "/poker buyin [count] | cashout | values | start | status | cards",
-            "/poker check | call | raise <total bet> | fold | allin",
-            "Hold an accepted item and use buyin. Minimum 100 chips; blinds 10/20. Cobblestone and other bulk trash are worth 0.",
-            "Items move into a persistent table vault. Cashout returns only real escrowed items; denomination leftovers remain as chips.",
-            "Two to nine players. The table owner starts each hand. Disconnected turns auto-check when legal, otherwise auto-fold."
+            "/poker bank | exchange in [count] | exchange out <item> [count] | values",
+            "/poker buyin <chips> | cashout | bots add <1-4> | bots remove",
+            "/poker start | status | cards | check | call | raise <total> | fold | allin",
+            "Exchange accepted items into your persistent chip wallet, or spend wallet chips on valued items. Bulk trash is worth 0.",
+            "Buy-in moves wallet chips to the table; cashout moves the table stack back. Minimum first buy-in 100; blinds 10/20.",
+            "Bots cost 100 wallet chips each; their remaining table chips return to their sponsor when removed.",
+            "Two to nine seats. Consultants may create and play normally; poker grants no world permissions."
         } : new String[] {
             "/poker list | create <stół> | join <stół> | leave",
-            "/poker buyin [liczba] | cashout | values | start | status | cards",
-            "/poker check | call | raise <łączny zakład> | fold | allin",
-            "Trzymaj uznawany przedmiot i użyj buyin. Minimum 100 żetonów; ciemne 10/20. Bruk i inne śmieci masowe mają wartość 0.",
-            "Przedmioty trafiają do trwałego sejfu stołu. Cashout oddaje wyłącznie prawdziwy depozyt; reszta nominałowa zostaje w żetonach.",
-            "Od 2 do 9 graczy. Właściciel stołu rozpoczyna rozdanie. Rozłączenie automatycznie czeka, jeśli wolno, albo pasuje."
+            "/poker bank | exchange in [liczba] | exchange out <przedmiot> [liczba] | values",
+            "/poker buyin <żetony> | cashout | bots add <1-4> | bots remove",
+            "/poker start | status | cards | check | call | raise <łącznie> | fold | allin",
+            "Wymieniaj uznawane przedmioty na trwałe saldo żetonów albo wydawaj żetony na przedmioty z tabeli. Śmieci masowe mają wartość 0.",
+            "Buy-in przenosi żetony z portfela na stół, a cashout z powrotem. Pierwszy buy-in min. 100; ciemne 10/20.",
+            "Każdy bot kosztuje 100 żetonów z portfela; pozostałe żetony wracają sponsorowi po usunięciu botów.",
+            "Od 2 do 9 miejsc. Konsultanci mogą tworzyć stoły i grać; poker nie daje uprawnień w świecie."
         };
         for (String line : lines) player.sendSystemMessage(Component.literal(line).withStyle(ChatFormatting.GRAY));
         return 1;
@@ -200,22 +220,56 @@ final class PokerCommands {
         } catch (PokerGame.PokerException error) { sendError(player, error.code); return 0; }
     }
 
-    private static int buyIn(ServerPlayer player, int requestedCount) {
+    private static int bank(ServerPlayer player) {
+        long balance = PokerData.get(player.getServer()).balance(player.getUUID());
+        send(player, "Portfel pokerowy: " + balance + " żetonów.", "Poker wallet: " + balance + " chips.", ChatFormatting.GOLD);
+        return (int) Math.min(Integer.MAX_VALUE, balance);
+    }
+
+    private static int exchangeIn(ServerPlayer player, int requestedCount) {
+        PokerData data = PokerData.get(player.getServer()); ItemStack held = player.getMainHandItem();
+        int count = requestedCount < 0 ? held.getCount() : requestedCount;
+        if (held.isEmpty() || count > held.getCount()) { sendError(player, "hold-exchange-item"); return 0; }
+        if (!PsychiatrykRoles.isPokerExchangeInputAllowed(held)) { sendError(player, "tagged-exchange-item"); return 0; }
+        String id = BuiltInRegistries.ITEM.getKey(held.getItem()).toString(); int unit = PokerItemValues.value(id);
+        if (unit <= 0) { sendError(player, "worthless-item"); return 0; }
+        long credit;
+        try { credit = Math.multiplyExact((long) unit, count); data.credit(player.getUUID(), credit); }
+        catch (ArithmeticException error) { sendError(player, "buyin-too-large"); return 0; }
+        held.shrink(count); player.inventoryMenu.broadcastChanges();
+        send(player, "Wymieniono " + count + "× " + id + " na " + credit + " żetonów. Portfel: " + data.balance(player.getUUID()) + ".",
+            "Exchanged " + count + "× " + id + " for " + credit + " chips. Wallet: " + data.balance(player.getUUID()) + ".", ChatFormatting.GREEN);
+        PsychiatrykRoles.pokerAudit(player, "POKER_EXCHANGE_IN", "item=" + id + " count=" + count + " chips=" + credit); return (int)Math.min(Integer.MAX_VALUE, credit);
+    }
+
+    private static int exchangeOut(ServerPlayer player, ResourceLocation id, int count) {
+        PokerData data = PokerData.get(player.getServer()); int unit = PokerItemValues.value(id.toString());
+        var item = BuiltInRegistries.ITEM.getOptional(id);
+        if (unit <= 0 || item.isEmpty()) { sendError(player, "worthless-item"); return 0; }
+        long cost;
+        try { cost = Math.multiplyExact((long) unit, count); } catch (ArithmeticException error) { sendError(player, "buyin-too-large"); return 0; }
+        if (!data.debit(player.getUUID(), cost)) { sendError(player, "wallet-insufficient"); return 0; }
+        int remaining = count;
+        while (remaining > 0) {
+            ItemStack delivery = new ItemStack(item.get(), Math.min(remaining, item.get().getMaxStackSize())); remaining -= delivery.getCount();
+            if (!player.getInventory().add(delivery) && !delivery.isEmpty()) {
+                ItemEntity dropped = player.drop(delivery, false); if (dropped != null) DroppedItemOwnership.mark(dropped, player.getUUID());
+            }
+        }
+        send(player, "Kupiono " + count + "× " + id + " za " + cost + ". Portfel: " + data.balance(player.getUUID()) + ".",
+            "Bought " + count + "× " + id + " for " + cost + ". Wallet: " + data.balance(player.getUUID()) + ".", ChatFormatting.GREEN);
+        PsychiatrykRoles.pokerAudit(player, "POKER_EXCHANGE_OUT", "item=" + id + " count=" + count + " chips=" + cost); return count;
+    }
+
+    private static int buyIn(ServerPlayer player, int amount) {
         PokerData data = PokerData.get(player.getServer()); PokerGame game = data.tableFor(player.getUUID());
         if (game == null) { sendError(player, "not-seated"); return 0; }
-        ItemStack held = player.getMainHandItem();
-        int count = requestedCount < 0 ? held.getCount() : requestedCount;
-        if (held.isEmpty() || count > held.getCount()) { sendError(player, "hold-buyin-item"); return 0; }
-        if (!PsychiatrykRoles.isPokerDepositAllowed(held)) { sendError(player, "protected-item"); return 0; }
-        ItemStack deposited = held.copy(); deposited.setCount(count);
+        if (data.balance(player.getUUID()) < amount) { sendError(player, "wallet-insufficient"); return 0; }
         try {
-            int credit = game.buyIn(player.getUUID(), BuiltInRegistries.ITEM.getKey(deposited.getItem()).toString(), count,
-                deposited.save(new net.minecraft.nbt.CompoundTag()));
-            held.shrink(count); data.changed();
-            send(player, "Wpłacono " + count + "× " + heldName(deposited) + " za " + credit + " żetonów. Saldo: " + game.player(player.getUUID()).chips + ".",
-                "Deposited " + count + "× " + heldName(deposited) + " for " + credit + " chips. Balance: " + game.player(player.getUUID()).chips + ".", ChatFormatting.GREEN);
-            PsychiatrykRoles.pokerAudit(player, "POKER_BUYIN", game.id() + " item=" + BuiltInRegistries.ITEM.getKey(deposited.getItem()) + " count=" + count + " credit=" + credit);
-            return credit;
+            game.buyIn(player.getUUID(), amount); data.debit(player.getUUID(), amount); data.changed();
+            send(player, "Przeniesiono " + amount + " żetonów na stół. Stół: " + game.player(player.getUUID()).chips + ", portfel: " + data.balance(player.getUUID()) + ".",
+                "Moved " + amount + " chips to the table. Table: " + game.player(player.getUUID()).chips + ", wallet: " + data.balance(player.getUUID()) + ".", ChatFormatting.GREEN);
+            PsychiatrykRoles.pokerAudit(player, "POKER_BUYIN", game.id() + " chips=" + amount); return amount;
         } catch (PokerGame.PokerException error) { sendError(player, error.code); return 0; }
     }
 
@@ -223,18 +277,36 @@ final class PokerCommands {
         PokerData data = PokerData.get(player.getServer()); PokerGame game = data.tableFor(player.getUUID());
         if (game == null) { sendError(player, "not-seated"); return 0; }
         try {
-            PokerGame.CashOut result = game.cashOut(player.getUUID()); data.changed();
-            for (PokerGame.EscrowItem returned : result.items()) {
-                ItemStack delivery = ItemStack.of(returned.stackTag()); delivery.setCount(returned.count());
-                if (!player.getInventory().add(delivery) && !delivery.isEmpty()) player.drop(delivery, false);
-            }
-            send(player, "Wypłacono przedmioty warte " + result.paid() + ". Pozostałe żetony: " + result.remaining() + ".",
-                "Returned escrow items worth " + result.paid() + ". Remaining chips: " + result.remaining() + ".", ChatFormatting.GREEN);
-            if (result.remaining() > 0) send(player,
-                "Brakuje odpowiedniego nominału w sejfie. Saldo jest zachowane; spróbuj ponownie po kolejnej wpłacie.",
-                "The vault lacks a suitable denomination. Your balance is preserved; try again after another deposit.", ChatFormatting.YELLOW);
-            PsychiatrykRoles.pokerAudit(player, "POKER_CASHOUT", game.id() + " paid=" + result.paid() + " remaining=" + result.remaining());
-            return result.paid();
+            int amount = game.cashOut(player.getUUID()); data.credit(player.getUUID(), amount); data.changed();
+            send(player, "Przeniesiono " + amount + " żetonów do portfela. Portfel: " + data.balance(player.getUUID()) + ".",
+                "Moved " + amount + " chips to your wallet. Wallet: " + data.balance(player.getUUID()) + ".", ChatFormatting.GREEN);
+            PsychiatrykRoles.pokerAudit(player, "POKER_CASHOUT", game.id() + " chips=" + amount); return amount;
+        } catch (PokerGame.PokerException error) { sendError(player, error.code); return 0; }
+    }
+
+    private static int addBots(ServerPlayer player, int count) {
+        PokerData data = PokerData.get(player.getServer()); PokerGame game = data.tableFor(player.getUUID());
+        if (game == null) { sendError(player, "not-seated"); return 0; }
+        if (!game.owner().equals(player.getUUID()) && !player.hasPermissions(4)) { sendError(player, "owner-only"); return 0; }
+        long cost = count * 100L; if (data.balance(player.getUUID()) < cost) { sendError(player, "wallet-insufficient"); return 0; }
+        try {
+            game.addBots(player.getUUID(), count, 100); data.debit(player.getUUID(), cost); data.changed();
+            broadcast(game, player.getServer(), "Dodano " + count + " botów za " + cost + " żetonów.",
+                "Added " + count + " bots for " + cost + " chips.", ChatFormatting.GREEN);
+            PsychiatrykRoles.pokerAudit(player, "POKER_BOTS_ADD", game.id() + " count=" + count + " chips=" + cost); return count;
+        } catch (PokerGame.PokerException error) { sendError(player, error.code); return 0; }
+    }
+
+    private static int removeBots(ServerPlayer player) {
+        PokerData data = PokerData.get(player.getServer()); PokerGame game = data.tableFor(player.getUUID());
+        if (game == null) { sendError(player, "not-seated"); return 0; }
+        if (!game.owner().equals(player.getUUID()) && !player.hasPermissions(4)) { sendError(player, "owner-only"); return 0; }
+        try {
+            int returned = game.removeBots(player.getUUID()); if (returned <= 0) { sendError(player, "no-bots"); return 0; }
+            data.credit(player.getUUID(), returned); data.changed();
+            send(player, "Usunięto boty; " + returned + " żetonów wróciło do portfela.",
+                "Removed bots; " + returned + " chips returned to your wallet.", ChatFormatting.GREEN);
+            PsychiatrykRoles.pokerAudit(player, "POKER_BOTS_REMOVE", game.id() + " chips=" + returned); return returned;
         } catch (PokerGame.PokerException error) { sendError(player, error.code); return 0; }
     }
 
@@ -243,8 +315,8 @@ final class PokerCommands {
         player.sendSystemMessage(Component.literal(en ? "POKER ITEM VALUES (per item)" : "WARTOŚCI POKEROWE (za sztukę)").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         PokerItemValues.all().entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).forEach(entry ->
             player.sendSystemMessage(Component.literal(entry.getKey() + " = " + entry.getValue()).withStyle(ChatFormatting.GRAY)));
-        send(player, "Minimalna pierwsza wpłata: 100. Przedmiotów spoza listy nie można wpłacać.",
-            "Minimum initial buy-in: 100. Unlisted items cannot be deposited.", ChatFormatting.YELLOW);
+        send(player, "Wymiana używa uproszczonych wartości w stylu ProjectE. Śmieci i przedmioty spoza listy mają wartość 0.",
+            "Exchange uses simplified ProjectE-style values. Trash and unlisted items are worth 0.", ChatFormatting.YELLOW);
         return PokerItemValues.all().size();
     }
 
@@ -269,18 +341,30 @@ final class PokerCommands {
     private static int adminDelete(CommandSourceStack source, String id) {
         PokerGame game = PokerData.get(source.getServer()).table(id);
         if (game == null) { source.sendFailure(Component.literal("Unknown table: " + id)); return 0; }
-        if (!game.canDelete()) { source.sendFailure(Component.literal("Table still has players, balances, or escrow; cash out and leave first.")); return 0; }
+        if (!game.canDelete()) { source.sendFailure(Component.literal("Table still has players; cash out/remove bots and leave first.")); return 0; }
         PokerData.get(source.getServer()).remove(id);
         source.sendSuccess(() -> Component.literal("Deleted poker table " + id).withStyle(ChatFormatting.RED), true);
         PsychiatrykRoles.pokerAudit(source.getServer(), source.getTextName(), "POKER_DELETE", id); return 1;
     }
 
     private static void publishAfterMutation(PokerGame game, MinecraftServer server) {
+        runBots(game, server);
         publishAutomaticFolds(game, server);
         if (game.phase() == PokerGame.Phase.WAITING && !game.lastResult().isEmpty()) {
             publishResult(game, server); game.clearLastResult();
         }
         broadcastStatus(game, server);
+    }
+
+    private static void runBots(PokerGame game, MinecraftServer server) {
+        Random random = new Random(game.handNumber() * 31L + game.pot() * 17L + game.currentBet());
+        int guard = 0;
+        while (game.phase() != PokerGame.Phase.WAITING && game.botTurn() && guard++ < 100) {
+            PokerGame.PlayerState bot = game.turnPlayer(); String action = game.actBot(random);
+            broadcast(game, server, bot.name + " wykonuje ruch: " + action + ".", bot.name + " acts: " + action + ".", ChatFormatting.GRAY);
+        }
+        if (guard >= 100) throw new IllegalStateException("Poker bot loop did not settle");
+        PokerData.get(server).changed();
     }
 
     private static void publishAutomaticFolds(PokerGame game, MinecraftServer server) {
@@ -304,9 +388,10 @@ final class PokerCommands {
         boolean en = english(player);
         player.sendSystemMessage(Component.literal("♠ " + game.id() + " | " + phaseName(game.phase(), en) + " | " + (en ? "pot " : "pula ") + game.pot()
             + (game.phase() == PokerGame.Phase.WAITING ? "" : " | " + (en ? "bet " : "zakład ") + game.currentBet())).withStyle(ChatFormatting.GOLD));
+        player.sendSystemMessage(Component.literal((en ? "Wallet: " : "Portfel: ") + PokerData.get(player.getServer()).balance(player.getUUID())).withStyle(ChatFormatting.YELLOW));
         player.sendSystemMessage(Component.literal((en ? "Board: " : "Stół: ") + cards(game.board())).withStyle(ChatFormatting.GREEN));
         for (PokerGame.PlayerState state : game.players()) {
-            String flags = (state.folded ? (en ? " folded" : " pas") : "") + (state.allIn ? " ALL-IN" : "") + (!state.connected ? (en ? " offline" : " offline") : "");
+            String flags = (state.bot ? " BOT" : "") + (state.folded ? (en ? " folded" : " pas") : "") + (state.allIn ? " ALL-IN" : "") + (!state.connected ? (en ? " offline" : " offline") : "");
             player.sendSystemMessage(Component.literal("- " + state.name + ": " + state.chips + " | " + (en ? "in hand " : "w rozdaniu ") + state.committedHand + flags)
                 .withStyle(state.id.equals(player.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.GRAY));
         }
@@ -360,9 +445,13 @@ final class PokerCommands {
             case "raise-not-reopened" -> new String[]{"Niepełny all-in nie otworzył ponownie możliwości podbicia; możesz sprawdzić lub spasować.", "The incomplete all-in did not reopen raising; you may call or fold."};
             case "already-all-in" -> new String[]{"Nie masz już żetonów do postawienia.", "You have no chips left to wager."};
             case "cashout-first" -> new String[]{"Najpierw wypłać żetony przez /poker cashout.", "Cash out your chips with /poker cashout first."};
-            case "hold-buyin-item" -> new String[]{"Trzymaj wpłacany przedmiot w głównej ręce (i podaj prawidłową liczbę).", "Hold the deposit item in your main hand (and use a valid count)."};
+            case "hold-exchange-item" -> new String[]{"Trzymaj wymieniany przedmiot w głównej ręce (i podaj prawidłową liczbę).", "Hold the exchange item in your main hand (and use a valid count)."};
             case "worthless-item" -> new String[]{"Ten przedmiot nie ma wartości pokerowej. Sprawdź /poker values.", "That item has no poker value. See /poker values."};
-            case "protected-item" -> new String[]{"Przedmiotów konsultanta ani przedmiotów zabezpieczonych nie można wpłacać.", "Consultant or protected items cannot be deposited."};
+            case "tagged-exchange-item" -> new String[]{"Można wymieniać tylko zwykłe, nieuszkodzone stosy bez nazwy, zaklęć i NBT.", "Only pristine ordinary stacks without names, enchantments, damage, or NBT can be exchanged."};
+            case "wallet-insufficient" -> new String[]{"Za mało żetonów w portfelu.", "Not enough chips in your wallet."};
+            case "below-minimum-buyin" -> new String[]{"Pierwszy buy-in musi wynosić co najmniej 100 żetonów.", "The initial buy-in must be at least 100 chips."};
+            case "bot-limit" -> new String[]{"Można mieć łącznie 1–4 boty i najwyżej 9 miejsc przy stole.", "A table may have 1–4 bots and at most 9 total seats."};
+            case "no-bots" -> new String[]{"Nie masz botów do usunięcia przy tym stole.", "You have no sponsored bots to remove at this table."};
             case "buyin-too-large" -> new String[]{"Ta wpłata jest zbyt duża.", "That buy-in is too large."};
             case "no-chips" -> new String[]{"Nie masz żetonów do wypłaty.", "You have no chips to cash out."};
             default -> new String[]{"Poker: błąd " + code, "Poker error: " + code};
@@ -387,5 +476,4 @@ final class PokerCommands {
         };
     }
 
-    private static String heldName(ItemStack stack) { return BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(); }
 }

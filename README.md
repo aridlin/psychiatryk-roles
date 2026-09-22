@@ -96,7 +96,10 @@ Typical session:
 ```text
 /poker create stol
 /poker join stol
-/poker buyin [count]
+/poker exchange in [count]
+/poker bank
+/poker buyin <chips>
+/poker bots add <1-4>
 /poker start
 /poker check
 /poker call
@@ -106,10 +109,13 @@ Typical session:
 /poker status
 /poker cards
 /poker cashout
+/poker exchange out <item> [count]
 /poker leave
 ```
 
-Hold an accepted item in the main hand before `buyin`; omitting `count` deposits the held stack. The minimum first buy-in is 100 chips and blinds are 10/20. Deposits are removed from inventory and stored with their complete NBT in a persistent table vault. Chips exist only in the server ledger, so they cannot be duplicated as items or moved through containers. `cashout` returns only real items already held in the vault. When available item denominations cannot exactly cover a balance, the unpaid remainder stays on that player's persistent balance for a later cash-out. A player must cash out before leaving.
+Poker uses a separate persistent chip wallet. `/poker exchange in [count]` consumes a pristine accepted stack from the main hand and credits its configured value. `/poker exchange out <item> [count]` debits that same value and creates ordinary fresh items. Named, enchanted, damaged, NBT-bearing, and consultant equipment cannot enter the exchange. `/poker buyin <chips>` moves wallet chips to the current table; `/poker cashout` moves the whole table stack back to the wallet. The minimum first table buy-in is 100 chips and blinds are 10/20. This is a deliberately simplified ProjectE-style value system: conversions conserve configured value while bulk trash remains excluded.
+
+For solo play, the table owner can use `/poker bots add <1-4>`. Each bot is funded with 100 chips taken from the owner's wallet, uses the normal validated turn/pot system, and plays automatically. `/poker bots remove` is available between hands and returns the sponsored bots' remaining chips to that owner. This keeps bot play value-backed. Bots and hands survive a process restart. Consultants can create, join, fund, and play tables through the same commands as everyone else; poker never grants world interaction permissions.
 
 Use `/poker values` for the authoritative in-game list. Common bulk items such as cobblestone and dirt are deliberately worth zero. Accepted per-item values are:
 
@@ -134,9 +140,9 @@ Use `/poker values` for the authoritative in-game list. Common bulk items such a
 | 18 / 9 | gold ingot / iron ingot |
 | 3 / 2 / 1 | amethyst shard / gold nugget / iron nugget |
 
-`/poker list` lists public tables and `/poker help` gives localized PL/EN instructions. Operators can run `/poker admin reset <table>` to cancel an active hand and refund every committed chip to its balance. `/poker admin delete <table>` refuses to delete a table until players, balances, and escrow are empty.
+`/poker list` lists public tables and `/poker help` gives localized PL/EN instructions. Operators can run `/poker admin reset <table>` to cancel an active hand and refund every committed chip to its table stack. `/poker admin delete <table>` refuses to delete a table until all seats have left.
 
-Tables, shuffled deck order, hole cards, board, turn state, commitments, balances, and exact escrow stacks persist in `psychiatryk_poker.dat`. A disconnected player automatically checks when no payment is owed and otherwise folds when their turn arrives. On process restart, persisted sessions are treated as offline; the first returning player triggers recovery until play reaches a connected seat or the hand settles. Consultant players use the same command-only UI, which grants no block, entity, container, or inventory-protection bypass. Consultant equipment and unbreakable protected items are rejected from buy-in.
+Wallets, tables, shuffled deck order, hole cards, board, turn state, commitments, table stacks, and bot sponsorship persist in `psychiatryk_poker.dat`. A disconnected player automatically checks when no payment is owed and otherwise folds when their turn arrives. On process restart, persisted human sessions are treated as offline while bots remain available; the first returning player triggers recovery until play reaches a connected seat or the hand settles.
 
 ## Permission items
 
@@ -305,7 +311,7 @@ build/libs/psychiatryk-roles-1.0.0.jar
 4. Start the server and confirm `Done` appears without a `psychiatryk_roles` load error.
 5. Verify `/help konsultant-item`, `/help przyjecie`, and `execute in psychiatryk_roles:konsultanci run time query daytime`.
 
-Persistent role, code, language, travel-position, audit-log, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`. Poker tables, hands, balances, and item escrow are stored separately in `psychiatryk_poker.dat`.
+Persistent role, code, language, travel-position, audit-log, and sleep-base data is stored in the overworld saved-data file `psychiatryk_roles.dat`. Poker wallets, tables, hands, table stacks, and bots are stored separately in `psychiatryk_poker.dat`.
 
 ## Safety notes
 

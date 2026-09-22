@@ -32,7 +32,6 @@ class PokerGameTest {
         while (game.phase() != PokerGame.Phase.WAITING) game.allIn(game.turnPlayer().id);
 
         assertEquals(300, game.players().stream().mapToInt(player -> player.chips).sum());
-        assertEquals(300, game.vaultValue());
         assertTrue(game.lastShowdown().stream().mapToInt(PokerGame.ShowdownEntry::payout).sum() > 0);
     }
 
@@ -51,7 +50,7 @@ class PokerGameTest {
     }
 
     @Test
-    void persistsActiveHandVaultAndDisconnectRecovery() {
+    void persistsActiveHandAndDisconnectRecovery() {
         PokerGame game = fundedGame();
         game.start(new Random(69));
         UUID disconnected = game.turnPlayer().id;
@@ -62,7 +61,6 @@ class PokerGameTest {
         PokerGame loaded = PokerGame.load(saved);
         assertEquals(game.phase(), loaded.phase());
         assertEquals(game.board(), loaded.board());
-        assertEquals(300, loaded.vaultValue());
         assertEquals(game.players().stream().mapToInt(player -> player.chips + player.committedHand).sum(),
             loaded.players().stream().mapToInt(player -> player.chips + player.committedHand).sum());
         assertTrue(loaded.players().stream().noneMatch(player -> player.connected));
@@ -72,16 +70,15 @@ class PokerGameTest {
     }
 
     @Test
-    void buyInRejectsTrashAndCashOutNeverMintsItems() {
-        PokerGame game = new PokerGame("vault", A); game.join(A, "A");
+    void requiresMinimumInitialBuyInAndCashOutReturnsTableStack() {
+        PokerGame game = new PokerGame("wallet", A); game.join(A, "A");
         assertEquals(0, PokerItemValues.value("minecraft:cobblestone"));
         assertTrue(PokerItemValues.value("minecraft:nautilus_shell") > 0);
-        assertThrows(PokerGame.PokerException.class, () -> game.buyIn(A, "minecraft:cobblestone", 64, stackTag("minecraft:cobblestone")));
-        game.buyIn(A, "minecraft:diamond", 1, stackTag("minecraft:diamond"));
-        PokerGame.CashOut out = game.cashOut(A);
-        assertEquals(100, out.paid()); assertEquals(0, out.remaining());
-        assertEquals(1, out.items().stream().mapToInt(PokerGame.EscrowItem::count).sum());
-        assertEquals(0, game.vaultValue());
+        PokerGame.PokerException error = assertThrows(PokerGame.PokerException.class, () -> game.buyIn(A, 60));
+        assertEquals("below-minimum-buyin", error.code);
+        game.buyIn(A, 100);
+        assertEquals(100, game.cashOut(A));
+        assertEquals(0, game.player(A).chips);
     }
 
     @Test
@@ -91,19 +88,29 @@ class PokerGameTest {
         game.reset();
         assertEquals(PokerGame.Phase.WAITING, game.phase());
         assertEquals(300, game.players().stream().mapToInt(player -> player.chips).sum());
-        assertEquals(300, game.vaultValue());
+        assertEquals(300, game.players().stream().mapToInt(player -> player.chips).sum());
+    }
+
+    @Test
+    void botsUseNormalTurnsPersistAndReturnTheirRemainingChips() {
+        PokerGame game = new PokerGame("solo", A); game.join(A, "A"); game.buyIn(A, 100);
+        game.addBots(A, 2, 100); assertEquals(2, game.botCount());
+        game.start(new Random(1337));
+        int guard = 0;
+        while (game.phase() != PokerGame.Phase.WAITING && guard++ < 200) {
+            if (game.botTurn()) game.actBot(new Random(guard));
+            else game.allIn(game.turnPlayer().id);
+        }
+        assertTrue(guard < 200);
+        PokerGame loaded = PokerGame.load(game.save()); assertEquals(2, loaded.botCount());
+        int before = loaded.players().stream().filter(player -> player.bot).mapToInt(player -> player.chips).sum();
+        assertEquals(before, loaded.removeBots(A)); assertEquals(0, loaded.botCount());
     }
 
     private static PokerGame fundedGame() {
         PokerGame game = new PokerGame("test", A); game.join(A, "A"); game.join(B, "B"); game.join(C, "C");
-        game.buyIn(A, "minecraft:diamond", 1, stackTag("minecraft:diamond"));
-        game.buyIn(B, "minecraft:diamond", 1, stackTag("minecraft:diamond"));
-        game.buyIn(C, "minecraft:diamond", 1, stackTag("minecraft:diamond"));
+        game.buyIn(A, 100); game.buyIn(B, 100); game.buyIn(C, 100);
         return game;
-    }
-
-    private static CompoundTag stackTag(String item) {
-        CompoundTag tag = new CompoundTag(); tag.putString("id", item); tag.putByte("Count", (byte) 1); return tag;
     }
 
     private static PokerHandEvaluator.HandValue value(int category, Integer... kickers) {

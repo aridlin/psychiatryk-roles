@@ -29,6 +29,8 @@ final class PokerGame {
         boolean folded;
         boolean allIn;
         boolean pendingLeave;
+        boolean bot;
+        UUID sponsor;
         int committedRound;
         int committedHand;
         final List<PokerCard> hole = new ArrayList<>(2);
@@ -42,14 +44,6 @@ final class PokerGame {
     }
 
     record ShowdownEntry(UUID player, PokerHandEvaluator.HandValue hand, int payout) {}
-    record EscrowItem(String itemId, int unitValue, int count, CompoundTag stackTag) {
-        EscrowItem {
-            if (unitValue <= 0 || count <= 0) throw new IllegalArgumentException("Invalid escrow item");
-            stackTag = stackTag.copy();
-        }
-        int totalValue() { return unitValue * count; }
-    }
-    record CashOut(List<EscrowItem> items, int paid, int remaining) {}
 
     private final String id;
     private final UUID owner;
@@ -59,7 +53,6 @@ final class PokerGame {
     private final List<PlayerState> players = new ArrayList<>();
     private final List<PokerCard> board = new ArrayList<>(5);
     private final List<PokerCard> deck = new ArrayList<>(52);
-    private final List<EscrowItem> vault = new ArrayList<>();
     private final Set<UUID> acted = new LinkedHashSet<>();
     private final Set<UUID> raiseClosedFor = new LinkedHashSet<>();
     private final List<ShowdownEntry> lastShowdown = new ArrayList<>();
@@ -92,14 +85,33 @@ final class PokerGame {
     int currentBet() { return currentBet; }
     long handNumber() { return handNumber; }
     int minimumBuyIn() { return minimumBuyIn; }
-    int vaultValue() { return vault.stream().mapToInt(EscrowItem::totalValue).sum(); }
-    boolean canDelete() { return phase == Phase.WAITING && players.isEmpty() && vault.isEmpty(); }
+    boolean canDelete() { return phase == Phase.WAITING && players.isEmpty(); }
     String lastResult() { return lastResult; }
     void clearLastResult() { lastResult = ""; lastShowdown.clear(); }
     List<ShowdownEntry> lastShowdown() { return List.copyOf(lastShowdown); }
     List<UUID> drainAutoFolded() { List<UUID> result = List.copyOf(lastAutoFolded); lastAutoFolded.clear(); return result; }
     PlayerState turnPlayer() { return turnIndex >= 0 && turnIndex < players.size() ? players.get(turnIndex) : null; }
     PlayerState player(UUID id) { return players.stream().filter(player -> player.id.equals(id)).findFirst().orElse(null); }
+    int botCount() { return (int) players.stream().filter(player -> player.bot).count(); }
+
+    void addBots(UUID sponsor, int count, int chipsEach) {
+        if (phase != Phase.WAITING) throw new PokerException("hand-active");
+        if (count < 1 || botCount() + count > 4 || players.size() + count > 9) throw new PokerException("bot-limit");
+        for (int i = 0; i < count; i++) {
+            int number = botCount() + 1;
+            UUID id = UUID.nameUUIDFromBytes(("psychiatryk-poker:" + this.id + ":bot:" + number).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            PlayerState bot = new PlayerState(id, "Bot " + number, chipsEach);
+            bot.bot = true; bot.sponsor = sponsor; bot.boughtIn = true; bot.connected = true;
+            players.add(bot);
+        }
+    }
+
+    int removeBots(UUID sponsor) {
+        if (phase != Phase.WAITING) throw new PokerException("hand-active");
+        int chips = players.stream().filter(player -> player.bot && sponsor.equals(player.sponsor)).mapToInt(player -> player.chips).sum();
+        players.removeIf(player -> player.bot && sponsor.equals(player.sponsor)); dealerIndex = -1;
+        return chips;
+    }
 
     void join(UUID playerId, String name) {
         PlayerState existing = player(playerId);
@@ -153,41 +165,43 @@ final class PokerGame {
             progress(Math.floorMod(turnIndex - 1, players.size()));
     }
 
-    int buyIn(UUID playerId, String itemId, int count, CompoundTag stackTag) {
-        if (phase != Phase.WAITING) throw new PokerException("hand-active");
-        PlayerState player = requirePlayer(playerId);
-        int unit = PokerItemValues.value(itemId);
-        if (unit <= 0 || count <= 0) throw new PokerException("worthless-item");
-        int credit;
-        try { credit = Math.multiplyExact(unit, count); }
-        catch (ArithmeticException error) { throw new PokerException("buyin-too-large"); }
-        if (player.chips > 10_000_000 - credit) throw new PokerException("buyin-too-large");
-        vault.add(new EscrowItem(itemId, unit, count, stackTag));
-        player.chips += credit;
-        if (player.chips >= minimumBuyIn) player.boughtIn = true;
-        return credit;
+    boolean botTurn() { return turnPlayer() != null && turnPlayer().bot; }
+
+    String actBot(Random random) {
+        PlayerState bot = turnPlayer();
+        if (bot == null || !bot.bot) throw new PokerException("not-bot-turn");
+        int owed = Math.max(0, currentBet - bot.committedRound);
+        int strength = bot.hole.stream().mapToInt(PokerCard::rank).max().orElse(2)
+            + (bot.hole.size() == 2 && bot.hole.get(0).rank() == bot.hole.get(1).rank() ? 6 : 0);
+        if (owed == 0) {
+            if (bot.chips > bigBlind * 3 && strength >= 13 && random.nextInt(4) == 0) {
+                int target = Math.min(bot.committedRound + bot.chips, currentBet + Math.max(lastRaise, bigBlind));
+                raiseTo(bot.id, target); return "raise " + target;
+            }
+            check(bot.id); return "check";
+        }
+        if (owed >= bot.chips) { if (strength >= 11 || random.nextInt(5) == 0) { allIn(bot.id); return "all-in"; } fold(bot.id); return "fold"; }
+        if (owed > Math.max(bigBlind * 4, bot.chips / 3) && strength < 12) { fold(bot.id); return "fold"; }
+        call(bot.id); return "call";
     }
 
-    CashOut cashOut(UUID playerId) {
+    void buyIn(UUID playerId, int amount) {
+        if (phase != Phase.WAITING) throw new PokerException("hand-active");
+        PlayerState player = requirePlayer(playerId);
+        if (amount <= 0 || player.chips > 10_000_000 - amount) throw new PokerException("buyin-too-large");
+        if (!player.boughtIn && player.chips + amount < minimumBuyIn) throw new PokerException("below-minimum-buyin");
+        player.chips += amount;
+        if (player.chips >= minimumBuyIn) player.boughtIn = true;
+    }
+
+    int cashOut(UUID playerId) {
         if (phase != Phase.WAITING) throw new PokerException("hand-active");
         PlayerState player = requirePlayer(playerId);
         if (player.chips <= 0) throw new PokerException("no-chips");
-        int remaining = player.chips;
-        List<EscrowItem> returned = new ArrayList<>();
-        List<EscrowItem> ordered = vault.stream()
-            .sorted(Comparator.comparingInt(EscrowItem::unitValue).reversed()).toList();
-        for (EscrowItem stack : ordered) {
-            int unit = stack.unitValue();
-            int count = Math.min(stack.count(), remaining / unit);
-            if (count <= 0) continue;
-            returned.add(new EscrowItem(stack.itemId(), unit, count, stack.stackTag()));
-            removeFromVault(stack, count);
-            remaining -= unit * count;
-        }
-        int paid = player.chips - remaining;
-        player.chips = remaining;
-        if (remaining == 0) player.boughtIn = false;
-        return new CashOut(List.copyOf(returned), paid, remaining);
+        int amount = player.chips;
+        player.chips = 0;
+        player.boughtIn = false;
+        return amount;
     }
 
     void reset() {
@@ -450,15 +464,12 @@ final class PokerGame {
         tag.putString("LastResult", lastResult);
         tag.putIntArray("Deck", deck.stream().mapToInt(PokerCard::id).toArray());
         tag.putIntArray("Board", board.stream().mapToInt(PokerCard::id).toArray());
-        ListTag vaultTags = new ListTag();
-        vault.forEach(stack -> { CompoundTag value = new CompoundTag(); value.putString("Item", stack.itemId());
-            value.putInt("Value", stack.unitValue()); value.putInt("Count", stack.count()); value.put("Stack", stack.stackTag().copy()); vaultTags.add(value); });
-        tag.put("Vault", vaultTags);
         ListTag playerTags = new ListTag();
         for (PlayerState player : players) {
             CompoundTag value = new CompoundTag(); value.putUUID("Id", player.id); value.putString("Name", player.name);
             value.putInt("Chips", player.chips); value.putBoolean("BoughtIn", player.boughtIn); value.putBoolean("Connected", player.connected); value.putBoolean("Folded", player.folded);
             value.putBoolean("AllIn", player.allIn); value.putBoolean("PendingLeave", player.pendingLeave);
+            value.putBoolean("Bot", player.bot); if (player.sponsor != null) value.putUUID("Sponsor", player.sponsor);
             value.putInt("CommittedRound", player.committedRound); value.putInt("CommittedHand", player.committedHand);
             value.putIntArray("Hole", player.hole.stream().mapToInt(PokerCard::id).toArray()); playerTags.add(value);
         }
@@ -476,16 +487,12 @@ final class PokerGame {
         game.currentBet = tag.getInt("CurrentBet"); game.lastRaise = tag.getInt("LastRaise"); game.handNumber = tag.getLong("HandNumber"); game.lastResult = tag.getString("LastResult");
         for (int id : tag.getIntArray("Deck")) game.deck.add(PokerCard.fromId(id));
         for (int id : tag.getIntArray("Board")) game.board.add(PokerCard.fromId(id));
-        for (Tag raw : tag.getList("Vault", Tag.TAG_COMPOUND)) {
-            CompoundTag value = (CompoundTag) raw; int canonical = PokerItemValues.value(value.getString("Item"));
-            if (canonical > 0 && value.getInt("Value") == canonical && value.getInt("Count") > 0
-                && value.getString("Item").equals(value.getCompound("Stack").getString("id")))
-                game.vault.add(new EscrowItem(value.getString("Item"), canonical, value.getInt("Count"), value.getCompound("Stack")));
-        }
         for (Tag raw : tag.getList("Players", Tag.TAG_COMPOUND)) {
             CompoundTag value = (CompoundTag) raw; PlayerState player = new PlayerState(value.getUUID("Id"), value.getString("Name"), value.getInt("Chips"));
             player.boughtIn = value.getBoolean("BoughtIn"); player.connected = false; player.folded = value.getBoolean("Folded"); player.allIn = value.getBoolean("AllIn");
             player.pendingLeave = value.getBoolean("PendingLeave"); player.committedRound = value.getInt("CommittedRound"); player.committedHand = value.getInt("CommittedHand");
+            player.bot = value.getBoolean("Bot"); if (value.hasUUID("Sponsor")) player.sponsor = value.getUUID("Sponsor");
+            if (player.bot) player.connected = true;
             for (int id : value.getIntArray("Hole")) player.hole.add(PokerCard.fromId(id)); game.players.add(player);
         }
         for (Tag raw : tag.getList("Acted", Tag.TAG_COMPOUND)) game.acted.add(((CompoundTag) raw).getUUID("Id"));
@@ -496,10 +503,4 @@ final class PokerGame {
         return game;
     }
 
-    private void removeFromVault(EscrowItem removed, int count) {
-        int index = vault.indexOf(removed);
-        if (index < 0 || count > removed.count()) throw new IllegalStateException("Poker vault underflow");
-        vault.remove(index);
-        if (count < removed.count()) vault.add(index, new EscrowItem(removed.itemId(), removed.unitValue(), removed.count() - count, removed.stackTag()));
-    }
 }

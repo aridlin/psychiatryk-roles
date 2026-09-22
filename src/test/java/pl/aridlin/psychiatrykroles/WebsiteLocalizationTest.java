@@ -52,13 +52,16 @@ class WebsiteLocalizationTest {
     }
 
     @Test
-    void pokerHasAVisibleLocalizedViewAndItemBackedRules() throws IOException {
+    void pokerHasAVisibleLocalizedViewWalletExchangeAndBots() throws IOException {
         String html = page();
         assertTrue(html.contains("data-view-link=\"poker\""));
         assertTrue(html.contains("data-view=\"poker\""));
         assertTrue(html.contains("'/poker" ) || html.contains("/poker buyin"));
         assertTrue(html.contains("muszle łodzika"));
         assertTrue(html.contains("nautilus shells"));
+        assertTrue(html.contains("/poker exchange in"));
+        assertTrue(html.contains("/poker bots add"));
+        assertTrue(html.contains("persistent chip wallet"));
         assertTrue(html.contains("['info','items','poker','generator']"));
     }
 }
