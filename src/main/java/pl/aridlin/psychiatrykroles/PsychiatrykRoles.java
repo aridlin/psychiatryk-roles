@@ -893,6 +893,12 @@ public final class PsychiatrykRoles {
             || owner.equals(stack.getTag().getString(DROPPED_ITEM_OWNER));
     }
 
+    private static boolean isOwnedDroppedEntity(ItemEntity item, Player player) {
+        return DroppedItemOwnership.isOwnedBy(item, player.getUUID())
+            || isOwnedImportedItem(item.getItem(), player)
+            || isOwnedLoot(item.getItem(), player);
+    }
+
     private static void clearTemporaryOwnership(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         if (tag == null) {
@@ -1018,7 +1024,7 @@ public final class PsychiatrykRoles {
             for (Entity entity : level.getAllEntities()) {
                 if (entity instanceof ItemEntity item
                     && item.isAlive()
-                    && (isOwnedImportedItem(item.getItem(), player) || isOwnedLoot(item.getItem(), player))) {
+                    && isOwnedDroppedEntity(item, player)) {
                     recalled.add(item);
                 }
             }
@@ -1032,11 +1038,11 @@ public final class PsychiatrykRoles {
             entity.discard();
             player.getInventory().add(moving);
             if (!moving.isEmpty()) {
-                moving.getOrCreateTag().putString(DROPPED_ITEM_OWNER, player.getUUID().toString());
                 ItemEntity overflow = new ItemEntity(
                     player.level(), player.getX(), player.getY() + 0.25D, player.getZ(), moving.copy()
                 );
                 overflow.setDefaultPickUpDelay();
+                DroppedItemOwnership.mark(overflow, player.getUUID());
                 player.level().addFreshEntity(overflow);
             }
             stacks++;
@@ -1911,7 +1917,7 @@ public final class PsychiatrykRoles {
         BlockDropKey key = new BlockDropKey(level.dimension(), item.blockPosition());
         PendingBlockDrop pending = PENDING_BLOCK_DROPS.get(key);
         if (pending != null && level.getGameTime() - pending.gameTime() <= 5) {
-            item.getItem().getOrCreateTag().putString(MINE_LOOT_OWNER, pending.owner().toString());
+            DroppedItemOwnership.mark(item, pending.owner());
         }
     }
 
@@ -2013,13 +2019,16 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event) {
+        ItemStack stack = event.getItem().getItem();
+        boolean owned = isOwnedDroppedEntity(event.getItem(), event.getEntity());
+        if (owned && (isOwnedImportedItem(stack, event.getEntity()) || isOwnedLoot(stack, event.getEntity()))) {
+            clearTemporaryOwnership(stack);
+        }
         if (isRestrictedConsultant(event.getEntity())) {
             if (hasPermission(event.getEntity(), "pickup")) {
                 return;
             }
-            ItemStack stack = event.getItem().getItem();
-            if (isOwnedImportedItem(stack, event.getEntity()) || isOwnedLoot(stack, event.getEntity())) {
-                clearTemporaryOwnership(stack);
+            if (owned) {
                 return;
             } else if (isSpruceSignItem(stack)) {
                 makeSpruceSignsPlaceable(stack, event.getEntity());
@@ -2060,8 +2069,7 @@ public final class PsychiatrykRoles {
         if (event.getEntity() instanceof Mob
             && event.getSource().getEntity() instanceof Player killer
             && (isConsultant(killer) || hasCleanupBag(killer))) {
-            String owner = killer.getUUID().toString();
-            event.getDrops().forEach(item -> item.getItem().getOrCreateTag().putString(KILL_LOOT_OWNER, owner));
+            event.getDrops().forEach(item -> DroppedItemOwnership.mark(item, killer.getUUID()));
         }
         if (event.getEntity() instanceof Player player && isConsultant(player)) {
             event.getDrops().removeIf(item -> isConsultantEquipment(item.getItem()));
@@ -2086,9 +2094,7 @@ public final class PsychiatrykRoles {
             event.getPlayer().inventoryMenu.broadcastChanges();
             event.setCanceled(true);
         } else if (isConsultant(event.getPlayer()) || hasCleanupBag(event.getPlayer())) {
-            event.getEntity().getItem().getOrCreateTag().putString(
-                DROPPED_ITEM_OWNER, event.getPlayer().getUUID().toString()
-            );
+            DroppedItemOwnership.mark(event.getEntity(), event.getPlayer().getUUID());
         }
     }
 

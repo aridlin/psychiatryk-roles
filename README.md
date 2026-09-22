@@ -33,6 +33,8 @@ In the normal server worlds a consultant:
 - may drop ordinary items, then recover those same dropped stacks;
 - cannot drop or deposit protected consultant equipment.
 
+Temporary ownership for ordinary tossed items, mining drops, and mob loot is stored on the dropped `ItemEntity`, including Minecraft's native owner UUID, rather than inside the `ItemStack` NBT. Drops belonging to the same player can merge in the world, different owners remain separated, and pickup preserves the item's original NBT so it stacks normally in inventory. Legacy stack ownership markers are still recognized and removed when encountered.
+
 ### Pacjent / Patient
 
 Patients use normal Survival gameplay. The known legacy patient accounts remain patients. A consultant becomes a patient by redeeming a persistent, one-time admission code with `/przyjecie`.
