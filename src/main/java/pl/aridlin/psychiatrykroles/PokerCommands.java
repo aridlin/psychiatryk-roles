@@ -34,7 +34,9 @@ final class PokerCommands {
             .then(Commands.literal("gui")
                 .executes(context -> openGui(context.getSource().getPlayerOrException()))
                 .then(Commands.literal("item")
-                    .executes(context -> giveGuiItem(context.getSource().getPlayerOrException()))))
+                    .executes(context -> giveGuiItem(context.getSource().getPlayerOrException()))
+                    .then(Commands.argument("player", StringArgumentType.word()).requires(source -> source.hasPermission(4))
+                        .executes(context -> deliverGuiItem(context.getSource(), StringArgumentType.getString(context, "player"))))))
             .then(Commands.literal("list").executes(context -> list(context.getSource())))
             .then(Commands.literal("create").then(Commands.argument("table", StringArgumentType.word())
                 .executes(context -> create(context.getSource().getPlayerOrException(), StringArgumentType.getString(context, "table")))))
@@ -79,6 +81,9 @@ final class PokerCommands {
     }
 
     static void onLogin(ServerPlayer player) {
+        PokerData deliveries = PokerData.get(player.getServer());
+        if (deliveries.hasPendingGuiItem(player.getUUID()) && giveGuiItem(player) == 1)
+            deliveries.deliveredGuiItem(player.getUUID());
         PokerGame game = PokerData.get(player.getServer()).tableFor(player.getUUID());
         if (game == null) return;
         game.reconnect(player.getUUID(), player.getGameProfile().getName());
@@ -103,7 +108,7 @@ final class PokerCommands {
 
     private static int help(ServerPlayer player) {
         boolean en = english(player);
-        player.sendSystemMessage(Component.literal(en ? "TEXAS HOLD'EM — COMMANDS" : "TEXAS HOLD'EM — KOMENDY").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+        PokerActivity.send(player, Component.literal(en ? "TEXAS HOLD'EM — COMMANDS" : "TEXAS HOLD'EM — KOMENDY").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         String[] lines = en ? new String[] {
             "/poker gui | gui item | list | create <table> | join <table> | leave",
             "/poker bank | exchange in [count] | exchange out <item> [count] | values",
@@ -123,7 +128,7 @@ final class PokerCommands {
             "Boty są darmowymi miejscami kasyna. Żetonów kasyna nie można wypłacić, więc boty nie tworzą wartości przedmiotów.",
             "Od 2 do 9 miejsc. Konsultanci mogą tworzyć stoły i grać; poker nie daje uprawnień w świecie."
         };
-        for (String line : lines) player.sendSystemMessage(Component.literal(line).withStyle(ChatFormatting.GRAY));
+        for (String line : lines) PokerActivity.send(player, Component.literal(line).withStyle(ChatFormatting.GRAY));
         return 1;
     }
 
@@ -142,6 +147,28 @@ final class PokerCommands {
 
     static boolean isGuiItem(ItemStack stack) {
         return stack.is(Items.CLOCK) && stack.hasTag() && stack.getTag().getBoolean(GUI_ITEM_MARKER);
+    }
+
+    private static int deliverGuiItem(CommandSourceStack source, String name) {
+        ServerPlayer online = source.getServer().getPlayerList().getPlayerByName(name);
+        var profile = online == null ? source.getServer().getProfileCache().get(name)
+            : java.util.Optional.of(online.getGameProfile());
+        if (profile.isEmpty()) {
+            source.sendFailure(Component.literal("Unknown player: " + name));
+            return 0;
+        }
+        if (online != null && giveGuiItem(online) == 1) {
+            source.sendSuccess(() -> Component.literal("Poker item delivered to " + name), true);
+        } else {
+            PokerData.get(source.getServer()).queueGuiItem(profile.get().getId());
+            source.sendSuccess(() -> Component.literal("Poker item queued for " + name + " on next login with inventory space."), true);
+        }
+        return 1;
+    }
+
+    static void localizeGuiItem(ItemStack stack, boolean en) {
+        stack.setHoverName(Component.literal(en ? "Poker menu — right-click" : "Menu pokera — kliknij PPM")
+            .withStyle(ChatFormatting.GOLD));
     }
 
     private static int giveGuiItem(ServerPlayer player) {
@@ -385,9 +412,9 @@ final class PokerCommands {
 
     private static int values(ServerPlayer player) {
         boolean en = english(player);
-        player.sendSystemMessage(Component.literal(en ? "POKER ITEM VALUES (per item)" : "WARTOŚCI POKEROWE (za sztukę)").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+        PokerActivity.send(player, Component.literal(en ? "POKER ITEM VALUES (per item)" : "WARTOŚCI POKEROWE (za sztukę)").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         PokerItemValues.all().entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).forEach(entry ->
-            player.sendSystemMessage(Component.literal(entry.getKey() + " = " + entry.getValue()
+            PokerActivity.send(player, Component.literal(entry.getKey() + " = " + entry.getValue()
                 + (PokerItemValues.canExchangeOut(entry.getKey()) ? (en ? " [buyable]" : " [do kupienia]") : ""))
                 .withStyle(ChatFormatting.GRAY)));
         send(player, "Wymiana używa uproszczonych wartości w stylu ProjectE. Śmieci i przedmioty spoza listy mają wartość 0.",
@@ -463,17 +490,17 @@ final class PokerCommands {
 
     private static void sendStatus(ServerPlayer player, PokerGame game) {
         boolean en = english(player);
-        player.sendSystemMessage(Component.literal("♠ " + game.id() + " | " + phaseName(game.phase(), en) + " | " + (en ? "pot " : "pula ") + game.pot()
+        PokerActivity.send(player, Component.literal("♠ " + game.id() + " | " + phaseName(game.phase(), en) + " | " + (en ? "pot " : "pula ") + game.pot()
             + (game.phase() == PokerGame.Phase.WAITING ? "" : " | " + (en ? "bet " : "zakład ") + game.currentBet())).withStyle(ChatFormatting.GOLD));
-        player.sendSystemMessage(Component.literal((en ? "Wallet: " : "Portfel: ") + PokerData.get(player.getServer()).balance(player.getUUID())).withStyle(ChatFormatting.YELLOW));
-        player.sendSystemMessage(Component.literal((en ? "Board: " : "Stół: ") + cards(game.board())).withStyle(ChatFormatting.GREEN));
+        PokerActivity.send(player, Component.literal((en ? "Wallet: " : "Portfel: ") + PokerData.get(player.getServer()).balance(player.getUUID())).withStyle(ChatFormatting.YELLOW));
+        PokerActivity.send(player, Component.literal((en ? "Board: " : "Stół: ") + cards(game.board())).withStyle(ChatFormatting.GREEN));
         for (PokerGame.PlayerState state : game.players()) {
             String flags = (state.bot ? " BOT" : "") + (state.folded ? (en ? " folded" : " pas") : "") + (state.allIn ? " ALL-IN" : "") + (!state.connected ? (en ? " offline" : " offline") : "");
-            player.sendSystemMessage(Component.literal("- " + state.name + ": " + state.chips + " | " + (en ? "in hand " : "w rozdaniu ") + state.committedHand + flags)
+            PokerActivity.send(player, Component.literal("- " + state.name + ": " + state.chips + " | " + (en ? "in hand " : "w rozdaniu ") + state.committedHand + flags)
                 .withStyle(state.id.equals(player.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.GRAY));
         }
         PokerGame.PlayerState turn = game.turnPlayer();
-        if (turn != null) player.sendSystemMessage(Component.literal((en ? "Turn: " : "Ruch: ") + turn.name).withStyle(ChatFormatting.YELLOW));
+        if (turn != null) PokerActivity.send(player, Component.literal((en ? "Turn: " : "Ruch: ") + turn.name).withStyle(ChatFormatting.YELLOW));
     }
 
     private static void broadcastStatus(PokerGame game, MinecraftServer server) {
@@ -496,9 +523,9 @@ final class PokerCommands {
         }
     }
 
-    private static boolean english(ServerPlayer player) { return RoleData.get(player.getServer()).isEnglish(player.getUUID()); }
+    private static boolean english(ServerPlayer player) { return PsychiatrykRoles.isEnglish(player); }
     private static void send(ServerPlayer player, String polish, String english, ChatFormatting color) {
-        player.sendSystemMessage(Component.literal(english(player) ? english : polish).withStyle(color));
+        PokerActivity.send(player, Component.literal(english(player) ? english : polish).withStyle(color));
     }
 
     private static void sendError(ServerPlayer player, String code) {

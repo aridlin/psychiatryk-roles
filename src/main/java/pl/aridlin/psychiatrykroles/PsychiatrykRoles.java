@@ -243,6 +243,8 @@ public final class PsychiatrykRoles {
     public PsychiatrykRoles() {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new VoidDoors());
+        MinecraftForge.EVENT_BUS.register(new RestartManager());
+        MinecraftForge.EVENT_BUS.register(new PokerActivity());
     }
 
     private static boolean isOperator(ServerPlayer player) {
@@ -291,7 +293,7 @@ public final class PsychiatrykRoles {
         return isConsultant(player) && !isFreedomDimension(player);
     }
 
-    private static boolean isEnglish(Player player) {
+    static boolean isEnglish(Player player) {
         if (!(player instanceof ServerPlayer serverPlayer) || serverPlayer.getServer() == null) {
             return false;
         }
@@ -565,6 +567,14 @@ public final class PsychiatrykRoles {
     }
 
     private static void applyLocalizedPresentation(ItemStack stack, boolean en) {
+        if (PokerCommands.isGuiItem(stack)) {
+            PokerCommands.localizeGuiItem(stack, en);
+            return;
+        }
+        if (VoidDoors.isVoidDoor(stack)) {
+            VoidDoors.localize(stack, en);
+            return;
+        }
         if (!isConsultantEquipment(stack)) {
             return;
         }
@@ -744,7 +754,7 @@ public final class PsychiatrykRoles {
     }
 
     private static ItemStack localizedView(ItemStack original, UUID viewerId) {
-        if (!isConsultantEquipment(original)) {
+        if (!isConsultantEquipment(original) && !VoidDoors.isVoidDoor(original) && !PokerCommands.isGuiItem(original)) {
             return original;
         }
         ItemStack localized = original.copy();
@@ -788,16 +798,15 @@ public final class PsychiatrykRoles {
             if (channel.pipeline().get(LOCALIZATION_HANDLER) != null) {
                 return;
             }
-            channel.pipeline().addBefore("encoder", LOCALIZATION_HANDLER, new ChannelDuplexHandler() {
-                @Override
-                public void write(ChannelHandlerContext context, Object message, ChannelPromise promise) throws Exception {
-                    super.write(context, localizeOutboundPacket(message, viewerId), promise);
-                }
-            });
+            addLocalizationHandler(channel.pipeline(), viewerId);
             if (player.getServer() != null) {
                 player.getServer().execute(() -> refreshLocalizedInventory(player));
             }
         });
+    }
+
+    static void addLocalizationHandler(io.netty.channel.ChannelPipeline pipeline, UUID viewerId) {
+        PacketLocalization.install(pipeline, LOCALIZATION_HANDLER, message -> localizeOutboundPacket(message, viewerId));
     }
 
     private static void removeLocalizationHandler(ServerPlayer player) {

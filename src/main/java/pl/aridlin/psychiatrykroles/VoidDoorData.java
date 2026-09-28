@@ -32,8 +32,7 @@ final class VoidDoorData extends SavedData {
                 UUID pair = UUID.fromString(entry.getString("Pair"));
                 String dimension = entry.getString("Dimension");
                 if (ResourceLocation.tryParse(dimension) == null) continue;
-                List<DoorPosition> positions = data.doors.computeIfAbsent(pair, ignored -> new ArrayList<>());
-                if (positions.size() < 2) positions.add(new DoorPosition(dimension,
+                data.addDoor(pair, new DoorPosition(dimension,
                     new BlockPos(entry.getInt("X"), entry.getInt("Y"), entry.getInt("Z"))));
             } catch (IllegalArgumentException ignored) {
             }
@@ -42,11 +41,28 @@ final class VoidDoorData extends SavedData {
     }
 
     boolean addDoor(UUID pair, DoorPosition position) {
+        if (pairAt(position.dimension(), position.pos()) != null) return false;
         List<DoorPosition> positions = doors.computeIfAbsent(pair, ignored -> new ArrayList<>());
         if (positions.contains(position) || positions.size() >= 2) return false;
         positions.add(position);
         setDirty();
         return true;
+    }
+
+    UUID pairAt(String dimension, BlockPos pos) {
+        DoorPosition position = new DoorPosition(dimension, pos);
+        for (var entry : doors.entrySet()) {
+            if (entry.getValue().contains(position)) return entry.getKey();
+        }
+        return null;
+    }
+
+    List<DoorPosition> positions() {
+        return doors.values().stream().flatMap(List::stream).toList();
+    }
+
+    boolean canPlace(UUID pair) {
+        return doors.getOrDefault(pair, List.of()).size() < 2;
     }
 
     DoorPosition partner(String dimension, BlockPos pos) {

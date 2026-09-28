@@ -72,7 +72,7 @@ final class PokerMenu extends ChestMenu {
 
     void refresh() {
         display.clearContent();
-        boolean en = RoleData.get(viewer.getServer()).isEnglish(viewer.getUUID());
+        boolean en = PsychiatrykRoles.isEnglish(viewer);
         PokerData data = PokerData.get(viewer.getServer());
         PokerGame game = data.tableFor(viewer.getUUID());
         display.setItem(53, icon(Items.BARRIER, ChatFormatting.RED + (en ? "Close" : "Zamknij")));
@@ -84,11 +84,23 @@ final class PokerMenu extends ChestMenu {
             display.setItem(46, icon(Items.EMERALD, ChatFormatting.GREEN
                 + (en ? "Open item exchange" : "Otwórz wymianę przedmiotów")));
         }
+        display.setItem(0, activityIcon(en));
         lastState = stateKey();
         super.broadcastChanges();
     }
 
     private String stateKey() {
+        return PsychiatrykRoles.isEnglish(viewer) + ":" + PokerActivity.recent(viewer.getUUID()).hashCode()
+            + ":" + animationFrame() + ":" + gameStateKey();
+    }
+
+    private int animationFrame() {
+        PokerGame game = PokerData.get(viewer.getServer()).tableFor(viewer.getUUID());
+        return !exchangeScreen && game != null && game.turnPlayer() != null
+            ? viewer.getServer().getTickCount() / 10 % 2 : 0;
+    }
+
+    private String gameStateKey() {
         PokerData data = PokerData.get(viewer.getServer()); PokerGame game = data.tableFor(viewer.getUUID());
         if (exchangeScreen) return "exchange:" + data.balance(viewer.getUUID()) + ':'
             + BuiltInRegistries.ITEM.getKey(viewer.getMainHandItem().getItem()) + ':'
@@ -184,16 +196,60 @@ final class PokerMenu extends ChestMenu {
             display.setItem(32, icon(Items.RED_DYE, ChatFormatting.RED + (en ? "Fold" : "Pas")));
         }
 
+        PokerGame.PlayerState turn = game.turnPlayer();
         int seatSlot = 36;
         for (PokerGame.PlayerState seat : game.players()) {
             String flags = (seat.bot ? " [BOT]" : "") + (seat.folded ? (en ? " folded" : " pas") : "") + (seat.allIn ? " ALL-IN" : "");
-            display.setItem(seatSlot++, icon(seat.id.equals(viewer.getUUID()) ? Items.PLAYER_HEAD : Items.ARMOR_STAND,
-                (seat.id.equals(viewer.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.WHITE) + seat.name
-                    + ChatFormatting.GRAY + " | " + seat.chips + " | " + seat.committedHand + flags));
+            boolean acting = turn != null && seat.id.equals(turn.id);
+            ItemStack seatIcon = icon(acting ? Items.GOLDEN_HELMET : Items.PLAYER_HEAD,
+                (acting ? ChatFormatting.GOLD : seat.id.equals(viewer.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.WHITE)
+                    + (acting ? "▶ " : "") + seat.name
+                    + ChatFormatting.GRAY + " | " + seat.chips + " | " + seat.committedHand + flags);
+            if (acting) {
+                lore(seatIcon, List.of(Component.literal(en ? "Acting now — waiting for this player." : "Teraz gra — czekamy na ten ruch.")
+                    .withStyle(ChatFormatting.YELLOW)));
+                if (animationFrame() == 0) {
+                    seatIcon.enchant(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING, 1);
+                    seatIcon.getOrCreateTag().putInt("HideFlags", 1);
+                }
+            }
+            display.setItem(seatSlot++, seatIcon);
             if (seatSlot > 44) break;
         }
-        PokerGame.PlayerState turn = game.turnPlayer();
-        if (turn != null) display.setItem(49, icon(Items.CLOCK, ChatFormatting.YELLOW + (en ? "Turn: " : "Ruch: ") + turn.name));
+        if (turn != null) {
+            display.setItem(49, icon(Items.GOLDEN_HELMET, ChatFormatting.YELLOW + (en ? "Turn: " : "Ruch: ") + turn.name));
+            Item pulse = animationFrame() == 0 ? Items.YELLOW_STAINED_GLASS_PANE : Items.ORANGE_STAINED_GLASS_PANE;
+            for (int slot : new int[] {48, 50}) display.setItem(slot, icon(pulse,
+                ChatFormatting.GOLD + (turn.id.equals(viewer.getUUID()) ? (en ? "Your turn!" : "Twój ruch!") : (en ? "Waiting for " : "Czekamy na ") + turn.name)));
+        }
+    }
+
+    private ItemStack activityIcon(boolean en) {
+        ItemStack item = icon(Items.WRITABLE_BOOK, ChatFormatting.AQUA + (en ? "Recent poker messages" : "Ostatnie wiadomości pokera"));
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.literal(en ? "Newest messages at the bottom. Help: /poker help" : "Najnowsze na dole. Pomoc: /poker help").withStyle(ChatFormatting.DARK_GRAY));
+        List<Component> recent = PokerActivity.recent(viewer.getUUID());
+        if (recent.isEmpty()) lines.add(Component.literal(en ? "No messages yet." : "Brak wiadomości."));
+        // Short lore lines keep long status messages inside the screen.
+        for (Component message : recent) {
+            String text = message.getString();
+            while (text.length() > 60) {
+                int split = text.lastIndexOf(' ', 60);
+                if (split < 20) split = 60;
+                lines.add(Component.literal(text.substring(0, split)).setStyle(message.getStyle()));
+                text = text.substring(split).stripLeading();
+            }
+            lines.add(Component.literal(text).setStyle(message.getStyle()));
+        }
+        if (lines.size() > 19) lines = new ArrayList<>(lines.subList(lines.size() - 19, lines.size()));
+        lore(item, lines);
+        return item;
+    }
+
+    private static void lore(ItemStack item, List<Component> lines) {
+        net.minecraft.nbt.ListTag tag = new net.minecraft.nbt.ListTag();
+        for (Component line : lines) tag.add(net.minecraft.nbt.StringTag.valueOf(Component.Serializer.toJson(line)));
+        item.getOrCreateTagElement("display").put("Lore", tag);
     }
 
     private void fillBorders(boolean en) {

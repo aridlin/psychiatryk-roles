@@ -107,6 +107,9 @@ Player redemption:
 
 ## Texas Hold'em poker
 
+Craft the poker menu clock from **one clock + one paper** in any crafting slots, or use `/poker gui item`. Operators/RCON can use `/poker gui item <player>`; offline deliveries are saved until the next login with free inventory space. The active seat wears a pulsing golden helmet, and the top-left book contains the viewer's latest poker chat messages. Private messages stay private to that viewer.
+
+
 The mod includes a complete server-authoritative multiplayer poker loop presented through vanilla chat. It requires no additional client mod. Tables support two to nine funded players, dealer/blind rotation, preflop/flop/turn/river betting, check, call, total-bet raise, fold, all-in, side pots, tied pots with deterministic odd-chip assignment, and seven-card showdown evaluation.
 
 Typical session:
@@ -271,7 +274,7 @@ The **Mirror of Returning** is an ordinary echo shard produced from one glass bl
 
 ### Void Door
 
-Craft two linked oak doors with planks and one ender pearl:
+Craft two linked dark oak doors with planks and one ender pearl:
 
 ```text
 wood  wood  empty
@@ -279,7 +282,15 @@ wood  pearl empty
 wood  wood  empty
 ```
 
-The crafted pair shares a unique link. Place both doors, open one, and walk into it to arrive just beyond the other door, including across dimensions. The link is saved with the world and is removed when either door is broken. Ordinary oak doors are unaffected.
+Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open both, and cross the black plane to teleport across dimensions. Closed doors do not teleport. Remote chunks are loaded on demand; obstructed exits refuse the teleport.
+
+The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane uses two vanilla text-display backgrounds, so no client resource pack is needed.
+
+### Scheduled restarts
+
+Operators and RCON can use `/restartin 5m`, `/restartin 1h30m`, `/restartin status`, and `/restartin cancel`. Durations range from 1 second to 30 days. Players receive localized titles and chat notices immediately, then at applicable milestones (including 5m, 1m, 30s, 10s, and 5s). Countdown timing uses elapsed wall time, so low TPS does not stretch it. Joining players see the current countdown.
+
+At zero, the server writes its timing marker, saves and stops cleanly. **The hosting supervisor must automatically relaunch the server after `stop`** (as on the existing deployment); this mod does not spawn a second JVM. The next fully started Forge server records downtime in `world/data/psychiatryk_restart_history.json`. The ETA uses the median of the last five valid restarts. No ETA is invented before the first measured restart. Offline intervals over 24 hours are excluded.
 
 Consultants remain in Survival and have unrestricted building, combat, containers, vehicles, item pickup, and ordinary item dropping there. Protected consultant equipment remains controlled.
 

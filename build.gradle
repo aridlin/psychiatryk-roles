@@ -45,3 +45,32 @@ tasks.named('jar', Jar) {
     }
     finalizedBy 'reobfJar'
 }
+
+// Isolated local Forge smoke server; never points at the production world.
+minecraft.runs {
+    server {
+        workingDirectory project.file('run-smoke')
+        args '--nogui'
+        mods { psychiatryk_roles { source sourceSets.main } }
+    }
+}
+
+sourceSets {
+    gameTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations {
+    gameTestImplementation.extendsFrom implementation
+    gameTestRuntimeOnly.extendsFrom runtimeOnly
+}
+minecraft.runs {
+    gameTestServer {
+        jvmArgs '-Xms256m', '-Xmx1G', '-XX:ActiveProcessorCount=2'
+        workingDirectory project.file('run-gametest')
+        property 'forge.enabledGameTestNamespaces', 'psychiatryk_roles'
+        args '--mixin.config=psychiatryk_roles.mixins.json'
+        mods { psychiatryk_roles { source sourceSets.main; source sourceSets.gameTest } }
+    }
+}

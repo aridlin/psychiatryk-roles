@@ -16,6 +16,8 @@ final class PokerData extends SavedData {
     private final Map<String, PokerGame> tables = new LinkedHashMap<>();
     private final Map<UUID, Long> wallets = new LinkedHashMap<>();
 
+    private final java.util.Set<UUID> pendingGuiItems = new java.util.HashSet<>();
+
     static PokerData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(PokerData::load, PokerData::new, FILE_NAME);
     }
@@ -30,6 +32,10 @@ final class PokerData extends SavedData {
             CompoundTag value = (CompoundTag) raw;
             if (value.hasUUID("Player") && value.getLong("Chips") > 0)
                 data.wallets.put(value.getUUID("Player"), value.getLong("Chips"));
+        }
+        for (Tag raw : tag.getList("PendingGuiItems", Tag.TAG_STRING)) {
+            try { data.pendingGuiItems.add(UUID.fromString(raw.getAsString())); }
+            catch (IllegalArgumentException ignored) { }
         }
         return data;
     }
@@ -71,6 +77,10 @@ final class PokerData extends SavedData {
         return removed;
     }
 
+    void queueGuiItem(UUID player) { pendingGuiItems.add(player); setDirty(); }
+    boolean hasPendingGuiItem(UUID player) { return pendingGuiItems.contains(player); }
+    void deliveredGuiItem(UUID player) { pendingGuiItems.remove(player); setDirty(); }
+
     void changed() { setDirty(); }
 
     @Override public CompoundTag save(CompoundTag tag) {
@@ -81,6 +91,9 @@ final class PokerData extends SavedData {
         wallets.forEach((player, chips) -> { CompoundTag value = new CompoundTag(); value.putUUID("Player", player);
             value.putLong("Chips", chips); walletTags.add(value); });
         tag.put("Wallets", walletTags);
+        ListTag deliveries = new ListTag();
+        pendingGuiItems.forEach(id -> deliveries.add(net.minecraft.nbt.StringTag.valueOf(id.toString())));
+        tag.put("PendingGuiItems", deliveries);
         return tag;
     }
 }
