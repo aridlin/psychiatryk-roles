@@ -14,6 +14,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.RegisterCommandsEvent;
 
 import java.util.ArrayList;
@@ -23,13 +24,17 @@ import java.util.Random;
 import java.util.UUID;
 
 final class PokerCommands {
+    private static final String GUI_ITEM_MARKER = "psychiatrykPokerMenu";
     private PokerCommands() {}
 
     static void register(RegisterCommandsEvent event) {
         event.getDispatcher().register(Commands.literal("poker")
             .executes(context -> help(context.getSource().getPlayerOrException()))
             .then(Commands.literal("help").executes(context -> help(context.getSource().getPlayerOrException())))
-            .then(Commands.literal("gui").executes(context -> openGui(context.getSource().getPlayerOrException())))
+            .then(Commands.literal("gui")
+                .executes(context -> openGui(context.getSource().getPlayerOrException()))
+                .then(Commands.literal("item")
+                    .executes(context -> giveGuiItem(context.getSource().getPlayerOrException()))))
             .then(Commands.literal("list").executes(context -> list(context.getSource())))
             .then(Commands.literal("create").then(Commands.argument("table", StringArgumentType.word())
                 .executes(context -> create(context.getSource().getPlayerOrException(), StringArgumentType.getString(context, "table")))))
@@ -49,7 +54,7 @@ final class PokerCommands {
                     .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
                         .executes(context -> exchangeIn(context.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(context, "count")))))
                 .then(Commands.literal("out").then(Commands.argument("item", ResourceLocationArgument.id())
-                    .suggests((context, builder) -> SharedSuggestionProvider.suggest(PokerItemValues.all().keySet(), builder))
+                    .suggests((context, builder) -> SharedSuggestionProvider.suggest(PokerItemValues.exchangeOutItems().keySet(), builder))
                     .executes(context -> exchangeOut(context.getSource().getPlayerOrException(), ResourceLocationArgument.getId(context, "item"), 1))
                     .then(Commands.argument("count", IntegerArgumentType.integer(1, 2304))
                         .executes(context -> exchangeOut(context.getSource().getPlayerOrException(), ResourceLocationArgument.getId(context, "item"), IntegerArgumentType.getInteger(context, "count")))))))
@@ -100,7 +105,7 @@ final class PokerCommands {
         boolean en = english(player);
         player.sendSystemMessage(Component.literal(en ? "TEXAS HOLD'EM — COMMANDS" : "TEXAS HOLD'EM — KOMENDY").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         String[] lines = en ? new String[] {
-            "/poker list | create <table> | join <table> | leave",
+            "/poker gui | gui item | list | create <table> | join <table> | leave",
             "/poker bank | exchange in [count] | exchange out <item> [count] | values",
             "/poker buyin <chips> | cashout | bots add <1-4> | bots remove",
             "/poker start | status | cards | check | call | raise <total> | fold | allin",
@@ -109,7 +114,7 @@ final class PokerCommands {
             "Bots are free house seats. House chips are never redeemable, so bots cannot mint item value.",
             "Two to nine seats. Consultants may create and play normally; poker grants no world permissions."
         } : new String[] {
-            "/poker list | create <stół> | join <stół> | leave",
+            "/poker gui | gui item | list | create <stół> | join <stół> | leave",
             "/poker bank | exchange in [liczba] | exchange out <przedmiot> [liczba] | values",
             "/poker buyin <żetony> | cashout | bots add <1-4> | bots remove",
             "/poker start | status | cards | check | call | raise <łącznie> | fold | allin",
@@ -135,7 +140,28 @@ final class PokerCommands {
         return tables.size();
     }
 
-    private static int openGui(ServerPlayer player) {
+    static boolean isGuiItem(ItemStack stack) {
+        return stack.is(Items.CLOCK) && stack.hasTag() && stack.getTag().getBoolean(GUI_ITEM_MARKER);
+    }
+
+    private static int giveGuiItem(ServerPlayer player) {
+        if (player.getInventory().getFreeSlot() < 0) {
+            send(player, "Brak miejsca w ekwipunku na zegar pokera.",
+                "No inventory space for the poker clock.", ChatFormatting.RED);
+            return 0;
+        }
+        ItemStack clock = new ItemStack(Items.CLOCK);
+        clock.getOrCreateTag().putBoolean(GUI_ITEM_MARKER, true);
+        clock.setHoverName(Component.literal(english(player) ? "Poker menu — right-click" : "Menu pokera — kliknij PPM")
+            .withStyle(ChatFormatting.GOLD));
+        player.getInventory().add(clock);
+        player.inventoryMenu.broadcastChanges();
+        send(player, "Otrzymujesz zegar pokera. Kliknij PPM, aby otworzyć menu.",
+            "You received a poker clock. Right-click to open the menu.", ChatFormatting.GREEN);
+        return 1;
+    }
+
+    static int openGui(ServerPlayer player) {
         player.openMenu(new net.minecraft.world.SimpleMenuProvider(
             (containerId, inventory, ignored) -> new PokerMenu(containerId, inventory, player),
             Component.literal(english(player) ? "Poker table" : "Stół pokerowy")));
@@ -272,7 +298,7 @@ final class PokerCommands {
         return (int) Math.min(Integer.MAX_VALUE, balance);
     }
 
-    private static int exchangeIn(ServerPlayer player, int requestedCount) {
+    static int exchangeIn(ServerPlayer player, int requestedCount) {
         PokerData data = PokerData.get(player.getServer()); ItemStack held = player.getMainHandItem();
         int count = requestedCount < 0 ? held.getCount() : requestedCount;
         if (held.isEmpty() || count > held.getCount()) { sendError(player, "hold-exchange-item"); return 0; }
@@ -288,10 +314,11 @@ final class PokerCommands {
         PsychiatrykRoles.pokerAudit(player, "POKER_EXCHANGE_IN", "item=" + id + " count=" + count + " chips=" + credit); return (int)Math.min(Integer.MAX_VALUE, credit);
     }
 
-    private static int exchangeOut(ServerPlayer player, ResourceLocation id, int count) {
+    static int exchangeOut(ServerPlayer player, ResourceLocation id, int count) {
         PokerData data = PokerData.get(player.getServer()); int unit = PokerItemValues.value(id.toString());
         var item = BuiltInRegistries.ITEM.getOptional(id);
         if (unit <= 0 || item.isEmpty()) { sendError(player, "worthless-item"); return 0; }
+        if (!PokerItemValues.canExchangeOut(id.toString())) { sendError(player, "out-disabled"); return 0; }
         long cost;
         try { cost = Math.multiplyExact((long) unit, count); } catch (ArithmeticException error) { sendError(player, "buyin-too-large"); return 0; }
         if (!data.debit(player.getUUID(), cost)) { sendError(player, "wallet-insufficient"); return 0; }
@@ -360,9 +387,13 @@ final class PokerCommands {
         boolean en = english(player);
         player.sendSystemMessage(Component.literal(en ? "POKER ITEM VALUES (per item)" : "WARTOŚCI POKEROWE (za sztukę)").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         PokerItemValues.all().entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).forEach(entry ->
-            player.sendSystemMessage(Component.literal(entry.getKey() + " = " + entry.getValue()).withStyle(ChatFormatting.GRAY)));
+            player.sendSystemMessage(Component.literal(entry.getKey() + " = " + entry.getValue()
+                + (PokerItemValues.canExchangeOut(entry.getKey()) ? (en ? " [buyable]" : " [do kupienia]") : ""))
+                .withStyle(ChatFormatting.GRAY)));
         send(player, "Wymiana używa uproszczonych wartości w stylu ProjectE. Śmieci i przedmioty spoza listy mają wartość 0.",
             "Exchange uses simplified ProjectE-style values. Trash and unlisted items are worth 0.", ChatFormatting.YELLOW);
+        send(player, "Kupować można tylko oznaczone podstawowe materiały; rzadkie przedmioty służą wyłącznie do wymiany na żetony.",
+            "Only marked basic materials can be bought; rare items can only be exchanged for chips.", ChatFormatting.YELLOW);
         return PokerItemValues.all().size();
     }
 
@@ -493,6 +524,7 @@ final class PokerCommands {
             case "cashout-first" -> new String[]{"Najpierw wypłać żetony przez /poker cashout.", "Cash out your chips with /poker cashout first."};
             case "hold-exchange-item" -> new String[]{"Trzymaj wymieniany przedmiot w głównej ręce (i podaj prawidłową liczbę).", "Hold the exchange item in your main hand (and use a valid count)."};
             case "worthless-item" -> new String[]{"Ten przedmiot nie ma wartości pokerowej. Sprawdź /poker values.", "That item has no poker value. See /poker values."};
+            case "out-disabled" -> new String[]{"Tego rzadkiego przedmiotu nie można kupić za żetony.", "This rare item cannot be bought with chips."};
             case "tagged-exchange-item" -> new String[]{"Można wymieniać tylko zwykłe, nieuszkodzone stosy bez nazwy, zaklęć i NBT.", "Only pristine ordinary stacks without names, enchantments, damage, or NBT can be exchanged."};
             case "wallet-insufficient" -> new String[]{"Za mało żetonów w portfelu.", "Not enough chips in your wallet."};
             case "below-minimum-buyin" -> new String[]{"Pierwszy buy-in musi wynosić co najmniej 100 żetonów.", "The initial buy-in must be at least 100 chips."};

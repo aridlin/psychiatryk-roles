@@ -113,6 +113,7 @@ Typical session:
 
 ```text
 /poker gui
+/poker gui item
 /poker create stol
 /poker join stol
 /poker exchange in [count]
@@ -132,9 +133,9 @@ Typical session:
 /poker leave
 ```
 
-Poker uses a separate persistent chip wallet. `/poker exchange in [count]` consumes a pristine accepted stack from the main hand and credits its configured value. `/poker exchange out <item> [count]` debits that same value and creates ordinary fresh items. Named, enchanted, damaged, NBT-bearing, and consultant equipment cannot enter the exchange. `/poker buyin <chips>` moves wallet chips to the current table; `/poker cashout` moves the whole table stack back to the wallet. The minimum first table buy-in is 100 chips and blinds are 10/20. This is a deliberately simplified ProjectE-style value system: conversions conserve configured value while bulk trash remains excluded.
+Poker uses a separate persistent chip wallet. `/poker exchange in [count]` consumes a pristine accepted stack from the main hand and credits its configured value. `/poker exchange out <item> [count]` buys only basic materials: iron or gold nuggets and ingots, amethyst shards, and emeralds. Rare items can be exchanged in but cannot be bought back. Elytra has no poker value in either direction. Named, enchanted, damaged, NBT-bearing, and consultant equipment cannot enter the exchange. `/poker buyin <chips>` moves wallet chips to the current table; `/poker cashout` moves the whole table stack back to the wallet. The minimum first table buy-in is 100 chips and blinds are 10/20.
 
-`/poker gui` opens a six-row vanilla chest interface, so it requires no client mod. The lobby lists joinable tables and can create a personal table. At a table it renders community cards, private hole cards, seats, turn, pot, wallet, table stack, redeemable reserve, and clickable exchange-in, buy-in, cash-out, bot, start, check, call, raise, all-in, fold, and leave controls. Display items are read-only and never enter the player's inventory. Commands remain available.
+`/poker gui` opens a six-row vanilla chest interface, so it requires no client mod. `/poker gui item` gives a clock that opens the same menu on right-click. The lobby lists joinable tables and can create a personal table. At a table it renders community cards, private hole cards, seats, turn, pot, wallet, table stack, redeemable reserve, and clickable buy-in, cash-out, bot, start, check, call, raise, all-in, fold, and leave controls. The exchange button in both lobby and table opens a catalog: sell the full main-hand stack, click an item to buy one, or shift-click to buy a full stack. Display items are read-only and never enter the player's inventory. Commands remain available.
 
 For solo play, the table owner can use `/poker bots add <1-4>`. Bots are free, start with 100 house chips, use the normal validated turn/pot system, and play automatically. House chips are tracked separately from the redeemable reserve funded by human buy-ins. A cash-out can never exceed that reserve, so farming free bots cannot mint exchangeable items; excess house chips expire. `/poker bots remove` removes them between hands without paying their house stack to anyone. Bots and hands survive a process restart. Consultants can use both the GUI and commands without bypassing world protections.
 
@@ -142,7 +143,7 @@ Use `/poker values` for the authoritative in-game list. Common bulk items such a
 
 | Value | Items |
 | ---: | --- |
-| 1000 | elytra, nether star |
+| 1000 | nether star |
 | 900 | netherite ingot |
 | 600 | enchanted golden apple |
 | 500 | totem of undying |
@@ -267,6 +268,18 @@ The **Mirror of Returning** is an ordinary echo shard produced from one glass bl
 ## Consultant world
 
 `psychiatryk_roles:konsultanci` is a second, independent overworld generated with vanilla overworld noise and biomes. The Passage Staff stores a separate last position on each side. First entry uses the dimension spawn.
+
+### Void Door
+
+Craft two linked oak doors with planks and one ender pearl:
+
+```text
+wood  wood  empty
+wood  pearl empty
+wood  wood  empty
+```
+
+The crafted pair shares a unique link. Place both doors, open one, and walk into it to arrive just beyond the other door, including across dimensions. The link is saved with the world and is removed when either door is broken. Ordinary oak doors are unaffected.
 
 Consultants remain in Survival and have unrestricted building, combat, containers, vehicles, item pickup, and ordinary item dropping there. Protected consultant equipment remains controlled.
 

@@ -1,6 +1,8 @@
 package pl.aridlin.psychiatrykroles;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,11 +18,14 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+import java.util.Map;
 
 final class PokerMenu extends ChestMenu {
     private static final int SIZE = 54;
     private final SimpleContainer display;
     private final ServerPlayer viewer;
+    private boolean exchangeScreen;
     private String lastState = "";
 
     PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer) {
@@ -45,6 +50,22 @@ final class PokerMenu extends ChestMenu {
     @Override public void clicked(int slotId, int button, ClickType clickType, Player player) {
         if (player != viewer || slotId < 0 || slotId >= SIZE) return;
         if (slotId == 53) { viewer.closeContainer(); return; }
+        if (exchangeScreen) {
+            if (slotId == 45) exchangeScreen = false;
+            else if (slotId == 46) PokerCommands.exchangeIn(viewer, -1);
+            else if (slotId >= 9 && slotId <= 44) {
+                Map.Entry<String, Integer> offer = exchangeOffer(slotId);
+                if (offer != null) {
+                    ResourceLocation id = ResourceLocation.tryParse(offer.getKey());
+                    if (id != null) PokerCommands.exchangeOut(viewer, id,
+                        clickType == ClickType.QUICK_MOVE
+                            ? BuiltInRegistries.ITEM.get(id).getMaxStackSize() : 1);
+                }
+            }
+            if (viewer.containerMenu == this) refresh();
+            return;
+        }
+        if (slotId == 46) { exchangeScreen = true; refresh(); return; }
         PokerCommands.guiClick(viewer, slotId);
         if (viewer.containerMenu == this) refresh();
     }
@@ -54,17 +75,26 @@ final class PokerMenu extends ChestMenu {
         boolean en = RoleData.get(viewer.getServer()).isEnglish(viewer.getUUID());
         PokerData data = PokerData.get(viewer.getServer());
         PokerGame game = data.tableFor(viewer.getUUID());
-        fillBorders(en);
-        display.setItem(4, icon(Items.NETHER_STAR, ChatFormatting.GOLD + (en ? "TEXAS HOLD'EM" : "TEXAS HOLD'EM")));
         display.setItem(53, icon(Items.BARRIER, ChatFormatting.RED + (en ? "Close" : "Zamknij")));
-        if (game == null) renderLobby(data, en); else renderTable(game, data, en);
+        if (exchangeScreen) renderExchange(data, en);
+        else {
+            fillBorders(en);
+            display.setItem(4, icon(Items.NETHER_STAR, ChatFormatting.GOLD + "TEXAS HOLD'EM"));
+            if (game == null) renderLobby(data, en); else renderTable(game, data, en);
+            display.setItem(46, icon(Items.EMERALD, ChatFormatting.GREEN
+                + (en ? "Open item exchange" : "Otwórz wymianę przedmiotów")));
+        }
         lastState = stateKey();
         super.broadcastChanges();
     }
 
     private String stateKey() {
         PokerData data = PokerData.get(viewer.getServer()); PokerGame game = data.tableFor(viewer.getUUID());
-        if (game == null) return "lobby:" + data.tables().stream().map(table -> table.id() + ':' + table.phase() + ':' + table.players().size()).toList();
+        if (exchangeScreen) return "exchange:" + data.balance(viewer.getUUID()) + ':'
+            + BuiltInRegistries.ITEM.getKey(viewer.getMainHandItem().getItem()) + ':'
+            + viewer.getMainHandItem().getCount() + ':' + viewer.getMainHandItem().getTag();
+        if (game == null) return "lobby:" + data.balance(viewer.getUUID()) + ':'
+            + data.tables().stream().map(table -> table.id() + ':' + table.phase() + ':' + table.players().size()).toList();
         StringBuilder value = new StringBuilder(game.id()).append('|').append(game.phase()).append('|').append(game.pot())
             .append('|').append(game.currentBet()).append('|').append(game.redeemableReserve()).append('|').append(data.balance(viewer.getUUID()))
             .append('|').append(game.board()).append('|').append(game.turnPlayer() == null ? "-" : game.turnPlayer().id);
@@ -72,6 +102,38 @@ final class PokerMenu extends ChestMenu {
             .append(':').append(seat.committedHand).append(':').append(seat.folded).append(':').append(seat.allIn).append(':').append(seat.connected);
         PokerGame.PlayerState self = game.player(viewer.getUUID()); if (self != null) value.append('|').append(self.hole);
         return value.toString();
+    }
+
+    private static List<Map.Entry<String, Integer>> exchangeOffers() {
+        return PokerItemValues.exchangeOutItems().entrySet().stream()
+            .sorted(Comparator.comparing(Map.Entry<String, Integer>::getValue)
+                .thenComparing(Map.Entry::getKey)).toList();
+    }
+
+    private static Map.Entry<String, Integer> exchangeOffer(int slot) {
+        List<Map.Entry<String, Integer>> offers = exchangeOffers();
+        int index = slot - 9;
+        return index >= 0 && index < offers.size() ? offers.get(index) : null;
+    }
+
+    private void renderExchange(PokerData data, boolean en) {
+        display.setItem(4, icon(Items.EMERALD, ChatFormatting.GOLD
+            + (en ? "ITEM EXCHANGE" : "WYMIANA PRZEDMIOTÓW")));
+        display.setItem(8, icon(Items.GOLD_NUGGET, ChatFormatting.YELLOW
+            + (en ? "Wallet: " : "Portfel: ") + data.balance(viewer.getUUID())));
+        display.setItem(45, icon(Items.ARROW, ChatFormatting.YELLOW + (en ? "Back to poker" : "Wróć do pokera")));
+        display.setItem(46, icon(Items.HOPPER, ChatFormatting.GREEN
+            + (en ? "Sell full main-hand stack" : "Sprzedaj cały stos z głównej ręki")));
+        display.setItem(47, icon(Items.BOOK, ChatFormatting.GRAY
+            + (en ? "Click to buy 1; shift-click to buy a stack" : "Kliknij, aby kupić 1; Shift+klik: cały stos")));
+        for (int slot = 9; slot <= 44; slot++) {
+            Map.Entry<String, Integer> offer = exchangeOffer(slot);
+            if (offer == null) break;
+            ResourceLocation id = ResourceLocation.tryParse(offer.getKey());
+            if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) continue;
+            display.setItem(slot, icon(BuiltInRegistries.ITEM.get(id), ChatFormatting.AQUA + offer.getKey()
+                + ChatFormatting.GRAY + " | " + offer.getValue() + (en ? " chips" : " żetonów")));
+        }
     }
 
     private void renderLobby(PokerData data, boolean en) {

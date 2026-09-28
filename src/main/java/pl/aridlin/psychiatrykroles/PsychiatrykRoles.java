@@ -242,6 +242,7 @@ public final class PsychiatrykRoles {
 
     public PsychiatrykRoles() {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new VoidDoors());
     }
 
     private static boolean isOperator(ServerPlayer player) {
@@ -1774,6 +1775,13 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onContainerInteraction(PlayerInteractEvent.RightClickBlock event) {
+        if (PokerCommands.isGuiItem(event.getItemStack())
+            && event.getEntity() instanceof ServerPlayer player) {
+            PokerCommands.openGui(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
         if (isTravelStaff(event.getItemStack()) && event.getEntity() instanceof ServerPlayer player) {
             useTravelStaff(player);
             event.setCanceled(true);
@@ -1892,6 +1900,12 @@ public final class PsychiatrykRoles {
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickItem event) {
         ItemStack stack = event.getItemStack();
+        if (PokerCommands.isGuiItem(stack) && event.getEntity() instanceof ServerPlayer player) {
+            PokerCommands.openGui(player);
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            return;
+        }
         if (isTravelStaff(stack) && event.getEntity() instanceof ServerPlayer player) {
             useTravelStaff(player);
             event.setCanceled(true);

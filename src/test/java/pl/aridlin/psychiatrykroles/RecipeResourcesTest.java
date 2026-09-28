@@ -17,6 +17,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RecipeResourcesTest {
     @Test
+    void voidDoorRecipeMakesOneMarkedPairFromWoodAndPearl() throws Exception {
+        var stream = RecipeResourcesTest.class.getResourceAsStream(
+            "/data/psychiatryk_roles/recipes/void_door.json");
+        assertNotNull(stream);
+        JsonObject json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+        assertEquals("minecraft:crafting_shaped", json.get("type").getAsString());
+        assertEquals("WW ", json.getAsJsonArray("pattern").get(0).getAsString());
+        assertEquals("WE ", json.getAsJsonArray("pattern").get(1).getAsString());
+        assertEquals("WW ", json.getAsJsonArray("pattern").get(2).getAsString());
+        assertEquals("minecraft:planks", json.getAsJsonObject("key").getAsJsonObject("W").get("tag").getAsString());
+        assertEquals("minecraft:ender_pearl", json.getAsJsonObject("key").getAsJsonObject("E").get("item").getAsString());
+        assertEquals(2, json.getAsJsonObject("result").get("count").getAsInt());
+        assertTrue(TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString())
+            .getBoolean("psychiatrykVoidDoor"));
+    }
+
+    @Test
     void everyConsultantRecipeCarriesFunctionalMarkersInItsResult() throws Exception {
         Map<String, String> recipes = Map.ofEntries(
             Map.entry("recipe_book", "psychiatrykRecipeBook"),

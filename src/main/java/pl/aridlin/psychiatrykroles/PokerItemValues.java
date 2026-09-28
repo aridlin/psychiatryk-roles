@@ -5,19 +5,41 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 final class PokerItemValues {
     private static final Map<String, Integer> VALUES = values();
+    private static final Set<String> EXCHANGE_OUT = Set.of(
+        "minecraft:iron_nugget", "minecraft:gold_nugget", "minecraft:amethyst_shard",
+        "minecraft:iron_ingot", "minecraft:gold_ingot", "minecraft:emerald"
+    );
 
     private PokerItemValues() {}
 
     static int value(Item item) { return value(BuiltInRegistries.ITEM.getKey(item).toString()); }
     static int value(String itemId) { return VALUES.getOrDefault(itemId, 0); }
     static Map<String, Integer> all() { return Map.copyOf(VALUES); }
+    static boolean canExchangeOut(String itemId) { return EXCHANGE_OUT.contains(itemId); }
+    static Map<String, Integer> exchangeOutItems() {
+        return VALUES.entrySet().stream().filter(entry -> canExchangeOut(entry.getKey()))
+            .collect(java.util.stream.Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
     private static Map<String, Integer> values() {
         Map<String, Integer> values = new LinkedHashMap<>();
         values.put("minecraft:iron_nugget", 1); values.put("minecraft:gold_nugget", 2);
+        values.put("minecraft:coal", 2); values.put("minecraft:charcoal", 2);
+        values.put("minecraft:copper_ingot", 3); values.put("minecraft:flint", 1);
+        values.put("minecraft:bone", 1); values.put("minecraft:string", 1);
+        values.put("minecraft:leather", 2); values.put("minecraft:feather", 1);
+        values.put("minecraft:gunpowder", 3); values.put("minecraft:slime_ball", 4);
+        values.put("minecraft:glowstone_dust", 3); values.put("minecraft:blaze_powder", 5);
+        values.put("minecraft:blaze_rod", 10); values.put("minecraft:ender_pearl", 8);
+        values.put("minecraft:quartz", 3); values.put("minecraft:prismarine_shard", 3);
+        values.put("minecraft:prismarine_crystals", 4); values.put("minecraft:lapis_lazuli", 3);
+        values.put("minecraft:redstone", 2); values.put("minecraft:obsidian", 6);
+        values.put("minecraft:clay_ball", 1); values.put("minecraft:brick", 2);
+        values.put("minecraft:paper", 1); values.put("minecraft:book", 4);
         values.put("minecraft:amethyst_shard", 3); values.put("minecraft:iron_ingot", 9);
         values.put("minecraft:gold_ingot", 18); values.put("minecraft:name_tag", 20);
         values.put("minecraft:saddle", 20); values.put("minecraft:dragon_breath", 25);
@@ -31,7 +53,7 @@ final class PokerItemValues {
         values.put("minecraft:netherite_scrap", 225); values.put("minecraft:wither_skeleton_skull", 250);
         values.put("minecraft:heart_of_the_sea", 300); values.put("minecraft:totem_of_undying", 500);
         values.put("minecraft:enchanted_golden_apple", 600); values.put("minecraft:netherite_ingot", 900);
-        values.put("minecraft:elytra", 1000); values.put("minecraft:nether_star", 1000);
+        values.put("minecraft:nether_star", 1000);
         return values;
     }
 }
