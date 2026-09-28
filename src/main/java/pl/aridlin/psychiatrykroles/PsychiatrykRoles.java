@@ -119,6 +119,7 @@ public final class PsychiatrykRoles {
         "rozowykocurek"
     );
     private static final Map<UUID, ContainerSnapshot> CONTAINER_SNAPSHOTS = new ConcurrentHashMap<>();
+    private static final Map<UUID, Boolean> CONTRACTOR_ACTIVITY = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> NEXT_SIGN_GRANT_TICK = new ConcurrentHashMap<>();
     private static final long SIGN_GRANT_INTERVAL_TICKS = 20L * 60L * 10L;
     private static final String SIGN_REMOVER_MARKER = "psychiatrykSignRemover";
@@ -253,10 +254,32 @@ public final class PsychiatrykRoles {
             || (player.getServer() != null && RoleData.get(player.getServer()).isPatient(player.getUUID()));
     }
 
+    private static boolean isContractor(ServerPlayer player) {
+        return player.getServer() != null && RoleData.get(player.getServer()).contractorRule(player.getUUID()) != null;
+    }
+
+    private static boolean isActiveContractor(ServerPlayer player) {
+        if (player.getServer() == null) return false;
+        RoleData.ContractorRule rule = RoleData.get(player.getServer()).contractorRule(player.getUUID());
+        if (rule == null) return false;
+        if (rule.mode().equals("always")) return true;
+        double maxDistance = (double) rule.radius() * rule.radius();
+        for (ServerPlayer patient : player.getServer().getPlayerList().getPlayers()) {
+            if (!isPatient(patient) || (rule.patient() != null && !rule.patient().equals(patient.getUUID()))) continue;
+            if (rule.mode().equals("online") || (patient.level() == player.level()
+                && player.distanceToSqr(patient) <= maxDistance)) return true;
+        }
+        return false;
+    }
+
+    private static boolean hasPatientGameplay(ServerPlayer player) {
+        return isPatient(player) || isActiveContractor(player);
+    }
+
     public static boolean isConsultant(Player player) {
         return player instanceof ServerPlayer serverPlayer
             && !isOperator(serverPlayer)
-            && !isPatient(serverPlayer);
+            && !hasPatientGameplay(serverPlayer);
     }
 
     private static boolean isFreedomDimension(Player player) {
@@ -1394,6 +1417,10 @@ public final class PsychiatrykRoles {
             return Component.literal(isEnglish(player) ? "[Patient] " : "[Pacjent] ").withStyle(ChatFormatting.LIGHT_PURPLE)
                 .append(Component.literal(player.getGameProfile().getName()).withStyle(ChatFormatting.WHITE));
         }
+        if (isContractor(player)) {
+            return Component.literal(isEnglish(player) ? "[Contractor] " : "[Kontraktor] ").withStyle(ChatFormatting.GOLD)
+                .append(Component.literal(player.getGameProfile().getName()).withStyle(ChatFormatting.WHITE));
+        }
         return Component.literal(isEnglish(player) ? "[Consultant] " : "[Konsultant] ").withStyle(ChatFormatting.AQUA)
             .append(Component.literal(player.getGameProfile().getName()).withStyle(ChatFormatting.WHITE));
     }
@@ -1414,13 +1441,51 @@ public final class PsychiatrykRoles {
     }
 
     private static void syncPatientRank(ServerPlayer player) {
+        syncMemberRank(player, true);
+    }
+
+    private static void syncMemberRank(ServerPlayer player, boolean active) {
         if (player.getServer() == null) {
             return;
         }
-        String command = "ftbranks add " + player.getGameProfile().getName() + " member";
+        String command = "ftbranks " + (active ? "add " : "remove ")
+            + player.getGameProfile().getName() + " member";
         player.getServer().getCommands().performPrefixedCommand(
             player.getServer().createCommandSourceStack().withPermission(4).withSuppressedOutput(), command
         );
+    }
+
+    private static void syncContractorRank(ServerPlayer player, boolean active) {
+        if (player.getServer() == null) return;
+        String command = "ftbranks " + (active ? "add " : "remove ")
+            + player.getGameProfile().getName() + " kontraktor";
+        player.getServer().getCommands().performPrefixedCommand(
+            player.getServer().createCommandSourceStack().withPermission(4).withSuppressedOutput(), command
+        );
+    }
+
+    private static void refreshContractor(ServerPlayer player) {
+        boolean active = isActiveContractor(player);
+        Boolean previous = CONTRACTOR_ACTIVITY.put(player.getUUID(), active);
+        if (previous != null && previous == active) return;
+        syncContractorRank(player, active);
+        syncCollisionRule(player);
+        player.refreshTabListName();
+        if (!active && isConsultant(player)) {
+            player.setGameMode(GameType.SURVIVAL);
+            ensureSignRemover(player);
+            ensureTravelStaff(player);
+            ensureWelcomeBook(player);
+        }
+        if (previous != null) {
+            player.sendSystemMessage(Component.literal(tr(player,
+                active ? "Warunek kontraktora spełniony: uprawnienia Pacjenta są aktywne."
+                    : "Warunek kontraktora niespełniony: obowiązują ograniczenia Konsultanta.",
+                active ? "Contractor condition met: Patient gameplay is active."
+                    : "Contractor condition not met: Consultant restrictions apply."))
+                .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.YELLOW));
+            audit(player, "CONTRACTOR_ACTIVITY", active ? "active" : "inactive");
+        }
     }
 
     private static void sendLanguagePrompt(ServerPlayer player) {
@@ -1558,6 +1623,11 @@ public final class PsychiatrykRoles {
             ensureTravelStaff(player);
         }
         syncCollisionRule(player);
+        if (isContractor(player)) {
+            if (player.getUUID().equals(RoleData.INITIAL_CONTRACTOR)) syncMemberRank(player, false);
+            CONTRACTOR_ACTIVITY.remove(player.getUUID());
+            refreshContractor(player);
+        }
         player.refreshTabListName();
         if (hasLanguage) {
             sendLanguagePrompt(player);
@@ -1568,7 +1638,8 @@ public final class PsychiatrykRoles {
             ensureWelcomeBook(player);
             sendConsultantWelcome(player);
         }
-        audit(player, "LOGIN", isOperator(player) ? "ordynator" : isPatient(player) ? "pacjent" : "konsultant");
+        audit(player, "LOGIN", isOperator(player) ? "ordynator" : isPatient(player) ? "pacjent"
+            : isContractor(player) ? "kontraktor" : "konsultant");
         PokerCommands.onLogin(player);
     }
 
@@ -1578,6 +1649,7 @@ public final class PsychiatrykRoles {
             return;
         }
         if (player.tickCount % 20 == 0) {
+            if (isContractor(player)) refreshContractor(player);
             boolean changed = false;
             for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
                 ItemStack item = player.getInventory().getItem(slot);
@@ -1682,6 +1754,7 @@ public final class PsychiatrykRoles {
             }
             NEXT_SIGN_GRANT_TICK.remove(player.getUUID());
             LAST_MIRROR_USE_TICK.remove(player.getUUID());
+            CONTRACTOR_ACTIVITY.remove(player.getUUID());
         }
     }
 
@@ -2173,6 +2246,38 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
+        event.getDispatcher().register(Commands.literal("zatrudnic")
+            .requires(source -> source.getEntity() instanceof ServerPlayer player
+                && (isPatient(player) || isOperator(player)))
+            .then(Commands.argument("nick", EntityArgument.player())
+                .executes(context -> hireContractor(context.getSource(), EntityArgument.getPlayer(context, "nick")))));
+
+        event.getDispatcher().register(Commands.literal("wyjebac")
+            .requires(source -> source.getEntity() instanceof ServerPlayer player
+                && (isPatient(player) || isOperator(player)))
+            .then(Commands.argument("nick", EntityArgument.player())
+                .executes(context -> fireContractor(context.getSource(), EntityArgument.getPlayer(context, "nick")))));
+
+        event.getDispatcher().register(Commands.literal("kontraktor")
+            .requires(source -> source.getEntity() instanceof ServerPlayer player
+                && (isPatient(player) || isOperator(player)))
+            .then(Commands.argument("nick", EntityArgument.player())
+                .then(Commands.literal("zawsze")
+                    .executes(context -> configureContractor(context.getSource(),
+                        EntityArgument.getPlayer(context, "nick"), "always", null, 0)))
+                .then(Commands.literal("online")
+                    .then(Commands.argument("pacjent", StringArgumentType.word())
+                        .executes(context -> configureContractor(context.getSource(),
+                            EntityArgument.getPlayer(context, "nick"), "online",
+                            StringArgumentType.getString(context, "pacjent"), 0))))
+                .then(Commands.literal("blisko")
+                    .then(Commands.argument("pacjent", StringArgumentType.word())
+                        .then(Commands.argument("promien", IntegerArgumentType.integer(1, 1024))
+                            .executes(context -> configureContractor(context.getSource(),
+                                EntityArgument.getPlayer(context, "nick"), "near",
+                                StringArgumentType.getString(context, "pacjent"),
+                                IntegerArgumentType.getInteger(context, "promien"))))))));
+
         event.getDispatcher().register(Commands.literal("przyjecie")
             .then(Commands.argument("kod", StringArgumentType.word())
                 .executes(context -> redeem(
@@ -2507,7 +2612,89 @@ public final class PsychiatrykRoles {
     private static String roleLabel(ServerPlayer player, boolean english) {
         if (isOperator(player)) return english ? "Director" : "Ordynator";
         if (isPatient(player)) return english ? "Patient" : "Pacjent";
+        if (isContractor(player)) return (english ? "Contractor" : "Kontraktor")
+            + (isActiveContractor(player) ? (english ? " (active)" : " (aktywny)")
+                : (english ? " (inactive)" : " (nieaktywny)"));
         return english ? "Consultant" : "Konsultant";
+    }
+
+    private static int hireContractor(net.minecraft.commands.CommandSourceStack source, ServerPlayer target) {
+        if (isOperator(target) || isPatient(target)) {
+            source.sendFailure(Component.literal(tr(source,
+                "Ordynator ani Pacjent nie może zostać Kontraktorem.",
+                "A Director or Patient cannot become a Contractor.")));
+            return 0;
+        }
+        RoleData data = RoleData.get(source.getServer());
+        if (data.contractorRule(target.getUUID()) != null) {
+            source.sendFailure(Component.literal(tr(source,
+                "Ten gracz jest już Kontraktorem.", "This player is already a Contractor.")));
+            return 0;
+        }
+        data.setContractor(target.getUUID(), new RoleData.ContractorRule("always", null, 0));
+        refreshContractor(target);
+        source.sendSuccess(() -> Component.literal(tr(source, "Zatrudniono ", "Hired ")
+            + target.getGameProfile().getName() + " jako Kontraktora."), false);
+        target.sendSystemMessage(Component.literal(tr(target,
+            "Zostałeś Kontraktorem. Masz teraz uprawnienia Pacjenta.",
+            "You are now a Contractor with Patient gameplay.")));
+        audit(source.getServer(), source.getTextName(), "CONTRACTOR_HIRE", target.getGameProfile().getName());
+        return 1;
+    }
+
+    private static int fireContractor(net.minecraft.commands.CommandSourceStack source, ServerPlayer target) {
+        if (!RoleData.get(source.getServer()).removeContractor(target.getUUID())) {
+            source.sendFailure(Component.literal(tr(source,
+                "Ten gracz nie jest Kontraktorem.", "This player is not a Contractor.")));
+            return 0;
+        }
+        CONTRACTOR_ACTIVITY.remove(target.getUUID());
+        syncContractorRank(target, false);
+        syncCollisionRule(target);
+        target.refreshTabListName();
+        target.setGameMode(GameType.SURVIVAL);
+        ensureSignRemover(target);
+        ensureTravelStaff(target);
+        ensureWelcomeBook(target);
+        source.sendSuccess(() -> Component.literal(tr(source, "Zwolniono ", "Fired ")
+            + target.getGameProfile().getName() + "."), false);
+        target.sendSystemMessage(Component.literal(tr(target,
+            "Nie jesteś już Kontraktorem. Obowiązują ograniczenia Konsultanta.",
+            "You are no longer a Contractor. Consultant restrictions apply.")));
+        audit(source.getServer(), source.getTextName(), "CONTRACTOR_FIRE", target.getGameProfile().getName());
+        return 1;
+    }
+
+    private static int configureContractor(net.minecraft.commands.CommandSourceStack source,
+                                           ServerPlayer target, String mode, String patientName, int radius) {
+        RoleData data = RoleData.get(source.getServer());
+        if (data.contractorRule(target.getUUID()) == null) {
+            source.sendFailure(Component.literal(tr(source,
+                "Najpierw użyj /zatrudnic <nick>.", "Use /zatrudnic <name> first.")));
+            return 0;
+        }
+        UUID patientId = null;
+        if (patientName != null && !patientName.equalsIgnoreCase("dowolny")
+            && !patientName.equalsIgnoreCase("any")) {
+            ServerPlayer patient = source.getServer().getPlayerList().getPlayerByName(patientName);
+            if (patient == null || !isPatient(patient)) {
+                source.sendFailure(Component.literal(tr(source,
+                    "Wskazany Pacjent musi być online podczas konfiguracji.",
+                    "The selected Patient must be online during configuration.")));
+                return 0;
+            }
+            patientId = patient.getUUID();
+        }
+        data.setContractor(target.getUUID(), new RoleData.ContractorRule(mode, patientId, radius));
+        refreshContractor(target);
+        String condition = mode.equals("always") ? "zawsze" : mode.equals("online") ? "online" : "blisko";
+        String detail = condition + (patientName == null ? "" : " " + patientName)
+            + (radius > 0 ? " " + radius : "");
+        source.sendSuccess(() -> Component.literal("Kontraktor " + target.getGameProfile().getName()
+            + ": " + detail), false);
+        audit(source.getServer(), source.getTextName(), "CONTRACTOR_RULE",
+            target.getGameProfile().getName() + " " + detail);
+        return 1;
     }
 
     private static int showStatus(net.minecraft.commands.CommandSourceStack source, ServerPlayer player) {
@@ -2545,7 +2732,7 @@ public final class PsychiatrykRoles {
     }
 
     private static int showPatientStatus(net.minecraft.commands.CommandSourceStack source, ServerPlayer player) {
-        if (!isPatient(player) && !isOperator(player)) {
+        if (!hasPatientGameplay(player) && !isOperator(player)) {
             source.sendFailure(Component.literal(tr(source,
                 "Ta komenda jest przeznaczona dla Pacjentów.",
                 "This command is available to Patients.")));
@@ -2609,8 +2796,11 @@ public final class PsychiatrykRoles {
                 .withStyle(ChatFormatting.RED));
             return 0;
         }
+        boolean wasContractor = isContractor(player);
         data.addPatient(player.getUUID());
         NEXT_SIGN_GRANT_TICK.remove(player.getUUID());
+        CONTRACTOR_ACTIVITY.remove(player.getUUID());
+        if (wasContractor) syncContractorRank(player, false);
         syncPatientRank(player);
         player.setGameMode(GameType.SURVIVAL);
         syncCollisionRule(player);

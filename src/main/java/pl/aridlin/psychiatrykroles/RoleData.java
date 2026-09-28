@@ -18,7 +18,9 @@ import java.util.UUID;
 
 final class RoleData extends SavedData {
     private static final String FILE_NAME = "psychiatryk_roles";
+    static final UUID INITIAL_CONTRACTOR = UUID.fromString("99b48e35-0942-4913-b8a2-6a1c96a33833");
     private final Set<UUID> patients = new LinkedHashSet<>();
+    private final Map<UUID, ContractorRule> contractors = new LinkedHashMap<>();
     private final Set<String> codes = new LinkedHashSet<>();
     private final Map<UUID, TravelPosition> mainPositions = new LinkedHashMap<>();
     private final Map<UUID, TravelPosition> freedomPositions = new LinkedHashMap<>();
@@ -36,6 +38,14 @@ final class RoleData extends SavedData {
 
     record OwnedChalkMarker(UUID owner, ChalkMarker marker) {}
 
+    record ContractorRule(String mode, UUID patient, int radius) {
+        ContractorRule {
+            if (!Set.of("always", "online", "near").contains(mode) || radius < 0) {
+                throw new IllegalArgumentException("Invalid contractor rule");
+            }
+        }
+    }
+
     static RoleData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(RoleData::load, RoleData::new, FILE_NAME);
     }
@@ -48,6 +58,21 @@ final class RoleData extends SavedData {
                 data.patients.add(UUID.fromString(value.getAsString()));
             } catch (IllegalArgumentException ignored) {
             }
+        }
+        for (Tag raw : tag.getList("Contractors", Tag.TAG_COMPOUND)) {
+            CompoundTag value = (CompoundTag) raw;
+            try {
+                UUID player = UUID.fromString(value.getString("Player"));
+                UUID patient = value.contains("Patient", Tag.TAG_STRING)
+                    ? UUID.fromString(value.getString("Patient")) : null;
+                data.contractors.put(player, new ContractorRule(value.getString("Mode"), patient, value.getInt("Radius")));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        if (!tag.getBoolean("ContractorMigrationV1")) {
+            data.patients.remove(INITIAL_CONTRACTOR);
+            data.contractors.putIfAbsent(INITIAL_CONTRACTOR, new ContractorRule("always", null, 0));
+            data.setDirty();
         }
         ListTag codeTags = tag.getList("Codes", Tag.TAG_STRING);
         for (Tag value : codeTags) {
@@ -113,9 +138,26 @@ final class RoleData extends SavedData {
     }
 
     void addPatient(UUID playerId) {
-        if (patients.add(playerId)) {
+        if (patients.add(playerId) | contractors.remove(playerId) != null) {
             setDirty();
         }
+    }
+
+    ContractorRule contractorRule(UUID playerId) {
+        return contractors.get(playerId);
+    }
+
+    boolean setContractor(UUID playerId, ContractorRule rule) {
+        if (patients.contains(playerId)) return false;
+        ContractorRule old = contractors.put(playerId, rule);
+        if (!rule.equals(old)) setDirty();
+        return old == null;
+    }
+
+    boolean removeContractor(UUID playerId) {
+        if (contractors.remove(playerId) == null) return false;
+        setDirty();
+        return true;
     }
 
     void addCode(String code) {
@@ -267,6 +309,17 @@ final class RoleData extends SavedData {
         ListTag patientTags = new ListTag();
         patients.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(patientTags::add);
         tag.put("Patients", patientTags);
+        ListTag contractorTags = new ListTag();
+        contractors.forEach((player, rule) -> {
+            CompoundTag value = new CompoundTag();
+            value.putString("Player", player.toString());
+            value.putString("Mode", rule.mode());
+            if (rule.patient() != null) value.putString("Patient", rule.patient().toString());
+            value.putInt("Radius", rule.radius());
+            contractorTags.add(value);
+        });
+        tag.put("Contractors", contractorTags);
+        tag.putBoolean("ContractorMigrationV1", true);
 
         ListTag codeTags = new ListTag();
         codes.stream().sorted().map(StringTag::valueOf).forEach(codeTags::add);

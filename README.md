@@ -41,6 +41,24 @@ Patients use normal Survival gameplay. The known legacy patient accounts remain 
 
 Patients can use `/pacjent status` for a localized readout of their current dimension, coordinates, respawn point, experience level, and food level.
 
+### Kontraktor / Contractor
+
+A Pacjent (or an operator) can hire an online consultant with `/zatrudnic <nick>` and remove the assignment with `/wyjebac <nick>`. Contractors receive Patient gameplay while their condition is active. They keep the Kontraktor label; when the condition is false, Consultant restrictions apply. Contractors cannot hire or fire other players. Assignments and conditions persist in `psychiatryk_roles.dat`.
+
+The default condition is always active. A Pacjent can configure each online contractor independently:
+
+```text
+/kontraktor <nick> zawsze
+/kontraktor <nick> online <pacjent|dowolny>
+/kontraktor <nick> blisko <pacjent|dowolny> <promien>
+```
+
+`online` requires the selected Pacjent, or any Pacjent with `dowolny`, to be online. `blisko` additionally requires the Pacjent to be within the chosen radius in the same dimension. A named Pacjent must be online when the condition is configured; the rule then stores their UUID, so name changes do not break it. The active state updates within one second. `/pacjent status` is available while the contractor has Patient gameplay.
+
+For FTB Ranks integration, add a `kontraktor` rank with the same gameplay permissions as the `member`/Pacjent rank. The mod adds this rank while the contractor condition is active and removes it when inactive or fired.
+
+The first deployment migrates Kameleon1200 from Pacjent to an always active Kontraktor. The migration runs once and preserves the other Pacjent accounts, including rozowykocurek.
+
 ### Ordynator / Director
 
 Minecraft operators are displayed as Ordynator/Director and retain unrestricted administrative behavior.
