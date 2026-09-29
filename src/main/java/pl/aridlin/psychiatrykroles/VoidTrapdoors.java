@@ -232,19 +232,11 @@ public final class VoidTrapdoors {
             if (target == null) continue;
             target.getChunkAt(destination.pos());
             if (!target.getBlockState(destination.pos()).is(Blocks.DARK_OAK_TRAPDOOR)) continue;
-            Direction sourceFacing = sourceLevel.getBlockState(source.pos()).getValue(TrapDoorBlock.FACING);
-            Direction targetFacing = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
-            Vec3 walked = player.position().subtract(from.position());
-            Vec3 velocity = player.getDeltaMovement();
-            if (walked.lengthSqr() > velocity.lengthSqr()) velocity = walked;
-            Vec3 outVelocity = VoidDoorGeometry.rotate(velocity, sourceFacing, targetFacing);
-            Vec3 exit = safeExit(target, player, destination.pos(), contact,
-                sourceFacing, targetFacing, outVelocity);
+            Direction away = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
+            Vec3 exit = safeExit(target, player, destination.pos(), away);
             if (exit == null) continue;
-            float yaw = Mth.wrapDegrees(player.getYRot()
-                + Mth.wrapDegrees(targetFacing.toYRot() - sourceFacing.toYRot()));
-            player.teleportTo(target, exit.x, exit.y, exit.z, yaw, player.getXRot());
-            player.setDeltaMovement(outVelocity);
+            player.teleportTo(target, exit.x, exit.y, exit.z, away.toYRot(), player.getXRot());
+            player.setDeltaMovement(popVelocity(away));
             player.hurtMarked = true;
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
             previous.put(player.getUUID(), new Sample(destination.dimension(), exit));
@@ -273,15 +265,12 @@ public final class VoidTrapdoors {
                 Contact contact = contact(center, item.getBoundingBox(),
                     item.position().subtract(item.getDeltaMovement()), item.position(), item.getDeltaMovement());
                 if (contact == null) continue;
-                Direction sourceFacing = state.getValue(TrapDoorBlock.FACING);
-                Direction targetFacing = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
-                Vec3 outVelocity = VoidDoorGeometry.rotate(item.getDeltaMovement(), sourceFacing, targetFacing);
-                Vec3 exit = safeExit(target, item, destination.pos(), contact,
-                    sourceFacing, targetFacing, outVelocity);
+                Direction away = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
+                Vec3 exit = safeExit(target, item, destination.pos(), away);
                 if (exit != null && item.teleportTo(target, exit.x, exit.y, exit.z,
                     Set.of(), item.getYRot(), item.getXRot())) {
                     Entity arrived = target.getEntity(item.getUUID());
-                    if (arrived != null) arrived.setDeltaMovement(outVelocity);
+                    if (arrived != null) arrived.setDeltaMovement(popVelocity(away));
                 }
             }
         }
@@ -314,37 +303,23 @@ public final class VoidTrapdoors {
             Mth.clamp(hit.z - center.z, -.4, .4)), upward);
     }
 
-    static Vec3 safeExit(ServerLevel level, Entity traveler, BlockPos door, Contact contact,
-                         Direction sourceFacing, Direction targetFacing, Vec3 outVelocity) {
-        Vec3 offset = VoidDoorGeometry.rotate(contact.offset(), sourceFacing, targetFacing);
-        Vec3 best = null;
-        double bestScore = Double.POSITIVE_INFINITY;
-        for (boolean requireSupport : new boolean[] { true, false }) {
-            for (boolean upward : new boolean[] {contact.upward(), !contact.upward()}) {
-                for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
-                    double sideways = -side.getStepZ() * offset.x + side.getStepX() * offset.z;
-                    for (int height = 0; height < 2; height++) {
-                        double feet = upward ? (height == 0 ? 1.01 : .01)
-                            : (height == 0 ? -1.99 : -.99);
-                        Vec3 exit = Vec3.atBottomCenterOf(door).add(
-                            side.getStepX() - side.getStepZ() * sideways, feet,
-                            side.getStepZ() + side.getStepX() * sideways);
-                        BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
-                        boolean supported = !level.getBlockState(floor).getCollisionShape(level, floor).isEmpty();
-                        if (requireSupport && !supported) continue;
-                        if (!level.noCollision(traveler,
-                            traveler.getBoundingBox().move(exit.subtract(traveler.position())))) continue;
-                        double score = (upward == contact.upward() ? 0 : 8) + height * .8
-                            - (side.getStepX() * offset.x + side.getStepZ() * offset.z) * 2
-                            - (side.getStepX() * outVelocity.x + side.getStepZ() * outVelocity.z) * 3
-                            + (side == targetFacing ? 0 : .1);
-                        if (score < bestScore) { bestScore = score; best = exit; }
-                    }
-                }
+    static Vec3 safeExit(ServerLevel level, Entity traveler, BlockPos door, Direction away) {
+        Vec3 center = Vec3.atBottomCenterOf(door);
+        // TrapDoorBlock.FACING points away from the side it was attached to.
+        // Stay above the destination, even if the air below it would be clear.
+        for (double offset : new double[] {.45, .7, 1.05}) {
+            for (double lateral : new double[] {0, -.35, .35}) {
+                Vec3 exit = center.add(away.getStepX() * offset - away.getStepZ() * lateral,
+                    1.02, away.getStepZ() * offset + away.getStepX() * lateral);
+                if (level.noCollision(traveler,
+                    traveler.getBoundingBox().move(exit.subtract(traveler.position())))) return exit;
             }
-            if (best != null) return best;
         }
-        return best;
+        return null;
+    }
+
+    static Vec3 popVelocity(Direction away) {
+        return new Vec3(away.getStepX() * .16, .18, away.getStepZ() * .16);
     }
 
     private static Vec3 planeCenter(ServerLevel level, BlockPos pos) {
@@ -354,16 +329,23 @@ public final class VoidTrapdoors {
 
     private static int frameMask(ServerLevel level, BlockPos pos) {
         int mask = 0;
+        double y = level.getBlockState(pos).getValue(TrapDoorBlock.HALF) == Half.TOP ? .9 : .1;
         for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
-            if (level.getBlockState(pos.relative(side)).isAir()) mask |= 1 << side.get2DDataValue();
+            if (!PortalFrameOcclusion.covers(level, pos.relative(side),
+                PortalFrameOcclusion.sideStrip(side, .03, .97, y - .035, y + .035)))
+                mask |= 1 << side.get2DDataValue();
         return mask;
     }
 
     private static List<Display.BlockDisplay> createPlane(ServerLevel level, BlockPos pos, int mask) {
         Vec3 center = planeCenter(level, pos);
         List<Display.BlockDisplay> result = new ArrayList<>();
+        float north = (mask & (1 << Direction.NORTH.get2DDataValue())) != 0 ? -.42f : -.5f;
+        float east = (mask & (1 << Direction.EAST.get2DDataValue())) != 0 ? .42f : .5f;
+        float south = (mask & (1 << Direction.SOUTH.get2DDataValue())) != 0 ? .42f : .5f;
+        float west = (mask & (1 << Direction.WEST.get2DDataValue())) != 0 ? -.42f : -.5f;
         result.add(addDisplay(level, center, Blocks.BLACK_CONCRETE.defaultBlockState(),
-            new Vector3f(-.43f, -.01f, -.43f), new Vector3f(.86f, .02f, .86f)));
+            new Vector3f(west, -.01f, north), new Vector3f(east - west, .02f, south - north)));
         for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
             if ((mask & (1 << side.get2DDataValue())) == 0) continue;
             Vector3f offset = switch (side) {

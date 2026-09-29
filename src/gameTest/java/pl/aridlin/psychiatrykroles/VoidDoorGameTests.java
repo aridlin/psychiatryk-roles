@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
@@ -209,16 +211,33 @@ public final class VoidDoorGameTests {
             long closedVisuals = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
                 new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
                 .size();
-            helper.assertTrue(closedVisuals == 7,
-                "Closed door must already contain its two black faces and five frame segments");
+            helper.assertTrue(closedVisuals == 9,
+                "Closed door must contain four black plane sections and five frame segments");
+            level.setBlock(first.east(), Blocks.STONE_SLAB.defaultBlockState()
+                .setValue(SlabBlock.TYPE, SlabType.BOTTOM), 2);
+            doors.onServerTick(tick);
+            long besideSlab = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
+                .size();
+            helper.assertTrue(besideSlab == 9,
+                "A bottom slab beside a tall door edge must leave its visible frame in place");
             level.setBlock(first.east(), Blocks.STONE.defaultBlockState(), 2);
             doors.onServerTick(tick);
             long framedBesideBlock = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
                 new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
                 .size();
-            helper.assertTrue(framedBesideBlock == 6,
+            helper.assertTrue(framedBesideBlock == 8,
                 "A solid neighbor must hide only its adjacent lower frame segment");
             level.setBlock(first.east(), Blocks.AIR.defaultBlockState(), 2);
+            level.setBlock(first.above(2), Blocks.STONE_SLAB.defaultBlockState()
+                .setValue(SlabBlock.TYPE, SlabType.BOTTOM), 2);
+            doors.onServerTick(tick);
+            long belowSlab = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
+                .size();
+            helper.assertTrue(belowSlab == 8,
+                "A bottom slab directly above the door must cover its top frame");
+            level.setBlock(first.above(2), Blocks.AIR.defaultBlockState(), 2);
             for (BlockPos pos : java.util.List.of(second, second.above()))
                 level.setBlock(pos, level.getBlockState(pos).setValue(DoorBlock.OPEN, true), 2);
             doors.onServerTick(tick);
@@ -365,7 +384,8 @@ public final class VoidDoorGameTests {
         var opened = Blocks.DARK_OAK_TRAPDOOR.defaultBlockState()
             .setValue(TrapDoorBlock.HALF, Half.BOTTOM).setValue(TrapDoorBlock.OPEN, true);
         level.setBlock(source, opened, 2);
-        level.setBlock(destination, opened.setValue(TrapDoorBlock.OPEN, false), 2);
+        level.setBlock(destination, opened.setValue(TrapDoorBlock.OPEN, false)
+            .setValue(TrapDoorBlock.FACING, Direction.SOUTH), 2);
         level.setBlock(destination.north(), Blocks.STONE.defaultBlockState(), 2);
         var data = VoidTrapdoorData.get(level.getServer());
         UUID id = UUID.randomUUID();
@@ -385,6 +405,14 @@ public final class VoidDoorGameTests {
                 new AABB(source).inflate(.5), entity -> entity.getTags().contains("psychiatrykVoidTrapdoorPlane"))
                 .size();
             helper.assertTrue(fullFrame == 5, "Trapdoor must keep its plane and four exposed frame edges");
+            level.setBlock(source.east(), Blocks.STONE_SLAB.defaultBlockState()
+                .setValue(SlabBlock.TYPE, SlabType.TOP), 2);
+            trapdoors.onServerTick(tick);
+            long besideTopSlab = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(source).inflate(.5), entity -> entity.getTags().contains("psychiatrykVoidTrapdoorPlane"))
+                .size();
+            helper.assertTrue(besideTopSlab == 5,
+                "A top slab cannot hide a bottom-half trapdoor frame");
             level.setBlock(source.east(), Blocks.STONE.defaultBlockState(), 2);
             trapdoors.onServerTick(tick);
             long partlyHiddenFrame = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
@@ -397,6 +425,9 @@ public final class VoidDoorGameTests {
             trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
             trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
             helper.assertTrue(traveler.teleportedLevel == level, "Open trapdoor must teleport to its linked partner");
+            helper.assertTrue(traveler.getY() > destination.getY() + 1
+                && traveler.getDeltaMovement().y > 0 && traveler.getDeltaMovement().z > 0,
+                "Trapdoor exit must pop above its destination and away from the north support block");
             helper.assertTrue(level.getBlockState(destination).getValue(TrapDoorBlock.OPEN) == false,
                 "Destination need not be open at the instant of contact");
             helper.assertTrue(VoidTrapdoors.touches(new Vec3(source.getX() + .5, source.getY() + .1,
@@ -482,10 +513,12 @@ public final class VoidDoorGameTests {
         helper.assertTrue(doorExit != null, "Door must use clear air when neither side has floor support");
         BlockPos doorFloor = BlockPos.containing(doorExit.x, doorExit.y - .1, doorExit.z);
         helper.assertTrue(level.getBlockState(doorFloor).isAir(), "Door fallback must genuinely lack support");
-        Vec3 trapdoorExit = VoidTrapdoors.safeExit(level, traveler, destination,
-            new VoidTrapdoors.Contact(Vec3.ZERO, false), Direction.NORTH, Direction.NORTH, Vec3.ZERO);
+        Vec3 trapdoorExit = VoidTrapdoors.safeExit(level, traveler, destination, Direction.SOUTH);
         helper.assertTrue(trapdoorExit != null,
             "Trapdoor must use clear air when no supported candidate is available");
+        helper.assertTrue(trapdoorExit.y > destination.getY() + 1
+            && trapdoorExit.z > destination.getZ() + .5,
+            "Trapdoor air fallback must remain above the hatch and away from its support side");
         BlockPos trapdoorFloor = BlockPos.containing(trapdoorExit.x, trapdoorExit.y - .1, trapdoorExit.z);
         helper.assertTrue(level.getBlockState(trapdoorFloor).isAir(),
             "Trapdoor fallback must genuinely lack support");

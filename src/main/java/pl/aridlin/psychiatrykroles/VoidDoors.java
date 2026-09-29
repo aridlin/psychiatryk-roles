@@ -539,55 +539,82 @@ public final class VoidDoors {
         Direction facing = level.getBlockState(lower).getValue(DoorBlock.FACING);
         Direction negative = facing.getAxis() == Direction.Axis.X ? Direction.NORTH : Direction.WEST;
         Direction positive = negative.getOpposite();
+        Vec3 center = VoidDoorGeometry.center(lower, facing);
+        double depth = facing.getAxis() == Direction.Axis.X ? center.x - lower.getX() : center.z - lower.getZ();
         int mask = 0;
-        if (level.getBlockState(lower.relative(negative)).isAir()) mask |= 1;
-        if (level.getBlockState(lower.above().relative(negative)).isAir()) mask |= 2;
-        if (level.getBlockState(lower.relative(positive)).isAir()) mask |= 4;
-        if (level.getBlockState(lower.above().relative(positive)).isAir()) mask |= 8;
-        if (level.getBlockState(lower.above(2)).isAir()) mask |= 16;
+        if (!PortalFrameOcclusion.covers(level, lower.relative(negative),
+            PortalFrameOcclusion.sideStrip(negative, depth - .03, depth + .03, .03, 1))) mask |= 1;
+        if (!PortalFrameOcclusion.covers(level, lower.above().relative(negative),
+            PortalFrameOcclusion.sideStrip(negative, depth - .03, depth + .03, 0, .89))) mask |= 2;
+        if (!PortalFrameOcclusion.covers(level, lower.relative(positive),
+            PortalFrameOcclusion.sideStrip(positive, depth - .03, depth + .03, .03, 1))) mask |= 4;
+        if (!PortalFrameOcclusion.covers(level, lower.above().relative(positive),
+            PortalFrameOcclusion.sideStrip(positive, depth - .03, depth + .03, 0, .89))) mask |= 8;
+        if (!PortalFrameOcclusion.covers(level, lower.above(2),
+            PortalFrameOcclusion.topStrip(facing.getAxis() == Direction.Axis.Z,
+                depth - .03, depth + .03))) mask |= 16;
         return mask;
+    }
+
+    record PlaneSection(double left, double right, double bottom, double top) {}
+
+    static PlaneSection planeSection(int mask, boolean upper) {
+        int negative = upper ? 2 : 1, positive = upper ? 8 : 4;
+        return new PlaneSection((mask & negative) != 0 ? -.415 : -.5,
+            (mask & positive) != 0 ? .415 : .5,
+            upper ? 1 : 0, upper ? ((mask & 16) != 0 ? 1.89 : 2) : 1);
     }
 
     private static List<Display> createPlane(ServerLevel level, BlockPos lower, int mask) {
         Direction facing = level.getBlockState(lower).getValue(DoorBlock.FACING);
         Vec3 center = VoidDoorGeometry.center(lower, facing);
         List<Display> result = new ArrayList<>();
-        // Opaque black text backgrounds are untextured, unlike black concrete. Back-to-back
-        // quads make a pure black plane from both sides, hidden inside the closed leaf.
-        for (int side = 0; side < 2; side++) {
-            Display.TextDisplay display = new Display.TextDisplay(EntityType.TEXT_DISPLAY, level);
-            CompoundTag tag;
-            try {
-                tag = TagParser.parseTag("{text:'{\"text\":\" \"}',alignment:\"center\",background:-16777216,text_opacity:0b,"
-                    + "billboard:\"fixed\",see_through:0b,default_background:0b,shadow:0b,"
-                    + "width:2f,height:4f,view_range:1f}");
-            } catch (com.mojang.brigadier.exceptions.CommandSyntaxException impossible) {
-                throw new IllegalStateException(impossible);
+        // A space's black TextDisplay background is five pixels wide and eleven high.
+        // Split it at block height so a missing lower frame widens only the lower plane.
+        Direction widthPositive = facing.getAxis() == Direction.Axis.Z ? Direction.EAST : Direction.SOUTH;
+        for (int sectionIndex = 0; sectionIndex < 2; sectionIndex++) {
+            PlaneSection section = planeSection(mask, sectionIndex == 1);
+            float scaleX = (float) ((section.right() - section.left()) / .125);
+            float scaleY = (float) ((section.top() - section.bottom()) / .275);
+            double lateral = (section.left() + section.right()) / 2;
+            for (int side = 0; side < 2; side++) {
+                Display.TextDisplay display = new Display.TextDisplay(EntityType.TEXT_DISPLAY, level);
+                CompoundTag tag;
+                try {
+                    tag = TagParser.parseTag("{text:'{\"text\":\" \"}',alignment:\"center\",background:-16777216,text_opacity:0b,"
+                        + "billboard:\"fixed\",see_through:0b,default_background:0b,shadow:0b,"
+                        + "width:2f,height:4f,view_range:1f}");
+                } catch (com.mojang.brigadier.exceptions.CommandSyntaxException impossible) {
+                    throw new IllegalStateException(impossible);
+                }
+                // The renderer offsets the background by half a pixel. Center each section.
+                tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
+                    new Transformation(new Vector3f(scaleX * .0125f, 0, 0), new Quaternionf(),
+                        new Vector3f(scaleX, scaleY, 1f), new Quaternionf())).result().orElseThrow());
+                display.load(tag);
+                double depth = side == 0 ? .004 : -.004;
+                display.setPos(center.x + widthPositive.getStepX() * lateral + facing.getStepX() * depth,
+                    center.y + section.bottom(),
+                    center.z + widthPositive.getStepZ() * lateral + facing.getStepZ() * depth);
+                display.setYRot(facing.toYRot() + side * 180);
+                display.setInvulnerable(true);
+                display.setNoGravity(true);
+                display.addTag(PLANE);
+                level.addFreshEntity(display);
+                result.add(display);
             }
-            // Let Mojang's codec produce the exact NBT representation expected by Display.
-            // Handwritten quaternion lists were rejected during real Forge startup.
-            tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
-                new Transformation(new Vector3f(-.1f, 0, 0), new Quaternionf(),
-                    new Vector3f(7.6f, 7.05f, 1f), new Quaternionf())).result().orElseThrow());
-            display.load(tag);
-            display.setPos(center.x, center.y, center.z);
-            display.setYRot(facing.toYRot() + side * 180);
-            display.setInvulnerable(true);
-            display.setNoGravity(true);
-            display.addTag(PLANE);
-            level.addFreshEntity(display);
-            result.add(display);
         }
         // Each exposed edge segment is independent, so a neighboring block hides
         // only the beam it actually covers.
         boolean widthX = facing.getAxis() == Direction.Axis.Z;
         for (int segment = 0; segment < 4; segment++) if ((mask & (1 << segment)) != 0) {
             float lateral = segment < 2 ? -.49f : .415f;
-            float y = segment % 2 == 0 ? .03f : .97f;
+            float y = segment % 2 == 0 ? .03f : 1f;
             Vector3f offset = widthX ? new Vector3f(lateral, y, -.035f)
                 : new Vector3f(-.035f, y, lateral);
-            Vector3f size = widthX ? new Vector3f(.075f, .94f, .07f)
-                : new Vector3f(.07f, .94f, .075f);
+            float length = segment % 2 == 0 ? .97f : .89f;
+            Vector3f size = widthX ? new Vector3f(.075f, length, .07f)
+                : new Vector3f(.07f, length, .075f);
             addFrameBeam(level, center, offset, size, result);
         }
         if ((mask & 16) != 0) addFrameBeam(level, center,

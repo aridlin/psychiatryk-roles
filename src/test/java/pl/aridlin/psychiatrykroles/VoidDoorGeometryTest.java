@@ -7,6 +7,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VoidDoorGeometryTest {
+    @Test void planeOnlyExpandsWhereAFrameSegmentIsHidden() {
+        assertEquals(new VoidDoors.PlaneSection(-.415, .415, 0, 1),
+            VoidDoors.planeSection(31, false));
+        assertEquals(new VoidDoors.PlaneSection(-.415, .415, 1, 1.89),
+            VoidDoors.planeSection(31, true));
+        assertEquals(new VoidDoors.PlaneSection(-.5, .415, 0, 1),
+            VoidDoors.planeSection(30, false));
+        assertEquals(new VoidDoors.PlaneSection(-.415, .415, 1, 1.89),
+            VoidDoors.planeSection(30, true));
+        assertEquals(new VoidDoors.PlaneSection(-.415, .415, 1, 2),
+            VoidDoors.planeSection(15, true));
+    }
+
     @Test void usesTheOtherSideWhenTheFacingSideIsBlocked() {
         BlockPos lower = new BlockPos(997, 77, 573);
         Vec3 south = Vec3.atBottomCenterOf(lower).add(0, .01, 1);
