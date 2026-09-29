@@ -107,6 +107,9 @@ Player redemption:
 
 ## Texas Hold'em poker
 
+Craft the poker menu clock from **one clock + one paper** in any crafting slots, or use `/poker gui item`. Operators/RCON can use `/poker gui item <player>`; offline deliveries are saved until the next login with free inventory space. The active seat wears a pulsing golden helmet, and the top-left book contains the viewer's latest poker chat messages. Private messages stay private to that viewer.
+
+
 The mod includes a complete server-authoritative multiplayer poker loop presented through vanilla chat. It requires no additional client mod. Tables support two to nine funded players, dealer/blind rotation, preflop/flop/turn/river betting, check, call, total-bet raise, fold, all-in, side pots, tied pots with deterministic odd-chip assignment, and seven-card showdown evaluation.
 
 Typical session:
@@ -271,7 +274,7 @@ The **Mirror of Returning** is an ordinary echo shard produced from one glass bl
 
 ### Void Door
 
-Craft two linked oak doors with planks and one ender pearl:
+Craft two linked dark oak doors with planks and one ender pearl:
 
 ```text
 wood  wood  empty
@@ -279,7 +282,25 @@ wood  pearl empty
 wood  wood  empty
 ```
 
-The crafted pair shares a unique link. Place both doors, open one, and walk into it to arrive just beyond the other door, including across dimensions. The link is saved with the world and is removed when either door is broken. Ordinary oak doors are unaffected.
+Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open either one, and cross its black plane to teleport across dimensions. The linked doors synchronize their open/closed state. Closed doors do not teleport. Each placed door keeps only its own chunk loaded using a Forge ticket, removed when the door is mined. The destination searches for a clear, supported side while preserving entry position, facing, and horizontal motion; clear air is accepted if no supported landing exists. Walking forward exits facing away from the door; walking backward exits facing toward it. If both sides are obstructed, teleporting is refused.
+
+The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Shift-breaking either complete endpoint removes both and returns the marked two-door stack, including its code. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane fits inside dark-oak display frame segments and expands only where a neighboring block fully covers a frame segment; all remain inside the closed leaf, so opening has no spawn delay. Vanilla block displays cannot render the End gateway block entity texture. Touching the plane with any part of a player or dropped item's hitbox teleports it. There are no particles or teleport cooldown. No client resource pack is needed.
+
+To add an optional code, put the newly crafted two-door stack in an anvil and rename it to the code. The output retains both linked doors but stores only a pair-specific SHA-256 digest. Leave the ordinary name to keep the pair unlocked. Right-clicking a coded closed door opens a vanilla anvil text prompt; type the code and take the paper-shaped submit control to open both doors. The paper is never granted, even on shift-click. A successful code entry lets that player reopen the pair without retyping for 15 seconds. Closing either door closes its partner. Unauthorised redstone opening is closed again on the next server tick. Mining preserves the code digest on the dropped door.
+
+### Void Trapdoor
+
+Craft two linked dark-oak Void Trapdoors with an empty top row, then plank + ender pearl + plank, then three planks. They stack up to two within one pair, and different pairs do not merge. Opening either trapdoor opens its partner, even across dimensions. Touching the black plane in the open trapdoor with any part of a player or dropped item's hitbox pops it into clear space above the linked trapdoor, with a gentle push away from the trapdoor's support side. Its narrow black plane and exposed dark-oak frame segments are already present while closed; only edges fully covered by neighboring blocks lose their frame and gain an extended plane. Each placed trapdoor keeps its own chunk loaded; mining preserves its pair ID and releases the ticket. Shift-breaking either complete endpoint removes both and returns the linked two-trapdoor stack.
+
+### Chat Book
+
+Craft a Chat Book from a book and quill plus an amethyst shard. Write one message or `/command` per line and close the editing screen. Sneak-right-click the book to send its lines in order. Chat is broadcast under the player's name as an unsigned server-originated player message; commands execute with that player's own permissions. The book allows up to 32 nonempty lines of 256 characters each per activation. Ordinary books are unaffected.
+
+### Scheduled restarts
+
+Operators and RCON can use `/restartin 5m`, `/restartin 1h30m`, `/restartin status`, and `/restartin cancel`. Durations range from 1 second to 30 days. Players receive localized titles and chat notices immediately, then at applicable milestones (including 5m, 1m, 30s, 10s, and 5s). Countdown timing uses elapsed wall time, so low TPS does not stretch it. Joining players see the current countdown.
+
+At zero, the server writes its timing marker, saves and stops cleanly. **The hosting supervisor must automatically relaunch the server after `stop`** (as on the existing deployment); this mod does not spawn a second JVM. The next fully started Forge server records downtime in `world/data/psychiatryk_restart_history.json`. The ETA uses the median of the last five valid restarts. No ETA is invented before the first measured restart. Offline intervals over 24 hours are excluded.
 
 Consultants remain in Survival and have unrestricted building, combat, containers, vehicles, item pickup, and ordinary item dropping there. Protected consultant equipment remains controlled.
 

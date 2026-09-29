@@ -4,7 +4,10 @@
   "package": "pl.aridlin.psychiatrykroles.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ServerLifecycleHooksMixin"
+    "ServerLifecycleHooksMixin",
+    "VoidDoorRecipeMixin",
+    "VoidDoorStackMixin",
+    "VoidDoorDropsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

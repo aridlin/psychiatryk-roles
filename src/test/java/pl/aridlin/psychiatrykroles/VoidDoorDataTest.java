@@ -10,6 +10,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VoidDoorDataTest {
     @Test
+    void minedDoorCanMoveAcrossDimensionsWithoutLosingItsPair() {
+        VoidDoorData data = new VoidDoorData();
+        UUID pair = UUID.randomUUID();
+        var first = new VoidDoorData.DoorPosition("minecraft:overworld", new BlockPos(1, 64, 2));
+        var second = new VoidDoorData.DoorPosition("minecraft:the_nether", new BlockPos(1, 64, 2));
+        assertTrue(data.addDoor(pair, first));
+        assertTrue(data.addDoor(pair, second));
+        assertEquals(pair, data.pairAt(first.dimension(), first.pos()));
+        assertFalse(data.addDoor(UUID.randomUUID(), first));
+        assertTrue(data.removeDoor(first.dimension(), first.pos()));
+        var moved = new VoidDoorData.DoorPosition("minecraft:the_end", new BlockPos(8, 80, 8));
+        assertTrue(data.addDoor(pair, moved));
+        VoidDoorData restored = VoidDoorData.load(data.save(new CompoundTag()));
+        assertEquals(moved, restored.partner(second.dimension(), second.pos()));
+        assertEquals(pair, restored.pairAt(moved.dimension(), moved.pos()));
+    }
+
+    @Test
     void linksExactlyTwoPlacedDoorsAndPersistsAcrossReload() {
         VoidDoorData data = new VoidDoorData();
         UUID pair = UUID.randomUUID();

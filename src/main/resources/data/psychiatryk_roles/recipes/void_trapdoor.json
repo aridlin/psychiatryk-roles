@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
-  "pattern": ["WW ", "WE ", "WW "],
+  "pattern": ["   ", "WEW", "WWW"],
   "key": {
     "W": { "tag": "minecraft:planks" },
     "E": { "item": "minecraft:ender_pearl" }
   },
   "result": {
-    "item": "minecraft:dark_oak_door",
+    "item": "minecraft:dark_oak_trapdoor",
     "count": 2,
-    "nbt": "{psychiatrykVoidDoor:1b}"
+    "nbt": "{psychiatrykVoidTrapdoor:1b}"
   },
   "show_notification": true
 }

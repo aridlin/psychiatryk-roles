@@ -17,6 +17,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RecipeResourcesTest {
     @Test
+    void chatBookRecipeMakesMarkedWritableBook() throws Exception {
+        try (var stream = RecipeResourcesTest.class.getResourceAsStream("/data/psychiatryk_roles/recipes/chat_book.json")) {
+            assertNotNull(stream);
+            JsonObject json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+            assertEquals("minecraft:crafting_shapeless", json.get("type").getAsString());
+            assertEquals("minecraft:writable_book", json.getAsJsonArray("ingredients").get(0).getAsJsonObject().get("item").getAsString());
+            assertEquals("minecraft:amethyst_shard", json.getAsJsonArray("ingredients").get(1).getAsJsonObject().get("item").getAsString());
+            assertEquals("minecraft:writable_book", json.getAsJsonObject("result").get("item").getAsString());
+            assertTrue(TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString()).getBoolean("psychiatrykChatBook"));
+        }
+    }
+
+    @Test
+    void pokerRecipeCraftsAFunctionalMenuClock() throws Exception {
+        try (var stream = RecipeResourcesTest.class.getResourceAsStream("/data/psychiatryk_roles/recipes/poker_menu.json")) {
+            assertNotNull(stream);
+            JsonObject json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+            assertEquals("minecraft:crafting_shapeless", json.get("type").getAsString());
+            assertEquals("minecraft:clock", json.getAsJsonArray("ingredients").get(0).getAsJsonObject().get("item").getAsString());
+            assertEquals("minecraft:paper", json.getAsJsonArray("ingredients").get(1).getAsJsonObject().get("item").getAsString());
+            assertTrue(TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString()).getBoolean("psychiatrykPokerMenu"));
+        }
+    }
+
+    @Test
     void voidDoorRecipeMakesOneMarkedPairFromWoodAndPearl() throws Exception {
         var stream = RecipeResourcesTest.class.getResourceAsStream(
             "/data/psychiatryk_roles/recipes/void_door.json");
@@ -28,6 +53,7 @@ class RecipeResourcesTest {
         assertEquals("WW ", json.getAsJsonArray("pattern").get(2).getAsString());
         assertEquals("minecraft:planks", json.getAsJsonObject("key").getAsJsonObject("W").get("tag").getAsString());
         assertEquals("minecraft:ender_pearl", json.getAsJsonObject("key").getAsJsonObject("E").get("item").getAsString());
+        assertEquals("minecraft:dark_oak_door", json.getAsJsonObject("result").get("item").getAsString());
         assertEquals(2, json.getAsJsonObject("result").get("count").getAsInt());
         assertTrue(TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString())
             .getBoolean("psychiatrykVoidDoor"));
