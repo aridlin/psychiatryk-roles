@@ -17,5 +17,6 @@ abstract class VoidDoorDropsMixin {
     private void psychiatrykRoles$preserveLink(BlockState state, LootParams.Builder params,
                                               CallbackInfoReturnable<List<ItemStack>> callback) {
         VoidDoors.preserveDropLink(state, params, callback.getReturnValue());
+        pl.aridlin.psychiatrykroles.VoidTrapdoors.preserveDropLink(state, params, callback.getReturnValue());
     }
 }

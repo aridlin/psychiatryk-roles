@@ -3,6 +3,7 @@ package pl.aridlin.psychiatrykroles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 
 import java.util.function.Predicate;
 
@@ -24,6 +25,16 @@ final class VoidDoorGeometry {
         Vec3 hit = from.lerp(to, a / (a - b));
         double sideways = facing.getAxis() == Direction.Axis.X ? hit.z - center.z : hit.x - center.x;
         return Math.abs(sideways) < 0.5 && hit.y < lower.getY() + 2 && hit.y + height > lower.getY();
+    }
+
+    static boolean touches(BlockPos lower, Direction facing, AABB hitbox) {
+        Vec3 center = center(lower, facing);
+        AABB plane = facing.getAxis() == Direction.Axis.X
+            ? new AABB(center.x - .025, lower.getY(), center.z - .48,
+                center.x + .025, lower.getY() + 2, center.z + .48)
+            : new AABB(center.x - .48, lower.getY(), center.z - .025,
+                center.x + .48, lower.getY() + 2, center.z + .025);
+        return plane.intersects(hitbox);
     }
 
     static Vec3 firstClearExit(BlockPos lower, Direction facing, Predicate<Vec3> clear) {

@@ -21,5 +21,6 @@ abstract class VoidDoorRecipeMixin {
     private void psychiatrykRoles$pair(CraftingContainer input, RegistryAccess registries,
                                       CallbackInfoReturnable<ItemStack> callback) {
         VoidDoors.assignCraftedPair(callback.getReturnValue());
+        pl.aridlin.psychiatrykroles.VoidTrapdoors.assignCraftedPair(callback.getReturnValue());
     }
 }

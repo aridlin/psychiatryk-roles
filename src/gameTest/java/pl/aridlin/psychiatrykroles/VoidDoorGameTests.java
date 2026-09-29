@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -17,14 +18,19 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -36,6 +42,7 @@ import java.util.UUID;
 public final class VoidDoorGameTests {
     private static final class TrackingPlayer extends FakePlayer {
         private ServerLevel teleportedLevel;
+        private float exitYaw;
 
         private TrackingPlayer(ServerLevel level) {
             super(level, new GameProfile(UUID.randomUUID(), "door-test"));
@@ -43,6 +50,7 @@ public final class VoidDoorGameTests {
 
         @Override public void teleportTo(ServerLevel level, double x, double y, double z, float yaw, float pitch) {
             teleportedLevel = level;
+            exitYaw = yaw;
             setPos(x, y, z);
         }
     }
@@ -117,8 +125,10 @@ public final class VoidDoorGameTests {
             helper.assertTrue(player.serverLevel() == level, "Test player must be in the door dimension");
             helper.assertTrue(!player.isSpectator() && !player.isPassenger() && !player.isSleeping() && player.isAlive(),
                 "Test player must be eligible to teleport");
+            level.setBlock(destination, level.getBlockState(destination).setValue(DoorBlock.OPEN, false), 2);
+            level.setBlock(destination.above(), level.getBlockState(destination.above()).setValue(DoorBlock.OPEN, false), 2);
             helper.assertTrue(level.getBlockState(source).getValue(DoorBlock.OPEN)
-                && level.getBlockState(destination).getValue(DoorBlock.OPEN), "Both test doors must be open");
+                && !level.getBlockState(destination).getValue(DoorBlock.OPEN), "Only the entry door needs to be open");
             helper.assertTrue(level.getBlockState(source).getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER
                 && level.getBlockState(source.above()).is(Blocks.DARK_OAK_DOOR)
                 && level.getBlockState(source.above()).getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER
@@ -127,6 +137,7 @@ public final class VoidDoorGameTests {
                 && level.getBlockState(destination.above()).getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER,
                 "Both test doors must retain their upper and lower halves");
             player.setPos(source.getX() - .25, source.getY() + .01, source.getZ() + .5);
+            player.setYRot(-90); // Walk east, facing east.
             Vec3 from = player.position();
             doors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
             player.setPos(source.getX() + .35, source.getY() + .01, source.getZ() + .5);
@@ -142,9 +153,78 @@ public final class VoidDoorGameTests {
             helper.assertTrue(Math.abs(player.getX() - (destination.getX() - .5)) < .05,
                 "Crossing must teleport to the clear side: actual x=" + player.getX()
                     + " expected=" + (destination.getX() - .5) + " candidate=" + candidate);
+            helper.assertTrue(player.exitYaw == Direction.WEST.toYRot(),
+                "Forward crossing must face away from the west exit");
+
+            var backwards = new TrackingPlayer(level);
+            backwards.setYRot(90); // Walk east while looking west.
+            backwards.setPos(source.getX() - .25, source.getY() + .01, source.getZ() + .5);
+            var secondPass = new VoidDoors();
+            secondPass.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, backwards));
+            backwards.setPos(source.getX() + .35, source.getY() + .01, source.getZ() + .5);
+            secondPass.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, backwards));
+            helper.assertTrue(backwards.teleportedLevel == level && backwards.exitYaw == Direction.EAST.toYRot(),
+                "Backward crossing must face the door from the west exit");
+            Vec3 plane = VoidDoorGeometry.center(source, Direction.EAST);
+            helper.assertTrue(VoidDoorGeometry.touches(source, Direction.EAST,
+                new AABB(plane.x - .01, plane.y + .5, plane.z - .01,
+                    plane.x + .01, plane.y + .6, plane.z + .01)),
+                "Any part of an entity hitbox touching the door plane must count");
+            var item = new net.minecraft.world.entity.item.ItemEntity(level,
+                plane.x, plane.y + .5, plane.z, new ItemStack(Items.DIAMOND));
+            level.addFreshEntity(item);
+            doors.onLevelTick(new TickEvent.LevelTickEvent(LogicalSide.SERVER, TickEvent.Phase.END,
+                level, () -> true));
+            helper.assertTrue(item.getX() > destination.getX() - 1,
+                "Dropped items touching the door plane must teleport");
         } finally {
             data.removeDoor(dimension, source);
             data.removeDoor(dimension, destination);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void eitherDoorSynchronizesOpenAndClosed(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos first = helper.absolutePos(new BlockPos(0, 1, 1));
+        BlockPos second = helper.absolutePos(new BlockPos(2, 1, 1));
+        for (BlockPos pos : java.util.List.of(first, second)) {
+            level.setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 2);
+            var lower = Blocks.DARK_OAK_DOOR.defaultBlockState().setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER);
+            level.setBlock(pos, lower, 2);
+            level.setBlock(pos.above(), lower.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 2);
+        }
+        var data = VoidDoorData.get(level.getServer());
+        String dimension = level.dimension().location().toString();
+        UUID pair = UUID.randomUUID();
+        data.addDoor(pair, new VoidDoorData.DoorPosition(dimension, first));
+        data.addDoor(pair, new VoidDoorData.DoorPosition(dimension, second));
+        var doors = new VoidDoors();
+        try {
+            var tick = new TickEvent.ServerTickEvent(TickEvent.Phase.END, () -> true, level.getServer());
+            doors.onServerTick(tick);
+            long closedVisuals = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
+                .size();
+            helper.assertTrue(closedVisuals == 5,
+                "Closed door must already contain its two black faces and three frame beams");
+            for (BlockPos pos : java.util.List.of(second, second.above()))
+                level.setBlock(pos, level.getBlockState(pos).setValue(DoorBlock.OPEN, true), 2);
+            doors.onServerTick(tick);
+            helper.assertTrue(level.getBlockState(first).getValue(DoorBlock.OPEN)
+                && level.getBlockState(first.above()).getValue(DoorBlock.OPEN),
+                "Opening either endpoint must open both halves of its partner");
+            for (BlockPos pos : java.util.List.of(first, first.above()))
+                level.setBlock(pos, level.getBlockState(pos).setValue(DoorBlock.OPEN, false), 2);
+            doors.onServerTick(tick);
+            helper.assertTrue(!level.getBlockState(second).getValue(DoorBlock.OPEN)
+                && !level.getBlockState(second.above()).getValue(DoorBlock.OPEN),
+                "Closing either endpoint must close both halves of its partner");
+        } finally {
+            data.removeDoor(dimension, first);
+            data.removeDoor(dimension, second);
+            doors.onServerTick(new TickEvent.ServerTickEvent(TickEvent.Phase.END, () -> true, level.getServer()));
         }
         helper.succeed();
     }
@@ -163,6 +243,9 @@ public final class VoidDoorGameTests {
 
     @GameTest(template = "empty")
     public static void recipesAndStackLimits(GameTestHelper helper) {
+        helper.assertTrue(helper.getLevel().getRecipeManager()
+            .byKey(new ResourceLocation("psychiatryk_roles", "void_trapdoor")).isPresent(),
+            "The linked trapdoor recipe must load from the data pack");
         ItemStack output = new ItemStack(Items.DARK_OAK_DOOR, 2);
         output.getOrCreateTag().putBoolean("psychiatrykVoidDoor", true);
         ShapedRecipe recipe = new ShapedRecipe(new ResourceLocation("psychiatryk_roles", "void_door"), "",
@@ -174,6 +257,15 @@ public final class VoidDoorGameTests {
         helper.assertTrue(first.getMaxStackSize() == 2, "Void Door stacks must be limited to two");
         helper.assertTrue(new ItemStack(Items.DARK_OAK_DOOR).getMaxStackSize() == 64, "Ordinary doors must remain unchanged");
         helper.assertTrue(!ItemStack.isSameItemSameTags(first, second), "Different pairs must not merge");
+        ItemStack trapdoorOutput = new ItemStack(Items.DARK_OAK_TRAPDOOR, 2);
+        trapdoorOutput.getOrCreateTag().putBoolean("psychiatrykVoidTrapdoor", true);
+        ShapedRecipe trapdoorRecipe = new ShapedRecipe(new ResourceLocation("psychiatryk_roles", "void_trapdoor"), "",
+            CraftingBookCategory.MISC, 1, 1, NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.ENDER_PEARL)),
+            trapdoorOutput);
+        ItemStack trapdoorPair = trapdoorRecipe.assemble((net.minecraft.world.inventory.CraftingContainer) null,
+            helper.getLevel().registryAccess());
+        helper.assertTrue(VoidTrapdoors.pair(trapdoorPair) != null && trapdoorPair.getMaxStackSize() == 2,
+            "Trapdoor recipe must assign a stackable linked pair during assembly");
         helper.succeed();
     }
 
@@ -195,6 +287,97 @@ public final class VoidDoorGameTests {
         helper.assertTrue(Block.getDrops(lower.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), level, pos.above(), null).isEmpty(),
             "Upper half must not duplicate the item");
         data.removeDoor(dimension, pos);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void codeFromAnvilUnlocksOnlyWithCorrectText(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = new TrackingPlayer(level);
+        ItemStack pair = new ItemStack(Items.DARK_OAK_DOOR, 2);
+        pair.getOrCreateTag().putBoolean("psychiatrykVoidDoor", true);
+        VoidDoors.assignCraftedPair(pair);
+        var anvil = new AnvilUpdateEvent(pair, ItemStack.EMPTY, "secret 123", 0, player);
+        var doors = new VoidDoors();
+        doors.onAnvilUpdate(anvil);
+        ItemStack coded = anvil.getOutput();
+        helper.assertTrue(!coded.isEmpty() && coded.getCount() == 2,
+            "Anvil must return the complete linked pair");
+        helper.assertTrue(!coded.getTag().toString().contains("secret 123"),
+            "The plain code must not be kept on the item");
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        level.setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 2);
+        var lower = Blocks.DARK_OAK_DOOR.defaultBlockState().setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER);
+        level.setBlock(pos, lower, 2);
+        level.setBlock(pos.above(), lower.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 2);
+        var data = VoidDoorData.get(level.getServer());
+        UUID id = VoidDoors.pair(coded);
+        String dimension = level.dimension().location().toString();
+        data.addDoor(id, new VoidDoorData.DoorPosition(dimension, pos));
+        data.setCode(id, coded.getTag().getString("psychiatrykVoidDoorCode"));
+        helper.assertTrue(data.code(id).equals(VoidDoorData.load(data.save(new CompoundTag())).code(id)),
+            "The code digest must survive saving and loading the world");
+        try {
+            var wrong = new VoidDoorCodeMenu(1, player.getInventory(), doors, level, pos, id);
+            wrong.setItemName("wrong");
+            wrong.clicked(wrong.getResultSlot(), 0, net.minecraft.world.inventory.ClickType.PICKUP, player);
+            helper.assertTrue(!level.getBlockState(pos).getValue(DoorBlock.OPEN),
+                "Wrong code must keep the door closed");
+            var correct = new VoidDoorCodeMenu(2, player.getInventory(), doors, level, pos, id);
+            correct.setItemName("secret 123");
+            correct.clicked(correct.getResultSlot(), 0, net.minecraft.world.inventory.ClickType.PICKUP, player);
+            helper.assertTrue(level.getBlockState(pos).getValue(DoorBlock.OPEN),
+                "Correct code must open the door");
+            helper.assertTrue(player.getInventory().countItem(Items.PAPER) == 0,
+                "The anvil prompt must never grant its paper placeholder");
+        } finally {
+            data.removeDoor(dimension, pos);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void trapdoorPairTeleportsAndKeepsItsLink(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos source = helper.absolutePos(new BlockPos(0, 1, 1));
+        BlockPos destination = helper.absolutePos(new BlockPos(2, 1, 1));
+        var opened = Blocks.DARK_OAK_TRAPDOOR.defaultBlockState()
+            .setValue(TrapDoorBlock.HALF, Half.BOTTOM).setValue(TrapDoorBlock.OPEN, true);
+        level.setBlock(source, opened, 2);
+        level.setBlock(destination, opened.setValue(TrapDoorBlock.OPEN, false), 2);
+        level.setBlock(destination.north(), Blocks.STONE.defaultBlockState(), 2);
+        var data = VoidTrapdoorData.get(level.getServer());
+        UUID id = UUID.randomUUID();
+        String dimension = level.dimension().location().toString();
+        data.addDoor(id, new VoidTrapdoorData.DoorPosition(dimension, source));
+        data.addDoor(id, new VoidTrapdoorData.DoorPosition(dimension, destination));
+        try {
+            var drops = Block.getDrops(opened, level, source, null);
+            helper.assertTrue(drops.size() == 1 && id.equals(VoidTrapdoors.pair(drops.get(0))),
+                "Mined trapdoor must retain the linked pair ID");
+            var traveler = new TrackingPlayer(level);
+            traveler.setPos(source.getX() + .5, source.getY() + .1, source.getZ() + .5);
+            var trapdoors = new VoidTrapdoors();
+            trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
+            trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
+            helper.assertTrue(traveler.teleportedLevel == level, "Open trapdoor must teleport to its linked partner");
+            helper.assertTrue(level.getBlockState(destination).getValue(TrapDoorBlock.OPEN) == false,
+                "Destination need not be open at the instant of contact");
+            helper.assertTrue(VoidTrapdoors.touches(new Vec3(source.getX() + .5, source.getY() + .1,
+                source.getZ() + .5), new AABB(source.getX() + .45, source.getY() + .08,
+                source.getZ() + .45, source.getX() + .55, source.getY() + .12, source.getZ() + .55)),
+                "Any part of the hitbox touching the plane must count");
+            var item = new net.minecraft.world.entity.item.ItemEntity(level,
+                source.getX() + .5, source.getY() + .1, source.getZ() + .5, new ItemStack(Items.DIAMOND));
+            level.addFreshEntity(item);
+            trapdoors.onLevelTick(new TickEvent.LevelTickEvent(LogicalSide.SERVER, TickEvent.Phase.END,
+                level, () -> true));
+            helper.assertTrue(item.getX() > destination.getX() - 1,
+                "A dropped item touching the plane must also teleport");
+        } finally {
+            data.removeDoor(dimension, source);
+            data.removeDoor(dimension, destination);
+        }
         helper.succeed();
     }
 }

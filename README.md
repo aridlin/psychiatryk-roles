@@ -282,9 +282,15 @@ wood  pearl empty
 wood  wood  empty
 ```
 
-Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open both, and cross the black plane to teleport across dimensions. Closed doors do not teleport. Remote chunks are loaded on demand; the destination uses the first clear, supported side of its doorway. If neither side is safe, teleporting is refused.
+Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open either one, and cross its black plane to teleport across dimensions. The linked doors synchronize their open/closed state. Closed doors do not teleport. Each placed door keeps only its own chunk loaded using a Forge ticket, removed when the door is mined. The destination uses the first clear, supported side of its doorway. You face away from the destination door after walking through, or toward it if you entered backward. If neither side is safe, teleporting is refused.
 
-The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane uses two vanilla text-display backgrounds and stays present inside the closed leaf, so opening has no display-spawn delay. No client resource pack is needed.
+The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane and three thin dark-oak display beams stay inside the closed leaf, so opening has no spawn delay. End-like particles appear while it is open; vanilla block displays cannot render the End gateway block entity texture. Touching the plane with any part of a player or dropped item's hitbox teleports it. There is no teleport cooldown. No client resource pack is needed.
+
+To add an optional code, put the newly crafted two-door stack in an anvil and rename it to the code. The output retains both linked doors but stores only a pair-specific SHA-256 digest. Leave the ordinary name to keep the pair unlocked. Right-clicking a coded closed door opens a vanilla anvil text prompt; type the code and take the paper-shaped submit control to open both doors. The paper is never granted. Closing either door closes its partner. Unauthorised redstone opening is closed again on the next server tick. Mining preserves the code digest on the dropped door.
+
+### Void Trapdoor
+
+Craft two linked dark-oak Void Trapdoors with an empty top row, then plank + ender pearl + plank, then three planks. They stack up to two within one pair, and different pairs do not merge. Opening either trapdoor opens its partner, even across dimensions. Touching the black plane in the open trapdoor with any part of a player or dropped item's hitbox teleports it to the first safe supported position beside the linked trapdoor. Each placed trapdoor keeps its own chunk loaded; mining preserves its pair ID and releases the ticket.
 
 ### Chat Book
 

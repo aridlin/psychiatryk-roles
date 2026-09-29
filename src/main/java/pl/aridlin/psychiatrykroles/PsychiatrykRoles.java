@@ -243,6 +243,7 @@ public final class PsychiatrykRoles {
     public PsychiatrykRoles() {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new VoidDoors());
+        MinecraftForge.EVENT_BUS.register(new VoidTrapdoors());
         MinecraftForge.EVENT_BUS.register(new RestartManager());
         MinecraftForge.EVENT_BUS.register(new PokerActivity());
     }
@@ -577,6 +578,8 @@ public final class PsychiatrykRoles {
         }
         if (VoidDoors.isVoidDoor(stack)) {
             VoidDoors.localize(stack, en);
+        } else if (VoidTrapdoors.isVoidTrapdoor(stack)) {
+            VoidTrapdoors.localize(stack, en);
             return;
         }
         if (!isConsultantEquipment(stack)) {

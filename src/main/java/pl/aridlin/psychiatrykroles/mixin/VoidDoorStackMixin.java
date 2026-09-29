@@ -11,6 +11,8 @@ import pl.aridlin.psychiatrykroles.VoidDoors;
 abstract class VoidDoorStackMixin {
     @Inject(method = {"getMaxStackSize", "m_41741_"}, at = @At("HEAD"), cancellable = true)
     private void psychiatrykRoles$pairStackLimit(CallbackInfoReturnable<Integer> callback) {
-        if (VoidDoors.isVoidDoor((ItemStack) (Object) this)) callback.setReturnValue(2);
+        if (VoidDoors.isVoidDoor((ItemStack) (Object) this)
+            || pl.aridlin.psychiatrykroles.VoidTrapdoors.isVoidTrapdoor((ItemStack) (Object) this))
+            callback.setReturnValue(2);
     }
 }
