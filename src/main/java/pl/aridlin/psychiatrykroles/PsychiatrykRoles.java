@@ -567,6 +567,10 @@ public final class PsychiatrykRoles {
     }
 
     private static void applyLocalizedPresentation(ItemStack stack, boolean en) {
+        if (ChatBook.isChatBook(stack)) {
+            ChatBook.localize(stack, en);
+            return;
+        }
         if (PokerCommands.isGuiItem(stack)) {
             PokerCommands.localizeGuiItem(stack, en);
             return;
@@ -754,7 +758,8 @@ public final class PsychiatrykRoles {
     }
 
     private static ItemStack localizedView(ItemStack original, UUID viewerId) {
-        if (!isConsultantEquipment(original) && !VoidDoors.isVoidDoor(original) && !PokerCommands.isGuiItem(original)) {
+        if (!isConsultantEquipment(original) && !VoidDoors.isVoidDoor(original)
+            && !PokerCommands.isGuiItem(original) && !ChatBook.isChatBook(original)) {
             return original;
         }
         ItemStack localized = original.copy();
@@ -1784,6 +1789,14 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onContainerInteraction(PlayerInteractEvent.RightClickBlock event) {
+        if (ChatBook.isChatBook(event.getItemStack()) && event.getEntity() instanceof ServerPlayer player) {
+            if (player.isShiftKeyDown()) {
+                ChatBook.send(player, event.getItemStack());
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.SUCCESS);
+            }
+            return;
+        }
         if (PokerCommands.isGuiItem(event.getItemStack())
             && event.getEntity() instanceof ServerPlayer player) {
             PokerCommands.openGui(player);
@@ -1909,6 +1922,14 @@ public final class PsychiatrykRoles {
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickItem event) {
         ItemStack stack = event.getItemStack();
+        if (ChatBook.isChatBook(stack) && event.getEntity() instanceof ServerPlayer player) {
+            if (player.isShiftKeyDown()) {
+                ChatBook.send(player, stack);
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.SUCCESS);
+            }
+            return;
+        }
         if (PokerCommands.isGuiItem(stack) && event.getEntity() instanceof ServerPlayer player) {
             PokerCommands.openGui(player);
             event.setCanceled(true);

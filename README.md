@@ -282,9 +282,13 @@ wood  pearl empty
 wood  wood  empty
 ```
 
-Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open both, and cross the black plane to teleport across dimensions. Closed doors do not teleport. Remote chunks are loaded on demand; obstructed exits refuse the teleport.
+Each crafted pair receives a unique UUID before the result can be taken, including shift-click crafting. Marked door stacks are limited to two; different pairs never merge. Place both doors, open both, and cross the black plane to teleport across dimensions. Closed doors do not teleport. Remote chunks are loaded on demand; the destination uses the first clear, supported side of its doorway. If neither side is safe, teleporting is refused.
 
-The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane uses two vanilla text-display backgrounds, so no client resource pack is needed.
+The link is saved with the world. Mining either half produces one marked dark oak door with the same pair ID; replacing it restores its endpoint. Saved oak Void Doors migrate to dark oak when their chunks load. Ordinary doors remain unchanged. The pure black plane uses two vanilla text-display backgrounds and stays present inside the closed leaf, so opening has no display-spawn delay. No client resource pack is needed.
+
+### Chat Book
+
+Craft a Chat Book from a book and quill plus an amethyst shard. Write one message or `/command` per line and close the editing screen. Sneak-right-click the book to send its lines in order. Chat is broadcast under the player's name as an unsigned server-originated player message; commands execute with that player's own permissions. The book allows up to 32 nonempty lines of 256 characters each per activation. Ordinary books are unaffected.
 
 ### Scheduled restarts
 

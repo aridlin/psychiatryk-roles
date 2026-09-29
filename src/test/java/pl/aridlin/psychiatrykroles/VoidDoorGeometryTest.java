@@ -7,6 +7,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VoidDoorGeometryTest {
+    @Test void usesTheOtherSideWhenTheFacingSideIsBlocked() {
+        BlockPos lower = new BlockPos(997, 77, 573);
+        Vec3 south = Vec3.atBottomCenterOf(lower).add(0, .01, 1);
+        Vec3 north = Vec3.atBottomCenterOf(lower).add(0, .01, -1);
+        assertEquals(north, VoidDoorGeometry.firstClearExit(lower, Direction.SOUTH,
+            candidate -> candidate.equals(north)));
+        assertEquals(south, VoidDoorGeometry.firstClearExit(lower, Direction.SOUTH,
+            candidate -> true));
+        assertNull(VoidDoorGeometry.firstClearExit(lower, Direction.SOUTH, candidate -> false));
+    }
+
     @Test void allFacingsWorkFromBothSidesOnlyWhenCrossed() {
         BlockPos lower = new BlockPos(2, 64, 3);
         for (Direction facing : Direction.Plane.HORIZONTAL) {

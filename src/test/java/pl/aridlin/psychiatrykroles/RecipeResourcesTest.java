@@ -17,6 +17,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RecipeResourcesTest {
     @Test
+    void chatBookRecipeMakesMarkedWritableBook() throws Exception {
+        try (var stream = RecipeResourcesTest.class.getResourceAsStream("/data/psychiatryk_roles/recipes/chat_book.json")) {
+            assertNotNull(stream);
+            JsonObject json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+            assertEquals("minecraft:crafting_shapeless", json.get("type").getAsString());
+            assertEquals("minecraft:writable_book", json.getAsJsonArray("ingredients").get(0).getAsJsonObject().get("item").getAsString());
+            assertEquals("minecraft:amethyst_shard", json.getAsJsonArray("ingredients").get(1).getAsJsonObject().get("item").getAsString());
+            assertEquals("minecraft:writable_book", json.getAsJsonObject("result").get("item").getAsString());
+            assertTrue(TagParser.parseTag(json.getAsJsonObject("result").get("nbt").getAsString()).getBoolean("psychiatrykChatBook"));
+        }
+    }
+
+    @Test
     void pokerRecipeCraftsAFunctionalMenuClock() throws Exception {
         try (var stream = RecipeResourcesTest.class.getResourceAsStream("/data/psychiatryk_roles/recipes/poker_menu.json")) {
             assertNotNull(stream);

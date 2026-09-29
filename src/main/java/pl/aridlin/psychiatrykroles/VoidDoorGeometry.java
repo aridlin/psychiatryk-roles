@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Predicate;
+
 final class VoidDoorGeometry {
     private VoidDoorGeometry() {}
 
@@ -22,5 +24,14 @@ final class VoidDoorGeometry {
         Vec3 hit = from.lerp(to, a / (a - b));
         double sideways = facing.getAxis() == Direction.Axis.X ? hit.z - center.z : hit.x - center.x;
         return Math.abs(sideways) < 0.5 && hit.y < lower.getY() + 2 && hit.y + height > lower.getY();
+    }
+
+    static Vec3 firstClearExit(BlockPos lower, Direction facing, Predicate<Vec3> clear) {
+        Vec3 center = Vec3.atBottomCenterOf(lower).add(0, 0.01, 0);
+        for (Direction side : new Direction[] { facing, facing.getOpposite() }) {
+            Vec3 exit = center.add(side.getStepX() * 1.0, 0, side.getStepZ() * 1.0);
+            if (clear.test(exit)) return exit;
+        }
+        return null;
     }
 }

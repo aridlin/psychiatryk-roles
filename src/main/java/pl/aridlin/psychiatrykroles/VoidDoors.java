@@ -1,11 +1,13 @@
 package pl.aridlin.psychiatrykroles;
 
+import com.mojang.math.Transformation;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
@@ -14,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Display;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,6 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 public final class VoidDoors {
     private static final String MARKER = "psychiatrykVoidDoor";
@@ -162,7 +167,8 @@ public final class VoidDoors {
             ServerLevel level = level(server, position.dimension());
             if (level == null || !level.hasChunkAt(position.pos()) || !completeDoor(level, position.pos())) continue;
             migrateOak(level, position.pos());
-            if (!level.getBlockState(position.pos()).getValue(DoorBlock.OPEN)) continue;
+            // The display sits inside the closed leaf, so keeping it alive avoids a
+            // visible spawn delay when the player opens the door.
             active.add(position);
             List<Display.TextDisplay> current = planes.get(position);
             if (current == null || current.stream().anyMatch(entity -> entity.isRemoved())) {
@@ -196,10 +202,18 @@ public final class VoidDoors {
             target.getChunkAt(destination.pos()); // Remote dimension/chunk may have no players.
             if (!completeDoor(target, destination.pos())) continue;
             BlockState targetState = target.getBlockState(destination.pos());
-            if (!targetState.getValue(DoorBlock.OPEN)) continue;
+            if (!targetState.getValue(DoorBlock.OPEN)) {
+                player.displayClientMessage(Component.literal(PsychiatrykRoles.isEnglish(player)
+                    ? "Open the linked Void Door first." : "Najpierw otwórz połączone Drzwi Pustki."), true);
+                continue;
+            }
             Direction facing = targetState.getValue(DoorBlock.FACING);
-            Vec3 exit = Vec3.atBottomCenterOf(destination.pos()).add(facing.getStepX() * 1.25, 0.01, facing.getStepZ() * 1.25);
-            if (!target.noCollision(player, player.getBoundingBox().move(exit.subtract(player.position())))) continue;
+            Vec3 exit = safeExit(target, player, destination.pos(), facing);
+            if (exit == null) {
+                player.displayClientMessage(Component.literal(PsychiatrykRoles.isEnglish(player)
+                    ? "No safe landing beside the linked Void Door." : "Brak bezpiecznego miejsca przy połączonych Drzwiach Pustki."), true);
+                continue;
+            }
             cooldown.put(player.getUUID(), now + 40);
             player.teleportTo(target, exit.x, exit.y, exit.z, facing.toYRot(), player.getXRot());
             previous.put(player.getUUID(), new Sample(destination.dimension(), exit));
@@ -226,6 +240,14 @@ public final class VoidDoors {
             && upper.getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER;
     }
 
+    static Vec3 safeExit(ServerLevel target, Entity traveler, BlockPos door, Direction facing) {
+        return VoidDoorGeometry.firstClearExit(door, facing, exit -> {
+            BlockPos floor = BlockPos.containing(exit.x, exit.y - 0.1, exit.z);
+            if (target.getBlockState(floor).getCollisionShape(target, floor).isEmpty()) return false;
+            return target.noCollision(traveler, traveler.getBoundingBox().move(exit.subtract(traveler.position())));
+        });
+    }
+
     private static void migrateOak(ServerLevel level, BlockPos lower) {
         for (BlockPos pos : List.of(lower, lower.above())) {
             BlockState old = level.getBlockState(pos);
@@ -245,12 +267,15 @@ public final class VoidDoors {
             try {
                 tag = TagParser.parseTag("{text:'{\"text\":\" \"}',background:-16777216,text_opacity:0b,"
                     + "billboard:\"fixed\",see_through:0b,default_background:0b,shadow:0b,"
-                    + "width:2f,height:4f,view_range:1f,"
-                    + "transformation:{translation:[-0.1f,0f,0f],scale:[8f,7.2727275f,1f],"
-                    + "left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f]}}");
+                    + "width:2f,height:4f,view_range:1f}");
             } catch (com.mojang.brigadier.exceptions.CommandSyntaxException impossible) {
                 throw new IllegalStateException(impossible);
             }
+            // Let Mojang's codec produce the exact NBT representation expected by Display.
+            // Handwritten quaternion lists were rejected during real Forge startup.
+            tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
+                new Transformation(new Vector3f(-.1f, 0, 0), new Quaternionf(),
+                    new Vector3f(8f, 7.2727275f, 1f), new Quaternionf())).result().orElseThrow());
             display.load(tag);
             display.setPos(center.x, center.y, center.z);
             display.setYRot(facing.toYRot() + side * 180);

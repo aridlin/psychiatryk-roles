@@ -68,6 +68,15 @@ class WebsiteLocalizationTest {
     }
 
     @Test
+    void chatBookRecipeExplainsTheActivationAndHasEnglishCopy() throws IOException {
+        String html = page();
+        assertTrue(html.contains("id=\"chat-book-recipe\""));
+        assertTrue(html.contains("1 × książka i pióro + 1 × odłamek ametystu"));
+        assertTrue(html.contains("1 × book and quill + 1 × amethyst shard"));
+        assertTrue(html.contains("Sneak-right-click") || html.contains("sneak and right-click"));
+    }
+
+    @Test
     void publishesTheVerifiedDynmapEndpoint() throws IOException {
         String html = page();
         assertTrue(html.contains("http://pl01-waw.icsv.pl:21007/"));
