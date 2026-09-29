@@ -29,8 +29,9 @@ final class VoidDoorCodeMenu extends AnvilMenu {
         this.door = door;
         this.pair = pair;
         ItemStack prompt = new ItemStack(Items.PAPER);
-        prompt.setHoverName(Component.literal(PsychiatrykRoles.isEnglish(inventory.player)
-            ? "Type code above" : "Wpisz kod powyżej"));
+        // AnvilScreen copies this item's hover name into the input field on open.
+        // The menu title supplies the prompt, while an empty item name leaves the field blank.
+        prompt.setHoverName(Component.empty());
         inputSlots.setItem(0, prompt);
         broadcastChanges();
     }

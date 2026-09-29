@@ -587,9 +587,12 @@ public final class VoidDoors {
                 } catch (com.mojang.brigadier.exceptions.CommandSyntaxException impossible) {
                     throw new IllegalStateException(impossible);
                 }
-                // The renderer offsets the background by half a pixel. Center each section.
+                // TextDisplay's background is centered half a font pixel to the right.
+                // Its effective horizontal scale is positive after the renderer's Y flip,
+                // so move it left by that amount. A positive translation visibly shifted
+                // the plane out of the frame, especially when one frame edge was hidden.
                 tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
-                    new Transformation(new Vector3f(scaleX * .0125f, 0, 0), new Quaternionf(),
+                    new Transformation(new Vector3f(-scaleX * .0125f, 0, 0), new Quaternionf(),
                         new Vector3f(scaleX, scaleY, 1f), new Quaternionf())).result().orElseThrow());
                 display.load(tag);
                 double depth = side == 0 ? .004 : -.004;

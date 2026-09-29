@@ -213,6 +213,14 @@ public final class VoidDoorGameTests {
                 .size();
             helper.assertTrue(closedVisuals == 9,
                 "Closed door must contain four black plane sections and five frame segments");
+            for (var display : level.getEntitiesOfClass(net.minecraft.world.entity.Display.TextDisplay.class,
+                new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))) {
+                CompoundTag transform = display.saveWithoutId(new CompoundTag()).getCompound("transformation");
+                float scaleX = transform.getList("scale", net.minecraft.nbt.Tag.TAG_FLOAT).getFloat(0);
+                float translationX = transform.getList("translation", net.minecraft.nbt.Tag.TAG_FLOAT).getFloat(0);
+                helper.assertTrue(Math.abs(translationX + scaleX * .0125f) < .0001f,
+                    "Black plane must cancel the text renderer's half-pixel horizontal offset");
+            }
             level.setBlock(first.east(), Blocks.STONE_SLAB.defaultBlockState()
                 .setValue(SlabBlock.TYPE, SlabType.BOTTOM), 2);
             doors.onServerTick(tick);
@@ -348,6 +356,8 @@ public final class VoidDoorGameTests {
             "The code digest must survive saving and loading the world");
         try {
             var wrong = new VoidDoorCodeMenu(1, player.getInventory(), doors, level, pos, id);
+            helper.assertTrue(wrong.getSlot(0).getItem().getHoverName().getString().isEmpty(),
+                "Code prompt must open with a blank anvil text field");
             wrong.setItemName("wrong");
             wrong.clicked(wrong.getResultSlot(), 0, net.minecraft.world.inventory.ClickType.PICKUP, player);
             helper.assertTrue(!level.getBlockState(pos).getValue(DoorBlock.OPEN),
