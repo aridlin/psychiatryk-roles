@@ -491,29 +491,37 @@ public final class VoidDoors {
     }
 
     static Vec3 safeExit(ServerLevel target, Entity traveler, BlockPos door, Direction facing) {
-        return VoidDoorGeometry.firstClearExit(door, facing, exit -> {
-            BlockPos floor = BlockPos.containing(exit.x, exit.y - 0.1, exit.z);
-            if (target.getBlockState(floor).getCollisionShape(target, floor).isEmpty()) return false;
-            return target.noCollision(traveler, traveler.getBoundingBox().move(exit.subtract(traveler.position())));
-        });
+        for (boolean requireSupport : new boolean[] { true, false }) {
+            Vec3 found = VoidDoorGeometry.firstClearExit(door, facing, exit -> {
+                BlockPos floor = BlockPos.containing(exit.x, exit.y - 0.1, exit.z);
+                boolean supported = !target.getBlockState(floor).getCollisionShape(target, floor).isEmpty();
+                return (!requireSupport || supported) && target.noCollision(traveler,
+                    traveler.getBoundingBox().move(exit.subtract(traveler.position())));
+            });
+            if (found != null) return found;
+        }
+        return null;
     }
 
     private record PortalExit(Vec3 position, Direction side) {}
 
     private static PortalExit safeExit(ServerLevel target, Entity traveler, BlockPos door,
                                        Direction preferred, double lateral, double height) {
-        for (Direction side : new Direction[] { preferred, preferred.getOpposite() }) {
-            for (double offset : new double[] { lateral, 0 }) {
-                for (double feet : new double[] { height, .01 }) {
-                    Vec3 exit = Vec3.atBottomCenterOf(door).add(
-                        side.getStepX() - side.getStepZ() * offset, feet,
-                        side.getStepZ() + side.getStepX() * offset);
-                    BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
-                    if (!(traveler instanceof ItemEntity)
-                        && target.getBlockState(floor).getCollisionShape(target, floor).isEmpty()) continue;
-                    if (target.noCollision(traveler,
-                        traveler.getBoundingBox().move(exit.subtract(traveler.position()))))
-                        return new PortalExit(exit, side);
+        for (boolean requireSupport : new boolean[] { true, false }) {
+            for (Direction side : new Direction[] { preferred, preferred.getOpposite() }) {
+                for (double offset : new double[] { lateral, 0 }) {
+                    for (double feet : new double[] { height, .01 }) {
+                        Vec3 exit = Vec3.atBottomCenterOf(door).add(
+                            side.getStepX() - side.getStepZ() * offset, feet,
+                            side.getStepZ() + side.getStepX() * offset);
+                        BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
+                        boolean supported = !target.getBlockState(floor)
+                            .getCollisionShape(target, floor).isEmpty();
+                        if (requireSupport && !supported) continue;
+                        if (target.noCollision(traveler,
+                            traveler.getBoundingBox().move(exit.subtract(traveler.position()))))
+                            return new PortalExit(exit, side);
+                    }
                 }
             }
         }
@@ -560,7 +568,7 @@ public final class VoidDoors {
             // Handwritten quaternion lists were rejected during real Forge startup.
             tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
                 new Transformation(new Vector3f(-.1f, 0, 0), new Quaternionf(),
-                    new Vector3f(6f, 6.2f, 1f), new Quaternionf())).result().orElseThrow());
+                    new Vector3f(7.6f, 7.05f, 1f), new Quaternionf())).result().orElseThrow());
             display.load(tag);
             display.setPos(center.x, center.y, center.z);
             display.setYRot(facing.toYRot() + side * 180);

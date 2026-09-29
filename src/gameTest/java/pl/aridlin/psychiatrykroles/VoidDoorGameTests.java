@@ -469,4 +469,26 @@ public final class VoidDoorGameTests {
             "Both trapdoors must return as one linked pair");
         helper.succeed();
     }
+
+    @GameTest(template = "empty")
+    public static void clearAirIsAValidFallbackForBothPortals(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos destination = helper.absolutePos(new BlockPos(1, 10, 1));
+        for (BlockPos pos : BlockPos.betweenClosed(destination.offset(-3, -4, -3),
+            destination.offset(3, 4, 3))) level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+        var traveler = new TrackingPlayer(level);
+        traveler.setPos(destination.getX() + .5, destination.getY() + .01, destination.getZ() + .5);
+        Vec3 doorExit = VoidDoors.safeExit(level, traveler, destination, Direction.NORTH);
+        helper.assertTrue(doorExit != null, "Door must use clear air when neither side has floor support");
+        BlockPos doorFloor = BlockPos.containing(doorExit.x, doorExit.y - .1, doorExit.z);
+        helper.assertTrue(level.getBlockState(doorFloor).isAir(), "Door fallback must genuinely lack support");
+        Vec3 trapdoorExit = VoidTrapdoors.safeExit(level, traveler, destination,
+            new VoidTrapdoors.Contact(Vec3.ZERO, false), Direction.NORTH, Direction.NORTH, Vec3.ZERO);
+        helper.assertTrue(trapdoorExit != null,
+            "Trapdoor must use clear air when no supported candidate is available");
+        BlockPos trapdoorFloor = BlockPos.containing(trapdoorExit.x, trapdoorExit.y - .1, trapdoorExit.z);
+        helper.assertTrue(level.getBlockState(trapdoorFloor).isAir(),
+            "Trapdoor fallback must genuinely lack support");
+        helper.succeed();
+    }
 }

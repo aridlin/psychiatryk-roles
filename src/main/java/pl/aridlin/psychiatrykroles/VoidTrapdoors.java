@@ -319,28 +319,30 @@ public final class VoidTrapdoors {
         Vec3 offset = VoidDoorGeometry.rotate(contact.offset(), sourceFacing, targetFacing);
         Vec3 best = null;
         double bestScore = Double.POSITIVE_INFINITY;
-        for (boolean upward : new boolean[] {contact.upward(), !contact.upward()}) {
-            for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
-                double sideways = -side.getStepZ() * offset.x + side.getStepX() * offset.z;
-                for (int height = 0; height < 2; height++) {
-                    double feet = upward ? (height == 0 ? 1.01 : .01)
-                        : (height == 0 ? -1.99 : -.99);
-                    Vec3 exit = Vec3.atBottomCenterOf(door).add(
-                        side.getStepX() - side.getStepZ() * sideways, feet,
-                        side.getStepZ() + side.getStepX() * sideways);
-                    BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
-                    boolean supported = !level.getBlockState(floor).getCollisionShape(level, floor).isEmpty();
-                    if (!supported && !(traveler instanceof ItemEntity)) continue;
-                    if (!level.noCollision(traveler,
-                        traveler.getBoundingBox().move(exit.subtract(traveler.position())))) continue;
-                    double score = (upward == contact.upward() ? 0 : 8) + height * .8
-                        + (supported ? 0 : 1.5)
-                        - (side.getStepX() * offset.x + side.getStepZ() * offset.z) * 2
-                        - (side.getStepX() * outVelocity.x + side.getStepZ() * outVelocity.z) * 3
-                        + (side == targetFacing ? 0 : .1);
-                    if (score < bestScore) { bestScore = score; best = exit; }
+        for (boolean requireSupport : new boolean[] { true, false }) {
+            for (boolean upward : new boolean[] {contact.upward(), !contact.upward()}) {
+                for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
+                    double sideways = -side.getStepZ() * offset.x + side.getStepX() * offset.z;
+                    for (int height = 0; height < 2; height++) {
+                        double feet = upward ? (height == 0 ? 1.01 : .01)
+                            : (height == 0 ? -1.99 : -.99);
+                        Vec3 exit = Vec3.atBottomCenterOf(door).add(
+                            side.getStepX() - side.getStepZ() * sideways, feet,
+                            side.getStepZ() + side.getStepX() * sideways);
+                        BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
+                        boolean supported = !level.getBlockState(floor).getCollisionShape(level, floor).isEmpty();
+                        if (requireSupport && !supported) continue;
+                        if (!level.noCollision(traveler,
+                            traveler.getBoundingBox().move(exit.subtract(traveler.position())))) continue;
+                        double score = (upward == contact.upward() ? 0 : 8) + height * .8
+                            - (side.getStepX() * offset.x + side.getStepZ() * offset.z) * 2
+                            - (side.getStepX() * outVelocity.x + side.getStepZ() * outVelocity.z) * 3
+                            + (side == targetFacing ? 0 : .1);
+                        if (score < bestScore) { bestScore = score; best = exit; }
+                    }
                 }
             }
+            if (best != null) return best;
         }
         return best;
     }
