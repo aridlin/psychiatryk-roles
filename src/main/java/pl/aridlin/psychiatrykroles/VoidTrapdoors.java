@@ -3,7 +3,6 @@ package pl.aridlin.psychiatrykroles;
 import com.mojang.math.Transformation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -16,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -58,7 +59,8 @@ public final class VoidTrapdoors {
     private final Map<UUID, Pending> pending = new HashMap<>();
     private final List<Placement> placements = new ArrayList<>();
     private final Map<UUID, Sample> previous = new HashMap<>();
-    private final Map<VoidTrapdoorData.DoorPosition, Display.BlockDisplay> planes = new HashMap<>();
+    private final Map<VoidTrapdoorData.DoorPosition, List<Display.BlockDisplay>> planes = new HashMap<>();
+    private final Map<VoidTrapdoorData.DoorPosition, Integer> frameMasks = new HashMap<>();
     private final Set<VoidTrapdoorData.DoorPosition> ticketed = new HashSet<>();
     private final Map<UUID, Boolean> lastOpen = new HashMap<>();
 
@@ -138,6 +140,34 @@ public final class VoidTrapdoors {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onBreak(BlockEvent.BreakEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player) || !player.isShiftKeyDown()
+            || !(event.getLevel() instanceof ServerLevel sourceLevel)
+            || !event.getState().is(Blocks.DARK_OAK_TRAPDOOR)) return;
+        BlockPos source = event.getPos();
+        VoidTrapdoorData data = VoidTrapdoorData.get(player.getServer());
+        String dimension = sourceLevel.dimension().location().toString();
+        UUID pair = data.pairAt(dimension, source);
+        VoidTrapdoorData.DoorPosition partner = data.partner(dimension, source);
+        if (pair == null || partner == null) return;
+        ServerLevel target = level(player.getServer(), partner.dimension());
+        if (target == null) return;
+        target.getChunkAt(partner.pos());
+        if (!target.getBlockState(partner.pos()).is(Blocks.DARK_OAK_TRAPDOOR)) return;
+        event.setCanceled(true);
+        sourceLevel.setBlock(source, Blocks.AIR.defaultBlockState(), 3);
+        target.setBlock(partner.pos(), Blocks.AIR.defaultBlockState(), 3);
+        data.removeDoor(dimension, source);
+        data.removeDoor(partner.dimension(), partner.pos());
+        removePlane(new VoidTrapdoorData.DoorPosition(dimension, source));
+        removePlane(partner);
+        ItemStack drops = new ItemStack(Items.DARK_OAK_TRAPDOOR, 2);
+        drops.getOrCreateTag().putBoolean(MARKER, true);
+        drops.getOrCreateTag().putString(PAIR, pair.toString());
+        if (!player.getInventory().add(drops)) player.drop(drops, false);
+    }
+
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
@@ -167,15 +197,13 @@ public final class VoidTrapdoors {
             if (level == null || !level.hasChunkAt(position.pos())
                 || !level.getBlockState(position.pos()).is(Blocks.DARK_OAK_TRAPDOOR)) continue;
             active.add(position);
-            Display.BlockDisplay plane = planes.get(position);
-            if (plane == null || plane.isRemoved()) {
+            List<Display.BlockDisplay> plane = planes.get(position);
+            int frameMask = frameMask(level, position.pos());
+            if (plane == null || plane.stream().anyMatch(Entity::isRemoved)
+                || frameMasks.getOrDefault(position, -1) != frameMask) {
                 removePlane(position);
-                planes.put(position, createPlane(level, position.pos()));
-            }
-            if (level.getBlockState(position.pos()).getValue(TrapDoorBlock.OPEN) && server.getTickCount() % 5 == 0) {
-                Vec3 center = planeCenter(level, position.pos());
-                level.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x, center.y, center.z,
-                    2, .3, .01, .3, 0);
+                planes.put(position, createPlane(level, position.pos(), frameMask));
+                frameMasks.put(position, frameMask);
             }
         }
         for (var position : List.copyOf(planes.keySet())) if (!active.contains(position)) removePlane(position);
@@ -195,17 +223,30 @@ public final class VoidTrapdoors {
             if (!sourceLevel.getBlockState(source.pos()).is(Blocks.DARK_OAK_TRAPDOOR)
                 || !sourceLevel.getBlockState(source.pos()).getValue(TrapDoorBlock.OPEN)) continue;
             Vec3 center = planeCenter(sourceLevel, source.pos());
-            if (!touches(center, player.getBoundingBox())) continue;
+            Contact contact = contact(center, player.getBoundingBox(), from.position(), player.position(),
+                player.getDeltaMovement());
+            if (contact == null) continue;
             var destination = data.partner(dimension, source.pos());
             if (destination == null) continue;
             ServerLevel target = level(player.getServer(), destination.dimension());
             if (target == null) continue;
             target.getChunkAt(destination.pos());
             if (!target.getBlockState(destination.pos()).is(Blocks.DARK_OAK_TRAPDOOR)) continue;
-            boolean upward = player.getY() > from.position().y;
-            Vec3 exit = safeExit(target, player, destination.pos(), upward);
+            Direction sourceFacing = sourceLevel.getBlockState(source.pos()).getValue(TrapDoorBlock.FACING);
+            Direction targetFacing = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
+            Vec3 walked = player.position().subtract(from.position());
+            Vec3 velocity = player.getDeltaMovement();
+            if (walked.lengthSqr() > velocity.lengthSqr()) velocity = walked;
+            Vec3 outVelocity = VoidDoorGeometry.rotate(velocity, sourceFacing, targetFacing);
+            Vec3 exit = safeExit(target, player, destination.pos(), contact,
+                sourceFacing, targetFacing, outVelocity);
             if (exit == null) continue;
-            player.teleportTo(target, exit.x, exit.y, exit.z, player.getYRot(), player.getXRot());
+            float yaw = Mth.wrapDegrees(player.getYRot()
+                + Mth.wrapDegrees(targetFacing.toYRot() - sourceFacing.toYRot()));
+            player.teleportTo(target, exit.x, exit.y, exit.z, yaw, player.getXRot());
+            player.setDeltaMovement(outVelocity);
+            player.hurtMarked = true;
+            player.connection.send(new ClientboundSetEntityMotionPacket(player));
             previous.put(player.getUUID(), new Sample(destination.dimension(), exit));
             return;
         }
@@ -229,10 +270,19 @@ public final class VoidTrapdoors {
             Vec3 center = planeCenter(sourceLevel, source.pos());
             for (ItemEntity item : sourceLevel.getEntitiesOfClass(ItemEntity.class,
                 new AABB(center.x - 1, center.y - 1, center.z - 1, center.x + 1, center.y + 1, center.z + 1))) {
-                if (!touches(center, item.getBoundingBox())) continue;
-                boolean upward = item.getDeltaMovement().y > 0;
-                Vec3 exit = safeExit(target, item, destination.pos(), upward);
-                if (exit != null) item.teleportTo(target, exit.x, exit.y, exit.z, Set.of(), item.getYRot(), item.getXRot());
+                Contact contact = contact(center, item.getBoundingBox(),
+                    item.position().subtract(item.getDeltaMovement()), item.position(), item.getDeltaMovement());
+                if (contact == null) continue;
+                Direction sourceFacing = state.getValue(TrapDoorBlock.FACING);
+                Direction targetFacing = target.getBlockState(destination.pos()).getValue(TrapDoorBlock.FACING);
+                Vec3 outVelocity = VoidDoorGeometry.rotate(item.getDeltaMovement(), sourceFacing, targetFacing);
+                Vec3 exit = safeExit(target, item, destination.pos(), contact,
+                    sourceFacing, targetFacing, outVelocity);
+                if (exit != null && item.teleportTo(target, exit.x, exit.y, exit.z,
+                    Set.of(), item.getYRot(), item.getXRot())) {
+                    Entity arrived = target.getEntity(item.getUUID());
+                    if (arrived != null) arrived.setDeltaMovement(outVelocity);
+                }
             }
         }
     }
@@ -250,16 +300,49 @@ public final class VoidTrapdoors {
             center.x + .46, center.y + .025, center.z + .46).intersects(hitbox);
     }
 
-    static Vec3 safeExit(ServerLevel level, Entity player, BlockPos door, boolean upward) {
-        for (int delta : upward ? new int[] {1, -1} : new int[] {-1, 1}) {
+    record Contact(Vec3 offset, boolean upward) {}
+
+    static Contact contact(Vec3 center, AABB hitbox, Vec3 from, Vec3 to, Vec3 velocity) {
+        if (!touches(center, hitbox) || from.distanceToSqr(to) > 16) return null;
+        double motion = to.y - from.y;
+        if (Math.abs(motion) < .001) motion = velocity.y;
+        boolean upward = motion > .001 || Math.abs(motion) < .001 && from.y < center.y;
+        double fraction = Math.abs(to.y - from.y) < .001 ? 1
+            : Mth.clamp((center.y - from.y) / (to.y - from.y), 0, 1);
+        Vec3 hit = from.lerp(to, fraction);
+        return new Contact(new Vec3(Mth.clamp(hit.x - center.x, -.4, .4), 0,
+            Mth.clamp(hit.z - center.z, -.4, .4)), upward);
+    }
+
+    static Vec3 safeExit(ServerLevel level, Entity traveler, BlockPos door, Contact contact,
+                         Direction sourceFacing, Direction targetFacing, Vec3 outVelocity) {
+        Vec3 offset = VoidDoorGeometry.rotate(contact.offset(), sourceFacing, targetFacing);
+        Vec3 best = null;
+        double bestScore = Double.POSITIVE_INFINITY;
+        for (boolean upward : new boolean[] {contact.upward(), !contact.upward()}) {
             for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
-                Vec3 exit = Vec3.atBottomCenterOf(door.relative(side)).add(0, delta == 1 ? 1.01 : -1.99, 0);
-                BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
-                if (level.getBlockState(floor).getCollisionShape(level, floor).isEmpty()) continue;
-                if (level.noCollision(player, player.getBoundingBox().move(exit.subtract(player.position())))) return exit;
+                double sideways = -side.getStepZ() * offset.x + side.getStepX() * offset.z;
+                for (int height = 0; height < 2; height++) {
+                    double feet = upward ? (height == 0 ? 1.01 : .01)
+                        : (height == 0 ? -1.99 : -.99);
+                    Vec3 exit = Vec3.atBottomCenterOf(door).add(
+                        side.getStepX() - side.getStepZ() * sideways, feet,
+                        side.getStepZ() + side.getStepX() * sideways);
+                    BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
+                    boolean supported = !level.getBlockState(floor).getCollisionShape(level, floor).isEmpty();
+                    if (!supported && !(traveler instanceof ItemEntity)) continue;
+                    if (!level.noCollision(traveler,
+                        traveler.getBoundingBox().move(exit.subtract(traveler.position())))) continue;
+                    double score = (upward == contact.upward() ? 0 : 8) + height * .8
+                        + (supported ? 0 : 1.5)
+                        - (side.getStepX() * offset.x + side.getStepZ() * offset.z) * 2
+                        - (side.getStepX() * outVelocity.x + side.getStepZ() * outVelocity.z) * 3
+                        + (side == targetFacing ? 0 : .1);
+                    if (score < bestScore) { bestScore = score; best = exit; }
+                }
             }
         }
-        return null;
+        return best;
     }
 
     private static Vec3 planeCenter(ServerLevel level, BlockPos pos) {
@@ -267,14 +350,42 @@ public final class VoidTrapdoors {
         return Vec3.atBottomCenterOf(pos).add(0, half == Half.TOP ? .9 : .1, 0);
     }
 
-    private static Display.BlockDisplay createPlane(ServerLevel level, BlockPos pos) {
+    private static int frameMask(ServerLevel level, BlockPos pos) {
+        int mask = 0;
+        for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
+            if (level.getBlockState(pos.relative(side)).isAir()) mask |= 1 << side.get2DDataValue();
+        return mask;
+    }
+
+    private static List<Display.BlockDisplay> createPlane(ServerLevel level, BlockPos pos, int mask) {
         Vec3 center = planeCenter(level, pos);
+        List<Display.BlockDisplay> result = new ArrayList<>();
+        result.add(addDisplay(level, center, Blocks.BLACK_CONCRETE.defaultBlockState(),
+            new Vector3f(-.43f, -.01f, -.43f), new Vector3f(.86f, .02f, .86f)));
+        for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
+            if ((mask & (1 << side.get2DDataValue())) == 0) continue;
+            Vector3f offset = switch (side) {
+                case NORTH -> new Vector3f(-.47f, -.035f, -.49f);
+                case SOUTH -> new Vector3f(-.47f, -.035f, .42f);
+                case WEST -> new Vector3f(-.49f, -.035f, -.47f);
+                case EAST -> new Vector3f(.42f, -.035f, -.47f);
+                default -> throw new IllegalStateException();
+            };
+            Vector3f size = side.getAxis() == Direction.Axis.Z
+                ? new Vector3f(.94f, .07f, .07f) : new Vector3f(.07f, .07f, .94f);
+            result.add(addDisplay(level, center, Blocks.DARK_OAK_PLANKS.defaultBlockState(), offset, size));
+        }
+        return result;
+    }
+
+    private static Display.BlockDisplay addDisplay(ServerLevel level, Vec3 center,
+                                                   net.minecraft.world.level.block.state.BlockState block,
+                                                   Vector3f offset, Vector3f size) {
         Display.BlockDisplay display = new Display.BlockDisplay(EntityType.BLOCK_DISPLAY, level);
         CompoundTag tag = new CompoundTag();
-        tag.put("block_state", NbtUtils.writeBlockState(Blocks.BLACK_CONCRETE.defaultBlockState()));
+        tag.put("block_state", NbtUtils.writeBlockState(block));
         tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
-            new Transformation(new Vector3f(-.46f, -.01f, -.46f), new Quaternionf(),
-                new Vector3f(.92f, .02f, .92f), new Quaternionf())).result().orElseThrow());
+            new Transformation(offset, new Quaternionf(), size, new Quaternionf())).result().orElseThrow());
         display.load(tag);
         display.setPos(center.x, center.y, center.z);
         display.setInvulnerable(true);
@@ -331,8 +442,9 @@ public final class VoidTrapdoors {
     }
 
     private void removePlane(VoidTrapdoorData.DoorPosition position) {
-        Display.BlockDisplay old = planes.remove(position);
-        if (old != null) old.discard();
+        List<Display.BlockDisplay> old = planes.remove(position);
+        frameMasks.remove(position);
+        if (old != null) old.forEach(Display::discard);
     }
 
     @SubscribeEvent public void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
@@ -341,6 +453,7 @@ public final class VoidTrapdoors {
     }
 
     @SubscribeEvent public void onStop(ServerStoppedEvent event) {
-        pending.clear(); placements.clear(); previous.clear(); planes.clear(); ticketed.clear(); lastOpen.clear();
+        pending.clear(); placements.clear(); previous.clear(); planes.clear(); frameMasks.clear();
+        ticketed.clear(); lastOpen.clear();
     }
 }

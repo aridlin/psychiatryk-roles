@@ -31,6 +31,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -163,7 +164,8 @@ public final class VoidDoorGameTests {
             secondPass.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, backwards));
             backwards.setPos(source.getX() + .35, source.getY() + .01, source.getZ() + .5);
             secondPass.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, backwards));
-            helper.assertTrue(backwards.teleportedLevel == level && backwards.exitYaw == Direction.EAST.toYRot(),
+            helper.assertTrue(backwards.teleportedLevel == level
+                && net.minecraft.util.Mth.wrapDegrees(backwards.exitYaw - Direction.EAST.toYRot()) == 0,
                 "Backward crossing must face the door from the west exit");
             Vec3 plane = VoidDoorGeometry.center(source, Direction.EAST);
             helper.assertTrue(VoidDoorGeometry.touches(source, Direction.EAST,
@@ -207,8 +209,16 @@ public final class VoidDoorGameTests {
             long closedVisuals = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
                 new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
                 .size();
-            helper.assertTrue(closedVisuals == 5,
-                "Closed door must already contain its two black faces and three frame beams");
+            helper.assertTrue(closedVisuals == 7,
+                "Closed door must already contain its two black faces and five frame segments");
+            level.setBlock(first.east(), Blocks.STONE.defaultBlockState(), 2);
+            doors.onServerTick(tick);
+            long framedBesideBlock = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(first).inflate(1, 2, 1), entity -> entity.getTags().contains("psychiatrykVoidPlane"))
+                .size();
+            helper.assertTrue(framedBesideBlock == 6,
+                "A solid neighbor must hide only its adjacent lower frame segment");
+            level.setBlock(first.east(), Blocks.AIR.defaultBlockState(), 2);
             for (BlockPos pos : java.util.List.of(second, second.above()))
                 level.setBlock(pos, level.getBlockState(pos).setValue(DoorBlock.OPEN, true), 2);
             doors.onServerTick(tick);
@@ -330,6 +340,17 @@ public final class VoidDoorGameTests {
                 "Correct code must open the door");
             helper.assertTrue(player.getInventory().countItem(Items.PAPER) == 0,
                 "The anvil prompt must never grant its paper placeholder");
+            level.setBlock(pos, level.getBlockState(pos).setValue(DoorBlock.OPEN, false), 2);
+            level.setBlock(pos.above(), level.getBlockState(pos.above()).setValue(DoorBlock.OPEN, false), 2);
+            helper.assertTrue(doors.hasCodeSession(player, id),
+                "Successful code entry must keep a 15-second session for that player");
+            helper.assertTrue(!doors.hasCodeSession(new TrackingPlayer(level), id),
+                "The code session must not unlock the pair for another player");
+            var shifted = new VoidDoorCodeMenu(3, player.getInventory(), doors, level, pos, id);
+            shifted.setItemName("secret 123");
+            shifted.quickMoveStack(player, shifted.getResultSlot());
+            helper.assertTrue(player.getInventory().countItem(Items.PAPER) == 0,
+                "Shift-clicking code paper must not grant even a ghost server item");
         } finally {
             data.removeDoor(dimension, pos);
         }
@@ -358,6 +379,21 @@ public final class VoidDoorGameTests {
             var traveler = new TrackingPlayer(level);
             traveler.setPos(source.getX() + .5, source.getY() + .1, source.getZ() + .5);
             var trapdoors = new VoidTrapdoors();
+            var tick = new TickEvent.ServerTickEvent(TickEvent.Phase.END, () -> true, level.getServer());
+            trapdoors.onServerTick(tick);
+            long fullFrame = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(source).inflate(.5), entity -> entity.getTags().contains("psychiatrykVoidTrapdoorPlane"))
+                .size();
+            helper.assertTrue(fullFrame == 5, "Trapdoor must keep its plane and four exposed frame edges");
+            level.setBlock(source.east(), Blocks.STONE.defaultBlockState(), 2);
+            trapdoors.onServerTick(tick);
+            long partlyHiddenFrame = level.getEntitiesOfClass(net.minecraft.world.entity.Display.class,
+                new AABB(source).inflate(.5), entity -> entity.getTags().contains("psychiatrykVoidTrapdoorPlane"))
+                .size();
+            helper.assertTrue(partlyHiddenFrame == 4,
+                "A solid neighbor must suppress only the adjoining trapdoor frame edge");
+            level.setBlock(source.east(), Blocks.AIR.defaultBlockState(), 2);
+            level.setBlock(destination, level.getBlockState(destination).setValue(TrapDoorBlock.OPEN, false), 2);
             trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
             trapdoors.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, traveler));
             helper.assertTrue(traveler.teleportedLevel == level, "Open trapdoor must teleport to its linked partner");
@@ -378,6 +414,59 @@ public final class VoidDoorGameTests {
             data.removeDoor(dimension, source);
             data.removeDoor(dimension, destination);
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void shiftBreakingEitherPortalReturnsTheLinkedPair(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        String dimension = level.dimension().location().toString();
+        var player = FakePlayerFactory.getMinecraft(level);
+        player.setShiftKeyDown(true);
+        var doors = new VoidDoors();
+        var doorData = VoidDoorData.get(level.getServer());
+        BlockPos first = helper.absolutePos(new BlockPos(0, 1, 1));
+        BlockPos second = helper.absolutePos(new BlockPos(2, 1, 1));
+        UUID doorPair = UUID.randomUUID();
+        for (BlockPos pos : java.util.List.of(first, second)) {
+            level.setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 2);
+            var lower = Blocks.DARK_OAK_DOOR.defaultBlockState()
+                .setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER);
+            level.setBlock(pos, lower, 2);
+            level.setBlock(pos.above(), lower.setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 2);
+            doorData.addDoor(doorPair, new VoidDoorData.DoorPosition(dimension, pos));
+        }
+        String digest = VoidDoors.codeHash(doorPair, "the code");
+        doorData.setCode(doorPair, digest);
+        var doorBreak = new BlockEvent.BreakEvent(level, first, level.getBlockState(first), player);
+        doors.onBreak(doorBreak);
+        helper.assertTrue(doorBreak.isCanceled() && level.getBlockState(first).isAir()
+            && level.getBlockState(first.above()).isAir() && level.getBlockState(second).isAir()
+            && level.getBlockState(second.above()).isAir(),
+            "Shift-breaking a door must remove both complete endpoints exactly once");
+        boolean returnedDoors = player.getInventory().items.stream().anyMatch(stack ->
+            stack.getCount() == 2 && doorPair.equals(VoidDoors.pair(stack))
+                && digest.equals(stack.getTag().getString("psychiatrykVoidDoorCode")));
+        helper.assertTrue(returnedDoors, "Both doors and their code must return as one linked pair");
+
+        var trapdoors = new VoidTrapdoors();
+        var trapdoorData = VoidTrapdoorData.get(level.getServer());
+        BlockPos trapFirst = helper.absolutePos(new BlockPos(0, 1, 3));
+        BlockPos trapSecond = helper.absolutePos(new BlockPos(2, 1, 3));
+        UUID trapPair = UUID.randomUUID();
+        for (BlockPos pos : java.util.List.of(trapFirst, trapSecond)) {
+            level.setBlock(pos, Blocks.DARK_OAK_TRAPDOOR.defaultBlockState(), 2);
+            trapdoorData.addDoor(trapPair, new VoidTrapdoorData.DoorPosition(dimension, pos));
+        }
+        var trapBreak = new BlockEvent.BreakEvent(level, trapSecond,
+            level.getBlockState(trapSecond), player);
+        trapdoors.onBreak(trapBreak);
+        helper.assertTrue(trapBreak.isCanceled() && level.getBlockState(trapFirst).isAir()
+            && level.getBlockState(trapSecond).isAir(),
+            "Shift-breaking either trapdoor must remove its partner");
+        helper.assertTrue(player.getInventory().items.stream().anyMatch(stack ->
+            stack.getCount() == 2 && trapPair.equals(VoidTrapdoors.pair(stack))),
+            "Both trapdoors must return as one linked pair");
         helper.succeed();
     }
 }

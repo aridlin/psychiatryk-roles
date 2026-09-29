@@ -13,11 +13,12 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -67,9 +68,11 @@ public final class VoidDoors {
     private final List<Placement> placements = new ArrayList<>();
     private final Map<UUID, Sample> previous = new HashMap<>();
     private final Map<VoidDoorData.DoorPosition, List<Display>> planes = new HashMap<>();
+    private final Map<VoidDoorData.DoorPosition, Integer> frameMasks = new HashMap<>();
     private final Set<VoidDoorData.DoorPosition> ticketed = new HashSet<>();
     private final Map<UUID, Boolean> lastOpen = new HashMap<>();
     private final Set<UUID> unlocked = new HashSet<>();
+    private final Map<UUID, Map<UUID, Long>> codeSessions = new HashMap<>();
 
     private record PendingPlacement(UUID pair, String code, int tick, VoidDoorData.DoorPosition position) {}
     private record Placement(PendingPlacement pending, BlockEvent.EntityPlaceEvent event) {}
@@ -142,13 +145,15 @@ public final class VoidDoors {
             BlockPos lower = lowerPos(clicked, clickedState);
             VoidDoorData data = VoidDoorData.get(player.getServer());
             UUID linked = data.pairAt(player.level().dimension().location().toString(), lower);
-            if (linked != null && !data.code(linked).isEmpty() && !clickedState.getValue(DoorBlock.OPEN)) {
+            if (linked != null && !data.code(linked).isEmpty() && !clickedState.getValue(DoorBlock.OPEN)
+                && !hasCodeSession(player, linked)) {
                 event.setCanceled(true);
                 player.openMenu(new SimpleMenuProvider((id, inventory, owner) ->
                     new VoidDoorCodeMenu(id, inventory, this, player.serverLevel(), lower, linked),
                     Component.literal(PsychiatrykRoles.isEnglish(player) ? "Void Door code" : "Kod Drzwi Pustki")));
                 return;
             }
+            if (linked != null && hasCodeSession(player, linked)) unlocked.add(linked);
         }
         ItemStack stack = event.getItemStack();
         if (!isVoidDoor(stack)) return;
@@ -202,6 +207,40 @@ public final class VoidDoors {
         }
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onBreak(BlockEvent.BreakEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player) || !player.isShiftKeyDown()
+            || !(event.getLevel() instanceof ServerLevel sourceLevel) || !isDoor(event.getState())) return;
+        BlockPos source = lowerPos(event.getPos(), event.getState());
+        VoidDoorData data = VoidDoorData.get(player.getServer());
+        String dimension = sourceLevel.dimension().location().toString();
+        UUID pair = data.pairAt(dimension, source);
+        VoidDoorData.DoorPosition partner = data.partner(dimension, source);
+        if (pair == null || partner == null || !completeDoor(sourceLevel, source)) return;
+        ServerLevel target = level(player.getServer(), partner.dimension());
+        if (target == null) return;
+        target.getChunkAt(partner.pos());
+        if (!completeDoor(target, partner.pos())) return;
+        String code = data.code(pair);
+        event.setCanceled(true);
+        removeDoorBlocks(sourceLevel, source);
+        removeDoorBlocks(target, partner.pos());
+        data.removeDoor(dimension, source);
+        data.removeDoor(partner.dimension(), partner.pos());
+        removePlane(new VoidDoorData.DoorPosition(dimension, source));
+        removePlane(partner);
+        ItemStack drops = new ItemStack(Items.DARK_OAK_DOOR, 2);
+        drops.getOrCreateTag().putBoolean(MARKER, true);
+        drops.getOrCreateTag().putString(PAIR, pair.toString());
+        if (!code.isEmpty()) drops.getOrCreateTag().putString(CODE, code);
+        if (!player.getInventory().add(drops)) player.drop(drops, false);
+    }
+
+    private static void removeDoorBlocks(ServerLevel level, BlockPos lower) {
+        level.setBlock(lower.above(), Blocks.AIR.defaultBlockState(), 2);
+        level.setBlock(lower, Blocks.AIR.defaultBlockState(), 3);
+    }
+
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
@@ -236,18 +275,12 @@ public final class VoidDoors {
             // visible spawn delay when the player opens the door.
             active.add(position);
             List<Display> current = planes.get(position);
-            if (current == null || current.stream().anyMatch(entity -> entity.isRemoved())) {
+            int frameMask = frameMask(level, position.pos());
+            if (current == null || current.stream().anyMatch(Entity::isRemoved)
+                || frameMasks.getOrDefault(position, -1) != frameMask) {
                 removePlane(position);
-                planes.put(position, createPlane(level, position.pos()));
-            }
-            if (level.getBlockState(position.pos()).getValue(DoorBlock.OPEN) && server.getTickCount() % 5 == 0) {
-                Direction facing = level.getBlockState(position.pos()).getValue(DoorBlock.FACING);
-                Vec3 center = VoidDoorGeometry.center(position.pos(), facing);
-                level.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x, center.y + 1, center.z,
-                    2, facing.getStepZ() * .18, .7, facing.getStepX() * .18, 0);
-                if (server.getTickCount() % 20 == 0)
-                    level.sendParticles(ParticleTypes.END_ROD, center.x, center.y + 1, center.z,
-                        1, facing.getStepZ() * .16, .6, facing.getStepX() * .16, 0);
+                planes.put(position, createPlane(level, position.pos(), frameMask));
+                frameMasks.put(position, frameMask);
             }
         }
         for (var position : List.copyOf(planes.keySet())) if (!active.contains(position)) removePlane(position);
@@ -268,8 +301,10 @@ public final class VoidDoors {
             ServerLevel sourceLevel = player.serverLevel();
             if (!completeDoor(sourceLevel, source.pos())) continue;
             BlockState sourceState = sourceLevel.getBlockState(source.pos());
-            if (!sourceState.getValue(DoorBlock.OPEN) || !VoidDoorGeometry.touches(source.pos(),
-                sourceState.getValue(DoorBlock.FACING), player.getBoundingBox())) continue;
+            Direction sourceFacing = sourceState.getValue(DoorBlock.FACING);
+            VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing,
+                player.getBoundingBox(), from.position(), player.position(), player.getDeltaMovement());
+            if (!sourceState.getValue(DoorBlock.OPEN) || contact == null) continue;
             var destination = data.partner(dimension, source.pos());
             if (destination == null) continue;
             ServerLevel target = level(player.getServer(), destination.dimension());
@@ -278,20 +313,26 @@ public final class VoidDoors {
             if (!completeDoor(target, destination.pos())) continue;
             BlockState targetState = target.getBlockState(destination.pos());
             Direction facing = targetState.getValue(DoorBlock.FACING);
-            Vec3 exit = safeExit(target, player, destination.pos(), facing);
+            Direction preferred = contact.approach() == sourceFacing ? facing : facing.getOpposite();
+            PortalExit exit = safeExit(target, player, destination.pos(), preferred,
+                contact.lateral(), contact.height());
             if (exit == null) {
                 player.displayClientMessage(Component.literal(PsychiatrykRoles.isEnglish(player)
                     ? "No safe landing beside the linked Void Door." : "Brak bezpiecznego miejsca przy połączonych Drzwiach Pustki."), true);
                 continue;
             }
-            double side = (exit.x - destination.pos().getX() - .5) * facing.getStepX()
-                + (exit.z - destination.pos().getZ() - .5) * facing.getStepZ();
-            Direction exitSide = side > 0 ? facing : facing.getOpposite();
-            Vec3 movement = player.position().subtract(from.position());
-            boolean backwards = player.getLookAngle().x * movement.x + player.getLookAngle().z * movement.z < 0;
-            Direction look = backwards ? exitSide.getOpposite() : exitSide;
-            player.teleportTo(target, exit.x, exit.y, exit.z, look.toYRot(), player.getXRot());
-            previous.put(player.getUUID(), new Sample(destination.dimension(), exit));
+            float yaw = Mth.wrapDegrees(player.getYRot()
+                + Mth.wrapDegrees(exit.side().toYRot() - contact.approach().toYRot()));
+            Vec3 walked = player.position().subtract(from.position());
+            Vec3 velocity = player.getDeltaMovement();
+            if (walked.horizontalDistanceSqr() > velocity.horizontalDistanceSqr())
+                velocity = new Vec3(walked.x, velocity.y, walked.z);
+            Vec3 outVelocity = VoidDoorGeometry.rotate(velocity, contact.approach(), exit.side());
+            player.teleportTo(target, exit.position().x, exit.position().y, exit.position().z, yaw, player.getXRot());
+            player.setDeltaMovement(outVelocity);
+            player.hurtMarked = true;
+            player.connection.send(new ClientboundSetEntityMotionPacket(player));
+            previous.put(player.getUUID(), new Sample(destination.dimension(), exit.position()));
             return;
         }
     }
@@ -317,9 +358,21 @@ public final class VoidDoors {
             Vec3 center = VoidDoorGeometry.center(source.pos(), state.getValue(DoorBlock.FACING));
             for (ItemEntity item : sourceLevel.getEntitiesOfClass(ItemEntity.class,
                 new AABB(center.x - 1, center.y, center.z - 1, center.x + 1, center.y + 2, center.z + 1))) {
-                if (!VoidDoorGeometry.touches(source.pos(), state.getValue(DoorBlock.FACING), item.getBoundingBox())) continue;
-                Vec3 exit = safeExit(target, item, destination.pos(), facing);
-                if (exit != null) item.teleportTo(target, exit.x, exit.y, exit.z, Set.of(), item.getYRot(), item.getXRot());
+                Direction sourceFacing = state.getValue(DoorBlock.FACING);
+                VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing,
+                    item.getBoundingBox(), item.position().subtract(item.getDeltaMovement()), item.position(),
+                    item.getDeltaMovement());
+                if (contact == null) continue;
+                Direction preferred = contact.approach() == sourceFacing ? facing : facing.getOpposite();
+                PortalExit exit = safeExit(target, item, destination.pos(), preferred,
+                    contact.lateral(), contact.height());
+                if (exit == null) continue;
+                Vec3 outVelocity = VoidDoorGeometry.rotate(item.getDeltaMovement(), contact.approach(), exit.side());
+                if (item.teleportTo(target, exit.position().x, exit.position().y, exit.position().z,
+                    Set.of(), item.getYRot(), item.getXRot())) {
+                    Entity arrived = target.getEntity(item.getUUID());
+                    if (arrived != null) arrived.setDeltaMovement(outVelocity);
+                }
             }
         }
     }
@@ -353,6 +406,8 @@ public final class VoidDoors {
         var pairs = data.pairs();
         lastOpen.keySet().retainAll(pairs.keySet());
         unlocked.retainAll(pairs.keySet());
+        codeSessions.entrySet().removeIf(entry -> !pairs.containsKey(entry.getKey()));
+        codeSessions.values().forEach(sessions -> sessions.values().removeIf(expiry -> expiry <= server.getTickCount()));
         for (var entry : pairs.entrySet()) {
             List<VoidDoorData.DoorPosition> positions = entry.getValue();
             if (positions.size() == 1) {
@@ -395,6 +450,8 @@ public final class VoidDoors {
                 ? "Incorrect Void Door code." : "Nieprawidłowy kod Drzwi Pustki."), true);
             return;
         }
+        codeSessions.computeIfAbsent(pair, ignored -> new HashMap<>())
+            .put(player.getUUID(), (long) player.getServer().getTickCount() + 300);
         unlocked.add(pair);
         setOpen(level, lower, true);
         VoidDoorData.DoorPosition partner = data.partner(level.dimension().location().toString(), lower);
@@ -403,6 +460,11 @@ public final class VoidDoors {
             if (other != null && completeDoor(other, partner.pos())) setOpen(other, partner.pos(), true);
         }
         lastOpen.put(pair, true);
+    }
+
+    boolean hasCodeSession(ServerPlayer player, UUID pair) {
+        return codeSessions.getOrDefault(pair, Map.of()).getOrDefault(player.getUUID(), 0L)
+            > player.getServer().getTickCount();
     }
 
     private static void setOpen(ServerLevel level, BlockPos lower, boolean open) {
@@ -436,6 +498,28 @@ public final class VoidDoors {
         });
     }
 
+    private record PortalExit(Vec3 position, Direction side) {}
+
+    private static PortalExit safeExit(ServerLevel target, Entity traveler, BlockPos door,
+                                       Direction preferred, double lateral, double height) {
+        for (Direction side : new Direction[] { preferred, preferred.getOpposite() }) {
+            for (double offset : new double[] { lateral, 0 }) {
+                for (double feet : new double[] { height, .01 }) {
+                    Vec3 exit = Vec3.atBottomCenterOf(door).add(
+                        side.getStepX() - side.getStepZ() * offset, feet,
+                        side.getStepZ() + side.getStepX() * offset);
+                    BlockPos floor = BlockPos.containing(exit.x, exit.y - .1, exit.z);
+                    if (!(traveler instanceof ItemEntity)
+                        && target.getBlockState(floor).getCollisionShape(target, floor).isEmpty()) continue;
+                    if (target.noCollision(traveler,
+                        traveler.getBoundingBox().move(exit.subtract(traveler.position()))))
+                        return new PortalExit(exit, side);
+                }
+            }
+        }
+        return null;
+    }
+
     private static void migrateOak(ServerLevel level, BlockPos lower) {
         for (BlockPos pos : List.of(lower, lower.above())) {
             BlockState old = level.getBlockState(pos);
@@ -443,7 +527,20 @@ public final class VoidDoors {
         }
     }
 
-    private static List<Display> createPlane(ServerLevel level, BlockPos lower) {
+    private static int frameMask(ServerLevel level, BlockPos lower) {
+        Direction facing = level.getBlockState(lower).getValue(DoorBlock.FACING);
+        Direction negative = facing.getAxis() == Direction.Axis.X ? Direction.NORTH : Direction.WEST;
+        Direction positive = negative.getOpposite();
+        int mask = 0;
+        if (level.getBlockState(lower.relative(negative)).isAir()) mask |= 1;
+        if (level.getBlockState(lower.above().relative(negative)).isAir()) mask |= 2;
+        if (level.getBlockState(lower.relative(positive)).isAir()) mask |= 4;
+        if (level.getBlockState(lower.above().relative(positive)).isAir()) mask |= 8;
+        if (level.getBlockState(lower.above(2)).isAir()) mask |= 16;
+        return mask;
+    }
+
+    private static List<Display> createPlane(ServerLevel level, BlockPos lower, int mask) {
         Direction facing = level.getBlockState(lower).getValue(DoorBlock.FACING);
         Vec3 center = VoidDoorGeometry.center(lower, facing);
         List<Display> result = new ArrayList<>();
@@ -453,7 +550,7 @@ public final class VoidDoors {
             Display.TextDisplay display = new Display.TextDisplay(EntityType.TEXT_DISPLAY, level);
             CompoundTag tag;
             try {
-                tag = TagParser.parseTag("{text:'{\"text\":\" \"}',background:-16777216,text_opacity:0b,"
+                tag = TagParser.parseTag("{text:'{\"text\":\" \"}',alignment:\"center\",background:-16777216,text_opacity:0b,"
                     + "billboard:\"fixed\",see_through:0b,default_background:0b,shadow:0b,"
                     + "width:2f,height:4f,view_range:1f}");
             } catch (com.mojang.brigadier.exceptions.CommandSyntaxException impossible) {
@@ -463,7 +560,7 @@ public final class VoidDoors {
             // Handwritten quaternion lists were rejected during real Forge startup.
             tag.put("transformation", Transformation.EXTENDED_CODEC.encodeStart(NbtOps.INSTANCE,
                 new Transformation(new Vector3f(-.1f, 0, 0), new Quaternionf(),
-                    new Vector3f(8f, 7.2727275f, 1f), new Quaternionf())).result().orElseThrow());
+                    new Vector3f(6f, 6.2f, 1f), new Quaternionf())).result().orElseThrow());
             display.load(tag);
             display.setPos(center.x, center.y, center.z);
             display.setYRot(facing.toYRot() + side * 180);
@@ -473,18 +570,25 @@ public final class VoidDoors {
             level.addFreshEntity(display);
             result.add(display);
         }
-        // Three narrow beams sit in the same thin slice as the plane. The closed
-        // dark-oak leaf occludes them; opening reveals the full frame at once.
-        addFrameBeam(level, center, facing, new Vector3f(-.49f, .03f, -.035f),
-            new Vector3f(.075f, 1.94f, .07f), result);
-        addFrameBeam(level, center, facing, new Vector3f(.415f, .03f, -.035f),
-            new Vector3f(.075f, 1.94f, .07f), result);
-        addFrameBeam(level, center, facing, new Vector3f(-.49f, 1.89f, -.035f),
-            new Vector3f(.98f, .08f, .07f), result);
+        // Each exposed edge segment is independent, so a neighboring block hides
+        // only the beam it actually covers.
+        boolean widthX = facing.getAxis() == Direction.Axis.Z;
+        for (int segment = 0; segment < 4; segment++) if ((mask & (1 << segment)) != 0) {
+            float lateral = segment < 2 ? -.49f : .415f;
+            float y = segment % 2 == 0 ? .03f : .97f;
+            Vector3f offset = widthX ? new Vector3f(lateral, y, -.035f)
+                : new Vector3f(-.035f, y, lateral);
+            Vector3f size = widthX ? new Vector3f(.075f, .94f, .07f)
+                : new Vector3f(.07f, .94f, .075f);
+            addFrameBeam(level, center, offset, size, result);
+        }
+        if ((mask & 16) != 0) addFrameBeam(level, center,
+            widthX ? new Vector3f(-.49f, 1.89f, -.035f) : new Vector3f(-.035f, 1.89f, -.49f),
+            widthX ? new Vector3f(.98f, .08f, .07f) : new Vector3f(.07f, .08f, .98f), result);
         return result;
     }
 
-    private static void addFrameBeam(ServerLevel level, Vec3 center, Direction facing,
+    private static void addFrameBeam(ServerLevel level, Vec3 center,
                                      Vector3f offset, Vector3f size, List<Display> result) {
         Display.BlockDisplay beam = new Display.BlockDisplay(EntityType.BLOCK_DISPLAY, level);
         CompoundTag tag = new CompoundTag();
@@ -493,7 +597,6 @@ public final class VoidDoors {
             new Transformation(offset, new Quaternionf(), size, new Quaternionf())).result().orElseThrow());
         beam.load(tag);
         beam.setPos(center.x, center.y, center.z);
-        beam.setYRot(facing.toYRot());
         beam.setInvulnerable(true);
         beam.setNoGravity(true);
         beam.addTag(PLANE);
@@ -509,6 +612,7 @@ public final class VoidDoors {
 
     private void removePlane(VoidDoorData.DoorPosition position) {
         var old = planes.remove(position);
+        frameMasks.remove(position);
         if (old != null) old.forEach(Display::discard);
     }
 
@@ -521,6 +625,7 @@ public final class VoidDoors {
 
     @SubscribeEvent
     public void onStop(ServerStoppedEvent event) {
-        pending.clear(); placements.clear(); previous.clear(); planes.clear(); ticketed.clear(); lastOpen.clear(); unlocked.clear();
+        pending.clear(); placements.clear(); previous.clear(); planes.clear(); frameMasks.clear();
+        ticketed.clear(); lastOpen.clear(); unlocked.clear(); codeSessions.clear();
     }
 }

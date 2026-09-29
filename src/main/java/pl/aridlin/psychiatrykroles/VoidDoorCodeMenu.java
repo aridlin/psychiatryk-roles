@@ -63,11 +63,17 @@ final class VoidDoorCodeMenu extends AnvilMenu {
             String submitted = attempt;
             serverPlayer.closeContainer();
             doors.unlock(serverPlayer, level, door, pair, submitted);
+            // A vanilla client predicts that shift-click moved the visual paper into
+            // inventory. Send the authoritative empty cursor and inventory immediately.
+            serverPlayer.inventoryMenu.sendAllDataToRemote();
         }
         // Ignore every other slot: the paper is a visual prompt, not a real item.
     }
 
-    @Override public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
+    @Override public ItemStack quickMoveStack(Player player, int slot) {
+        if (slot == getResultSlot()) clicked(slot, 0, ClickType.QUICK_MOVE, player);
+        return ItemStack.EMPTY;
+    }
 
     @Override public boolean stillValid(Player player) {
         return player.level() == level && player.distanceToSqr(door.getX() + .5, door.getY() + .5,
