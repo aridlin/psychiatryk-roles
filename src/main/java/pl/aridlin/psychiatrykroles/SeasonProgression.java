@@ -55,10 +55,9 @@ final class SeasonProgression {
         if (season == null || !borderUpdateDue(borderInitialized, server.getTickCount())) return;
         long elapsedDays = Math.min(season.durationDays,
             Math.max(0L, (System.currentTimeMillis() - season.startedAt) / DAY_MS));
-        double left = 1.0 - (double) elapsedDays / season.durationDays;
         // Slow opening, faster closing, then a clearly visible final arena.
-        double diameter = season.finalDiameter
-            + (season.initialDiameter - season.finalDiameter) * left * left;
+        double diameter = borderDiameter(season.initialDiameter, season.finalDiameter,
+            season.durationDays, elapsedDays);
         for (ServerLevel level : server.getAllLevels()) {
             double scale = level.dimension() == Level.NETHER ? 0.125 : 1.0;
             var border = level.getWorldBorder();
@@ -73,6 +72,11 @@ final class SeasonProgression {
 
     static boolean borderUpdateDue(boolean alreadyInitialized, int tickCount) {
         return !alreadyInitialized || tickCount % 1200 == 0;
+    }
+
+    static double borderDiameter(double initialDiameter, double finalDiameter, int durationDays, long elapsedDays) {
+        double progress = Math.min(1.0, Math.max(0.0, (double) elapsedDays / durationDays));
+        return initialDiameter - (initialDiameter - finalDiameter) * progress * progress;
     }
 
     private Settings get(MinecraftServer server) {
