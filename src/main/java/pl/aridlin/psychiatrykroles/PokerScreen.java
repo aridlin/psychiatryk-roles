@@ -91,7 +91,7 @@ public final class PokerScreen extends AbstractContainerScreen<PokerMenu> {
         graphics.drawString(font, playerInventoryTitle, 8, 129, MUTED, false);
         if (!isExchange()) {
             graphics.drawString(font, label("KARTY WSPÓLNE", "COMMUNITY"), 48, 27, TEXT, false);
-            graphics.drawString(font, label("TWOJE", "YOURS"), 13, 52, TEXT, false);
+            graphics.drawString(font, label("TWOJE", "YOURS"), 13, 43, TEXT, false);
         }
     }
 
@@ -165,20 +165,31 @@ public final class PokerScreen extends AbstractContainerScreen<PokerMenu> {
         graphics.fill(sx, y + 5, right, y + 217, 0xFF24291F);
         graphics.fill(sx + 1, y + 6, right - 1, y + 7, BORDER);
         graphics.drawString(font, label("STAN GRY", "GAME STATE"), sx + 5, y + 12, 0xFFE6C783, false);
-        drawTrimmed(graphics, menu.getSlot(4).getItem().getHoverName().getString(), sx + 5, y + 25, 91, TEXT);
-        drawTrimmed(graphics, menu.getSlot(8).getItem().getHoverName().getString(), sx + 5, y + 37, 91, MUTED);
+        String[] game = menu.getSlot(4).getItem().getHoverName().getString()
+            .split(java.util.regex.Pattern.quote(" | "));
+        String[] wallet = menu.getSlot(8).getItem().getHoverName().getString()
+            .split(java.util.regex.Pattern.quote(" | "));
+        drawTrimmed(graphics, game[0], sx + 5, y + 25, 91, TEXT);
+        if (game.length >= 3) drawTrimmed(graphics, game[1] + " | " + game[2], sx + 5, y + 36, 91, TEXT);
+        if (wallet.length >= 3) {
+            drawTrimmed(graphics, label("Portfel ", "Wallet ") + lastWord(wallet[0]), sx + 5, y + 47, 91, MUTED);
+            drawTrimmed(graphics, label("Stół ", "Table ") + lastWord(wallet[1]), sx + 5, y + 58, 91, MUTED);
+            drawTrimmed(graphics, label("Rezerwa ", "Reserve ") + lastWord(wallet[2]), sx + 5, y + 69, 91, MUTED);
+        } else if (wallet.length > 0) {
+            drawTrimmed(graphics, wallet[0], sx + 5, y + 47, 91, MUTED);
+        }
         ItemStack turn = menu.getSlot(49).getItem();
         if (turn.is(Items.GOLDEN_HELMET)) {
-            graphics.fill(sx + 3, y + 51, right - 3, y + 75, 0xFF4C3B21);
-            graphics.drawString(font, label("TERAZ GRA", "ACTING NOW"), sx + 6, y + 54, 0xFFFFDA80, false);
-            drawTrimmed(graphics, turn.getHoverName().getString(), sx + 6, y + 65, 88, TEXT);
+            graphics.fill(sx + 3, y + 82, right - 3, y + 106, 0xFF4C3B21);
+            graphics.drawString(font, label("TERAZ GRA", "ACTING NOW"), sx + 6, y + 85, 0xFFFFDA80, false);
+            drawTrimmed(graphics, turn.getHoverName().getString(), sx + 6, y + 96, 88, TEXT);
         }
-        graphics.drawString(font, label("OSTATNIE", "RECENT"), sx + 5, y + 84, 0xFFE6C783, false);
+        graphics.drawString(font, label("OSTATNIE", "RECENT"), sx + 5, y + 114, 0xFFE6C783, false);
         ItemLore lore = menu.getSlot(0).getItem().get(DataComponents.LORE);
         List<Component> lines = lore == null ? List.of() : lore.lines();
-        int first = Math.max(1, lines.size() - 8); // skip the fixed help line
-        int lineY = y + 97;
-        for (int i = first; i < lines.size() && lineY < y + 182; i++) {
+        int first = Math.max(1, lines.size() - 6); // skip the fixed help line
+        int lineY = y + 127;
+        for (int i = first; i < lines.size() && lineY < y + 187; i++) {
             drawTrimmed(graphics, lines.get(i).getString(), sx + 5, lineY, 91, MUTED);
             lineY += 10;
         }
@@ -188,7 +199,15 @@ public final class PokerScreen extends AbstractContainerScreen<PokerMenu> {
     }
 
     private void drawTrimmed(GuiGraphics graphics, String value, int x, int y, int maxWidth, int color) {
-        graphics.drawString(font, font.plainSubstrByWidth(value, maxWidth), x, y, color, false);
+        String text = font.width(value) <= maxWidth ? value
+            : font.plainSubstrByWidth(value, maxWidth - font.width("…")) + "…";
+        graphics.drawString(font, text, x, y, color, false);
+    }
+
+    private static String lastWord(String value) {
+        String trimmed = value.trim();
+        int space = trimmed.lastIndexOf(' ');
+        return space < 0 ? trimmed : trimmed.substring(space + 1);
     }
 
     private boolean isExchange() { return menu.getSlot(4).getItem().is(Items.EMERALD); }
@@ -207,6 +226,6 @@ public final class PokerScreen extends AbstractContainerScreen<PokerMenu> {
     }
 
     private String label(String polish, String english) {
-        return title.getString().equals("Poker table") ? english : polish;
+        return title.getString().equals("Poker table") || title.getString().equals("Exchange") ? english : polish;
     }
 }
