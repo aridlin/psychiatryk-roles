@@ -254,6 +254,7 @@ public final class PsychiatrykRoles {
 
     public PsychiatrykRoles(net.neoforged.bus.api.IEventBus modBus) {
         BuildTransferMarkers.register(modBus);
+        PokerMenus.register(modBus);
         modBus.addListener(BuildTransferNetwork::register);
         modBus.addListener((RegisterTicketControllersEvent event) -> {
             event.register(VoidDoors.TICKET_CONTROLLER);

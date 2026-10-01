@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,15 +29,22 @@ final class PokerMenu extends ChestMenu {
     private boolean exchangeScreen;
     private String lastState = "";
 
+    // The client receives the same 54 server-synced slots, but never reads
+    // PokerData. Keeping this slot contract stable lets the visual client lag
+    // behind routine server-side poker changes.
+    PokerMenu(int containerId, Inventory inventory) {
+        this(containerId, inventory, null, new SimpleContainer(SIZE));
+    }
+
     PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer) {
         this(containerId, inventory, viewer, new SimpleContainer(SIZE));
     }
 
     private PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer, SimpleContainer display) {
-        super(MenuType.GENERIC_9x6, containerId, inventory, display, 6);
+        super(PokerMenus.TYPE.get(), containerId, inventory, display, 6);
         this.display = display;
         this.viewer = viewer;
-        refresh();
+        if (viewer != null) refresh();
     }
 
     @Override public boolean stillValid(Player player) { return true; }
