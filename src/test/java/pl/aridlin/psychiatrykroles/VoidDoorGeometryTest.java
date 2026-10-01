@@ -28,7 +28,9 @@ class VoidDoorGeometryTest {
 
     @Test void onlyTheUnframedSideAndTopExtendTheContactArea() {
         assertNull(movingContact(31, .44, .5));
-        assertNotNull(movingContact(31 & ~4, .44, .5));
+        VoidDoorGeometry.Contact unframed = movingContact(31 & ~4, .44, .5);
+        assertNotNull(unframed);
+        assertEquals(.44, unframed.lateral(), 1.0e-6);
         assertNull(movingContact(31 & ~4, .44, 1.5));
         assertNull(movingContact(31, 0, 1.95));
         assertNotNull(movingContact(31 & ~16, 0, 1.95));

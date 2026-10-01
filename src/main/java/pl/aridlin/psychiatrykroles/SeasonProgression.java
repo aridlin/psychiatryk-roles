@@ -23,6 +23,7 @@ final class SeasonProgression {
     private static final long DAY_MS = 86_400_000L;
     private MinecraftServer cachedServer;
     private Settings settings;
+    private boolean borderInitialized;
 
     private record Settings(long startedAt, int centerX, int centerZ, double initialDiameter,
                             double finalDiameter, int durationDays, int netherUnlockDays,
@@ -50,9 +51,8 @@ final class SeasonProgression {
     @SubscribeEvent
     public void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
-        if (server.getTickCount() % 1200 != 0) return;
         Settings season = get(server);
-        if (season == null) return;
+        if (season == null || !borderUpdateDue(borderInitialized, server.getTickCount())) return;
         long elapsedDays = Math.min(season.durationDays,
             Math.max(0L, (System.currentTimeMillis() - season.startedAt) / DAY_MS));
         double left = 1.0 - (double) elapsedDays / season.durationDays;
@@ -68,11 +68,17 @@ final class SeasonProgression {
                 Math.abs(border.getCenterZ() - season.centerZ * scale) > 0.5)
                 border.setCenter(season.centerX * scale, season.centerZ * scale);
         }
+        borderInitialized = true;
+    }
+
+    static boolean borderUpdateDue(boolean alreadyInitialized, int tickCount) {
+        return !alreadyInitialized || tickCount % 1200 == 0;
     }
 
     private Settings get(MinecraftServer server) {
         if (cachedServer == server) return settings;
         cachedServer = server;
+        borderInitialized = false;
         settings = read(server);
         return settings;
     }

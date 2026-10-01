@@ -61,7 +61,9 @@ final class VoidDoorGeometry {
         Direction approach = sign > 0 ? facing : facing.getOpposite();
         double lateral = (hit.x - center.x) * -approach.getStepZ()
             + (hit.z - center.z) * approach.getStepX();
-        return new Contact(Mth.clamp(lateral, -.35, .35),
+        // Preserve the entry's side-to-side position across the visible plane.
+        // The destination's collision check can still fall back toward its center.
+        return new Contact(Mth.clamp(lateral, -.5, .5),
             Mth.clamp(hit.y - lower.getY(), .01, 1.6), approach);
     }
 
