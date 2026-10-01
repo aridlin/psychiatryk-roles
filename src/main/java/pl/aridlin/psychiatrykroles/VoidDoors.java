@@ -34,16 +34,18 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.common.world.ForgeChunkManager;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.world.chunk.TicketController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +62,8 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public final class VoidDoors {
+    static final TicketController TICKET_CONTROLLER = new TicketController(
+        ResourceLocation.fromNamespaceAndPath(PsychiatrykRoles.MOD_ID, "void_doors"));
     private static final String MARKER = "psychiatrykVoidDoor";
     private static final String PAIR = "psychiatrykVoidDoorPair";
     private static final String PLANE = "psychiatrykVoidPlane";
@@ -80,16 +84,16 @@ public final class VoidDoors {
 
     public static boolean isVoidDoor(ItemStack stack) {
         return (stack.is(Items.DARK_OAK_DOOR) || stack.is(Items.OAK_DOOR))
-            && stack.hasTag() && stack.getTag().getBoolean(MARKER);
+            && ItemTagCompat.read(stack).getBoolean(MARKER);
     }
 
     public static void assignCraftedPair(ItemStack stack) {
-        if (isVoidDoor(stack)) stack.getOrCreateTag().putString(PAIR, UUID.randomUUID().toString());
+        if (isVoidDoor(stack)) ItemTagCompat.putString(stack, PAIR, UUID.randomUUID().toString());
     }
 
     static UUID pair(ItemStack stack) {
         if (!isVoidDoor(stack)) return null;
-        try { return UUID.fromString(stack.getTag().getString(PAIR)); }
+        try { return UUID.fromString(ItemTagCompat.read(stack).getString(PAIR)); }
         catch (IllegalArgumentException ignored) { return null; }
     }
 
@@ -112,9 +116,9 @@ public final class VoidDoors {
         if (name.length() > 50) return;
         ItemStack output = left.copy();
         if (name.isEmpty() || name.equals("Void Doors") || name.equals("Drzwi Pustki")) {
-            output.getOrCreateTag().remove(CODE);
+            ItemTagCompat.remove(output, CODE);
         } else {
-            output.getOrCreateTag().putString(CODE, codeHash(pair, name));
+            ItemTagCompat.putString(output, CODE, codeHash(pair, name));
         }
         localize(output, PsychiatrykRoles.isEnglish(event.getPlayer()));
         event.setOutput(output);
@@ -122,17 +126,17 @@ public final class VoidDoors {
     }
 
     public static void localize(ItemStack stack, boolean english) {
-        stack.setHoverName(Component.literal(english ? "Void Doors" : "Drzwi Pustki")
+        ItemTagCompat.setName(stack, Component.literal(english ? "Void Doors" : "Drzwi Pustki")
             .withStyle(ChatFormatting.DARK_PURPLE));
-        ListTag lore = new ListTag();
+        List<Component> lore = new ArrayList<>();
         for (String line : english ? new String[] {
             "A linked pair, even across dimensions.", "Open either door and cross its black plane.",
             "Mining and replacing a door keeps its link."
         } : new String[] { "Połączona para, także między wymiarami.",
             "Otwórz dowolne drzwi i przejdź przez czarną płaszczyznę.", "Wykopanie i postawienie zachowuje połączenie." }) {
-            lore.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(line).withStyle(ChatFormatting.GRAY))));
+            lore.add(Component.literal(line).withStyle(ChatFormatting.GRAY));
         }
-        stack.getOrCreateTagElement("display").put("Lore", lore);
+        ItemTagCompat.setLore(stack, lore);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -166,7 +170,7 @@ public final class VoidDoors {
             assignCraftedPair(stack);
         }
         BlockPlaceContext context = new BlockPlaceContext(player, event.getHand(), stack, event.getHitVec());
-        pending.put(player.getUUID(), new PendingPlacement(pair(stack), stack.getOrCreateTag().getString(CODE),
+        pending.put(player.getUUID(), new PendingPlacement(pair(stack), ItemTagCompat.read(stack).getString(CODE),
             player.getServer().getTickCount(),
             new VoidDoorData.DoorPosition(player.level().dimension().location().toString(), context.getClickedPos())));
     }
@@ -198,10 +202,10 @@ public final class VoidDoors {
             ItemStack drop = drops.get(i);
             if (drop.is(Items.OAK_DOOR) || drop.is(Items.DARK_OAK_DOOR)) {
                 ItemStack linked = new ItemStack(Items.DARK_OAK_DOOR, drop.getCount());
-                linked.getOrCreateTag().putBoolean(MARKER, true);
-                linked.getOrCreateTag().putString(PAIR, pair.toString());
+                ItemTagCompat.putBoolean(linked, MARKER, true);
+                ItemTagCompat.putString(linked, PAIR, pair.toString());
                 String code = VoidDoorData.get(params.getLevel().getServer()).code(pair);
-                if (!code.isEmpty()) linked.getOrCreateTag().putString(CODE, code);
+                if (!code.isEmpty()) ItemTagCompat.putString(linked, CODE, code);
                 drops.set(i, linked);
             }
         }
@@ -230,9 +234,9 @@ public final class VoidDoors {
         removePlane(new VoidDoorData.DoorPosition(dimension, source));
         removePlane(partner);
         ItemStack drops = new ItemStack(Items.DARK_OAK_DOOR, 2);
-        drops.getOrCreateTag().putBoolean(MARKER, true);
-        drops.getOrCreateTag().putString(PAIR, pair.toString());
-        if (!code.isEmpty()) drops.getOrCreateTag().putString(CODE, code);
+        ItemTagCompat.putBoolean(drops, MARKER, true);
+        ItemTagCompat.putString(drops, PAIR, pair.toString());
+        if (!code.isEmpty()) ItemTagCompat.putString(drops, CODE, code);
         if (!player.getInventory().add(drops)) player.drop(drops, false);
     }
 
@@ -242,8 +246,7 @@ public final class VoidDoors {
     }
 
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
+    public void onServerTick(ServerTickEvent.Post event) {
         var server = event.getServer();
         VoidDoorData data = VoidDoorData.get(server);
         reconcileTickets(server, data.positions());
@@ -287,8 +290,8 @@ public final class VoidDoors {
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
         String dimension = player.level().dimension().location().toString();
         Sample from = previous.put(player.getUUID(), new Sample(dimension, player.position()));
         if (from == null || !from.dimension().equals(dimension)
@@ -338,8 +341,8 @@ public final class VoidDoors {
     }
 
     @SubscribeEvent
-    public void onLevelTick(TickEvent.LevelTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !(event.level instanceof ServerLevel sourceLevel)) return;
+    public void onLevelTick(LevelTickEvent.Post event) {
+        if (!(event.getLevel() instanceof ServerLevel sourceLevel)) return;
         String dimension = sourceLevel.dimension().location().toString();
         VoidDoorData data = VoidDoorData.get(sourceLevel.getServer());
         for (var source : data.positions()) {
@@ -352,17 +355,22 @@ public final class VoidDoors {
             if (destination == null) continue;
             ServerLevel target = level(sourceLevel.getServer(), destination.dimension());
             if (target == null) continue;
-            target.getChunkAt(destination.pos());
-            if (!completeDoor(target, destination.pos())) continue;
-            Direction facing = target.getBlockState(destination.pos()).getValue(DoorBlock.FACING);
             Vec3 center = VoidDoorGeometry.center(source.pos(), state.getValue(DoorBlock.FACING));
-            for (ItemEntity item : sourceLevel.getEntitiesOfClass(ItemEntity.class,
-                new AABB(center.x - 1, center.y, center.z - 1, center.x + 1, center.y + 2, center.z + 1))) {
+            List<ItemEntity> nearby = sourceLevel.getEntitiesOfClass(ItemEntity.class,
+                new AABB(center.x - 1, center.y, center.z - 1, center.x + 1, center.y + 2, center.z + 1));
+            Direction facing = null;
+            for (ItemEntity item : nearby) {
                 Direction sourceFacing = state.getValue(DoorBlock.FACING);
                 VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing,
                     item.getBoundingBox(), item.position().subtract(item.getDeltaMovement()), item.position(),
                     item.getDeltaMovement());
                 if (contact == null) continue;
+                if (facing == null) {
+                    // A remote chunk load is only necessary when an item actually touches the plane.
+                    target.getChunkAt(destination.pos());
+                    if (!completeDoor(target, destination.pos())) break;
+                    facing = target.getBlockState(destination.pos()).getValue(DoorBlock.FACING);
+                }
                 Direction preferred = contact.approach() == sourceFacing ? facing : facing.getOpposite();
                 PortalExit exit = safeExit(target, item, destination.pos(), preferred,
                     contact.lateral(), contact.height());
@@ -398,7 +406,7 @@ public final class VoidDoors {
     private static void changeTicket(net.minecraft.server.MinecraftServer server,
                                      VoidDoorData.DoorPosition position, boolean add) {
         ServerLevel level = level(server, position.dimension());
-        if (level != null) ForgeChunkManager.forceChunk(level, PsychiatrykRoles.MOD_ID, position.pos(),
+        if (level != null) TICKET_CONTROLLER.forceChunk(level, position.pos(),
             position.pos().getX() >> 4, position.pos().getZ() >> 4, add, false);
     }
 

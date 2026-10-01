@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "id": "minecraft:written_book",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykRecipeBook:1b}",
+      "minecraft:written_book_content": {
+        "title": "Psychiatryk",
+        "author": "Psychiatryk",
+        "generation": 0,
+        "pages": ["Psychiatryk"],
+        "resolved": true
+      }
+    }
+  },
+  "show_notification": true
+}

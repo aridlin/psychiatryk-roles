@@ -31,7 +31,7 @@ final class VoidDoorCodeMenu extends AnvilMenu {
         ItemStack prompt = new ItemStack(Items.PAPER);
         // AnvilScreen copies this item's hover name into the input field on open.
         // The menu title supplies the prompt, while an empty item name leaves the field blank.
-        prompt.setHoverName(Component.empty());
+        ItemTagCompat.setName(prompt, Component.empty());
         inputSlots.setItem(0, prompt);
         broadcastChanges();
     }
@@ -49,7 +49,7 @@ final class VoidDoorCodeMenu extends AnvilMenu {
         ItemStack result = ItemStack.EMPTY;
         if (attempt != null && !attempt.isEmpty()) {
             result = new ItemStack(Items.PAPER);
-            result.setHoverName(Component.literal(PsychiatrykRoles.isEnglish(player)
+            ItemTagCompat.setName(result, Component.literal(PsychiatrykRoles.isEnglish(player)
                 ? "Submit code" : "Zatwierdź kod"));
         }
         resultSlots.setItem(0, result);

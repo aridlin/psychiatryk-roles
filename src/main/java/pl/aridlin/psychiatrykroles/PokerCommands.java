@@ -15,7 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +146,7 @@ final class PokerCommands {
     }
 
     static boolean isGuiItem(ItemStack stack) {
-        return stack.is(Items.CLOCK) && stack.hasTag() && stack.getTag().getBoolean(GUI_ITEM_MARKER);
+        return stack.is(Items.CLOCK) && ItemTagCompat.read(stack).getBoolean(GUI_ITEM_MARKER);
     }
 
     private static int deliverGuiItem(CommandSourceStack source, String name) {
@@ -167,7 +167,7 @@ final class PokerCommands {
     }
 
     static void localizeGuiItem(ItemStack stack, boolean en) {
-        stack.setHoverName(Component.literal(en ? "Poker menu — right-click" : "Menu pokera — kliknij PPM")
+        ItemTagCompat.setName(stack, Component.literal(en ? "Poker menu — right-click" : "Menu pokera — kliknij PPM")
             .withStyle(ChatFormatting.GOLD));
     }
 
@@ -178,9 +178,8 @@ final class PokerCommands {
             return 0;
         }
         ItemStack clock = new ItemStack(Items.CLOCK);
-        clock.getOrCreateTag().putBoolean(GUI_ITEM_MARKER, true);
-        clock.setHoverName(Component.literal(english(player) ? "Poker menu — right-click" : "Menu pokera — kliknij PPM")
-            .withStyle(ChatFormatting.GOLD));
+        ItemTagCompat.putBoolean(clock, GUI_ITEM_MARKER, true);
+        localizeGuiItem(clock, english(player));
         player.getInventory().add(clock);
         player.inventoryMenu.broadcastChanges();
         send(player, "Otrzymujesz zegar pokera. Kliknij PPM, aby otworzyć menu.",
@@ -351,7 +350,7 @@ final class PokerCommands {
         if (!data.debit(player.getUUID(), cost)) { sendError(player, "wallet-insufficient"); return 0; }
         int remaining = count;
         while (remaining > 0) {
-            ItemStack delivery = new ItemStack(item.get(), Math.min(remaining, item.get().getMaxStackSize())); remaining -= delivery.getCount();
+            ItemStack delivery = new ItemStack(item.get(), Math.min(remaining, new ItemStack(item.get()).getMaxStackSize())); remaining -= delivery.getCount();
             if (!player.getInventory().add(delivery) && !delivery.isEmpty()) {
                 ItemEntity dropped = player.drop(delivery, false); if (dropped != null) DroppedItemOwnership.mark(dropped, player.getUUID());
             }

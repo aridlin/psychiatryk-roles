@@ -2,21 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "pattern": [
-    "S",
-    "S",
-    "C"
+    " S ",
+    "SSS",
+    " S "
   ],
   "key": {
     "S": {
       "item": "minecraft:stick"
-    },
-    "C": {
-      "item": "minecraft:cobblestone"
     }
   },
   "result": {
-    "item": "minecraft:stone_sword",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b}"
+    "id": "minecraft:shears",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykExtractor:1b}"
+    }
   },
   "show_notification": true
 }

@@ -15,8 +15,10 @@
     }
   },
   "result": {
-    "item": "minecraft:rabbit_hide",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykCleanupBag:1b}"
+    "id": "minecraft:rabbit_hide",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykCleanupBag:1b}"
+    }
   },
   "show_notification": true
 }

@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import pl.aridlin.psychiatrykroles.VoidDoors;
 
-@Mixin(value = BlockBehaviour.class, remap = false)
+@Mixin(BlockBehaviour.class)
 abstract class VoidDoorDropsMixin {
-    @Inject(method = {"getDrops", "m_49635_"}, at = @At("RETURN"))
+    @Inject(method = "getDrops", at = @At("RETURN"))
     private void psychiatrykRoles$preserveLink(BlockState state, LootParams.Builder params,
                                               CallbackInfoReturnable<List<ItemStack>> callback) {
         VoidDoors.preserveDropLink(state, params, callback.getReturnValue());

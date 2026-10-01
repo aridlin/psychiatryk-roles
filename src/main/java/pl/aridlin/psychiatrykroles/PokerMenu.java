@@ -1,6 +1,7 @@
 package pl.aridlin.psychiatrykroles;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -13,6 +14,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -59,7 +61,7 @@ final class PokerMenu extends ChestMenu {
                     ResourceLocation id = ResourceLocation.tryParse(offer.getKey());
                     if (id != null) PokerCommands.exchangeOut(viewer, id,
                         clickType == ClickType.QUICK_MOVE
-                            ? BuiltInRegistries.ITEM.get(id).getMaxStackSize() : 1);
+                            ? new ItemStack(BuiltInRegistries.ITEM.get(id)).getMaxStackSize() : 1);
                 }
             }
             if (viewer.containerMenu == this) refresh();
@@ -104,7 +106,7 @@ final class PokerMenu extends ChestMenu {
         PokerData data = PokerData.get(viewer.getServer()); PokerGame game = data.tableFor(viewer.getUUID());
         if (exchangeScreen) return "exchange:" + data.balance(viewer.getUUID()) + ':'
             + BuiltInRegistries.ITEM.getKey(viewer.getMainHandItem().getItem()) + ':'
-            + viewer.getMainHandItem().getCount() + ':' + viewer.getMainHandItem().getTag();
+            + viewer.getMainHandItem().getCount() + ':' + viewer.getMainHandItem().getComponentsPatch();
         if (game == null) return "lobby:" + data.balance(viewer.getUUID()) + ':'
             + data.tables().stream().map(table -> table.id() + ':' + table.phase() + ':' + table.players().size()).toList();
         StringBuilder value = new StringBuilder(game.id()).append('|').append(game.phase()).append('|').append(game.pot())
@@ -209,8 +211,7 @@ final class PokerMenu extends ChestMenu {
                 lore(seatIcon, List.of(Component.literal(en ? "Acting now — waiting for this player." : "Teraz gra — czekamy na ten ruch.")
                     .withStyle(ChatFormatting.YELLOW)));
                 if (animationFrame() == 0) {
-                    seatIcon.enchant(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING, 1);
-                    seatIcon.getOrCreateTag().putInt("HideFlags", 1);
+                    seatIcon.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
                 }
             }
             display.setItem(seatSlot++, seatIcon);
@@ -247,9 +248,7 @@ final class PokerMenu extends ChestMenu {
     }
 
     private static void lore(ItemStack item, List<Component> lines) {
-        net.minecraft.nbt.ListTag tag = new net.minecraft.nbt.ListTag();
-        for (Component line : lines) tag.add(net.minecraft.nbt.StringTag.valueOf(Component.Serializer.toJson(line)));
-        item.getOrCreateTagElement("display").put("Lore", tag);
+        item.set(DataComponents.LORE, new ItemLore(lines));
     }
 
     private void fillBorders(boolean en) {
@@ -266,6 +265,6 @@ final class PokerMenu extends ChestMenu {
     }
 
     private static ItemStack icon(Item item, String name) {
-        ItemStack stack = new ItemStack(item); stack.setHoverName(Component.literal(name)); return stack;
+        ItemStack stack = new ItemStack(item); stack.set(DataComponents.CUSTOM_NAME, Component.literal(name)); return stack;
     }
 }

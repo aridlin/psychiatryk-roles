@@ -11,6 +11,8 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
@@ -21,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -34,13 +37,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
+
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -50,10 +54,13 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -62,33 +69,38 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.scores.Team;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.entity.EntityMountEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerContainerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
+import net.neoforged.neoforge.common.util.TriState;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.io.File;
 import java.io.IOException;
@@ -179,7 +191,7 @@ public final class PsychiatrykRoles {
         .build();
     private static final int HOSTILE_ANGER_TICKS = 20 * 30;
     private static final ResourceKey<Level> FREEDOM_DIMENSION = ResourceKey.create(
-        Registries.DIMENSION, new ResourceLocation(MOD_ID, "konsultanci")
+        Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(MOD_ID, "konsultanci")
     );
     private static final Set<net.minecraft.world.level.block.Block> ROCK_BLOCKS = Set.of(
         Blocks.STONE, Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE,
@@ -227,7 +239,7 @@ public final class PsychiatrykRoles {
                 ItemStack now = slot.getItem();
                 if (isConsultantEquipment(now)
                     && (!isConsultantEquipment(before)
-                        || !ItemStack.isSameItemSameTags(now, before)
+                        || !ItemStack.isSameItemSameComponents(now, before)
                         || now.getCount() > before.getCount())) {
                     return true;
                 }
@@ -240,12 +252,21 @@ public final class PsychiatrykRoles {
     private record PendingBlockDrop(UUID owner, long gameTime) {}
     private record Provocation(UUID consultant, int expiresAtTick) {}
 
-    public PsychiatrykRoles() {
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new VoidDoors());
-        MinecraftForge.EVENT_BUS.register(new VoidTrapdoors());
-        MinecraftForge.EVENT_BUS.register(new RestartManager());
-        MinecraftForge.EVENT_BUS.register(new PokerActivity());
+    public PsychiatrykRoles(net.neoforged.bus.api.IEventBus modBus) {
+        BuildTransferMarkers.register(modBus);
+        modBus.addListener(BuildTransferNetwork::register);
+        modBus.addListener((RegisterTicketControllersEvent event) -> {
+            event.register(VoidDoors.TICKET_CONTROLLER);
+            event.register(VoidTrapdoors.TICKET_CONTROLLER);
+        });
+        NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(new BuildTransferMarkers());
+        NeoForge.EVENT_BUS.register(new VoidDoors());
+        NeoForge.EVENT_BUS.register(new VoidTrapdoors());
+        NeoForge.EVENT_BUS.register(new RestartManager());
+        NeoForge.EVENT_BUS.register(new SeasonProgression());
+        NeoForge.EVENT_BUS.register(new PokerActivity());
+        NeoForge.EVENT_BUS.register(new VillagerTradeRebalance());
     }
 
     private static boolean isOperator(ServerPlayer player) {
@@ -332,7 +353,7 @@ public final class PsychiatrykRoles {
     static boolean isPokerExchangeInputAllowed(ItemStack stack) {
         // Only ordinary pristine stacks enter the exchange. This prevents damaged,
         // enchanted or named items from being laundered into fresh replacements.
-        return !stack.isEmpty() && !isConsultantEquipment(stack) && !stack.hasTag();
+        return !stack.isEmpty() && !isConsultantEquipment(stack) && stack.isComponentsPatchEmpty();
     }
 
     private static void auditDenied(Player player, String action, String detail) {
@@ -361,14 +382,7 @@ public final class PsychiatrykRoles {
     }
 
     private static void appendLore(ItemStack stack, Component... lines) {
-        CompoundTag display = stack.getOrCreateTagElement("display");
-        ListTag lore = display.contains("Lore", Tag.TAG_LIST)
-            ? display.getList("Lore", Tag.TAG_STRING)
-            : new ListTag();
-        for (Component line : lines) {
-            lore.add(StringTag.valueOf(Component.Serializer.toJson(line)));
-        }
-        display.put("Lore", lore);
+        ItemTagCompat.appendLore(stack, lines);
     }
 
     private static ItemStack makePlaceableSpruceSign(Player player) {
@@ -383,18 +397,20 @@ public final class PsychiatrykRoles {
         }
         ListTag canPlaceOn = new ListTag();
         BuiltInRegistries.BLOCK.keySet().forEach(id -> canPlaceOn.add(StringTag.valueOf(id.toString())));
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.put("CanPlaceOn", canPlaceOn);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.set(stack, tag);
+        ItemTagCompat.setCanPlaceAnywhere(stack);
     }
 
     private static boolean isPlaceableSpruceSign(ItemStack stack) {
-        return isSpruceSignItem(stack) && stack.hasTag() && stack.getTag().contains("CanPlaceOn");
+        return isSpruceSignItem(stack) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).contains("CanPlaceOn");
     }
 
     private static ItemStack makeSignRemover(Player player) {
         ItemStack stack = new ItemStack(Items.STONE_AXE);
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean("Unbreakable", true);
         tag.putBoolean(SIGN_REMOVER_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
@@ -404,49 +420,55 @@ public final class PsychiatrykRoles {
         canDestroy.add(StringTag.valueOf("minecraft:spruce_hanging_sign"));
         canDestroy.add(StringTag.valueOf("minecraft:spruce_wall_hanging_sign"));
         tag.put("CanDestroy", canDestroy);
+        ItemTagCompat.set(stack, tag);
+        ItemTagCompat.setUnbreakable(stack);
+        ItemTagCompat.setCanBreak(stack, Blocks.SPRUCE_SIGN, Blocks.SPRUCE_WALL_SIGN,
+            Blocks.SPRUCE_HANGING_SIGN, Blocks.SPRUCE_WALL_HANGING_SIGN);
         return stack;
     }
 
     private static boolean isSignRemover(ItemStack stack) {
         return stack.is(Items.STONE_AXE)
-            && stack.hasTag()
-            && stack.getTag().getBoolean(SIGN_REMOVER_MARKER);
+            && ItemTagCompat.has(stack)
+            && ItemTagCompat.read(stack).getBoolean(SIGN_REMOVER_MARKER);
     }
 
     private static ItemStack makeConsultantSword(ItemStack stack, Player player) {
-        stack.getOrCreateTag().putBoolean(CONSULTANT_SWORD_MARKER, true);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_SWORD_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
         return stack;
     }
 
     private static boolean isConsultantSword(ItemStack stack) {
         return stack.is(Items.STONE_SWORD)
-            && stack.hasTag()
-            && stack.getTag().getBoolean(CONSULTANT_SWORD_MARKER);
+            && ItemTagCompat.has(stack)
+            && ItemTagCompat.read(stack).getBoolean(CONSULTANT_SWORD_MARKER);
     }
 
     private static ItemStack makeConsultantPickaxe(ItemStack stack, Player player) {
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean(CONSULTANT_PICKAXE_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
         ListTag canDestroy = new ListTag();
         canDestroy.add(StringTag.valueOf("minecraft:stone"));
         canDestroy.add(StringTag.valueOf("minecraft:cobblestone"));
         tag.put("CanDestroy", canDestroy);
+        ItemTagCompat.set(stack, tag);
+        ItemTagCompat.setCanBreak(stack, Blocks.STONE, Blocks.COBBLESTONE);
         return stack;
     }
 
     private static boolean isConsultantPickaxe(ItemStack stack) {
         return stack.is(Items.STONE_PICKAXE)
-            && stack.hasTag()
-            && stack.getTag().getBoolean(CONSULTANT_PICKAXE_MARKER);
+            && ItemTagCompat.has(stack)
+            && ItemTagCompat.read(stack).getBoolean(CONSULTANT_PICKAXE_MARKER);
     }
 
     private static boolean isConsultantEquipment(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().getBoolean(CONSULTANT_ITEM_MARKER)) {
+        if (!ItemTagCompat.has(stack) || !ItemTagCompat.read(stack).getBoolean(CONSULTANT_ITEM_MARKER)) {
             return false;
         }
-        CompoundTag tag = stack.getTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         return tag.getBoolean(SIGN_REMOVER_MARKER)
             || tag.getBoolean(CONSULTANT_SWORD_MARKER)
             || tag.getBoolean(CONSULTANT_PICKAXE_MARKER)
@@ -464,77 +486,81 @@ public final class PsychiatrykRoles {
     }
 
     private static ItemStack makeExtractor(ItemStack stack, Player player) {
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean(EXTRACTOR_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.set(stack, tag);
         return stack;
     }
 
     private static boolean isExtractor(ItemStack stack) {
-        return stack.is(Items.SHEARS) && stack.hasTag() && stack.getTag().getBoolean(EXTRACTOR_MARKER);
+        return stack.is(Items.SHEARS) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(EXTRACTOR_MARKER);
     }
 
     private static ItemStack makeImporter(ItemStack stack, Player player) {
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean(IMPORTER_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.set(stack, tag);
         return stack;
     }
 
     private static boolean isImporter(ItemStack stack) {
         return stack.is(Items.RECOVERY_COMPASS)
-            && stack.hasTag()
-            && stack.getTag().getBoolean(IMPORTER_MARKER);
+            && ItemTagCompat.has(stack)
+            && ItemTagCompat.read(stack).getBoolean(IMPORTER_MARKER);
     }
 
     private static ItemStack makeTravelStaff(Player player) {
         ItemStack stack = new ItemStack(Items.BLAZE_ROD);
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean(TRAVEL_STAFF_MARKER, true);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
         tag.putBoolean("Unbreakable", true);
+        ItemTagCompat.set(stack, tag);
+        ItemTagCompat.setUnbreakable(stack);
         return stack;
     }
 
     private static boolean isTravelStaff(ItemStack stack) {
-        return stack.is(Items.BLAZE_ROD) && stack.hasTag() && stack.getTag().getBoolean(TRAVEL_STAFF_MARKER);
+        return stack.is(Items.BLAZE_ROD) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(TRAVEL_STAFF_MARKER);
     }
 
     private static ItemStack makeReturnMirror(ItemStack stack, Player player) {
-        stack.getOrCreateTag().putBoolean(RETURN_MIRROR_MARKER, true);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, RETURN_MIRROR_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
         return stack;
     }
 
     private static boolean isReturnMirror(ItemStack stack) {
-        return stack.is(Items.ECHO_SHARD) && stack.hasTag() && stack.getTag().getBoolean(RETURN_MIRROR_MARKER);
+        return stack.is(Items.ECHO_SHARD) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(RETURN_MIRROR_MARKER);
     }
 
     private static ItemStack makeWelcomeBook(Player player) {
         ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
-        stack.getOrCreateTag().putBoolean(WELCOME_BOOK_MARKER, true);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, WELCOME_BOOK_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
         return stack;
     }
 
     private static boolean isWelcomeBook(ItemStack stack) {
-        return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(WELCOME_BOOK_MARKER);
+        return stack.is(Items.WRITTEN_BOOK) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(WELCOME_BOOK_MARKER);
     }
 
     private static boolean isRecipeBook(ItemStack stack) {
-        return stack.is(Items.WRITTEN_BOOK) && stack.hasTag() && stack.getTag().getBoolean(RECIPE_BOOK_MARKER);
+        return stack.is(Items.WRITTEN_BOOK) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(RECIPE_BOOK_MARKER);
     }
 
     private static boolean isEscortCompass(ItemStack stack) {
-        return stack.is(Items.COMPASS) && stack.hasTag() && stack.getTag().getBoolean(ESCORT_COMPASS_MARKER);
+        return stack.is(Items.COMPASS) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(ESCORT_COMPASS_MARKER);
     }
 
     private static boolean isTemporaryChalk(ItemStack stack) {
-        return stack.is(Items.WHITE_DYE) && stack.hasTag() && stack.getTag().getBoolean(TEMPORARY_CHALK_MARKER);
+        return stack.is(Items.WHITE_DYE) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(TEMPORARY_CHALK_MARKER);
     }
 
     private static boolean isCleanupBag(ItemStack stack) {
-        return stack.is(Items.RABBIT_HIDE) && stack.hasTag() && stack.getTag().getBoolean(CLEANUP_BAG_MARKER);
+        return stack.is(Items.RABBIT_HIDE) && ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(CLEANUP_BAG_MARKER);
     }
 
     private static boolean hasCleanupBag(Player player) {
@@ -548,22 +574,22 @@ public final class PsychiatrykRoles {
 
     private static ItemStack makeEscortCompass(Player player) {
         ItemStack stack = new ItemStack(Items.COMPASS);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        stack.getOrCreateTag().putBoolean(ESCORT_COMPASS_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, ESCORT_COMPASS_MARKER, true);
         return stack;
     }
 
     private static ItemStack makeTemporaryChalk(Player player) {
         ItemStack stack = new ItemStack(Items.WHITE_DYE);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        stack.getOrCreateTag().putBoolean(TEMPORARY_CHALK_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, TEMPORARY_CHALK_MARKER, true);
         return stack;
     }
 
     private static ItemStack makeCleanupBag(Player player) {
         ItemStack stack = new ItemStack(Items.RABBIT_HIDE);
-        stack.getOrCreateTag().putBoolean(CONSULTANT_ITEM_MARKER, true);
-        stack.getOrCreateTag().putBoolean(CLEANUP_BAG_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CONSULTANT_ITEM_MARKER, true);
+        ItemTagCompat.putBoolean(stack, CLEANUP_BAG_MARKER, true);
         return stack;
     }
 
@@ -585,7 +611,7 @@ public final class PsychiatrykRoles {
         if (!isConsultantEquipment(stack)) {
             return;
         }
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.remove(LEGACY_LORE_LANGUAGE);
         CompoundTag display = tag.getCompound("display");
         display.remove("Name");
@@ -595,52 +621,51 @@ public final class PsychiatrykRoles {
         } else {
             tag.put("display", display);
         }
+        ItemTagCompat.set(stack, tag);
+        stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        stack.remove(net.minecraft.core.component.DataComponents.LORE);
         if (isSignRemover(stack)) {
-            stack.setHoverName(Component.literal(en ? "Sign Remover" : "Usuwacz Tabliczek").withStyle(ChatFormatting.AQUA));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Sign Remover" : "Usuwacz Tabliczek").withStyle(ChatFormatting.AQUA));
             appendLore(stack,
                 Component.literal(en ? "Removes spruce signs only." : "Usuwa wyłącznie świerkowe tabliczki.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Indestructible consultant item." : "Niezniszczalny przedmiot konsultanta.").withStyle(ChatFormatting.DARK_GRAY));
         } else if (isConsultantSword(stack)) {
-            stack.setHoverName(Component.literal(en ? "Consultant Sword" : "Miecz Konsultanta").withStyle(ChatFormatting.RED));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Consultant Sword" : "Miecz Konsultanta").withStyle(ChatFormatting.RED));
             appendLore(stack,
                 Component.literal(en ? "Can attack hostile mobs only." : "Pozwala atakować wyłącznie wrogie moby.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Other entities remain protected." : "Inne istoty pozostają chronione.").withStyle(ChatFormatting.DARK_GRAY));
         } else if (isConsultantPickaxe(stack)) {
-            stack.setHoverName(Component.literal(en ? "Consultant Pickaxe" : "Kilof Konsultanta").withStyle(ChatFormatting.GRAY));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Consultant Pickaxe" : "Kilof Konsultanta").withStyle(ChatFormatting.GRAY));
             appendLore(stack,
                 Component.literal(en ? "Can mine stone and cobblestone." : "Pozwala wydobywać kamień i bruk.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Other blocks remain protected." : "Inne bloki pozostają chronione.").withStyle(ChatFormatting.DARK_GRAY));
         } else if (isExtractor(stack)) {
-            stack.setHoverName(Component.literal(en ? "Consultant Item Extractor" : "Ekstraktor Przedmiotów").withStyle(ChatFormatting.YELLOW));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Consultant Item Extractor" : "Ekstraktor Przedmiotów").withStyle(ChatFormatting.YELLOW));
             appendLore(stack,
                 Component.literal(en ? "Right-click to remove all consultant items." : "PPM usuwa wszystkie przedmioty konsultanta.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Default items return after rejoining." : "Przedmioty domyślne wrócą po ponownym wejściu.").withStyle(ChatFormatting.DARK_GRAY));
         } else if (isImporter(stack)) {
-            stack.setHoverName(Component.literal("Importer").withStyle(ChatFormatting.GREEN));
+            ItemTagCompat.setName(stack, Component.literal("Importer").withStyle(ChatFormatting.GREEN));
             appendLore(stack,
                 Component.literal(en ? "Main hand: Importer; offhand: ordinary item." : "Główna ręka: Importer; druga ręka: zwykły przedmiot.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Right-click to make the stack droppable." : "PPM przenosi stos i pozwala go wyrzucić.").withStyle(ChatFormatting.DARK_GRAY));
         } else if (isTravelStaff(stack)) {
-            stack.setHoverName(Component.literal(en ? "Passage Staff" : "Laska Przejścia").withStyle(ChatFormatting.LIGHT_PURPLE));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Passage Staff" : "Laska Przejścia").withStyle(ChatFormatting.LIGHT_PURPLE));
             appendLore(stack,
                 Component.literal(en ? "Right-click or drop: switch worlds." : "PPM lub wyrzucenie: przejdź między światami.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Returns to your last position in each world." : "Wracasz do ostatniej pozycji w każdym świecie.").withStyle(ChatFormatting.DARK_GRAY),
                 Component.literal(en ? "Consultant restrictions are disabled there." : "W świecie konsultantów ograniczenia są wyłączone.").withStyle(ChatFormatting.GREEN));
         } else if (isReturnMirror(stack)) {
-            stack.setHoverName(Component.literal(en ? "Mirror of Returning" : "Lustro Powrotu").withStyle(ChatFormatting.AQUA));
+            ItemTagCompat.setName(stack, Component.literal(en ? "Mirror of Returning" : "Lustro Powrotu").withStyle(ChatFormatting.AQUA));
             appendLore(stack,
                 Component.literal(en ? "Use: return to your valid respawn point." : "Użycie: wróć do prawidłowego punktu odrodzenia.").withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Use again quickly: go to world spawn." : "Użyj ponownie szybko: wróć na spawn świata.").withStyle(ChatFormatting.GOLD));
         } else if (isWelcomeBook(stack)) {
-            stack.setHoverName(Component.literal(en ? "Consultant Handbook" : "Poradnik Konsultanta")
+            ItemTagCompat.setName(stack, Component.literal(en ? "Consultant Handbook" : "Poradnik Konsultanta")
                 .withStyle(ChatFormatting.GOLD));
             appendLore(stack, Component.literal(en
                 ? "Localized guide to roles, tools, and both worlds."
                 : "Przewodnik po rolach, narzędziach i obu światach.").withStyle(ChatFormatting.GRAY));
-            tag.putString("title", en ? "Consultant Handbook" : "Poradnik Konsultanta");
-            tag.putString("author", "Psychiatryk");
-            tag.putBoolean("resolved", true);
-            ListTag pages = new ListTag();
             String[] bookPages = en ? new String[] {
                 "WELCOME, CONSULTANT\n\nYou are in Survival while server rules protect the hospital world from destructive actions.",
                 "PROTECTION\n\nContainers are view-only. PvP, entity damage, trampling, mounting, and ordinary building need explicit permission.",
@@ -654,22 +679,16 @@ public final class PsychiatrykRoles {
                 "PODRÓŻ\n\nUżyj lub wyrzuć Laskę Przejścia do swobodnego świata. Lustro wraca do odrodzenia, a szybko użyte ponownie na spawn świata.",
                 "POMOC\n\n/polski lub /english zmienia język.\n/konsultant status pokazuje uprawnienia.\n/przyjecie <kod> wykorzystuje kod."
             };
-            for (String page : bookPages) {
-                pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
-            }
-            tag.put("pages", pages);
+            ItemTagCompat.setWrittenBook(stack, en ? "Consultant Handbook" : "Poradnik Konsultanta",
+                "Psychiatryk", bookPages);
         } else if (isRecipeBook(stack)) {
-            stack.setHoverName(Component.literal(en ? "Consultant Recipe Book" : "Księga Receptur Konsultanta")
+            ItemTagCompat.setName(stack, Component.literal(en ? "Consultant Recipe Book" : "Księga Receptur Konsultanta")
                 .withStyle(ChatFormatting.GOLD));
             appendLore(stack,
                 Component.literal(en ? "Readable crafting guide for consultant tools." : "Czytelny przewodnik po recepturach narzędzi.")
                     .withStyle(ChatFormatting.GRAY),
                 Component.literal(en ? "Crafted from one stick." : "Tworzona z jednego patyka.")
                     .withStyle(ChatFormatting.DARK_GRAY));
-            tag.putString("title", en ? "Consultant Recipes" : "Receptury Konsultanta");
-            tag.putString("author", "Psychiatryk");
-            tag.putBoolean("resolved", true);
-            ListTag pages = new ListTag();
             String[] bookPages = en ? new String[] {
                 "CONSULTANT RECIPES\n\nThis book: 1 stick.\n\nConsultants may craft this book, the mirror, Escort Compass, and Cleanup Bag.",
                 "CONSULTANT SWORD\n\nVertical column:\nstick\nstick\ncobblestone\n\nAttacks hostile mobs only.",
@@ -693,12 +712,10 @@ public final class PsychiatrykRoles {
                 "TORBA PORZĄDKOWA\n\n5 skór + nić: skóry w górnych rogach i dolnym rzędzie, nić pośrodku.\n\nPrzywołuje twoje wczytane uprawnione przedmioty.",
                 "ZASADA TWORZENIA\n\nPacjent lub Ordynator tworzy ograniczone narzędzia i przekazuje je konsultantowi. Konsultant może tworzyć księgę, lustro, kompas i torbę."
             };
-            for (String page : bookPages) {
-                pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
-            }
-            tag.put("pages", pages);
+            ItemTagCompat.setWrittenBook(stack, en ? "Consultant Recipes" : "Receptury Konsultanta",
+                "Psychiatryk", bookPages);
         } else if (isEscortCompass(stack)) {
-            stack.setHoverName(Component.literal(en ? "Escort Compass" : "Kompas Eskorty")
+            ItemTagCompat.setName(stack, Component.literal(en ? "Escort Compass" : "Kompas Eskorty")
                 .withStyle(ChatFormatting.AQUA));
             appendLore(stack,
                 Component.literal(en ? "Points to the nearest online Patient." : "Wskazuje najbliższego Pacjenta online.")
@@ -706,7 +723,7 @@ public final class PsychiatrykRoles {
                 Component.literal(en ? "The Patient must be in the same dimension." : "Pacjent musi być w tym samym wymiarze.")
                     .withStyle(ChatFormatting.DARK_GRAY));
         } else if (isTemporaryChalk(stack)) {
-            stack.setHoverName(Component.literal(en ? "Temporary Chalk" : "Tymczasowa Kreda")
+            ItemTagCompat.setName(stack, Component.literal(en ? "Temporary Chalk" : "Tymczasowa Kreda")
                 .withStyle(ChatFormatting.WHITE));
             appendLore(stack,
                 Component.literal(en ? "Marks the distant block with a 3D particle X." : "Oznacza odległy blok przestrzennym X z cząsteczek.")
@@ -716,7 +733,7 @@ public final class PsychiatrykRoles {
                 Component.literal(en ? "10s cooldown; 5 markers; expires after 24h." : "10 s odnowienia; 5 znaczników; wygasa po 24 h.")
                     .withStyle(ChatFormatting.DARK_GRAY));
         } else if (isCleanupBag(stack)) {
-            stack.setHoverName(Component.literal(en ? "Cleanup Bag" : "Torba Porządkowa")
+            ItemTagCompat.setName(stack, Component.literal(en ? "Cleanup Bag" : "Torba Porządkowa")
                 .withStyle(ChatFormatting.GREEN));
             appendLore(stack,
                 Component.literal(en ? "Recalls your loaded dropped, mined, and mob-loot items." : "Przywołuje twoje wczytane wyrzucone, wykopane i zdobyte przedmioty.")
@@ -729,7 +746,7 @@ public final class PsychiatrykRoles {
             String near = tag.getString(CONSULTANT_NEAR);
             int radius = tag.getInt(CONSULTANT_RADIUS);
             String condition = near.isEmpty() ? "" : " near " + near + " (" + radius + ")";
-            stack.setHoverName(Component.literal((en ? "Consultant: " : "Konsultant: ") + action + condition)
+            ItemTagCompat.setName(stack, Component.literal((en ? "Consultant: " : "Konsultant: ") + action + condition)
                 .withStyle(ChatFormatting.AQUA));
             String usage = switch (action) {
                 case "take", "pickup" -> en ? "Works anywhere in your inventory." : "Działa z dowolnego miejsca w ekwipunku.";
@@ -762,6 +779,7 @@ public final class PsychiatrykRoles {
 
     private static ItemStack localizedView(ItemStack original, UUID viewerId) {
         if (!isConsultantEquipment(original) && !VoidDoors.isVoidDoor(original)
+            && !VoidTrapdoors.isVoidTrapdoor(original)
             && !PokerCommands.isGuiItem(original) && !ChatBook.isChatBook(original)) {
             return original;
         }
@@ -773,9 +791,9 @@ public final class PsychiatrykRoles {
     @SuppressWarnings("unchecked")
     private static Object localizeOutboundPacket(Object message, UUID viewerId) {
         if (message instanceof ClientboundBundlePacket packet) {
-            List<Packet<ClientGamePacketListener>> localized = new java.util.ArrayList<>();
-            for (Packet<ClientGamePacketListener> child : packet.subPackets()) {
-                localized.add((Packet<ClientGamePacketListener>) localizeOutboundPacket(child, viewerId));
+            List<Packet<? super ClientGamePacketListener>> localized = new java.util.ArrayList<>();
+            for (Packet<? super ClientGamePacketListener> child : packet.subPackets()) {
+                localized.add((Packet<? super ClientGamePacketListener>) localizeOutboundPacket(child, viewerId));
             }
             return new ClientboundBundlePacket(localized);
         }
@@ -800,7 +818,7 @@ public final class PsychiatrykRoles {
     }
 
     private static void installLocalizationHandler(ServerPlayer player) {
-        var channel = player.connection.connection.channel();
+        var channel = player.connection.getConnection().channel();
         UUID viewerId = player.getUUID();
         channel.eventLoop().execute(() -> {
             if (channel.pipeline().get(LOCALIZATION_HANDLER) != null) {
@@ -818,7 +836,7 @@ public final class PsychiatrykRoles {
     }
 
     private static void removeLocalizationHandler(ServerPlayer player) {
-        var channel = player.connection.connection.channel();
+        var channel = player.connection.getConnection().channel();
         channel.eventLoop().execute(() -> {
             if (channel.pipeline().get(LOCALIZATION_HANDLER) != null) {
                 channel.pipeline().remove(LOCALIZATION_HANDLER);
@@ -887,11 +905,13 @@ public final class PsychiatrykRoles {
         if (!forceWorldSpawn && player.getRespawnPosition() != null) {
             destination = player.getServer().getLevel(player.getRespawnDimension());
             if (destination != null) {
-                target = ServerPlayer.findRespawnPositionAndUseSpawnBlock(
-                    destination, player.getRespawnPosition(), player.getRespawnAngle(),
-                    player.isRespawnForced(), true
-                ).orElse(null);
-                yaw = player.getRespawnAngle();
+                DimensionTransition respawn = player.findRespawnPositionAndUseSpawnBlock(true,
+                    DimensionTransition.DO_NOTHING);
+                if (!respawn.missingRespawnBlock()) {
+                    destination = respawn.newLevel();
+                    target = respawn.pos();
+                    yaw = respawn.yRot();
+                }
             }
         }
         if (target == null) {
@@ -917,22 +937,22 @@ public final class PsychiatrykRoles {
     }
 
     private static boolean isImportedItem(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().getBoolean(IMPORTED_ITEM_MARKER);
+        return ItemTagCompat.has(stack) && ItemTagCompat.read(stack).getBoolean(IMPORTED_ITEM_MARKER);
     }
 
     private static boolean isOwnedImportedItem(ItemStack stack, Player player) {
         return isImportedItem(stack)
-            && player.getUUID().toString().equals(stack.getTag().getString(IMPORTED_ITEM_OWNER));
+            && player.getUUID().toString().equals(ItemTagCompat.read(stack).getString(IMPORTED_ITEM_OWNER));
     }
 
     private static boolean isOwnedLoot(ItemStack stack, Player player) {
-        if (!stack.hasTag()) {
+        if (!ItemTagCompat.has(stack)) {
             return false;
         }
         String owner = player.getUUID().toString();
-        return owner.equals(stack.getTag().getString(KILL_LOOT_OWNER))
-            || owner.equals(stack.getTag().getString(MINE_LOOT_OWNER))
-            || owner.equals(stack.getTag().getString(DROPPED_ITEM_OWNER));
+        return owner.equals(ItemTagCompat.read(stack).getString(KILL_LOOT_OWNER))
+            || owner.equals(ItemTagCompat.read(stack).getString(MINE_LOOT_OWNER))
+            || owner.equals(ItemTagCompat.read(stack).getString(DROPPED_ITEM_OWNER));
     }
 
     private static boolean isOwnedDroppedEntity(ItemEntity item, Player player) {
@@ -942,13 +962,15 @@ public final class PsychiatrykRoles {
     }
 
     private static void clearTemporaryOwnership(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         if (tag == null) {
             return;
         }
         OwnershipMetadata.clearTemporary(tag);
         if (tag.isEmpty()) {
-            stack.setTag(null);
+            ItemTagCompat.set(stack, null);
+        } else {
+            ItemTagCompat.set(stack, tag);
         }
     }
 
@@ -972,11 +994,13 @@ public final class PsychiatrykRoles {
 
     private static void updateEscortCompass(ItemStack stack, ServerPlayer player) {
         ServerPlayer patient = nearestPatient(player);
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         if (patient == null) {
             tag.remove("LodestonePos");
             tag.remove("LodestoneDimension");
             tag.remove("LodestoneTracked");
+            ItemTagCompat.set(stack, tag);
+            stack.remove(DataComponents.LODESTONE_TRACKER);
             if (player.tickCount % 40 == 0
                 && (isEscortCompass(player.getMainHandItem()) || isEscortCompass(player.getOffhandItem()))) {
                 player.displayClientMessage(Component.literal(tr(player,
@@ -988,6 +1012,9 @@ public final class PsychiatrykRoles {
         tag.put("LodestonePos", NbtUtils.writeBlockPos(patient.blockPosition()));
         tag.putString("LodestoneDimension", patient.level().dimension().location().toString());
         tag.putBoolean("LodestoneTracked", false);
+        ItemTagCompat.set(stack, tag);
+        stack.set(DataComponents.LODESTONE_TRACKER,
+            new LodestoneTracker(Optional.of(GlobalPos.of(patient.level().dimension(), patient.blockPosition())), false));
         if (player.tickCount % 40 == 0
             && (isEscortCompass(player.getMainHandItem()) || isEscortCompass(player.getOffhandItem()))) {
             int distance = (int) Math.round(Math.sqrt(player.distanceToSqr(patient)));
@@ -1120,8 +1147,8 @@ public final class PsychiatrykRoles {
         }
         player.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
         boolean alreadyImported = isImportedItem(moving);
-        moving.getOrCreateTag().putBoolean(IMPORTED_ITEM_MARKER, true);
-        moving.getOrCreateTag().putString(IMPORTED_ITEM_OWNER, player.getUUID().toString());
+        ItemTagCompat.putBoolean(moving, IMPORTED_ITEM_MARKER, true);
+        ItemTagCompat.putString(moving, IMPORTED_ITEM_OWNER, player.getUUID().toString());
         if (!alreadyImported) {
             appendLore(moving, Component.literal(tr(player,
                 "Zaimportowano: można wyrzucić i ponownie podnieść.",
@@ -1140,22 +1167,22 @@ public final class PsychiatrykRoles {
     }
 
     private static boolean hasPermissionAction(ItemStack stack, String action) {
-        return stack.hasTag()
-            && stack.getTag().getBoolean(CONSULTANT_ITEM_MARKER)
-            && (stack.getTag().getLong(CONSULTANT_EXPIRES_AT) <= 0L
-                || stack.getTag().getLong(CONSULTANT_EXPIRES_AT) > System.currentTimeMillis())
-            && action.equals(stack.getTag().getString(CONSULTANT_ACTION));
+        return ItemTagCompat.has(stack)
+            && ItemTagCompat.read(stack).getBoolean(CONSULTANT_ITEM_MARKER)
+            && (ItemTagCompat.read(stack).getLong(CONSULTANT_EXPIRES_AT) <= 0L
+                || ItemTagCompat.read(stack).getLong(CONSULTANT_EXPIRES_AT) > System.currentTimeMillis())
+            && action.equals(ItemTagCompat.read(stack).getString(CONSULTANT_ACTION));
     }
 
     private static boolean permissionConditionSatisfied(ItemStack stack, Player player) {
-        if (!stack.hasTag()) {
+        if (!ItemTagCompat.has(stack)) {
             return false;
         }
-        String near = stack.getTag().getString(CONSULTANT_NEAR);
+        String near = ItemTagCompat.read(stack).getString(CONSULTANT_NEAR);
         if (near.isEmpty()) {
             return true;
         }
-        int radius = stack.getTag().getInt(CONSULTANT_RADIUS);
+        int radius = ItemTagCompat.read(stack).getInt(CONSULTANT_RADIUS);
         double maximumDistance = (double) radius * radius;
         if (near.equalsIgnoreCase("patients") || near.equalsIgnoreCase("pacjenci")) {
             if (player.getServer() == null) {
@@ -1225,10 +1252,10 @@ public final class PsychiatrykRoles {
     }
 
     private static List<String> permissionTargets(ItemStack stack) {
-        if (!stack.hasTag()) {
+        if (!ItemTagCompat.has(stack)) {
             return List.of();
         }
-        return List.of(stack.getTag().getString(CONSULTANT_TARGETS).split(","));
+        return List.of(ItemTagCompat.read(stack).getString(CONSULTANT_TARGETS).split(","));
     }
 
     private static boolean matchesBlockPreset(String preset, BlockState state) {
@@ -1259,11 +1286,11 @@ public final class PsychiatrykRoles {
             case "villagers", "villager", "mieszkancy" -> entity instanceof Villager;
             case "players", "player", "gracze" -> entity instanceof Player;
             case "undead", "nieumarli" -> entity instanceof net.minecraft.world.entity.LivingEntity living
-                && living.getMobType() == MobType.UNDEAD;
+                && entity.getType().is(EntityTypeTags.UNDEAD);
             case "arthropods", "arthropod", "stawonogi" -> entity instanceof net.minecraft.world.entity.LivingEntity living
-                && living.getMobType() == MobType.ARTHROPOD;
+                && entity.getType().is(EntityTypeTags.ARTHROPOD);
             case "aquatic", "water", "wodne" -> entity instanceof net.minecraft.world.entity.LivingEntity living
-                && living.getMobType() == MobType.WATER;
+                && entity.getType().is(EntityTypeTags.AQUATIC);
             case "illagers", "illager", "najezdzcy" -> entity instanceof AbstractIllager;
             case "mobs", "mob" -> entity instanceof Mob;
             case "bosses", "boss" -> {
@@ -1324,7 +1351,7 @@ public final class PsychiatrykRoles {
         Item item, String action, String targets, String near, int radius, Player player, long expiresAt
     ) {
         ItemStack stack = new ItemStack(item);
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = ItemTagCompat.read(stack);
         tag.putBoolean(CONSULTANT_ITEM_MARKER, true);
         tag.putString(CONSULTANT_ACTION, action);
         tag.putString(CONSULTANT_TARGETS, targets);
@@ -1335,7 +1362,9 @@ public final class PsychiatrykRoles {
         }
         if (action.equals("mine")) {
             ListTag canDestroy = new ListTag();
-            if (List.of(targets.split(",")).stream().map(String::trim).anyMatch("*"::equals)) {
+            boolean allBlocks = List.of(targets.split(",")).stream().map(String::trim).anyMatch("*"::equals);
+            List<Block> nativeCanBreak = new ArrayList<>();
+            if (allBlocks) {
                 BuiltInRegistries.BLOCK.keySet().forEach(id -> canDestroy.add(StringTag.valueOf(id.toString())));
             } else {
                 for (String target : targets.split(",")) {
@@ -1343,14 +1372,36 @@ public final class PsychiatrykRoles {
                     if (isBlockPreset(trimmed)) {
                         BuiltInRegistries.BLOCK.entrySet().stream()
                             .filter(entry -> matchesBlockPreset(trimmed, entry.getValue().defaultBlockState()))
-                            .forEach(entry -> canDestroy.add(StringTag.valueOf(entry.getKey().location().toString())));
+                            .forEach(entry -> {
+                                canDestroy.add(StringTag.valueOf(entry.getKey().location().toString()));
+                                nativeCanBreak.add(entry.getValue());
+                            });
                     } else {
                         canDestroy.add(StringTag.valueOf(trimmed));
+                        if (trimmed.startsWith("#")) {
+                            ResourceLocation tagId = ResourceLocation.tryParse(trimmed.substring(1));
+                            if (tagId != null) {
+                                TagKey<Block> blockTag = TagKey.create(Registries.BLOCK, tagId);
+                                BuiltInRegistries.BLOCK.entrySet().stream()
+                                    .map(Map.Entry::getValue)
+                                    .filter(block -> block.defaultBlockState().is(blockTag))
+                                    .forEach(nativeCanBreak::add);
+                            }
+                        } else {
+                            ResourceLocation blockId = ResourceLocation.tryParse(trimmed);
+                            if (blockId != null) BuiltInRegistries.BLOCK.entrySet().stream()
+                                .filter(entry -> entry.getKey().location().equals(blockId))
+                                .map(Map.Entry::getValue)
+                                .forEach(nativeCanBreak::add);
+                        }
                     }
                 }
             }
             tag.put("CanDestroy", canDestroy);
+            if (allBlocks) ItemTagCompat.setCanBreakAnywhere(stack);
+            else if (!nativeCanBreak.isEmpty()) ItemTagCompat.setCanBreak(stack, nativeCanBreak.toArray(Block[]::new));
         }
+        ItemTagCompat.set(stack, tag);
         return stack;
     }
 
@@ -1512,7 +1563,7 @@ public final class PsychiatrykRoles {
     }
 
     private static String playerIp(ServerPlayer player) {
-        if (player.connection.connection.channel().remoteAddress() instanceof InetSocketAddress address
+        if (player.connection.getConnection().channel().remoteAddress() instanceof InetSocketAddress address
             && address.getAddress() != null) {
             return address.getAddress().getHostAddress();
         }
@@ -1555,12 +1606,12 @@ public final class PsychiatrykRoles {
     }
 
     private static void finishDefaultLanguage(UUID playerId, boolean english, String source) {
-        var currentServer = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        var currentServer = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
         if (currentServer == null) {
             return;
         }
         currentServer.execute(() -> {
-            var server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+            var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
             ServerPlayer player = server == null ? null : server.getPlayerList().getPlayer(playerId);
             if (player == null || RoleData.get(server).hasLanguage(playerId)) {
                 return;
@@ -1662,8 +1713,8 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) {
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
         if (player.tickCount % 20 == 0) {
@@ -1671,8 +1722,8 @@ public final class PsychiatrykRoles {
             boolean changed = false;
             for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
                 ItemStack item = player.getInventory().getItem(slot);
-                if (item.hasTag() && item.getTag().getLong(CONSULTANT_EXPIRES_AT) > 0L
-                    && item.getTag().getLong(CONSULTANT_EXPIRES_AT) <= System.currentTimeMillis()) {
+                if (ItemTagCompat.has(item) && ItemTagCompat.read(item).getLong(CONSULTANT_EXPIRES_AT) > 0L
+                    && ItemTagCompat.read(item).getLong(CONSULTANT_EXPIRES_AT) <= System.currentTimeMillis()) {
                     audit(player, "ITEM_EXPIRED", BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
                     player.getInventory().setItem(slot, ItemStack.EMPTY);
                     player.displayClientMessage(Component.literal(tr(player,
@@ -1838,7 +1889,7 @@ public final class PsychiatrykRoles {
             && isConsultantEquipment(event.getItemStack())
             && !isPlaceableSpruceSign(event.getItemStack())) {
             if (isContainer) {
-                event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.DENY);
+                event.setUseItem(TriState.FALSE);
             } else {
                 event.setCanceled(true);
                 event.setCancellationResult(InteractionResult.FAIL);
@@ -1854,11 +1905,11 @@ public final class PsychiatrykRoles {
         if (event.getItemStack().getItem() instanceof BlockItem blockItem
             && (permitsBlock(event.getEntity().getOffhandItem(), event.getEntity(), "place", blockItem.getBlock().defaultBlockState())
                 || inventoryPermitsBlock(event.getEntity(), "place-amulet", blockItem.getBlock().defaultBlockState()))) {
-            event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.ALLOW);
+            event.setUseItem(TriState.TRUE);
             return;
         }
         if (isContainer || isSpruceBlock(state)) {
-            event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.DENY);
+            event.setUseItem(TriState.FALSE);
             return;
         }
         event.setCanceled(true);
@@ -1983,7 +2034,7 @@ public final class PsychiatrykRoles {
         if (isFreedomDimension(event.getEntity())) {
             return;
         }
-        if (!stack.isEdible() && !isSpruceSignItem(stack) && !isWelcomeBook(stack)) {
+        if (!stack.has(DataComponents.FOOD) && !isSpruceSignItem(stack) && !isWelcomeBook(stack)) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
         }
@@ -2005,8 +2056,8 @@ public final class PsychiatrykRoles {
             return;
         }
         event.setCanceled(true);
-        event.setUseBlock(net.minecraftforge.eventbus.api.Event.Result.DENY);
-        event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.DENY);
+        event.setUseBlock(TriState.FALSE);
+        event.setUseItem(TriState.FALSE);
         removeOldestChalkMarker(player);
     }
 
@@ -2056,7 +2107,7 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onPvp(LivingAttackEvent event) {
+    public void onPvp(LivingIncomingDamageEvent event) {
         boolean victimIsConsultant = event.getEntity() instanceof Player victim && isRestrictedConsultant(victim);
         boolean attackerIsConsultant = event.getSource().getEntity() instanceof Player attacker && isRestrictedConsultant(attacker);
         boolean pvpAgainstConsultant = victimIsConsultant && event.getSource().getEntity() instanceof Player;
@@ -2095,19 +2146,19 @@ public final class PsychiatrykRoles {
 
     @SubscribeEvent
     public void onMobTarget(LivingChangeTargetEvent event) {
-        if (event.getNewTarget() instanceof Player player && isRestrictedConsultant(player)) {
+        if (event.getNewAboutToBeSetTarget() instanceof Player player && isRestrictedConsultant(player)) {
             Provocation provocation = HOSTILE_PROVOCATIONS.get(event.getEntity().getUUID());
             int now = player.getServer() == null ? Integer.MAX_VALUE : player.getServer().getTickCount();
             if (provocation == null
                 || !provocation.consultant().equals(player.getUUID())
                 || provocation.expiresAtTick() < now) {
-                event.setNewTarget(null);
+                event.setNewAboutToBeSetTarget(null);
             }
         }
     }
 
     @SubscribeEvent
-    public void onHostileProvoked(LivingHurtEvent event) {
+    public void onHostileProvoked(LivingDamageEvent.Post event) {
         if (event.getEntity() instanceof Enemy
             && event.getSource().getEntity() instanceof ServerPlayer attacker
             && isRestrictedConsultant(attacker)
@@ -2120,7 +2171,7 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onHostileTick(LivingEvent.LivingTickEvent event) {
+    public void onHostileTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Mob mob)
             || !(mob instanceof Enemy)
             || mob.tickCount % 20 != 0
@@ -2139,25 +2190,25 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onItemPickup(EntityItemPickupEvent event) {
-        ItemStack stack = event.getItem().getItem();
-        boolean owned = isOwnedDroppedEntity(event.getItem(), event.getEntity());
-        if (owned && (isOwnedImportedItem(stack, event.getEntity()) || isOwnedLoot(stack, event.getEntity()))) {
+    public void onItemPickup(ItemEntityPickupEvent.Pre event) {
+        ItemStack stack = event.getItemEntity().getItem();
+        boolean owned = isOwnedDroppedEntity(event.getItemEntity(), event.getPlayer());
+        if (owned && (isOwnedImportedItem(stack, event.getPlayer()) || isOwnedLoot(stack, event.getPlayer()))) {
             clearTemporaryOwnership(stack);
         }
-        if (isRestrictedConsultant(event.getEntity())) {
-            if (hasPermission(event.getEntity(), "pickup")) {
+        if (isRestrictedConsultant(event.getPlayer())) {
+            if (hasPermission(event.getPlayer(), "pickup")) {
                 return;
             }
             if (owned) {
                 return;
             } else if (isSpruceSignItem(stack)) {
-                makeSpruceSignsPlaceable(stack, event.getEntity());
+                makeSpruceSignsPlaceable(stack, event.getPlayer());
             } else if (isConsultantEquipment(stack)) {
                 return;
             } else {
-                event.setCanceled(true);
-                auditDenied(event.getEntity(), "DENY_PICKUP", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+                event.setCanPickup(TriState.FALSE);
+                auditDenied(event.getPlayer(), "DENY_PICKUP", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
             }
         }
     }
@@ -2234,9 +2285,9 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onConsultantSleep(PlayerSleepInBedEvent event) {
+    public void onConsultantSleep(CanPlayerSleepEvent event) {
         if (isRestrictedConsultant(event.getEntity())) {
-            event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
+            event.setProblem(Player.BedSleepingProblem.OTHER_PROBLEM);
             event.getEntity().displayClientMessage(Component.literal(tr(event.getEntity(),
                 "Konsultanci nie są liczeni do limitu snu.",
                 "Consultants are excluded from the sleep requirement."))
@@ -2245,10 +2296,7 @@ public final class PsychiatrykRoles {
     }
 
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) {
-            return;
-        }
+    public void onServerTick(ServerTickEvent.Post event) {
         var server = event.getServer();
         int currentTick = server.getTickCount();
         if (currentTick % 10 == 0) {
@@ -2458,10 +2506,10 @@ public final class PsychiatrykRoles {
         }
         try {
             backupPlayerData(server, profile.get().getId());
-            CompoundTag playerTag = NbtIo.readCompressed(file);
+            CompoundTag playerTag = NbtIo.readCompressed(file.toPath(), NbtAccounter.unlimitedHeap());
             int removed = removeConsultantEntries(playerTag.getList("Inventory", Tag.TAG_COMPOUND));
             removed += removeConsultantEntries(playerTag.getList("EnderItems", Tag.TAG_COMPOUND));
-            NbtIo.writeCompressed(playerTag, file);
+            NbtIo.writeCompressed(playerTag, file.toPath());
             int finalRemoved = removed;
             source.sendSuccess(() -> Component.literal(
                 "Usunięto zapisane przedmioty konsultanta gracza " + playerName + ": " + finalRemoved
@@ -2481,7 +2529,8 @@ public final class PsychiatrykRoles {
     }
 
     private static boolean isRecognizedSavedConsultantItem(CompoundTag savedStack) {
-        CompoundTag tag = savedStack.getCompound("tag");
+        CompoundTag tag = savedStack.getCompound("components").getCompound("minecraft:custom_data");
+        if (tag.isEmpty()) tag = savedStack.getCompound("tag"); // Backups predating data components.
         if (!tag.getBoolean(CONSULTANT_ITEM_MARKER)) {
             return false;
         }
@@ -2579,7 +2628,7 @@ public final class PsychiatrykRoles {
         int radius,
         long expiresAt
     ) {
-        Item item = ForgeRegistries.ITEMS.getValue(itemId);
+        Item item = BuiltInRegistries.ITEM.get(itemId);
         if (item == null || item == Items.AIR) {
             source.sendFailure(Component.literal(tr(source, "Nieznany przedmiot: ", "Unknown item: ") + itemId));
             return 0;
@@ -2625,7 +2674,7 @@ public final class PsychiatrykRoles {
             default -> ItemStack.EMPTY;
         };
         if (!stack.isEmpty() && expiresAt > 0L) {
-            stack.getOrCreateTag().putLong(CONSULTANT_EXPIRES_AT, expiresAt);
+            ItemTagCompat.putLong(stack, CONSULTANT_EXPIRES_AT, expiresAt);
             }
         return stack;
     }
@@ -2756,18 +2805,18 @@ public final class PsychiatrykRoles {
         long now = System.currentTimeMillis();
         for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
             ItemStack stack = player.getInventory().getItem(slot);
-            if (!stack.hasTag() || !stack.getTag().contains(CONSULTANT_ACTION, Tag.TAG_STRING)) continue;
+            if (!ItemTagCompat.has(stack) || !ItemTagCompat.read(stack).contains(CONSULTANT_ACTION, Tag.TAG_STRING)) continue;
             permissions++;
-            String action = stack.getTag().getString(CONSULTANT_ACTION);
-            String targets = stack.getTag().getString(CONSULTANT_TARGETS);
-            String near = stack.getTag().getString(CONSULTANT_NEAR);
-            long expiresAt = stack.getTag().getLong(CONSULTANT_EXPIRES_AT);
+            String action = ItemTagCompat.read(stack).getString(CONSULTANT_ACTION);
+            String targets = ItemTagCompat.read(stack).getString(CONSULTANT_TARGETS);
+            String near = ItemTagCompat.read(stack).getString(CONSULTANT_NEAR);
+            long expiresAt = ItemTagCompat.read(stack).getLong(CONSULTANT_EXPIRES_AT);
             String expiry = expiresAt <= 0L ? (en ? "permanent" : "bezterminowy")
                 : Math.max(0L, (expiresAt - now + 999L) / 1000L) + "s";
             boolean active = hasPermissionAction(stack, action) && permissionConditionSatisfied(stack, player);
             source.sendSuccess(() -> Component.literal("- " + action
                 + (targets.isEmpty() ? "" : " [" + targets + "]")
-                + (near.isEmpty() ? "" : " near " + near + "/" + stack.getTag().getInt(CONSULTANT_RADIUS))
+                + (near.isEmpty() ? "" : " near " + near + "/" + ItemTagCompat.read(stack).getInt(CONSULTANT_RADIUS))
                 + " | " + expiry + " | " + (active ? (en ? "active" : "aktywne") : (en ? "inactive" : "nieaktywne")))
                 .withStyle(active ? ChatFormatting.GREEN : ChatFormatting.YELLOW), false);
         }

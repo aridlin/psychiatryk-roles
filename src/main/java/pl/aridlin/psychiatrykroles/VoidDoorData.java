@@ -1,6 +1,7 @@
 package pl.aridlin.psychiatrykroles;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -22,10 +23,11 @@ final class VoidDoorData extends SavedData {
     record DoorPosition(String dimension, BlockPos pos) {}
 
     static VoidDoorData get(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(VoidDoorData::load, VoidDoorData::new, FILE_NAME);
+        return server.overworld().getDataStorage().computeIfAbsent(
+            new SavedData.Factory<>(VoidDoorData::new, VoidDoorData::load), FILE_NAME);
     }
 
-    static VoidDoorData load(CompoundTag tag) {
+    static VoidDoorData load(CompoundTag tag, HolderLookup.Provider registries) {
         VoidDoorData data = new VoidDoorData();
         for (Tag raw : tag.getList("Doors", Tag.TAG_COMPOUND)) {
             CompoundTag entry = (CompoundTag) raw;
@@ -42,6 +44,8 @@ final class VoidDoorData extends SavedData {
         }
         return data;
     }
+
+    static VoidDoorData load(CompoundTag tag) { return load(tag, null); }
 
     boolean addDoor(UUID pair, DoorPosition position) {
         if (pairAt(position.dimension(), position.pos()) != null) return false;
@@ -117,7 +121,7 @@ final class VoidDoorData extends SavedData {
         return false;
     }
 
-    @Override public CompoundTag save(CompoundTag tag) {
+    @Override public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag entries = new ListTag();
         doors.forEach((pair, positions) -> positions.forEach(position -> {
             CompoundTag entry = new CompoundTag();
@@ -132,4 +136,6 @@ final class VoidDoorData extends SavedData {
         tag.put("Doors", entries);
         return tag;
     }
+
+    CompoundTag save(CompoundTag tag) { return save(tag, null); }
 }

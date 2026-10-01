@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:clock"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:clock",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykPokerMenu:1b}"
+    }
+  }
+}

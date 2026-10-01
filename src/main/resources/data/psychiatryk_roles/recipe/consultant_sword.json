@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "pattern": [
-    "SSS",
-    " C ",
-    " C "
+    "S",
+    "S",
+    "C"
   ],
   "key": {
     "S": {
@@ -15,8 +15,10 @@
     }
   },
   "result": {
-    "item": "minecraft:stone_pickaxe",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykConsultantPickaxe:1b,CanDestroy:[\"minecraft:stone\",\"minecraft:cobblestone\"]}"
+    "id": "minecraft:stone_sword",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b}"
+    }
   },
   "show_notification": true
 }

@@ -2,18 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "pattern": [
-    "S",
-    "S",
+    "G",
     "S"
   ],
   "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
     "S": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "minecraft:blaze_rod",
-    "nbt": "{psychiatrykConsultantItem:1b,psychiatrykTravelStaff:1b,Unbreakable:1b}"
+    "id": "minecraft:echo_shard",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b}"
+    }
   },
   "show_notification": true
 }
