@@ -112,7 +112,8 @@ public final class VoidDoors {
         ItemStack left = event.getLeft();
         UUID pair = pair(left);
         if (pair == null || !event.getRight().isEmpty()) return;
-        String name = event.getName().strip();
+        String name = normalizedAnvilName(event.getName());
+        if (name == null) return;
         if (name.length() > 50) return;
         ItemStack output = left.copy();
         if (name.isEmpty() || name.equals("Void Doors") || name.equals("Drzwi Pustki")) {
@@ -123,6 +124,11 @@ public final class VoidDoors {
         localize(output, PsychiatrykRoles.isEnglish(event.getPlayer()));
         event.setOutput(output);
         event.setCost(1);
+    }
+
+    static String normalizedAnvilName(String rawName) {
+        // NeoForge fires once on insertion, before the client sends a rename value.
+        return rawName == null ? null : rawName.strip();
     }
 
     public static void localize(ItemStack stack, boolean english) {
@@ -306,6 +312,7 @@ public final class VoidDoors {
             BlockState sourceState = sourceLevel.getBlockState(source.pos());
             Direction sourceFacing = sourceState.getValue(DoorBlock.FACING);
             VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing,
+                frameMask(sourceLevel, source.pos()),
                 player.getBoundingBox(), from.position(), player.position(), player.getDeltaMovement());
             if (!sourceState.getValue(DoorBlock.OPEN) || contact == null) continue;
             var destination = data.partner(dimension, source.pos());
@@ -332,6 +339,8 @@ public final class VoidDoors {
                 velocity = new Vec3(walked.x, velocity.y, walked.z);
             Vec3 outVelocity = VoidDoorGeometry.rotate(velocity, contact.approach(), exit.side());
             player.teleportTo(target, exit.position().x, exit.position().y, exit.position().z, yaw, player.getXRot());
+            // Dimension travel may be canceled by season rules. Keep source momentum and sample then.
+            if (player.serverLevel() != target || player.position().distanceToSqr(exit.position()) > .25) continue;
             player.setDeltaMovement(outVelocity);
             player.hurtMarked = true;
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
@@ -356,12 +365,17 @@ public final class VoidDoors {
             ServerLevel target = level(sourceLevel.getServer(), destination.dimension());
             if (target == null) continue;
             Vec3 center = VoidDoorGeometry.center(source.pos(), state.getValue(DoorBlock.FACING));
+            // Contact accepts up to four blocks of travel per tick, so include entities
+            // that have already crossed completely beyond the thin plane.
             List<ItemEntity> nearby = sourceLevel.getEntitiesOfClass(ItemEntity.class,
-                new AABB(center.x - 1, center.y, center.z - 1, center.x + 1, center.y + 2, center.z + 1));
+                new AABB(center.x - 4.5, center.y - 4, center.z - 4.5,
+                    center.x + 4.5, center.y + 6, center.z + 4.5));
+            if (nearby.isEmpty()) continue;
+            int visibleMask = frameMask(sourceLevel, source.pos());
             Direction facing = null;
             for (ItemEntity item : nearby) {
                 Direction sourceFacing = state.getValue(DoorBlock.FACING);
-                VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing,
+                VoidDoorGeometry.Contact contact = VoidDoorGeometry.contact(source.pos(), sourceFacing, visibleMask,
                     item.getBoundingBox(), item.position().subtract(item.getDeltaMovement()), item.position(),
                     item.getDeltaMovement());
                 if (contact == null) continue;

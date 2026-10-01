@@ -2,11 +2,38 @@ package pl.aridlin.psychiatrykroles;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VoidDoorGeometryTest {
+    private static AABB smallBox(Vec3 position) {
+        return new AABB(position.x - .005, position.y - .005, position.z - .005,
+            position.x + .005, position.y + .005, position.z + .005);
+    }
+
+    private static VoidDoorGeometry.Contact movingContact(int mask, double lateral, double height) {
+        BlockPos lower = new BlockPos(0, 64, 0);
+        Vec3 center = VoidDoorGeometry.center(lower, Direction.EAST);
+        Vec3 from = center.add(-1, height, lateral);
+        Vec3 to = center.add(1, height, lateral);
+        return VoidDoorGeometry.contact(lower, Direction.EAST, mask, smallBox(to),
+            from, to, to.subtract(from));
+    }
+
+    @Test void aFastCrossingAndTheVisibleBottomStripTouchTheDoorPlane() {
+        assertNotNull(movingContact(31, 0, .005));
+    }
+
+    @Test void onlyTheUnframedSideAndTopExtendTheContactArea() {
+        assertNull(movingContact(31, .44, .5));
+        assertNotNull(movingContact(31 & ~4, .44, .5));
+        assertNull(movingContact(31 & ~4, .44, 1.5));
+        assertNull(movingContact(31, 0, 1.95));
+        assertNotNull(movingContact(31 & ~16, 0, 1.95));
+    }
+
     @Test void planeOnlyExpandsWhereAFrameSegmentIsHidden() {
         assertEquals(new VoidDoors.PlaneSection(-.415, .415, 0, 1),
             VoidDoors.planeSection(31, false));

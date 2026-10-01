@@ -28,20 +28,27 @@ final class VoidDoorGeometry {
         return Math.abs(sideways) < 0.5 && hit.y < lower.getY() + 2 && hit.y + height > lower.getY();
     }
 
-    static boolean touches(BlockPos lower, Direction facing, AABB hitbox) {
+    private static AABB plane(BlockPos lower, Direction facing, VoidDoors.PlaneSection section) {
         Vec3 center = center(lower, facing);
-        AABB plane = facing.getAxis() == Direction.Axis.X
-            ? new AABB(center.x - .025, lower.getY() + .1, center.z - .38,
-                center.x + .025, lower.getY() + 1.85, center.z + .38)
-            : new AABB(center.x - .38, lower.getY() + .1, center.z - .025,
-                center.x + .38, lower.getY() + 1.85, center.z + .025);
-        return plane.intersects(hitbox);
+        return facing.getAxis() == Direction.Axis.X
+            ? new AABB(center.x - .0125, lower.getY() + section.bottom(), center.z + section.left(),
+                center.x + .0125, lower.getY() + section.top(), center.z + section.right())
+            : new AABB(center.x + section.left(), lower.getY() + section.bottom(), center.z - .0125,
+                center.x + section.right(), lower.getY() + section.top(), center.z + .0125);
     }
 
     record Contact(double lateral, double height, Direction approach) {}
 
-    static Contact contact(BlockPos lower, Direction facing, AABB hitbox, Vec3 from, Vec3 to, Vec3 velocity) {
-        if (!touches(lower, facing, hitbox) || from.distanceToSqr(to) > 16) return null;
+    static Contact contact(BlockPos lower, Direction facing, int frameMask, AABB hitbox,
+                           Vec3 from, Vec3 to, Vec3 velocity) {
+        if (from.distanceToSqr(to) > 16) return null;
+        double fraction = Double.NaN;
+        for (boolean upper : new boolean[] {false, true}) {
+            double next = PortalSweep.firstContact(plane(lower, facing, VoidDoors.planeSection(frameMask, upper)),
+                hitbox, from, to);
+            if (!Double.isNaN(next) && (Double.isNaN(fraction) || next < fraction)) fraction = next;
+        }
+        if (Double.isNaN(fraction)) return null;
         Vec3 center = center(lower, facing);
         double oldDistance = (from.x - center.x) * facing.getStepX()
             + (from.z - center.z) * facing.getStepZ();
@@ -50,10 +57,6 @@ final class VoidDoorGeometry {
         double motion = newDistance - oldDistance;
         if (Math.abs(motion) < .001) motion = velocity.x * facing.getStepX() + velocity.z * facing.getStepZ();
         int sign = motion > .001 ? 1 : motion < -.001 ? -1 : oldDistance <= 0 ? 1 : -1;
-        double extent = facing.getAxis() == Direction.Axis.X ? hitbox.getXsize() / 2 : hitbox.getZsize() / 2;
-        double edge = sign > 0 ? -extent : extent;
-        double fraction = Math.abs(newDistance - oldDistance) < .001 ? 1
-            : Mth.clamp((edge - oldDistance) / (newDistance - oldDistance), 0, 1);
         Vec3 hit = from.lerp(to, fraction);
         Direction approach = sign > 0 ? facing : facing.getOpposite();
         double lateral = (hit.x - center.x) * -approach.getStepZ()

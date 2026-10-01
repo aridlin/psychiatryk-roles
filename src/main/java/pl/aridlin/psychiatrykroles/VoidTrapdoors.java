@@ -227,7 +227,8 @@ public final class VoidTrapdoors {
             if (!sourceLevel.getBlockState(source.pos()).is(Blocks.DARK_OAK_TRAPDOOR)
                 || !sourceLevel.getBlockState(source.pos()).getValue(TrapDoorBlock.OPEN)) continue;
             Vec3 center = planeCenter(sourceLevel, source.pos());
-            Contact contact = contact(center, player.getBoundingBox(), from.position(), player.position(),
+            Contact contact = contact(center, frameMask(sourceLevel, source.pos()),
+                player.getBoundingBox(), from.position(), player.position(),
                 player.getDeltaMovement());
             if (contact == null) continue;
             var destination = data.partner(dimension, source.pos());
@@ -240,6 +241,7 @@ public final class VoidTrapdoors {
             Vec3 exit = safeExit(target, player, destination.pos(), away);
             if (exit == null) continue;
             player.teleportTo(target, exit.x, exit.y, exit.z, away.toYRot(), player.getXRot());
+            if (player.serverLevel() != target || player.position().distanceToSqr(exit) > .25) continue;
             player.setDeltaMovement(popVelocity(away));
             player.hurtMarked = true;
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
@@ -263,10 +265,13 @@ public final class VoidTrapdoors {
             if (target == null) continue;
             Vec3 center = planeCenter(sourceLevel, source.pos());
             List<ItemEntity> nearby = sourceLevel.getEntitiesOfClass(ItemEntity.class,
-                new AABB(center.x - 1, center.y - 1, center.z - 1, center.x + 1, center.y + 1, center.z + 1));
+                new AABB(center.x - 4.5, center.y - 4.5, center.z - 4.5,
+                    center.x + 4.5, center.y + 4.5, center.z + 4.5));
+            if (nearby.isEmpty()) continue;
+            int visibleMask = frameMask(sourceLevel, source.pos());
             Direction away = null;
             for (ItemEntity item : nearby) {
-                Contact contact = contact(center, item.getBoundingBox(),
+                Contact contact = contact(center, visibleMask, item.getBoundingBox(),
                     item.position().subtract(item.getDeltaMovement()), item.position(), item.getDeltaMovement());
                 if (contact == null) continue;
                 if (away == null) {
@@ -286,28 +291,18 @@ public final class VoidTrapdoors {
         }
     }
 
-    static boolean crossed(Vec3 center, Vec3 from, Vec3 to) {
-        if (from.distanceToSqr(to) > 16) return false;
-        double a = from.y - center.y, b = to.y - center.y;
-        if (a == b || !((a < 0 && b >= 0) || (a > 0 && b <= 0))) return false;
-        Vec3 hit = from.lerp(to, a / (a - b));
-        return Math.abs(hit.x - center.x) < .46 && Math.abs(hit.z - center.z) < .46;
-    }
-
-    static boolean touches(Vec3 center, AABB hitbox) {
-        return new AABB(center.x - .46, center.y - .025, center.z - .46,
-            center.x + .46, center.y + .025, center.z + .46).intersects(hitbox);
-    }
-
     record Contact(Vec3 offset, boolean upward) {}
 
-    static Contact contact(Vec3 center, AABB hitbox, Vec3 from, Vec3 to, Vec3 velocity) {
-        if (!touches(center, hitbox) || from.distanceToSqr(to) > 16) return null;
+    static Contact contact(Vec3 center, int frameMask, AABB hitbox, Vec3 from, Vec3 to, Vec3 velocity) {
+        if (from.distanceToSqr(to) > 16) return null;
+        PlaneBounds bounds = planeBounds(frameMask);
+        AABB plane = new AABB(center.x + bounds.west(), center.y - .01, center.z + bounds.north(),
+            center.x + bounds.east(), center.y + .01, center.z + bounds.south());
+        double fraction = PortalSweep.firstContact(plane, hitbox, from, to);
+        if (Double.isNaN(fraction)) return null;
         double motion = to.y - from.y;
         if (Math.abs(motion) < .001) motion = velocity.y;
         boolean upward = motion > .001 || Math.abs(motion) < .001 && from.y < center.y;
-        double fraction = Math.abs(to.y - from.y) < .001 ? 1
-            : Mth.clamp((center.y - from.y) / (to.y - from.y), 0, 1);
         Vec3 hit = from.lerp(to, fraction);
         return new Contact(new Vec3(Mth.clamp(hit.x - center.x, -.4, .4), 0,
             Mth.clamp(hit.z - center.z, -.4, .4)), upward);
@@ -347,13 +342,24 @@ public final class VoidTrapdoors {
         return mask;
     }
 
+    record PlaneBounds(double north, double east, double south, double west) {}
+
+    static PlaneBounds planeBounds(int mask) {
+        return new PlaneBounds(
+            (mask & (1 << Direction.NORTH.get2DDataValue())) != 0 ? -.42 : -.5,
+            (mask & (1 << Direction.EAST.get2DDataValue())) != 0 ? .42 : .5,
+            (mask & (1 << Direction.SOUTH.get2DDataValue())) != 0 ? .42 : .5,
+            (mask & (1 << Direction.WEST.get2DDataValue())) != 0 ? -.42 : -.5);
+    }
+
     private static List<Display.BlockDisplay> createPlane(ServerLevel level, BlockPos pos, int mask) {
         Vec3 center = planeCenter(level, pos);
         List<Display.BlockDisplay> result = new ArrayList<>();
-        float north = (mask & (1 << Direction.NORTH.get2DDataValue())) != 0 ? -.42f : -.5f;
-        float east = (mask & (1 << Direction.EAST.get2DDataValue())) != 0 ? .42f : .5f;
-        float south = (mask & (1 << Direction.SOUTH.get2DDataValue())) != 0 ? .42f : .5f;
-        float west = (mask & (1 << Direction.WEST.get2DDataValue())) != 0 ? -.42f : -.5f;
+        PlaneBounds bounds = planeBounds(mask);
+        float north = (float) bounds.north();
+        float east = (float) bounds.east();
+        float south = (float) bounds.south();
+        float west = (float) bounds.west();
         result.add(addDisplay(level, center, Blocks.BLACK_CONCRETE.defaultBlockState(),
             new Vector3f(west, -.01f, north), new Vector3f(east - west, .02f, south - north)));
         for (Direction side : new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}) {
