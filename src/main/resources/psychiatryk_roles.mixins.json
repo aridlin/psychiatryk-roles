@@ -8,6 +8,9 @@
     "VoidDoorStackMixin",
     "VoidDoorDropsMixin"
   ],
+  "client": [
+    "VoidDoorAnvilScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

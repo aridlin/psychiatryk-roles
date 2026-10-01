@@ -91,7 +91,7 @@ public final class VoidDoors {
         if (isVoidDoor(stack)) ItemTagCompat.putString(stack, PAIR, UUID.randomUUID().toString());
     }
 
-    static UUID pair(ItemStack stack) {
+    public static UUID pair(ItemStack stack) {
         if (!isVoidDoor(stack)) return null;
         try { return UUID.fromString(ItemTagCompat.read(stack).getString(PAIR)); }
         catch (IllegalArgumentException ignored) { return null; }
