@@ -9,6 +9,9 @@ import java.util.Objects;
 
 /** Pure planning core shared by the client preview and creative-only server paste. */
 public final class BuildTransferPlan {
+    /** One selection can cover a large base without imposing an unbounded paste on the server. */
+    public static final int MAX_VOLUME = 262_144;
+    public static final int MAX_AXIS = 128;
     public record Cell(int x, int y, int z) {
         Cell offset(int dx, int dy, int dz) { return new Cell(x + dx, y + dy, z + dz); }
     }
@@ -18,6 +21,12 @@ public final class BuildTransferPlan {
     public record Ground(int topY, String supportState) {}
 
     private BuildTransferPlan() {}
+
+    public static boolean validSize(int x, int y, int z) {
+        return x >= 1 && y >= 1 && z >= 1 &&
+            x <= MAX_AXIS && y <= MAX_AXIS && z <= MAX_AXIS &&
+            (long) x * y * z <= MAX_VOLUME;
+    }
 
     /**
      * The baseline is a pristine world generated with the original seed and
@@ -43,7 +52,8 @@ public final class BuildTransferPlan {
     /** Anchor by the median ground height, then support short gaps under built floors. */
     public static List<Paste> blend(List<Change> changes, Cell sourceAnchor, Cell targetAnchor,
                                     int sourceGroundMedian, Map<Cell, Ground> targetColumns) {
-        if (changes.size() > 65536) throw new IllegalArgumentException("Selection exceeds 65,536 blocks");
+        if (changes.size() > MAX_VOLUME)
+            throw new IllegalArgumentException("Selection exceeds " + MAX_VOLUME + " blocks");
         if (targetColumns.isEmpty()) throw new IllegalArgumentException("Target ground is not sampled");
         List<Integer> heights = targetColumns.values().stream().map(Ground::topY).sorted().toList();
         int targetGroundMedian = heights.get(heights.size() / 2);

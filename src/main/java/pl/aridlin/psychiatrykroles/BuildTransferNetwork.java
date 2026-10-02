@@ -26,6 +26,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -40,17 +41,23 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /** Versioned client-to-server blueprint upload; the server alone changes the world. */
 @EventBusSubscriber(modid = PsychiatrykRoles.MOD_ID)
 final class BuildTransferNetwork {
     private static final int CHUNK_BYTES = 24 * 1024;
-    private static final int MAX_BYTES = 2 * 1024 * 1024;
-    private static final int MAX_BLOCKS = 65536;
+    private static final int MAX_BYTES = 8 * 1024 * 1024;
+    private static final int PARTS_PER_TICK = 8;
     private static final int MAX_CHANGES_PER_TICK = 256;
     private static final long MAX_NANOS_PER_TICK = 4_000_000L;
-    private static final Map<UUID, Upload> UPLOADS = new HashMap<>();
+    private static final Map<UUID, Upload> UPLOADS = new ConcurrentHashMap<>();
     private static PasteJob activeJob;
+    private static ClientUpload clientUpload;
+
+    private record ClientUpload(String id, byte[] bytes, int offset, int nextChunk) {
+        ClientUpload next(int newOffset) { return new ClientUpload(id, bytes, newOffset, nextChunk + 1); }
+    }
 
     private record Upload(String id, int declaredSize, String sha256, BlockPos anchor,
                           boolean carve, ByteArrayOutputStream bytes, int nextChunk, long startedMillis) {
@@ -104,17 +111,36 @@ final class BuildTransferNetwork {
     }
 
     static void send(CompoundTag blueprint, BlockPos anchor, boolean carve) throws IOException {
+        if (clientUpload != null) throw new IOException("Another blueprint is still uploading");
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         NbtIo.writeCompressed(blueprint, output);
         byte[] bytes = output.toByteArray();
-        if (bytes.length > MAX_BYTES) throw new IOException("Blueprint exceeds 2 MiB compressed");
+        if (bytes.length > MAX_BYTES) throw new IOException("Blueprint exceeds 8 MiB compressed");
         String id = UUID.randomUUID().toString();
         PacketDistributor.sendToServer(new Begin(id, bytes.length, digest(bytes), anchor, carve));
-        for (int offset = 0, index = 0; offset < bytes.length; offset += CHUNK_BYTES, index++) {
-            PacketDistributor.sendToServer(new Part(id, index,
-                Arrays.copyOfRange(bytes, offset, Math.min(bytes.length, offset + CHUNK_BYTES))));
+        clientUpload = new ClientUpload(id, bytes, 0, 0);
+    }
+
+    /** Spread large uploads across ticks instead of queuing hundreds of packets at once. */
+    static void pumpClientUpload() {
+        ClientUpload upload = clientUpload;
+        if (upload == null) return;
+        for (int sent = 0; sent < PARTS_PER_TICK && upload.offset < upload.bytes.length; sent++) {
+            int end = Math.min(upload.bytes.length, upload.offset + CHUNK_BYTES);
+            PacketDistributor.sendToServer(new Part(upload.id, upload.nextChunk,
+                Arrays.copyOfRange(upload.bytes, upload.offset, end)));
+            upload = upload.next(end);
         }
-        PacketDistributor.sendToServer(new Finish(id));
+        if (upload.offset == upload.bytes.length) {
+            PacketDistributor.sendToServer(new Finish(upload.id));
+            clientUpload = null;
+        } else {
+            clientUpload = upload;
+        }
+    }
+
+    static void cancelClientUpload() {
+        clientUpload = null;
     }
 
     private static void begin(Begin packet, IPayloadContext context) {
@@ -152,7 +178,7 @@ final class BuildTransferNetwork {
         if (!digest(bytes).equals(upload.sha256)) return;
         try {
             if (activeJob != null) throw new IllegalStateException("another build transfer is still running");
-            CompoundTag blueprint = NbtIo.readCompressed(new ByteArrayInputStream(bytes), NbtAccounter.create(32L * 1024 * 1024));
+            CompoundTag blueprint = NbtIo.readCompressed(new ByteArrayInputStream(bytes), NbtAccounter.create(128L * 1024 * 1024));
             List<Placement> changes = plan(player, upload.anchor, blueprint, upload.carve);
             activeJob = new PasteJob(player.getServer(), player.serverLevel(), player.getUUID(), changes);
             player.sendSystemMessage(Component.literal("Build transfer queued " + changes.size() + " changes"
@@ -165,28 +191,36 @@ final class BuildTransferNetwork {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
+        if (event.getServer().getTickCount() % 20 == 0)
+            UPLOADS.entrySet().removeIf(entry -> expired(entry.getValue()));
         PasteJob job = activeJob;
         if (job == null || job.server != event.getServer()) return;
+        ServerPlayer player = event.getServer().getPlayerList().getPlayer(job.playerId);
+        if (player == null || !player.isCreative() || !player.hasPermissions(2) ||
+            player.serverLevel() != job.level) {
+            stopPaste(job, player, "operator left the world or lost Creative/operator access");
+            return;
+        }
         long deadline = System.nanoTime() + MAX_NANOS_PER_TICK;
         int batch = 0;
         while (job.next < job.changes.size() && batch < MAX_CHANGES_PER_TICK) {
             Placement change = job.changes.get(job.next++);
+            if (!job.level.isLoaded(change.pos()) || !job.level.getWorldBorder().isWithinBounds(change.pos()) ||
+                !job.level.mayInteract(player, change.pos())) {
+                stopPaste(job, player, "target chunk unloaded or became protected at " + change.pos());
+                return;
+            }
             try {
                 if (job.level.setBlock(change.pos(), change.state(), 2)) job.applied++;
                 else job.failed++;
             } catch (RuntimeException error) {
-                activeJob = null;
-                String message = "Build transfer stopped after " + job.applied + " changes at "
-                    + change.pos() + ": " + error.getMessage();
-                ServerPlayer player = event.getServer().getPlayerList().getPlayer(job.playerId);
-                if (player != null) player.sendSystemMessage(Component.literal(message));
-                com.mojang.logging.LogUtils.getLogger().error(message, error);
+                stopPaste(job, player, "block update failed at " + change.pos() + ": " + error.getMessage());
+                com.mojang.logging.LogUtils.getLogger().error("Build transfer block update failed", error);
                 return;
             }
             batch++;
             if (System.nanoTime() >= deadline) break;
         }
-        ServerPlayer player = event.getServer().getPlayerList().getPlayer(job.playerId);
         if (job.next == job.changes.size()) {
             activeJob = null;
             String message = "Build transfer finished: " + job.applied + " changed, " + job.failed
@@ -197,6 +231,18 @@ final class BuildTransferNetwork {
             player.sendSystemMessage(Component.literal("Build transfer: " + job.next + "/" + job.changes.size()
                 + " changes processed."));
         }
+    }
+
+    private static void stopPaste(PasteJob job, ServerPlayer player, String reason) {
+        activeJob = null;
+        String message = "Build transfer stopped after " + job.applied + " changes: " + reason;
+        if (player != null) player.sendSystemMessage(Component.literal(message));
+        com.mojang.logging.LogUtils.getLogger().warn(message);
+    }
+
+    @SubscribeEvent
+    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        UPLOADS.remove(event.getEntity().getUUID());
     }
 
     @SubscribeEvent
@@ -217,10 +263,10 @@ final class BuildTransferNetwork {
         if (root.getInt("version") != 1) throw new IllegalArgumentException("unsupported file version");
         requireCarveEvidence(carve, root.getString("provenance"));
         int sx = root.getInt("sizeX"), sy = root.getInt("sizeY"), sz = root.getInt("sizeZ");
-        if (sx < 1 || sy < 1 || sz < 1 || sx > 96 || sy > 96 || sz > 96 ||
-            (long)sx * sy * sz > MAX_BLOCKS) throw new IllegalArgumentException("invalid selection size");
+        if (!BuildTransferPlan.validSize(sx, sy, sz))
+            throw new IllegalArgumentException("invalid selection size");
         ListTag blocks = root.getList("blocks", Tag.TAG_COMPOUND);
-        if (blocks.size() > MAX_BLOCKS) throw new IllegalArgumentException("too many blocks");
+        if (blocks.size() > BuildTransferPlan.MAX_VOLUME) throw new IllegalArgumentException("too many blocks");
 
         List<Integer> allGround = new ArrayList<>(sx * sz);
         for (int x = 0; x < sx; x++) for (int z = 0; z < sz; z++) {

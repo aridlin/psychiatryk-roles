@@ -2473,6 +2473,7 @@ public final class PsychiatrykRoles {
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), false)));
         event.getDispatcher().register(Commands.literal("english")
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), true)));
+        PsychiatrykHelpCommands.register(event);
         PokerCommands.register(event);
         OldWorldCommands.register(event);
     }

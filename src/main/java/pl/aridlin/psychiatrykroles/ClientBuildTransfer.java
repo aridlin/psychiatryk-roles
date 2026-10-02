@@ -25,6 +25,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 
@@ -49,7 +50,6 @@ public final class ClientBuildTransfer {
     private static int previewYOffset;
     private static String previewName;
     private static boolean previewCarve;
-    private static final int MAX_VOLUME = 65536;
 
     private ClientBuildTransfer() {}
 
@@ -88,6 +88,22 @@ public final class ClientBuildTransfer {
             })));
     }
 
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.getConnection() == null || mc.player == null || mc.level == null) {
+            BuildTransferNetwork.cancelClientUpload();
+            return;
+        }
+        try {
+            BuildTransferNetwork.pumpClientUpload();
+        } catch (RuntimeException error) {
+            BuildTransferNetwork.cancelClientUpload();
+            if (mc.player != null)
+                mc.player.displayClientMessage(Component.literal("Build upload stopped: " + error.getMessage()), false);
+        }
+    }
+
     private static int save(String name) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.player == null || !mc.player.isCreative()) return fail("Creative mode required");
@@ -97,8 +113,9 @@ public final class ClientBuildTransfer {
             Math.min(first.getY(), second.getY()), Math.min(first.getZ(), second.getZ()));
         BlockPos max = new BlockPos(Math.max(first.getX(), second.getX()),
             Math.max(first.getY(), second.getY()), Math.max(first.getZ(), second.getZ()));
-        long volume = (long)(max.getX()-min.getX()+1)*(max.getY()-min.getY()+1)*(max.getZ()-min.getZ()+1);
-        if (volume > MAX_VOLUME) return fail("Selection exceeds 65,536 blocks");
+        int sx = max.getX()-min.getX()+1, sy = max.getY()-min.getY()+1, sz = max.getZ()-min.getZ()+1;
+        if (!BuildTransferPlan.validSize(sx, sy, sz))
+            return fail("Selection must fit within 128 blocks per axis and 262,144 blocks total");
         ListTag blocks = new ListTag();
         int uncertain = 0;
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
@@ -149,13 +166,13 @@ public final class ClientBuildTransfer {
         if (!validName(name)) return fail("Invalid blueprint name");
         try {
             Path path = file(name);
-            CompoundTag root = NbtIo.readCompressed(path, NbtAccounter.create(32L * 1024 * 1024));
+            CompoundTag root = NbtIo.readCompressed(path, NbtAccounter.create(128L * 1024 * 1024));
             if (root.getInt("version") != 1 || !root.contains("sourceMinX") || !root.contains("sourceMinZ"))
                 return fail("Blueprint lacks source coordinates; save it again in the old world");
             if (!root.getString("sourceDimension").equals(mc.level.dimension().location().toString()))
                 return fail("Open the matching dimension in a pristine copy of the old world");
             int sx = root.getInt("sizeX"), sy = root.getInt("sizeY"), sz = root.getInt("sizeZ");
-            if (sx < 1 || sy < 1 || sz < 1 || (long) sx * sy * sz > MAX_VOLUME)
+            if (!BuildTransferPlan.validSize(sx, sy, sz))
                 return fail("Invalid blueprint size");
             int x0 = root.getInt("sourceMinX"), y0 = root.getInt("sourceMinY"), z0 = root.getInt("sourceMinZ");
             List<Integer> pristineGround = new ArrayList<>(sx * sz);
@@ -212,15 +229,14 @@ public final class ClientBuildTransfer {
         if (mc.player == null || mc.level == null || !mc.player.isCreative()) return fail("Creative mode required");
         if (!validName(name)) return fail("Invalid blueprint name");
         try {
-            CompoundTag root = NbtIo.readCompressed(file(name), NbtAccounter.create(8L * 1024 * 1024));
+            CompoundTag root = NbtIo.readCompressed(file(name), NbtAccounter.create(128L * 1024 * 1024));
             if (root.getInt("version") != 1) return fail("Unsupported blueprint version");
             if (carve && !root.getString("provenance").equals("pristine-diff"))
                 return fail("Carving requires a blueprint compared with a pristine world first");
             ListTag blocks = root.getList("blocks", Tag.TAG_COMPOUND);
-            if (blocks.size() > MAX_VOLUME) return fail("Blueprint too large");
+            if (blocks.size() > BuildTransferPlan.MAX_VOLUME) return fail("Blueprint too large");
             int sx = root.getInt("sizeX"), sy = root.getInt("sizeY"), sz = root.getInt("sizeZ");
-            if (sx < 1 || sy < 1 || sz < 1 || sx > 96 || sy > 96 || sz > 96
-                || (long) sx * sy * sz > MAX_VOLUME) return fail("Invalid blueprint size");
+            if (!BuildTransferPlan.validSize(sx, sy, sz)) return fail("Invalid blueprint size");
             BlockPos anchor;
             if (mc.hitResult instanceof BlockHitResult hit) {
                 BlockPos lookedAt = hit.getBlockPos();
@@ -260,7 +276,7 @@ public final class ClientBuildTransfer {
             return fail("Place the first corner block at the preview anchor before pasting");
         try {
             BuildTransferNetwork.send(previewRoot, previewAt, previewCarve);
-            mc.player.displayClientMessage(Component.literal("Sent " + previewName + " to the server for validation and "
+            mc.player.displayClientMessage(Component.literal("Uploading " + previewName + " to the server for validation and "
                 + (previewCarve ? "carving/placement" : "placement")), false);
             return 1;
         } catch (IOException error) { return fail("Could not send blueprint: " + error.getMessage()); }
