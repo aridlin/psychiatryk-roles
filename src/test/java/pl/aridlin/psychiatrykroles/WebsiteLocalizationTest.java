@@ -81,7 +81,8 @@ class WebsiteLocalizationTest {
     void publishesTheLiveSeasonPackAndRetiresTheMigrationPage() throws IOException {
         String html = page();
         assertTrue(html.contains("NeoForge 21.1.252"));
-        assertTrue(html.contains("pl01-waw.icsv.pl:50035"));
+        assertTrue(html.contains("goplanska.pl"));
+        assertFalse(html.contains("pl01-waw.icsv.pl:50035"));
         assertTrue(html.contains("-klient.mrpack\" download>"));
         assertFalse(html.contains("href=\"migracja.html\""));
         assertFalse(html.contains("http://pl01-waw.icsv.pl:21007/"));
