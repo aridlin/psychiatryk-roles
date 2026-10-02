@@ -2474,6 +2474,7 @@ public final class PsychiatrykRoles {
         event.getDispatcher().register(Commands.literal("english")
             .executes(context -> setLanguage(context.getSource().getPlayerOrException(), true)));
         PokerCommands.register(event);
+        OldWorldCommands.register(event);
     }
 
     private static int clearConsultantItems(net.minecraft.commands.CommandSourceStack source, String playerName) {

@@ -59,6 +59,8 @@ final class SeasonProgression {
         double diameter = borderDiameter(season.initialDiameter, season.finalDiameter,
             season.durationDays, elapsedDays);
         for (ServerLevel level : server.getAllLevels()) {
+            // The archive is an administrative transfer workspace, not part of the season arena.
+            if (level.dimension().equals(OldWorldCommands.DIMENSION)) continue;
             double scale = level.dimension() == Level.NETHER ? 0.125 : 1.0;
             var border = level.getWorldBorder();
             double target = Math.max(1.0, diameter * scale);

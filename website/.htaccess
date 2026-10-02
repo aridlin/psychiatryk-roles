@@ -1,5 +1,10 @@
 RewriteEngine On
 
+# The old voting infographic has finished. Keep bookmarks useful while the
+# archived HTML and vote endpoint are moved out of the public directory.
+RewriteRule ^migracja\.html$ / [R=301,L,NE]
+RewriteRule ^vote\.php$ / [R=301,L,NE]
+
 # Keep the public information host canonical when the bare domain is attached
 # to this Titanaxe site. The Minecraft SRV record remains independent.
 RewriteCond %{HTTP_HOST} ^(?:www\.)?goplanska\.pl$ [NC]
