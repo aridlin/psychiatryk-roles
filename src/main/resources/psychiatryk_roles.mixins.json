@@ -9,7 +9,8 @@
     "VoidDoorDropsMixin"
   ],
   "client": [
-    "VoidDoorAnvilScreenMixin"
+    "VoidDoorAnvilScreenMixin",
+    "ModernFoundryEnchantmentLookupMixin"
   ],
   "injectors": {
     "defaultRequire": 1

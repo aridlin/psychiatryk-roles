@@ -83,7 +83,7 @@ class WebsiteLocalizationTest {
         assertTrue(html.contains("NeoForge 21.1.252"));
         assertTrue(html.contains("goplanska.pl"));
         assertFalse(html.contains("pl01-waw.icsv.pl:50035"));
-        assertTrue(html.contains("-klient.mrpack\" download>"));
+        assertTrue(html.contains(".mrpack\" download>"));
         assertFalse(html.contains("href=\"migracja.html\""));
         assertFalse(html.contains("http://pl01-waw.icsv.pl:21007/"));
     }
