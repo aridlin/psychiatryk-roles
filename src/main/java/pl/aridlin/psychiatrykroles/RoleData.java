@@ -1,5 +1,6 @@
 package pl.aridlin.psychiatrykroles;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -47,10 +48,11 @@ final class RoleData extends SavedData {
     }
 
     static RoleData get(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(RoleData::load, RoleData::new, FILE_NAME);
+        return server.overworld().getDataStorage().computeIfAbsent(
+            new SavedData.Factory<>(RoleData::new, RoleData::load), FILE_NAME);
     }
 
-    static RoleData load(CompoundTag tag) {
+    static RoleData load(CompoundTag tag, HolderLookup.Provider registries) {
         RoleData data = new RoleData();
         ListTag patientTags = tag.getList("Patients", Tag.TAG_STRING);
         for (Tag value : patientTags) {
@@ -119,6 +121,8 @@ final class RoleData extends SavedData {
         }
         return data;
     }
+
+    static RoleData load(CompoundTag tag) { return load(tag, null); }
 
     private static void loadPositions(ListTag tags, Map<UUID, TravelPosition> destination) {
         for (Tag raw : tags) {
@@ -305,7 +309,7 @@ final class RoleData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag patientTags = new ListTag();
         patients.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(patientTags::add);
         tag.put("Patients", patientTags);
@@ -357,4 +361,6 @@ final class RoleData extends SavedData {
         tag.put("AuditLog", logTags);
         return tag;
     }
+
+    CompoundTag save(CompoundTag tag) { return save(tag, null); }
 }

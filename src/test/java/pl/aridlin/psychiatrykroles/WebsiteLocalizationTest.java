@@ -39,7 +39,8 @@ class WebsiteLocalizationTest {
         String html = page();
         assertTrue(html.contains("'PRZEDMIOTY':'ITEMS'"));
         assertTrue(html.contains("'role i zasady.':'roles and rules.'"));
-        assertTrue(html.contains("'mody.':'mods.'"));
+        assertTrue(html.contains("mody sezonu."));
+        assertTrue(html.contains("season mods."));
         assertTrue(html.contains("'narzędzia konsultanta.':'consultant tools.'"));
         assertTrue(html.contains("'generator komend.':'command generator.'"));
         assertTrue(html.contains("'NA GÓRĘ ↑':'BACK TO TOP ↑'"));
@@ -68,10 +69,22 @@ class WebsiteLocalizationTest {
     }
 
     @Test
-    void publishesTheVerifiedDynmapEndpoint() throws IOException {
+    void chatBookRecipeExplainsTheActivationAndHasEnglishCopy() throws IOException {
         String html = page();
-        assertTrue(html.contains("http://pl01-waw.icsv.pl:21007/"));
-        assertTrue(html.contains("OTWÓRZ MAPĘ DYNMAP"));
-        assertTrue(html.contains("OPEN DYNMAP"));
+        assertTrue(html.contains("id=\"chat-book-recipe\""));
+        assertTrue(html.contains("1 × książka i pióro + 1 × odłamek ametystu"));
+        assertTrue(html.contains("1 × book and quill + 1 × amethyst shard"));
+        assertTrue(html.contains("Sneak-right-click") || html.contains("sneak and right-click"));
+    }
+
+    @Test
+    void publishesTheLiveSeasonPackAndRetiresTheMigrationPage() throws IOException {
+        String html = page();
+        assertTrue(html.contains("NeoForge 21.1.252"));
+        assertTrue(html.contains("goplanska.pl"));
+        assertFalse(html.contains("pl01-waw.icsv.pl:50035"));
+        assertTrue(html.contains(".mrpack\" download>"));
+        assertFalse(html.contains("href=\"migracja.html\""));
+        assertFalse(html.contains("http://pl01-waw.icsv.pl:21007/"));
     }
 }

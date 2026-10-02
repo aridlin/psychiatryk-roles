@@ -7,3 +7,6 @@ out/
 *.log
 deploy/
 
+run-smoke/
+run-gametest/
+logs/

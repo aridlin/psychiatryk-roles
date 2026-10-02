@@ -3,6 +3,7 @@ package pl.aridlin.psychiatrykroles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -16,11 +17,14 @@ final class PokerData extends SavedData {
     private final Map<String, PokerGame> tables = new LinkedHashMap<>();
     private final Map<UUID, Long> wallets = new LinkedHashMap<>();
 
+    private final java.util.Set<UUID> pendingGuiItems = new java.util.HashSet<>();
+
     static PokerData get(MinecraftServer server) {
-        return server.overworld().getDataStorage().computeIfAbsent(PokerData::load, PokerData::new, FILE_NAME);
+        return server.overworld().getDataStorage().computeIfAbsent(
+            new SavedData.Factory<>(PokerData::new, PokerData::load), FILE_NAME);
     }
 
-    static PokerData load(CompoundTag tag) {
+    static PokerData load(CompoundTag tag, HolderLookup.Provider registries) {
         PokerData data = new PokerData();
         for (Tag raw : tag.getList("Tables", Tag.TAG_COMPOUND)) {
             PokerGame game = PokerGame.load((CompoundTag) raw);
@@ -31,8 +35,14 @@ final class PokerData extends SavedData {
             if (value.hasUUID("Player") && value.getLong("Chips") > 0)
                 data.wallets.put(value.getUUID("Player"), value.getLong("Chips"));
         }
+        for (Tag raw : tag.getList("PendingGuiItems", Tag.TAG_STRING)) {
+            try { data.pendingGuiItems.add(UUID.fromString(raw.getAsString())); }
+            catch (IllegalArgumentException ignored) { }
+        }
         return data;
     }
+
+    static PokerData load(CompoundTag tag) { return load(tag, null); }
 
     Collection<PokerGame> tables() { return tables.values(); }
     PokerGame table(String id) { return tables.get(id.toLowerCase()); }
@@ -71,9 +81,13 @@ final class PokerData extends SavedData {
         return removed;
     }
 
+    void queueGuiItem(UUID player) { pendingGuiItems.add(player); setDirty(); }
+    boolean hasPendingGuiItem(UUID player) { return pendingGuiItems.contains(player); }
+    void deliveredGuiItem(UUID player) { pendingGuiItems.remove(player); setDirty(); }
+
     void changed() { setDirty(); }
 
-    @Override public CompoundTag save(CompoundTag tag) {
+    @Override public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag values = new ListTag();
         tables.values().forEach(table -> values.add(table.save()));
         tag.put("Tables", values);
@@ -81,6 +95,11 @@ final class PokerData extends SavedData {
         wallets.forEach((player, chips) -> { CompoundTag value = new CompoundTag(); value.putUUID("Player", player);
             value.putLong("Chips", chips); walletTags.add(value); });
         tag.put("Wallets", walletTags);
+        ListTag deliveries = new ListTag();
+        pendingGuiItems.forEach(id -> deliveries.add(net.minecraft.nbt.StringTag.valueOf(id.toString())));
+        tag.put("PendingGuiItems", deliveries);
         return tag;
     }
+
+    CompoundTag save(CompoundTag tag) { return save(tag, null); }
 }

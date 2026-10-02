@@ -1,6 +1,7 @@
 package pl.aridlin.psychiatrykroles;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -9,10 +10,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -28,15 +29,22 @@ final class PokerMenu extends ChestMenu {
     private boolean exchangeScreen;
     private String lastState = "";
 
+    // The client receives the same 54 server-synced slots, but never reads
+    // PokerData. Keeping this slot contract stable lets the visual client lag
+    // behind routine server-side poker changes.
+    PokerMenu(int containerId, Inventory inventory) {
+        this(containerId, inventory, null, new SimpleContainer(SIZE));
+    }
+
     PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer) {
         this(containerId, inventory, viewer, new SimpleContainer(SIZE));
     }
 
     private PokerMenu(int containerId, Inventory inventory, ServerPlayer viewer, SimpleContainer display) {
-        super(MenuType.GENERIC_9x6, containerId, inventory, display, 6);
+        super(PokerMenus.TYPE.get(), containerId, inventory, display, 6);
         this.display = display;
         this.viewer = viewer;
-        refresh();
+        if (viewer != null) refresh();
     }
 
     @Override public boolean stillValid(Player player) { return true; }
@@ -59,7 +67,7 @@ final class PokerMenu extends ChestMenu {
                     ResourceLocation id = ResourceLocation.tryParse(offer.getKey());
                     if (id != null) PokerCommands.exchangeOut(viewer, id,
                         clickType == ClickType.QUICK_MOVE
-                            ? BuiltInRegistries.ITEM.get(id).getMaxStackSize() : 1);
+                            ? new ItemStack(BuiltInRegistries.ITEM.get(id)).getMaxStackSize() : 1);
                 }
             }
             if (viewer.containerMenu == this) refresh();
@@ -72,7 +80,7 @@ final class PokerMenu extends ChestMenu {
 
     void refresh() {
         display.clearContent();
-        boolean en = RoleData.get(viewer.getServer()).isEnglish(viewer.getUUID());
+        boolean en = PsychiatrykRoles.isEnglish(viewer);
         PokerData data = PokerData.get(viewer.getServer());
         PokerGame game = data.tableFor(viewer.getUUID());
         display.setItem(53, icon(Items.BARRIER, ChatFormatting.RED + (en ? "Close" : "Zamknij")));
@@ -84,15 +92,27 @@ final class PokerMenu extends ChestMenu {
             display.setItem(46, icon(Items.EMERALD, ChatFormatting.GREEN
                 + (en ? "Open item exchange" : "Otwórz wymianę przedmiotów")));
         }
+        display.setItem(0, activityIcon(en));
         lastState = stateKey();
         super.broadcastChanges();
     }
 
     private String stateKey() {
+        return PsychiatrykRoles.isEnglish(viewer) + ":" + PokerActivity.recent(viewer.getUUID()).hashCode()
+            + ":" + animationFrame() + ":" + gameStateKey();
+    }
+
+    private int animationFrame() {
+        PokerGame game = PokerData.get(viewer.getServer()).tableFor(viewer.getUUID());
+        return !exchangeScreen && game != null && game.turnPlayer() != null
+            ? viewer.getServer().getTickCount() / 10 % 2 : 0;
+    }
+
+    private String gameStateKey() {
         PokerData data = PokerData.get(viewer.getServer()); PokerGame game = data.tableFor(viewer.getUUID());
         if (exchangeScreen) return "exchange:" + data.balance(viewer.getUUID()) + ':'
             + BuiltInRegistries.ITEM.getKey(viewer.getMainHandItem().getItem()) + ':'
-            + viewer.getMainHandItem().getCount() + ':' + viewer.getMainHandItem().getTag();
+            + viewer.getMainHandItem().getCount() + ':' + viewer.getMainHandItem().getComponentsPatch();
         if (game == null) return "lobby:" + data.balance(viewer.getUUID()) + ':'
             + data.tables().stream().map(table -> table.id() + ':' + table.phase() + ':' + table.players().size()).toList();
         StringBuilder value = new StringBuilder(game.id()).append('|').append(game.phase()).append('|').append(game.pot())
@@ -184,16 +204,57 @@ final class PokerMenu extends ChestMenu {
             display.setItem(32, icon(Items.RED_DYE, ChatFormatting.RED + (en ? "Fold" : "Pas")));
         }
 
+        PokerGame.PlayerState turn = game.turnPlayer();
         int seatSlot = 36;
         for (PokerGame.PlayerState seat : game.players()) {
             String flags = (seat.bot ? " [BOT]" : "") + (seat.folded ? (en ? " folded" : " pas") : "") + (seat.allIn ? " ALL-IN" : "");
-            display.setItem(seatSlot++, icon(seat.id.equals(viewer.getUUID()) ? Items.PLAYER_HEAD : Items.ARMOR_STAND,
-                (seat.id.equals(viewer.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.WHITE) + seat.name
-                    + ChatFormatting.GRAY + " | " + seat.chips + " | " + seat.committedHand + flags));
+            boolean acting = turn != null && seat.id.equals(turn.id);
+            ItemStack seatIcon = icon(acting ? Items.GOLDEN_HELMET : Items.PLAYER_HEAD,
+                (acting ? ChatFormatting.GOLD : seat.id.equals(viewer.getUUID()) ? ChatFormatting.AQUA : ChatFormatting.WHITE)
+                    + (acting ? "▶ " : "") + seat.name
+                    + ChatFormatting.GRAY + " | " + seat.chips + " | " + seat.committedHand + flags);
+            if (acting) {
+                lore(seatIcon, List.of(Component.literal(en ? "Acting now — waiting for this player." : "Teraz gra — czekamy na ten ruch.")
+                    .withStyle(ChatFormatting.YELLOW)));
+                if (animationFrame() == 0) {
+                    seatIcon.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+                }
+            }
+            display.setItem(seatSlot++, seatIcon);
             if (seatSlot > 44) break;
         }
-        PokerGame.PlayerState turn = game.turnPlayer();
-        if (turn != null) display.setItem(49, icon(Items.CLOCK, ChatFormatting.YELLOW + (en ? "Turn: " : "Ruch: ") + turn.name));
+        if (turn != null) {
+            display.setItem(49, icon(Items.GOLDEN_HELMET, ChatFormatting.YELLOW + (en ? "Turn: " : "Ruch: ") + turn.name));
+            Item pulse = animationFrame() == 0 ? Items.YELLOW_STAINED_GLASS_PANE : Items.ORANGE_STAINED_GLASS_PANE;
+            for (int slot : new int[] {48, 50}) display.setItem(slot, icon(pulse,
+                ChatFormatting.GOLD + (turn.id.equals(viewer.getUUID()) ? (en ? "Your turn!" : "Twój ruch!") : (en ? "Waiting for " : "Czekamy na ") + turn.name)));
+        }
+    }
+
+    private ItemStack activityIcon(boolean en) {
+        ItemStack item = icon(Items.WRITABLE_BOOK, ChatFormatting.AQUA + (en ? "Recent poker messages" : "Ostatnie wiadomości pokera"));
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.literal(en ? "Newest messages at the bottom. Help: /poker help" : "Najnowsze na dole. Pomoc: /poker help").withStyle(ChatFormatting.DARK_GRAY));
+        List<Component> recent = PokerActivity.recent(viewer.getUUID());
+        if (recent.isEmpty()) lines.add(Component.literal(en ? "No messages yet." : "Brak wiadomości."));
+        // Short lore lines keep long status messages inside the screen.
+        for (Component message : recent) {
+            String text = message.getString();
+            while (text.length() > 60) {
+                int split = text.lastIndexOf(' ', 60);
+                if (split < 20) split = 60;
+                lines.add(Component.literal(text.substring(0, split)).setStyle(message.getStyle()));
+                text = text.substring(split).stripLeading();
+            }
+            lines.add(Component.literal(text).setStyle(message.getStyle()));
+        }
+        if (lines.size() > 19) lines = new ArrayList<>(lines.subList(lines.size() - 19, lines.size()));
+        lore(item, lines);
+        return item;
+    }
+
+    private static void lore(ItemStack item, List<Component> lines) {
+        item.set(DataComponents.LORE, new ItemLore(lines));
     }
 
     private void fillBorders(boolean en) {
@@ -210,6 +271,6 @@ final class PokerMenu extends ChestMenu {
     }
 
     private static ItemStack icon(Item item, String name) {
-        ItemStack stack = new ItemStack(item); stack.setHoverName(Component.literal(name)); return stack;
+        ItemStack stack = new ItemStack(item); stack.set(DataComponents.CUSTOM_NAME, Component.literal(name)); return stack;
     }
 }

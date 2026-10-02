@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:white_dye"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "id": "minecraft:white_dye",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykTemporaryChalk:1b}"
+    }
+  },
+  "show_notification": true
+}

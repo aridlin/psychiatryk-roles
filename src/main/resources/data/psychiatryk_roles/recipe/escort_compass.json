@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:compass"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "result": {
+    "id": "minecraft:compass",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykEscortCompass:1b}"
+    }
+  },
+  "show_notification": true
+}

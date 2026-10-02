@@ -6,6 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PokerDataTest {
     @Test
+    void offlinePokerItemDeliveryPersistsUntilClaimed() {
+        UUID player = UUID.randomUUID();
+        PokerData data = new PokerData();
+        data.queueGuiItem(player);
+        PokerData restored = PokerData.load(data.save(new net.minecraft.nbt.CompoundTag()));
+        assertTrue(restored.hasPendingGuiItem(player));
+        restored.deliveredGuiItem(player);
+        assertFalse(PokerData.load(restored.save(new net.minecraft.nbt.CompoundTag())).hasPendingGuiItem(player));
+    }
+
+    @Test
     void elytraCannotBeExchanged() {
         assertEquals(0, PokerItemValues.value("minecraft:elytra"));
         assertFalse(PokerItemValues.all().containsKey("minecraft:elytra"));
