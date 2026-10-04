@@ -1,0 +1,28 @@
+{
+  "runtime_complete": true,
+  "candidate_sha256": "611128d6e95b51e7564d224a1115b16d0afd0a4bd6e0d373cf445452c6ba66e2",
+  "checks": [
+    "[04Oct2026 19:32:59.639] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS safe rental spawn",
+    "[04Oct2026 19:32:59.639] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS half-charge",
+    "[04Oct2026 19:32:59.640] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS insufficient chips",
+    "[04Oct2026 19:32:59.641] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS paid riding",
+    "[04Oct2026 19:32:59.641] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS wallet debit",
+    "[04Oct2026 19:32:59.641] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS paid remount",
+    "[04Oct2026 19:32:59.642] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS variant 1",
+    "[04Oct2026 19:32:59.642] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS variant 2",
+    "[04Oct2026 19:32:59.642] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS 30kmh cap",
+    "[04Oct2026 19:32:59.643] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS unrendered cleanup",
+    "[04Oct2026 19:32:59.644] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS pulverize",
+    "[04Oct2026 19:33:00.555] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS zombie jockey",
+    "[04Oct2026 19:33:00.556] [Server thread/INFO] [RentalQA/]: RENTAL QA PASS unrendered jockey cleanup restores AI",
+    "[04Oct2026 19:33:01.771] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS all three creative rentals",
+    "[04Oct2026 19:33:03.524] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS toggle changes current settings after reload",
+    "[04Oct2026 19:33:04.990] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS server checks complete",
+    "[04Oct2026 19:33:04.991] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS parked on side",
+    "[04Oct2026 19:33:04.991] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS visibility lease",
+    "[04Oct2026 19:33:06.500] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS glasses follow head",
+    "[04Oct2026 19:33:06.500] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS headlight behavior registered",
+    "[04Oct2026 19:33:06.500] [Render thread/INFO] [RentalQA/]: RENTAL QA PASS night headlight emits light"
+  ],
+  "production_deployed": false
+}
