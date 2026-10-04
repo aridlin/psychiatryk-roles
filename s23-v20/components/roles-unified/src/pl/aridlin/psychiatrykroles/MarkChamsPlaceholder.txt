@@ -1,0 +1,1 @@
+Client source lives in partymarkers so all chams use the same compositor.

@@ -1,0 +1,17 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-or-later; model under Sketchfab Standard license (see bundled notice)"
+[[mods]]
+modId="goplanska_kukirin"
+version="1.0.0"
+displayName="Goplanska KuKirin Scooter"
+
+[[dependencies.goplanska_kukirin]]
+modId="gemrender"
+type="required"
+versionRange="[0.1.6,)"
+ordering="AFTER"
+side="CLIENT"
+
+[[mixins]]
+config="goplanska-scooter.mixins.json"

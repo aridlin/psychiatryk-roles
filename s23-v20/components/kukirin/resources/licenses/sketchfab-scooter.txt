@@ -1,0 +1,8 @@
+Model Information:
+* title:	Кикшеринговый самокат "МТС Юрент"
+* source:	https://sketchfab.com/3d-models/fddbc46d599240bba8258e6d2c4daa59
+* author:	kovsh (https://sketchfab.com/kovs)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
