@@ -1,5 +1,7 @@
 # S23 v22
 
+**Tested and staged, not deployed.** The October 4 restart vote expired without approval; production and public download pointers remain v21.
+
 Scooter storage has Settings and searchable Music buttons. Both return to storage and fit Minecraft GUI scale. Recall defaults to R, rebindable in Controls, and retains owner/Loyalty checks.
 
 - Netherite block smithing upgrade: normal acceleration below the standard top speed, then 180 km/h, gentle descent, stronger air steering and 3-block steps above 100 km/h.
