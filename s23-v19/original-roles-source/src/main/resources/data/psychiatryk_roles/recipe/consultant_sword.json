@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "S",
+    "S",
+    "C"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "id": "minecraft:stone_sword",
+    "components": {
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykConsultantSword:1b}"
+    }
+  },
+  "show_notification": true
+}

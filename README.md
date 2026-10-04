@@ -1,3 +1,9 @@
+# Current release: Goplanska S23 v19
+
+The production NeoForge 1.21.1 release is in **[s23-v19](s23-v19/README.md)**, including current custom components and the tested JAR. The project below is retained as the historical Forge 1.20.1 edition.
+
+---
+
 # Psychiatryk Roles
 
 Psychiatryk Roles is a Forge 1.20.1 server mod for a role-based Minecraft server. It assigns every new player the restricted **Konsultant** role, preserves privileged **Ordynator** and admitted **Pacjent** players, and provides controlled tools that grant narrowly scoped actions without removing the server's protections.

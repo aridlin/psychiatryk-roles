@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="goplanska_starter"
+version="1.0.2"
+displayName="Goplanska Kinker Starter"
+description="Preview and deploy a Modern Foundry starter smeltery and crafting stations."
+[[dependencies.goplanska_starter]]
+modId="modernfoundry"
+type="required"
+versionRange="[1.21.1-4.1.6-NeoForge]"
+ordering="AFTER"
+side="BOTH"

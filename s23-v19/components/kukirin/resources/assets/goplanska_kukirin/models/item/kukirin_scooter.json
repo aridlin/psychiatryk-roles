@@ -1,0 +1,251 @@
+{
+  "textures": {
+    "black": "minecraft:block/black_concrete",
+    "orange": "minecraft:block/orange_concrete",
+    "particle": "minecraft:block/black_concrete"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        3,
+        2
+      ],
+      "to": [
+        11,
+        5,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#black"
+        },
+        "south": {
+          "texture": "#black"
+        },
+        "east": {
+          "texture": "#black"
+        },
+        "west": {
+          "texture": "#black"
+        },
+        "up": {
+          "texture": "#black"
+        },
+        "down": {
+          "texture": "#black"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        5,
+        3
+      ],
+      "to": [
+        11,
+        5.5,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#orange"
+        },
+        "south": {
+          "texture": "#orange"
+        },
+        "east": {
+          "texture": "#orange"
+        },
+        "west": {
+          "texture": "#orange"
+        },
+        "up": {
+          "texture": "#orange"
+        },
+        "down": {
+          "texture": "#orange"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        5,
+        12
+      ],
+      "to": [
+        9,
+        15,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#black"
+        },
+        "south": {
+          "texture": "#black"
+        },
+        "east": {
+          "texture": "#black"
+        },
+        "west": {
+          "texture": "#black"
+        },
+        "up": {
+          "texture": "#black"
+        },
+        "down": {
+          "texture": "#black"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        14,
+        12
+      ],
+      "to": [
+        13,
+        16,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#black"
+        },
+        "south": {
+          "texture": "#black"
+        },
+        "east": {
+          "texture": "#black"
+        },
+        "west": {
+          "texture": "#black"
+        },
+        "up": {
+          "texture": "#black"
+        },
+        "down": {
+          "texture": "#black"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0,
+        2
+      ],
+      "to": [
+        9,
+        6,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#black"
+        },
+        "south": {
+          "texture": "#black"
+        },
+        "east": {
+          "texture": "#black"
+        },
+        "west": {
+          "texture": "#black"
+        },
+        "up": {
+          "texture": "#black"
+        },
+        "down": {
+          "texture": "#black"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0,
+        10
+      ],
+      "to": [
+        9,
+        6,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#black"
+        },
+        "south": {
+          "texture": "#black"
+        },
+        "east": {
+          "texture": "#black"
+        },
+        "west": {
+          "texture": "#black"
+        },
+        "up": {
+          "texture": "#black"
+        },
+        "down": {
+          "texture": "#black"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "ground": {
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  }
+}

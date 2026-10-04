@@ -1,0 +1,1 @@
+{"required":true,"package":"pl.aridlin.spectate.mixin","compatibilityLevel":"JAVA_21","client":["SpectateHandsMixin"],"injectors":{"defaultRequire":1}}

@@ -1,0 +1,12 @@
+{
+  "pack": "goplanska-s23-v19-full-2xbr.zip",
+  "scale": 2,
+  "mods": 93,
+  "vanilla": "1.21.1",
+  "pngs": 43269,
+  "animations": 751,
+  "size": 184819327,
+  "sha1": "89e9cc65e4cd396b1a38ea35e2749a6eaa21a708",
+  "sha256": "31a134ad81e9f76c7614170f138c22ff0b8332000eefcb645f0c8eb807c47d17",
+  "optional": true
+}

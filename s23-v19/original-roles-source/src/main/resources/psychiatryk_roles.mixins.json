@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "pl.aridlin.psychiatrykroles.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "VoidDoorRecipeMixin",
+    "VoidDoorStackMixin",
+    "VoidDoorDropsMixin"
+  ],
+  "client": [
+    "VoidDoorAnvilScreenMixin",
+    "ModernFoundryEnchantmentLookupMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

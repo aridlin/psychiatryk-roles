@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "WW ",
+    "WED",
+    "WW "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "id": "minecraft:warped_door",
+    "count": 2,
+    "components": {
+      "minecraft:custom_data": "{psychiatrykVoidDoor:1b}"
+    }
+  },
+  "show_notification": true
+}

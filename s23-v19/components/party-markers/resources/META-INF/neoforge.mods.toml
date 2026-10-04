@@ -1,0 +1,47 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="goplanska_party_markers"
+version="2.1.0"
+displayName="Goplanska Party Markers"
+description='''Fixed-size, through-wall dots for your persistent WAY party. Works beyond entity and terrain render distance in the same dimension.'''
+[[dependencies.goplanska_party_markers]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="CLIENT"
+[[dependencies.goplanska_party_markers]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="CLIENT"
+[[dependencies.goplanska_party_markers]]
+modId="way"
+type="required"
+versionRange="[2.0.0,2.1.0)"
+ordering="AFTER"
+side="CLIENT"
+
+[[mods]]
+modId="goplanska_parties"
+version="2.1.0"
+displayName="Goplanska Parties"
+description="Persistent party waypoints, private chat and friendly fire protection. Uses existing goplanska_party memberships."
+[[dependencies.goplanska_parties]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.goplanska_parties]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config="goplanska-chams.mixins.json"

@@ -1,0 +1,16 @@
+{
+  "fullPackLoaded": true,
+  "checks": [
+    "CHAMS QA PASS",
+    "TEXTURE QA PASS glass",
+    "TEXTURE QA PASS grass",
+    "SELF OCCLUSION QA PASS entity",
+    "SELF OCCLUSION QA PASS exposed block",
+    "MODEL QA PASS",
+    "EXTRAS QA PASS all custom recipes indexed",
+    "EXTRAS QA PASS spear recipes",
+    "EXTRAS QA PASS two ballot buttons",
+    "No button packet rejects"
+  ],
+  "result": "passed"
+}

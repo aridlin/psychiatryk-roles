@@ -1,0 +1,1 @@
+Goplanska Admin Spectate. GPL-3.0-or-later. Body preservation uses Bodycam by ClasherHD, GPL-3.0, https://github.com/ClasherHD/bodycam.

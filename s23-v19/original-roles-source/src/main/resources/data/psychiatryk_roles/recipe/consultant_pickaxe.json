@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SSS",
+    " C ",
+    " C "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "id": "minecraft:stone_pickaxe",
+    "components": {
+      "minecraft:can_break": {
+        "predicates": [
+          {
+            "blocks": "minecraft:stone"
+          },
+          {
+            "blocks": "minecraft:cobblestone"
+          }
+        ]
+      },
+      "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykConsultantPickaxe:1b}"
+    }
+  },
+  "show_notification": true
+}
