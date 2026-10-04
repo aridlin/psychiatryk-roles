@@ -1,8 +1,6 @@
-# Current release: Goplanska S23 v20
+# Current release: Goplanska S23 v22
 
-The production NeoForge 1.21.1 release is in **[s23-v20](s23-v20/README.md)**, including current custom components and the tested JAR. The project below is retained as the historical Forge 1.20.1 edition.
-
-**Deployed October 4, 2026:** scooter gameplay, paint, trim, music/storage upgrades and wall kicks. Previous release: [s23-v19](s23-v19/README.md).
+The NeoForge 1.21.1 release is in **[s23-v22](s23-v22/README.md)**. Previous release: [s23-v21](s23-v21/README.md). The project below is the historical Forge 1.20.1 edition.
 
 ---
 

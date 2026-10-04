@@ -1,0 +1,8 @@
+{
+  "changedSinceFullPass": [
+    "pl/aridlin/kukirin/ScooterSettingsScreen.class",
+    "pl/aridlin/kukirin/ScooterMusicScreen.class",
+    "goplanska-unified-components.json"
+  ],
+  "onlyMenuLayoutChanged": true
+}

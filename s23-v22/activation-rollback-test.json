@@ -1,0 +1,6 @@
+{
+  "applyExact": true,
+  "rollbackExact": true,
+  "configRollback": true,
+  "iconUnchanged": true
+}

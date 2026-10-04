@@ -1,0 +1,1 @@
+{"required": true, "minVersion": "0.8", "package": "pl.aridlin.kukirin.mixin", "compatibilityLevel": "JAVA_21", "mixins": ["ScooterEnchantMixin", "ScooterAirStepMixin"], "client": ["ScooterCameraMixin", "ScooterRiderPoseMixin", "ScooterSmithingPreviewMixin", "ScooterVisualAccessor", "RentalTripRendererMixin"], "injectors": {"defaultRequire": 1}}

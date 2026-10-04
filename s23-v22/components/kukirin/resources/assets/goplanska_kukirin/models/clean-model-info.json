@@ -1,0 +1,7 @@
+{
+  "model": "G2-style original game model",
+  "author": "Aridlin project",
+  "triangles": 2784,
+  "license": "GPL-3.0-or-later",
+  "source": "work/kukirin/build_clean_g2.py"
+}

@@ -1,0 +1,1 @@
+{"motor": {"sounds": [{"name": "goplanska_kukirin:motor", "stream": false}]}, "wind": {"sounds": [{"name": "goplanska_kukirin:wind", "stream": false}]}, "wav": {"sounds": [{"name": "goplanska_kukirin:motor", "stream": true, "attenuation_distance": 64}]}, "nitro": {"sounds": [{"name": "goplanska_kukirin:nitro", "stream": false}], "subtitle": "subtitles.goplanska_kukirin.nitro"}}
