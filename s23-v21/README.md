@@ -1,6 +1,8 @@
 # S23 v21
 
-Tested release candidate; production activation is conditional on the restart vote.
+Deployed on October 4, 2026 at 20:22 Europe/Warsaw after isolated runtime and rollback tests. The server was empty, so no restart vote was needed. Website downloads, AutoModpack and the main Prism profile use v21.
+
+The server imported 635 checksum-verified WAV tracks. Long loops were shortened to four minutes; six empty or unreadable source files were skipped.
 
 - Lime, Bolt and City rentals appear in the Psychiatryk Roles creative tab.
 - Half charge, 30 km/h cap, real poker wallet payment, parked tripping, zombie jockeys, render-aware and empty-battery cleanup.
