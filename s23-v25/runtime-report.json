@@ -1,0 +1,21 @@
+{
+  "runtime_complete": true,
+  "candidate_sha256": "d78ee34dbe028150a5c4bf9fce52c1bcad7f330866ee822504d9876d44454d28",
+  "dedicated_and_client": {
+    "started": true,
+    "passed": true,
+    "normalShutdown": true,
+    "profileBackup": "/home/aridlin/.local/share/PrismLauncher/instances/goplanska-chams-singleplayer-test/minecraft/test-update-backups/scooter-v23-ux-1791198896"
+  },
+  "battery_tests": "powered depot, unpowered shaft, 60 minute fill, 30 minute drain, idle no drain, persistence, infinite smithing, rental exclusion passed",
+  "motor_hum_retest": "waived by user",
+  "balancing_tests": "Unbreaking, Mending, heat persistence and cooling, enchant cache invalidation passed",
+  "easter_egg_tests": "anvil names, upward gravity, Nether rental explosion passed",
+  "chams_performance": {
+    "pixel_equal": true,
+    "full_ms": 7.291904,
+    "cropped_ms": 0.8052053333333333,
+    "reduction_percent": 88.95754341618687
+  },
+  "benchmark_scope": "eight small highlights at 3840x2160, GPU timer, original vs cropped composite, framebuffer byte equality"
+}

@@ -1,0 +1,86 @@
+{
+  "vertex": "goplanska_party_markers:party_composite",
+  "fragment": "goplanska_party_markers:party_composite",
+  "attributes": [
+    "Position",
+    "UV0"
+  ],
+  "samplers": [
+    {
+      "name": "PositionMask"
+    },
+    {
+      "name": "CoverBoxes"
+    },
+    {
+      "name": "TextureCover"
+    },
+    {
+      "name": "EntityCover"
+    }
+  ],
+  "uniforms": [
+    {
+      "name": "BoxCount",
+      "type": "int",
+      "count": 1,
+      "values": [
+        0
+      ]
+    },
+    {
+      "name": "CoverOffset",
+      "type": "float",
+      "count": 3,
+      "values": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "FallbackCover",
+      "type": "float",
+      "count": 1,
+      "values": [
+        0
+      ]
+    },
+    {
+      "name": "TeamColor",
+      "type": "float",
+      "count": 4,
+      "values": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "PatternAnchor",
+      "type": "float",
+      "count": 2,
+      "values": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "HalftoneEnabled",
+      "type": "int",
+      "count": 1,
+      "values": [
+        1
+      ]
+    },
+    {
+      "name": "TargetEntityKey",
+      "type": "float",
+      "count": 1,
+      "values": [
+        0
+      ]
+    }
+  ]
+}
