@@ -1,0 +1,14 @@
+{
+  "release": "2026-10-05-S23-v24",
+  "server_started": true,
+  "server_done": "2026-10-05 09:24:01 UTC",
+  "online_at_restart": 0,
+  "restart": "execute unless entity @a run restartin 10s",
+  "server_and_host_sha256": "81d2b2d5a9cabca172dd50c2bbcea84048763de9bd8e3072617ba86719ee104f",
+  "automodpack_index_candidate_sha1": true,
+  "prism_verified": true,
+  "public_archives_verified": true,
+  "rollback_bootstrap": "server-before-v24.jar",
+  "visual_sun_death_confirmation_pending": true,
+  "performance_freeze_root_cause_unconfirmed": true
+}

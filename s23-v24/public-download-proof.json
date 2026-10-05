@@ -1,0 +1,14 @@
+{
+  "pointer": {
+    "release": "2026-10-05-S23-v24",
+    "curseforge": "psychiatryk-s23-20261005-klient-v24-curseforge.zip",
+    "prism": "psychiatryk-s23-20261005-klient-v24.mrpack",
+    "previousRelease": "v23",
+    "manifest": "goplanska-release-v24.json",
+    "sha256": {
+      "psychiatryk-s23-20261005-klient-v24-curseforge.zip": "2643635b917683b754dd9e2731c92c07a5f8c10dec3c1ab63adb5a7cb1157368",
+      "psychiatryk-s23-20261005-klient-v24.mrpack": "e908fc5c28e2412469675e7b1c8d1213d017798e5e64d16de4f6463407aea0e1"
+    }
+  },
+  "archives_verified": true
+}

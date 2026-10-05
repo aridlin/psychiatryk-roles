@@ -1,0 +1,13 @@
+{
+  "apply": true,
+  "rollback_all_changed_files": true,
+  "files": [
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip"
+  ],
+  "bootstrap_sha256": "098117838d0817eca9e2c70f668b9377d80352d1c65f1d1e819ccdbc9ca9b6de"
+}
