@@ -7,5 +7,6 @@
   "coal_cases": 4693065,
   "model_skin_dimensions": "20 x 512x512",
   "v26_runtime_model_loading": "failed; held",
-  "candidate_sha256": "655fed5305a8f364c5dc40c027d797d324ca1994df89363b42f1644353f01700"
+  "candidate_sha256": "79ba4fe6587c7da3d572b285099cb1895c13b49cefba1719f719fe1ea41b7529",
+  "packed_jar_assets": "20 matching 512x512 skins; ZIP valid; coal policy present"
 }
