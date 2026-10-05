@@ -1,0 +1,22 @@
+{
+  "apply": true,
+  "rollback_all_changed_files": true,
+  "files": [
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar",
+    "mods/pointblank-neoforge-1.21-2.2.0.jar",
+    "mods/walkers-5.8.13.jar",
+    "mods/craftedcore-5.8.2.jar",
+    "mods/geckolib-neoforge-1.21.1-4.9.3.jar",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/mods/ShoulderSurfing-NeoForge-1.21.1-5.2.0.jar",
+    "automodpack/host-modpack/main/mods/pointblank-neoforge-1.21-2.2.0.jar",
+    "automodpack/host-modpack/main/mods/walkers-5.8.13.jar",
+    "automodpack/host-modpack/main/mods/craftedcore-5.8.2.jar",
+    "automodpack/host-modpack/main/mods/geckolib-neoforge-1.21.1-4.9.3.jar",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip"
+  ],
+  "bootstrap_sha256": "d59da55b950f270ec5f8047382e07d61476ec1a0ed3b35d4b2c10fc23d0e95af"
+}

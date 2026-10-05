@@ -1,0 +1,27 @@
+{
+  "runtime_complete": true,
+  "candidate_sha256": "5dc540afaf791fe1694889eb767e8c0fb14a2f75f0ba47df89b55031f09a9d07",
+  "gpu_model_loaded": true,
+  "replay_record_and_open": true,
+  "dedicated_and_client": {
+    "started": true,
+    "passed": true,
+    "normalShutdown": true
+  },
+  "checks": [
+    "sound physics smoothing applies to real OpenAL sources",
+    "headlights exposed solid ground lighting-engine check",
+    "Shoulder Surfing loaded",
+    "admin GUI five settings and live save",
+    "Frost II falling water landing",
+    "bound Loyalty dropped item recall preserves upgrades",
+    "full prior scooter regression suite",
+    "Ctrl sustained bounded slide and release recovery pure simulation",
+    "Point Blank 2.2.0, GeckoLib 4.9.3, Woodwalkers 5.8.13 and CraftedCore 5.8.2 dedicated/client startup with scooter regression and Flashback replay"
+  ],
+  "limitations": [
+    "Player feedback still needed for drift feel and visible headlights in the production world",
+    "Server lag identified as blocking save disk writes; hosting storage issue not resolved",
+    "Two-human passenger rifle firing and Warden chase filming still require friends in-game"
+  ]
+}

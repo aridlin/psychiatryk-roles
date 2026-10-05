@@ -1,0 +1,12 @@
+{
+  "release": "2026-10-05-S23-v28",
+  "server_started": true,
+  "startup_utc": "2026-10-05 16:45:29",
+  "server_and_host_sha256": "5dc540afaf791fe1694889eb767e8c0fb14a2f75f0ba47df89b55031f09a9d07",
+  "prism_verified": true,
+  "public_archives_verified": true,
+  "automodpack_index_matches_all_managed_client_jars": true,
+  "empty_server_conditional_restart": true,
+  "headlight_visual_feedback_pending": true,
+  "hosting_save_io_stalls_unresolved": true
+}

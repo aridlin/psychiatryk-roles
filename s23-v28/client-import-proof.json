@@ -1,0 +1,5 @@
+{
+  "all_102_client_jars_exact": true,
+  "no_obsolete_geckolib": true,
+  "no_duplicate_external_and_embedded_mods": true
+}
