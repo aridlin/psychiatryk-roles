@@ -1,6 +1,6 @@
-# Tested candidate: Goplanska S23 v22
+# Current release: Goplanska S23 v23
 
-Production remains **v21**: the v22 restart vote expired without approval. The tested NeoForge 1.21.1 candidate is in **[s23-v22](s23-v22/README.md)**. Previous release: [s23-v21](s23-v21/README.md). The project below is the historical Forge 1.20.1 edition.
+The NeoForge 1.21.1 release is in **[s23-v23](s23-v23/README.md)**. Previous release: [s23-v22](s23-v22/README.md). The project below is the historical Forge 1.20.1 edition.
 
 ---
 

@@ -1,0 +1,13 @@
+{
+  "release": "2026-10-05-S23-v23",
+  "production_boot_completed": true,
+  "AutoModpack_generated": true,
+  "server_and_host_sha256": "f9036accfd612f2afc60ff0c8a538423a1933d0dbaadbd5bf4b7b9e4921c0ebc",
+  "generated_inventory_matches": true,
+  "help_text_matches": true,
+  "public_artifacts_verified": true,
+  "Prism_managed_mods_verified": 93,
+  "players_online_before_restart": 0,
+  "restart": "execute unless entity @a run restartin 10s",
+  "villager_staged_hotfix_preserved": true
+}

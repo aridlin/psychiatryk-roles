@@ -1,0 +1,27 @@
+{
+  "runtime_complete": true,
+  "candidate_sha256": "f9036accfd612f2afc60ff0c8a538423a1933d0dbaadbd5bf4b7b9e4921c0ebc",
+  "dedicated_and_client": {
+    "started": true,
+    "passed": true,
+    "normalShutdown": true,
+    "profileBackup": "/home/aridlin/.local/share/PrismLauncher/instances/goplanska-chams-singleplayer-test/minecraft/test-update-backups/scooter-v23-ux-1791182671"
+  },
+  "motor_hum_retest": "waived by user",
+  "features_tested": [
+    "headlight remote state, light ground ahead",
+    "smithing upgrades and previews",
+    "saddle passenger authorization",
+    "Frost Walker lava and restore",
+    "Breach thin wall, thick wall rejection, minimum speed and cooldown",
+    "S braking ground and air",
+    "player trip pose and zero health/fall damage",
+    "mob knockdown AI restoration",
+    "Piercing scaling beyond normal speed",
+    "rental snow block/layer detection, sinking and destruction",
+    "lunge synchronized serial and cooldown",
+    "100-chip no-parking fine, disintegration and 5 damage",
+    "inventory buttons, help and lore"
+  ],
+  "netherite_speed_ramp": "67 to 180 km/h in 2400 ticks / 120 seconds"
+}
