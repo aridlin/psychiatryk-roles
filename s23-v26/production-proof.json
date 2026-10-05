@@ -1,0 +1,11 @@
+{
+  "release": "2026-10-05-S23-v26",
+  "server_started": true,
+  "startup_utc": "2026-10-05 14:42:30",
+  "server_and_host_sha256": "7c0623e086a12ed1366cd45944a6941475f3164084a2402a984ad80d078347e9",
+  "prism_verified": true,
+  "public_archives_verified": true,
+  "automodpack_index_matches_all_managed_client_jars": true,
+  "players_at_restart": 0,
+  "transfer_integrity_repaired_and_verified": true
+}

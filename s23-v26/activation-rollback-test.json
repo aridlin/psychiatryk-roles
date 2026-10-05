@@ -1,0 +1,17 @@
+{
+  "apply": true,
+  "rollback_all_changed_files": true,
+  "files": [
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/mods/connector-2.0.0-beta.17+1.21.1-full.jar",
+    "automodpack/host-modpack/main/mods/forgified-fabric-api-0.116.15+2.3.5+1.21.1.jar",
+    "automodpack/host-modpack/main/mods/flashback_neoforge_fixed-1.0.14.jar",
+    "automodpack/host-modpack/main/mods/Flashback-0.39.7-for-MC1.21.1.jar",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip"
+  ],
+  "bootstrap_sha256": "678300fe853a1b4a7b663660bc6bc6df2520735acc658fa9ba7b2f08a9798449"
+}

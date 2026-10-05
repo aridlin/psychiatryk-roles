@@ -1,0 +1,28 @@
+{
+  "runtime_complete": true,
+  "candidate_sha256": "7c0623e086a12ed1366cd45944a6941475f3164084a2402a984ad80d078347e9",
+  "gpu_model_loaded": true,
+  "replay_record_and_open": true,
+  "dedicated_and_client": {
+    "started": true,
+    "passed": true,
+    "normalShutdown": true,
+    "profileBackup": "/home/aridlin/.local/share/PrismLauncher/instances/goplanska-chams-singleplayer-test/minecraft/test-update-backups/scooter-v23-ux-1791209688"
+  },
+  "checks": [
+    "actual GPU model loads 20 same-size skins",
+    "hand tips match evaluated model pose at five steering angles",
+    "night headlight synchronization and actual dynamic lighting engine",
+    "coal consumption partial stacks full state Creative and movement/air/passenger rejection",
+    "name-tag routing and pickup persistence",
+    "workstation refunds and preserved data",
+    "decoded music loop reuse",
+    "chams cropped/full framebuffer equality",
+    "Flashback 0.39.7 records, saves and reopens modded world"
+  ],
+  "limitations": [
+    "drift feel, trim appearance and night-light appearance await player feedback",
+    "older scooter API shader compression warning uses valid RGBA8 atlas fallback"
+  ],
+  "motor_hum_retest": "waived by user"
+}

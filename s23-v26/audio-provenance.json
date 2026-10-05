@@ -1,0 +1,14 @@
+{
+  "chiki_ride.wav": {
+    "same_as_previously_published_v25": true,
+    "sha256": "d4358175748c7dcd605ff4f57780bb7511ab986bd6e2a6543c61655b15d6d6a8",
+    "origin": "generate_bundled_music.py procedural original composition",
+    "license": "CC0 1.0"
+  },
+  "night_motor.wav": {
+    "same_as_previously_published_v25": true,
+    "sha256": "d8c72e1aa7296837b79c800f83a876c2b883621c0277a9286b2df9cdfe44e2a7",
+    "origin": "generate_bundled_music.py procedural original composition",
+    "license": "CC0 1.0"
+  }
+}
