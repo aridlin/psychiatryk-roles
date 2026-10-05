@@ -2,6 +2,8 @@
 
 The NeoForge 1.21.1 release is in **[s23-v25](s23-v25/README.md)**. Previous release: [s23-v24](s23-v24/README.md). The project below is the historical Forge 1.20.1 edition.
 
+Prepared source: [next scooter update](s23-next-preview/README.md) (not deployed; game tests paused).
+
 ---
 
 # Psychiatryk Roles
