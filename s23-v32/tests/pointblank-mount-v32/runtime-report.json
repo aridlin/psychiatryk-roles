@@ -1,0 +1,25 @@
+{
+  "checks": 14,
+  "error": "",
+  "success": true,
+  "labels": [
+    "real scooter driver and co-passenger mount successfully",
+    "same-rig filter identifies scooter/self/co-passenger",
+    "outside living target stays eligible",
+    "actual mounted HitScan selects outside target beyond scooter and passenger",
+    "server supplied-target validation rejects own scooter/co-passenger",
+    "server validation retains outside target",
+    "actual SlowProjectile collision excludes own rig",
+    "actual SlowProjectile retains ordinary outside collision",
+    "near-owner cached co-passenger hit cannot bypass projectile collision filter",
+    "outside cached projectile target is unchanged",
+    "dismount removes same-rig protection",
+    "ordinary dismounted hitscan can still target parked scooter",
+    "ordinary query keeps original candidate list identity",
+    "horse/other vehicle behavior is not globally filtered"
+  ],
+  "normal_shutdown": true,
+  "test_type": "actual NeoForge dedicated server with installed PointBlank 2.2.0 and actual applied mixins",
+  "main_client_touched": false,
+  "production_touched": false
+}

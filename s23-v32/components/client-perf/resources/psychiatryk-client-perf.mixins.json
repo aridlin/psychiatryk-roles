@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.clientperf.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["SnapshotCacheAccess", "IdlePayloadCaptureMixin", "SnapshotReflectionMixin"],
+  "injectors": {"defaultRequire": 1}
+}

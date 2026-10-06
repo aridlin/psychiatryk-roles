@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "game_launched": false,
+  "settings": {
+    "environment_evaluation_ray_count": 24,
+    "environment_evaluation_ray_bounces": 2,
+    "max_occlusion_rays": 8
+  },
+  "checks": [
+    {
+      "script": "build_v32.py",
+      "success": true,
+      "changed_lines": 3,
+      "CRLF_and_other_user_settings_preserved": true,
+      "missing_duplicate_rejected": true
+    },
+    {
+      "script": "update_prism_v32.py",
+      "success": true,
+      "changed_lines": 3,
+      "CRLF_and_other_user_settings_preserved": true,
+      "missing_duplicate_rejected": true
+    }
+  ]
+}

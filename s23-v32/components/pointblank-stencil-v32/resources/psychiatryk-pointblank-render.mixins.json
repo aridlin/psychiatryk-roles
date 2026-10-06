@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.pointblankstencil.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["ScopeStencilMixin", "ScopeGlowStencilMixin"],
+  "injectors": {"defaultRequire": 1}
+}

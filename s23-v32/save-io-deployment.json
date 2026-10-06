@@ -1,0 +1,28 @@
+{
+  "files": [
+    "automodpack/host-modpack/main/README-SAVE-IO.txt",
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/config/sound_physics_remastered/soundphysics.properties",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar"
+  ],
+  "candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+  "restartRequired": true,
+  "restartVerified": true,
+  "rollbackDirectory": "goplanska-releases/v32/before-save-io",
+  "saveFormatUnchanged": true,
+  "restartMode": "execute unless entity @a run restartin 10s",
+  "onlinePlayersBeforeRestart": 0,
+  "onlineCheckLogTime": "06Oct2026 09:36:46.266",
+  "startupDoneLogTime": "06Oct2026 09:38:32.864",
+  "startupDoneSeconds": 1.555,
+  "automodpackIndexVerified": true,
+  "productionHostJarSha1": "dfaf46d59294e6d030f8f6934284862a18b061c9",
+  "noMixinInjectionFailures": true,
+  "existingOptionalCompatibilityWarningsRemain": true,
+  "mainGameRestarted": false,
+  "verifiedAt": "2026-10-06T09:40:54.915833+00:00"
+}

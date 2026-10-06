@@ -1,0 +1,1 @@
+{"required":true,"minVersion":"0.8","package":"pl.aridlin.psychiatrykroles.pointblankfix.mixin","compatibilityLevel":"JAVA_21","mixins":["HitScanMountMixin","SlowProjectileMountMixin"],"injectors":{"defaultRequire":1}}

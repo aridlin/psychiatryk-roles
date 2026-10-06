@@ -1,0 +1,406 @@
+{
+  "success": true,
+  "candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+  "verification_method": "Actual runtime cases on component candidate JARs, connected by exact byte equivalence; final combined jar is not described as rerunning every historical case",
+  "components": {
+    "save_io": {
+      "reference_jar_sha256": "2f026c66692f810da56aedf108c6acf58c7ce087a0328fd74a7e7bcd1de6bee3",
+      "byte_identical_entries": [
+        "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Action.class",
+        "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Job.class",
+        "pl/aridlin/psychiatrykroles/io/OrderedIoOwner.class",
+        "pl/aridlin/psychiatrykroles/io/PlayerSaves$Owner.class",
+        "pl/aridlin/psychiatrykroles/io/PlayerSaves$Snapshot.class",
+        "pl/aridlin/psychiatrykroles/io/PlayerSaves.class",
+        "pl/aridlin/psychiatrykroles/io/SableIoBarrier$Store.class",
+        "pl/aridlin/psychiatrykroles/io/SableIoBarrier.class",
+        "pl/aridlin/psychiatrykroles/io/SaveIoLifecycle.class",
+        "pl/aridlin/psychiatrykroles/io/mixin/PlayerDataStorageMixin.class",
+        "pl/aridlin/psychiatrykroles/io/mixin/SableStorageIoMixin.class",
+        "pl/aridlin/psychiatrykroles/io/mixin/SaveFlushMixin.class",
+        "psychiatryk-save-io.mixins.json"
+      ],
+      "checks": 37
+    },
+    "client_performance_and_toggle": {
+      "reference_jar_sha256": "c3d8c63a30c6f5f5392cb5f8d45eee9fa5ff677c01191480dae6cce2ffb33d5c",
+      "byte_identical_entries": [
+        "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+        "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+        "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+        "pl/aridlin/partymarkers/ChamsCategories.class",
+        "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+        "pl/aridlin/partymarkers/PartyMarkers.class",
+        "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$1.class",
+        "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$2.class",
+        "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$EntityAccess.class",
+        "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache.class",
+        "pl/aridlin/psychiatrykroles/clientperf/mixin/IdlePayloadCaptureMixin.class",
+        "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotCacheAccess.class",
+        "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotReflectionMixin.class",
+        "psychiatryk-client-perf.mixins.json"
+      ],
+      "checks": 30,
+      "scope": "actual title-screen client; no production game changes or world/FPS measurement"
+    },
+    "villager_trades": {
+      "reference_jar_sha256": "bd8ce6322def0c5c42c2de4b073f6b7ced66c43a64c596006dd5d1610cde1a1c",
+      "byte_identical_entries": [
+        "goplanska-villager.mixins.json",
+        "pl/aridlin/psychiatrykroles/VillagerTradeRebalance$WrappedListing.class",
+        "pl/aridlin/psychiatrykroles/VillagerTradeRebalance.class",
+        "pl/aridlin/psychiatrykroles/Wiesniuk.class",
+        "pl/aridlin/psychiatrykroles/mixin/UnlimitedVillagerOfferMixin.class"
+      ],
+      "real_mixin_dedicated_checks": 16,
+      "actual_merchant_offer_checks": 18,
+      "reference_scope": "Fixture jar may subsequently contain additional overlays; these exact trade entries retain the independently exercised compiled bytes"
+    },
+    "frost_walker": {
+      "reference_jar_sha256": "b9545ebcddc2fbf40ca50a726a0fd9e6eb1a44e21a1040c53cfa14dc8011e81c",
+      "byte_identical_entries": [
+        "pl/aridlin/kukirin/ScooterFrostWalker.class"
+      ],
+      "runtime_report": {
+        "success": true,
+        "checks": [
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "200 km/h lookahead extends existing crust by four travel ticks (4 ms)"
+          },
+          {
+            "passed": true,
+            "description": "middle of long swept capsule has no endpoint-circle gap"
+          },
+          {
+            "passed": true,
+            "description": "200 km/h scooter retains continuous next-tick support across nine actual moves"
+          },
+          {
+            "passed": true,
+            "description": "new lava crust retains scheduled source-lava expiry"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "existing Frosted Ice continues four-tick water path"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "level II prepares source-lava landing surface before falling movement"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "level II does not freeze source above a deeply submerged scooter"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 1"
+          },
+          {
+            "passed": true,
+            "description": "level I near-surface rider receives bounded high-speed lookahead"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 1"
+          },
+          {
+            "passed": true,
+            "description": "level I retains near-surface limit and does not create airborne landing path"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "flowing lava is not replaced"
+          },
+          {
+            "passed": true,
+            "description": "covered source lava is not replaced"
+          },
+          {
+            "passed": true,
+            "description": "actual player mounts scooter with Frost Walker 2"
+          },
+          {
+            "passed": true,
+            "description": "lookahead at unloaded chunk boundary neither loads nor generates chunks (1421 -> 1421)"
+          },
+          {
+            "passed": true,
+            "description": "temporary lava crust restores source lava after rider leaves and expiry ticks run"
+          }
+        ]
+      }
+    },
+    "pointblank": {
+      "pointblank-mount-v32": {
+        "exact_entries": [
+          "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class",
+          "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class",
+          "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class",
+          "psychiatryk-pointblank-mount.mixins.json"
+        ],
+        "runtime_report": {
+          "checks": 14,
+          "error": "",
+          "success": true,
+          "labels": [
+            "real scooter driver and co-passenger mount successfully",
+            "same-rig filter identifies scooter/self/co-passenger",
+            "outside living target stays eligible",
+            "actual mounted HitScan selects outside target beyond scooter and passenger",
+            "server supplied-target validation rejects own scooter/co-passenger",
+            "server validation retains outside target",
+            "actual SlowProjectile collision excludes own rig",
+            "actual SlowProjectile retains ordinary outside collision",
+            "near-owner cached co-passenger hit cannot bypass projectile collision filter",
+            "outside cached projectile target is unchanged",
+            "dismount removes same-rig protection",
+            "ordinary dismounted hitscan can still target parked scooter",
+            "ordinary query keeps original candidate list identity",
+            "horse/other vehicle behavior is not globally filtered"
+          ],
+          "normal_shutdown": true,
+          "test_type": "actual NeoForge dedicated server with installed PointBlank 2.2.0 and actual applied mixins",
+          "main_client_touched": false,
+          "production_touched": false
+        }
+      },
+      "pointblank-stencil-v32": {
+        "exact_entries": [
+          "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class",
+          "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class",
+          "psychiatryk-pointblank-render.mixins.json"
+        ],
+        "runtime_report": {
+          "candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+          "checks": [
+            {
+              "name": "control_missing_terrain",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "control_stale_equal_stencil",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "control_plain_gun_visible",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "completed",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "source_profile_unchanged",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "all_framebuffers_complete",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "no_GL_errors",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "baseline_empty_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "gun_unselected_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "equipped_firstperson_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "after_inventory_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "unscope_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "removed_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "plain_gun_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "plain_after_inventory_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "plain_removed_terrain_visible",
+              "passed": true,
+              "detail": 28497
+            },
+            {
+              "name": "equipped_firstperson_world_stencil_ready",
+              "passed": true,
+              "detail": {
+                "function": 519,
+                "mask": 255
+              }
+            },
+            {
+              "name": "after_inventory_world_stencil_ready",
+              "passed": true,
+              "detail": {
+                "function": 519,
+                "mask": 255
+              }
+            },
+            {
+              "name": "unscope_world_stencil_ready",
+              "passed": true,
+              "detail": {
+                "function": 519,
+                "mask": 255
+              }
+            },
+            {
+              "name": "PIP_scope_retained",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "portal_server_valid",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "actual_portal_recursion",
+              "passed": true,
+              "detail": null
+            },
+            {
+              "name": "portal_empty_destination_visible",
+              "passed": true,
+              "detail": 33459
+            },
+            {
+              "name": "portal_equipped_destination_visible",
+              "passed": true,
+              "detail": 27469
+            },
+            {
+              "name": "portal_aim_destination_visible",
+              "passed": true,
+              "detail": 48972
+            },
+            {
+              "name": "portal_unscope_destination_visible",
+              "passed": true,
+              "detail": 27652
+            },
+            {
+              "name": "portal_removed_destination_visible",
+              "passed": true,
+              "detail": 33459
+            },
+            {
+              "name": "portal_inner_layer_stencil_clipped",
+              "passed": true,
+              "detail": [
+                [
+                  "portal_empty",
+                  1,
+                  514,
+                  1
+                ],
+                [
+                  "portal_equipped",
+                  1,
+                  514,
+                  1
+                ],
+                [
+                  "portal_aim",
+                  1,
+                  514,
+                  1
+                ],
+                [
+                  "portal_unscope",
+                  1,
+                  514,
+                  1
+                ],
+                [
+                  "portal_removed",
+                  1,
+                  514,
+                  1
+                ]
+              ]
+            }
+          ],
+          "passed": 28,
+          "total": 28,
+          "runtime_verified": true,
+          "control": "early-stencil-control/runtime-report.json",
+          "runtime": "runtime-report.json",
+          "renderer": "llvmpipe (LLVM 23.1.1, 256 bits)",
+          "scope_claim": "M4A1 + eaglescope on full NeoForge/IP/Sable client stack",
+          "success": true,
+          "sample_count": 191
+        }
+      }
+    }
+  },
+  "registered_mixin_resources": [
+    "goplanska-chams.mixins.json",
+    "goplanska-scooter.mixins.json",
+    "goplanska-villager.mixins.json",
+    "goplanska_spectate.mixins.json",
+    "psychiatryk-client-perf.mixins.json",
+    "psychiatryk-pointblank-mount.mixins.json",
+    "psychiatryk-pointblank-render.mixins.json",
+    "psychiatryk-save-io.mixins.json",
+    "psychiatryk_roles.mixins.json"
+  ],
+  "limits": [
+    "Production base FPS has not been measured after client relaunch",
+    "Host filesystem latency remains; synchronous reads, allocation and explicit flush can still wait"
+  ]
+}

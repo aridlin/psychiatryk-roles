@@ -1,0 +1,1 @@
+{"description":{"translate":"enchantment.goplanska_kukirin.lunge"},"supported_items":"#goplanska_kukirin:scooters","weight":5,"max_level":3,"min_cost":{"base":12,"per_level_above_first":8},"max_cost":{"base":40,"per_level_above_first":8},"anvil_cost":4,"slots":["feet"],"effects":{}}

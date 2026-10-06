@@ -1,0 +1,194 @@
+{
+  "candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+  "checks": [
+    {
+      "name": "control_missing_terrain",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "control_stale_equal_stencil",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "control_plain_gun_visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "completed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source_profile_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_framebuffers_complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_GL_errors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "baseline_empty_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "gun_unselected_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "equipped_firstperson_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "after_inventory_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "unscope_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "removed_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "plain_gun_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "plain_after_inventory_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "plain_removed_terrain_visible",
+      "passed": true,
+      "detail": 28497
+    },
+    {
+      "name": "equipped_firstperson_world_stencil_ready",
+      "passed": true,
+      "detail": {
+        "function": 519,
+        "mask": 255
+      }
+    },
+    {
+      "name": "after_inventory_world_stencil_ready",
+      "passed": true,
+      "detail": {
+        "function": 519,
+        "mask": 255
+      }
+    },
+    {
+      "name": "unscope_world_stencil_ready",
+      "passed": true,
+      "detail": {
+        "function": 519,
+        "mask": 255
+      }
+    },
+    {
+      "name": "PIP_scope_retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portal_server_valid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual_portal_recursion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "portal_empty_destination_visible",
+      "passed": true,
+      "detail": 33459
+    },
+    {
+      "name": "portal_equipped_destination_visible",
+      "passed": true,
+      "detail": 27469
+    },
+    {
+      "name": "portal_aim_destination_visible",
+      "passed": true,
+      "detail": 48972
+    },
+    {
+      "name": "portal_unscope_destination_visible",
+      "passed": true,
+      "detail": 27652
+    },
+    {
+      "name": "portal_removed_destination_visible",
+      "passed": true,
+      "detail": 33459
+    },
+    {
+      "name": "portal_inner_layer_stencil_clipped",
+      "passed": true,
+      "detail": [
+        [
+          "portal_empty",
+          1,
+          514,
+          1
+        ],
+        [
+          "portal_equipped",
+          1,
+          514,
+          1
+        ],
+        [
+          "portal_aim",
+          1,
+          514,
+          1
+        ],
+        [
+          "portal_unscope",
+          1,
+          514,
+          1
+        ],
+        [
+          "portal_removed",
+          1,
+          514,
+          1
+        ]
+      ]
+    }
+  ],
+  "passed": 28,
+  "total": 28,
+  "runtime_verified": true,
+  "control": "early-stencil-control/runtime-report.json",
+  "runtime": "runtime-report.json",
+  "renderer": "llvmpipe (LLVM 23.1.1, 256 bits)",
+  "scope_claim": "M4A1 + eaglescope on full NeoForge/IP/Sable client stack",
+  "success": true,
+  "sample_count": 191
+}

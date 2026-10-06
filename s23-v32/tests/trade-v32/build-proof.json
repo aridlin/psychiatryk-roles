@@ -1,0 +1,26 @@
+{
+  "java": "21",
+  "changed_classes": {
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance$WrappedListing.class": {
+      "old_sha256": "8aca3fbab45dfab286921bdcb4121eaa696b59d3888c55c96e7399e5121a8ce0",
+      "new_sha256": "67b05a38fb8fbee374336a6ab76b61d3a829e29edf79897ccf7e497e9a1f4a63"
+    },
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance.class": {
+      "old_sha256": "1f770b8e9d8f63ed1f1bdd0b6627defce53f4b0a2d3407e1a9eb8bda715cb452",
+      "new_sha256": "d575452683fd2797d50f28c85623329c4d523a45e3227130e8423604b6e0ee5e"
+    },
+    "pl/aridlin/psychiatrykroles/Wiesniuk.class": {
+      "old_sha256": "fc04017e8b97ea005bc2986bf6e3aee50008730649d16d8cb32418fc83079fa0",
+      "new_sha256": "b27f56c62390368f19c5bac05d832853dcd80c676d45fd7511a0b45b75827b6d"
+    },
+    "pl/aridlin/psychiatrykroles/mixin/UnlimitedVillagerOfferMixin.class": {
+      "old_sha256": null,
+      "new_sha256": "f2327e10b953e426a188da00a967cc319fa28f8d0a624b3cae868676faeff47f"
+    }
+  },
+  "resource": "goplanska-villager.mixins.json",
+  "resource_sha256": "acc09c4205d9f836ae9ab9f2622603790cec07aedd35fec0b488e262d3938675",
+  "qa_checks": 18,
+  "qa_log": "work/trade-v32/qa-results.txt",
+  "main_client_touched": false
+}

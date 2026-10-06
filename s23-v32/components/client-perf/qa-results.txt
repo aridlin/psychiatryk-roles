@@ -1,0 +1,9 @@
+PASS: cached reflection equals shipped original methods for absent/inherited/shadowed/mutable fields, records, getter precedence and throwing getters.
+PASS: 32 real compiled handler/policy cases; recording and configuration preserved, snapshot-eligible Create/storage/roles idle pre-roll preserved, skipped capture leaves buffer bytes/indices/refcount intact.
+Cached negative discovery allocated 3818944 bytes for 100000 field+entity iterations (JIT overhead included).
+Shipped original negative discovery allocated 36100856 bytes for 10000 field+entity iterations (reference invocation overhead included).
+SLF4J(W): Class path contains multiple SLF4J providers.
+SLF4J(W): Found provider [org.slf4j.simple.SimpleServiceProvider@5aebe890]
+SLF4J(W): Found provider [org.apache.logging.slf4j.SLF4JServiceProvider@65d09a04]
+SLF4J(W): See https://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J(I): Actual provider is of type [org.slf4j.simple.SimpleServiceProvider@5aebe890]

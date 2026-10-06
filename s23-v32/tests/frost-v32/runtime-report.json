@@ -1,0 +1,89 @@
+{
+  "success": true,
+  "checks": [
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "200 km/h lookahead extends existing crust by four travel ticks (4 ms)"
+    },
+    {
+      "passed": true,
+      "description": "middle of long swept capsule has no endpoint-circle gap"
+    },
+    {
+      "passed": true,
+      "description": "200 km/h scooter retains continuous next-tick support across nine actual moves"
+    },
+    {
+      "passed": true,
+      "description": "new lava crust retains scheduled source-lava expiry"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "existing Frosted Ice continues four-tick water path"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "level II prepares source-lava landing surface before falling movement"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "level II does not freeze source above a deeply submerged scooter"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 1"
+    },
+    {
+      "passed": true,
+      "description": "level I near-surface rider receives bounded high-speed lookahead"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 1"
+    },
+    {
+      "passed": true,
+      "description": "level I retains near-surface limit and does not create airborne landing path"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "flowing lava is not replaced"
+    },
+    {
+      "passed": true,
+      "description": "covered source lava is not replaced"
+    },
+    {
+      "passed": true,
+      "description": "actual player mounts scooter with Frost Walker 2"
+    },
+    {
+      "passed": true,
+      "description": "lookahead at unloaded chunk boundary neither loads nor generates chunks (1421 -> 1421)"
+    },
+    {
+      "passed": true,
+      "description": "temporary lava crust restores source lava after rider leaves and expiry ticks run"
+    }
+  ]
+}

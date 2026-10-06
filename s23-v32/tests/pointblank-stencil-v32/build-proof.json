@@ -1,0 +1,16 @@
+{
+  "classes": {
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class": "9f7699b55a68ab172f4ef1b894e7faee9a01953cf4b20ae5b853abe994cf85ed",
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class": "822b4e6390371dea1b3155a0ffebd310e4bf82f1b330bff73cfce9fa77a6ef12"
+  },
+  "resource": "psychiatryk-pointblank-render.mixins.json",
+  "resourceSha": "aac7e5043c1a109af9d1efb0e29cafbb1eeca26e976017557420e2c42ae58c53",
+  "component_jar": "work/pointblank-stencil-v32/pointblank-stencil-component.jar",
+  "component_jar_sha256": "c3692a69dca56de999036736797cc64287c1f06f9901c26ab9c95213f17fa8ad",
+  "runtime_verified": true,
+  "runtime_report": "work/pointblank-stencil-v32/runtime-report.json",
+  "runtime_candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+  "runtime_checks_passed": 28,
+  "runtime_checks_total": 28,
+  "runtime_scope": "M4A1 + eaglescope on full NeoForge/IP/Sable client stack"
+}

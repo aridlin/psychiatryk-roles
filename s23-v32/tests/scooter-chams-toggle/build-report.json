@@ -1,0 +1,33 @@
+{
+  "baseline_sha256": "5570300cb5fa3cdb3cd29e7e1c2f87b136db8d30dcaf89e1246a46f19bca8e95",
+  "compiled_classes": [
+    "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+    "pl/aridlin/partymarkers/ChamsCategories.class",
+    "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+    "pl/aridlin/partymarkers/HalftoneChams$Shaders.class",
+    "pl/aridlin/partymarkers/HalftoneChams.class",
+    "pl/aridlin/partymarkers/PartyMarkers$Dot.class",
+    "pl/aridlin/partymarkers/PartyMarkers.class"
+  ],
+  "changed_existing_classes": [
+    "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+    "pl/aridlin/partymarkers/ChamsCategories.class",
+    "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+    "pl/aridlin/partymarkers/PartyMarkers.class"
+  ],
+  "class_sha256": {
+    "pl/aridlin/partymarkers/ChamsCategories$Hover.class": "dcffa4e3e7e1a6f28a32f2e7286683d8ec7011a17cf0c61d7d449cde8a72ebd2",
+    "pl/aridlin/partymarkers/ChamsCategories$Kind.class": "247ab0b536283be0d321cc170f466dc4c1a8972e15ff6703078162b9027cccf9",
+    "pl/aridlin/partymarkers/ChamsCategories$Target.class": "745fb76d4d72d0b06f9751fde1639fa5f632191f665a3b91580317bed522c8af",
+    "pl/aridlin/partymarkers/ChamsCategories.class": "bd0fb0119d2cf80405d88caf6cc628983538fef8d19a87173a225d0d16c9f79c",
+    "pl/aridlin/partymarkers/HalftoneChams$Events.class": "8e62bfbea756bf9422f7b79c728aceb42c6ecd4816b2ac7213dae917b45aa6a0",
+    "pl/aridlin/partymarkers/HalftoneChams$Shaders.class": "d0b5204703cc65f1f235118b943be1ed24532d1763a42b8916c42a0613bb1ebf",
+    "pl/aridlin/partymarkers/HalftoneChams.class": "29d684685d10522e64925f43959f28a2a0036cc29ba1d475b769dc0f23b380b5",
+    "pl/aridlin/partymarkers/PartyMarkers$Dot.class": "80c1f8364512e8c09b507ac257ed0970edba9ff8fe0796ad0a3811f84d3be9fc",
+    "pl/aridlin/partymarkers/PartyMarkers.class": "ff1f47858183d54bf23e25653634d97314cf331fd402a5e1469427a6c6d8c96e"
+  }
+}

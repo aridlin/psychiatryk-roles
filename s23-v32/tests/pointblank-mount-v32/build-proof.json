@@ -1,0 +1,20 @@
+{
+  "java": "21",
+  "classes": {
+    "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class": "28021d22480f592b1dbcd3ceccef56b5332fdb70e4d420610e86d6c8df96ac66",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class": "2aa0ca80f60f638a044a32fc62dc64ec5b22e07f59b9e0b98f02f373aa82ec94",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class": "6f53fb5c827c1b865cd4c6229435844c86ae3464d04b0b86819b30442ab6c725"
+  },
+  "resource": "psychiatryk-pointblank-mount.mixins.json",
+  "resource_sha256": "d52962cc3ab8548d15c089d372136b1f1ddafb3f5706d84e74c4cd4e1d0efab6",
+  "tested_jar": "work/trade-v32/server/mods/psychiatryk_roles-2.1.1.jar",
+  "tested_jar_sha256": "bd8ce6322def0c5c42c2de4b073f6b7ced66c43a64c596006dd5d1610cde1a1c",
+  "sources": {
+    "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.java": "4ddc838db1ee8712d861457b08a5b6e7cb053385a3309095c0682931425291d9",
+    "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.java": "7e1dcf58fab06da5f97139cbc56f7447e70eb652874ba8c9305d15885f330aab",
+    "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.java": "26257e7d2453f487cc8cebdbdd571bb2eb09b4bf8e2ed1b365b6232e78b7fc7d"
+  },
+  "qa_source_sha256": "f6676c69cdcee3029a0bd283eb2f4aa98ad5f255dbae9a362879443d2f14164c",
+  "target_mod": "pointblank-neoforge-1.21-2.2.0.jar",
+  "target_mod_sha256": "203131e58706c623477bd6ccab91ff75e7b5389d33efa1339243cee26e7fe170"
+}

@@ -1,0 +1,30 @@
+{
+  "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$1.class": {
+    "sha256": "ba5b10860e8cb0fa9be0ed5482a4535cee4968b1b2153669bd8128278199c5ce",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$2.class": {
+    "sha256": "d532aeebbc20ea1caa2536c1369a41db630c3068071dcec2baabc7a8a7fcd448",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$EntityAccess.class": {
+    "sha256": "07f86e68dace02afb4793b49354006a4cc173d5c88ac4e9991034d7cf925cad1",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache.class": {
+    "sha256": "c8593d5bf3e776cf8a2f1eb6396dc407477640f3dc1a509e69cca0e01c9f9ea6",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/mixin/IdlePayloadCaptureMixin.class": {
+    "sha256": "0791f7ad9dc2ffdadaf5af85237c9a4e2987f77c1bd572599536603fcac6e199",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotCacheAccess.class": {
+    "sha256": "ea003cd79209346109984e4613b2a02e28f76ab8d8ab353dc3ac4f76a53e168b",
+    "matches_title_tested": true
+  },
+  "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotReflectionMixin.class": {
+    "sha256": "bd5da1d864b68503a1e7224916576f10eedf0cfca6f9c2426c8bea1748d343ea",
+    "matches_title_tested": true
+  }
+}

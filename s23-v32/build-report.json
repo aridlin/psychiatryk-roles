@@ -1,0 +1,123 @@
+{
+  "candidate_sha256": "ac32a763e5ed3c54dd5a5197424d24d2b2b9f73f0d610aba4aeda20832dcb25a",
+  "base_sha256": "5570300cb5fa3cdb3cd29e7e1c2f87b136db8d30dcaf89e1246a46f19bca8e95",
+  "changed_existing_entries": [
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance.class",
+    "pl/aridlin/psychiatrykroles/Wiesniuk.class",
+    "pl/aridlin/kukirin/ScooterFrostWalker.class",
+    "pl/aridlin/partymarkers/PartyMarkers.class",
+    "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+    "pl/aridlin/partymarkers/ChamsCategories.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance$WrappedListing.class",
+    "goplanska-villager.mixins.json",
+    "META-INF/neoforge.mods.toml"
+  ],
+  "allowed_changed_existing_entries": [
+    "META-INF/neoforge.mods.toml",
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance$WrappedListing.class",
+    "pl/aridlin/psychiatrykroles/VillagerTradeRebalance.class",
+    "pl/aridlin/psychiatrykroles/Wiesniuk.class",
+    "goplanska-villager.mixins.json",
+    "pl/aridlin/kukirin/ScooterFrostWalker.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+    "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+    "pl/aridlin/partymarkers/ChamsCategories.class",
+    "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+    "pl/aridlin/partymarkers/PartyMarkers.class"
+  ],
+  "added_entries": [
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$1.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$2.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$EntityAccess.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/IdlePayloadCaptureMixin.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotCacheAccess.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotReflectionMixin.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Action.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Job.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves$Owner.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves$Snapshot.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves.class",
+    "pl/aridlin/psychiatrykroles/io/SableIoBarrier$Store.class",
+    "pl/aridlin/psychiatrykroles/io/SableIoBarrier.class",
+    "pl/aridlin/psychiatrykroles/io/SaveIoLifecycle.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/PlayerDataStorageMixin.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/SableStorageIoMixin.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/SaveFlushMixin.class",
+    "pl/aridlin/psychiatrykroles/mixin/UnlimitedVillagerOfferMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class",
+    "psychiatryk-client-perf.mixins.json",
+    "psychiatryk-pointblank-mount.mixins.json",
+    "psychiatryk-pointblank-render.mixins.json",
+    "psychiatryk-save-io.mixins.json"
+  ],
+  "new_classes": [
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$1.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$2.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$EntityAccess.class",
+    "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/IdlePayloadCaptureMixin.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotCacheAccess.class",
+    "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotReflectionMixin.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Action.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Job.class",
+    "pl/aridlin/psychiatrykroles/io/OrderedIoOwner.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves$Owner.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves$Snapshot.class",
+    "pl/aridlin/psychiatrykroles/io/PlayerSaves.class",
+    "pl/aridlin/psychiatrykroles/io/SableIoBarrier$Store.class",
+    "pl/aridlin/psychiatrykroles/io/SableIoBarrier.class",
+    "pl/aridlin/psychiatrykroles/io/SaveIoLifecycle.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/PlayerDataStorageMixin.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/SableStorageIoMixin.class",
+    "pl/aridlin/psychiatrykroles/io/mixin/SaveFlushMixin.class",
+    "pl/aridlin/psychiatrykroles/mixin/UnlimitedVillagerOfferMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class",
+    "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class"
+  ],
+  "pointblank_components": {
+    "pointblank-mount-v32": {
+      "java": "21",
+      "classes": {
+        "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class": "28021d22480f592b1dbcd3ceccef56b5332fdb70e4d420610e86d6c8df96ac66",
+        "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class": "2aa0ca80f60f638a044a32fc62dc64ec5b22e07f59b9e0b98f02f373aa82ec94",
+        "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class": "6f53fb5c827c1b865cd4c6229435844c86ae3464d04b0b86819b30442ab6c725"
+      },
+      "resource": "psychiatryk-pointblank-mount.mixins.json",
+      "resource_sha256": "d52962cc3ab8548d15c089d372136b1f1ddafb3f5706d84e74c4cd4e1d0efab6",
+      "tested_jar": "work/trade-v32/server/mods/psychiatryk_roles-2.1.1.jar",
+      "tested_jar_sha256": "bd8ce6322def0c5c42c2de4b073f6b7ced66c43a64c596006dd5d1610cde1a1c",
+      "sources": {
+        "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.java": "4ddc838db1ee8712d861457b08a5b6e7cb053385a3309095c0682931425291d9",
+        "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.java": "7e1dcf58fab06da5f97139cbc56f7447e70eb652874ba8c9305d15885f330aab",
+        "work/pointblank-mount-v32/src/pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.java": "26257e7d2453f487cc8cebdbdd571bb2eb09b4bf8e2ed1b365b6232e78b7fc7d"
+      },
+      "qa_source_sha256": "f6676c69cdcee3029a0bd283eb2f4aa98ad5f255dbae9a362879443d2f14164c",
+      "target_mod": "pointblank-neoforge-1.21-2.2.0.jar",
+      "target_mod_sha256": "203131e58706c623477bd6ccab91ff75e7b5389d33efa1339243cee26e7fe170"
+    },
+    "pointblank-stencil-v32": {
+      "classes": {
+        "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class": "9f7699b55a68ab172f4ef1b894e7faee9a01953cf4b20ae5b853abe994cf85ed",
+        "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class": "822b4e6390371dea1b3155a0ffebd310e4bf82f1b330bff73cfce9fa77a6ef12"
+      },
+      "resource": "psychiatryk-pointblank-render.mixins.json",
+      "resourceSha": "aac7e5043c1a109af9d1efb0e29cafbb1eeca26e976017557420e2c42ae58c53",
+      "component_jar": "work/pointblank-stencil-v32/pointblank-stencil-component.jar",
+      "component_jar_sha256": "c3692a69dca56de999036736797cc64287c1f06f9901c26ab9c95213f17fa8ad",
+      "runtime_verified": false
+    }
+  }
+}
