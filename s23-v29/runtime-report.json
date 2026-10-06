@@ -1,0 +1,19 @@
+{
+  "late_wall_kick_tests_pass": true,
+  "audio_loop_real_engine_pass": true,
+  "runtime_complete": true,
+  "registration_recovery": true,
+  "portal_secondary_world_survives": true,
+  "night_dedicated_client_rendered": true,
+  "candidate_sha256": "50a8c4f66735b629a894a0abb864cade540c2e4a73ce4dac558563703fe56d36",
+  "changed_classes": [
+    "pl/aridlin/kukirin/Scooter.class",
+    "pl/aridlin/kukirin/ScooterHeadlights.class",
+    "pl/aridlin/kukirin/ScooterAudioClient$Moving.class",
+    "pl/aridlin/kukirin/ScooterAudioClient$PcmStream.class",
+    "pl/aridlin/kukirin/WallKickMomentum.class"
+  ],
+  "road_rgb_mean_increase": 26.300238095238097,
+  "main_session_missing_registration_confirmed": true,
+  "main_user_confirmed_visible_beam": true
+}
