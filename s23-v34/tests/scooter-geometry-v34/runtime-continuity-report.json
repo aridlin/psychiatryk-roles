@@ -1,0 +1,115 @@
+{
+  "success": true,
+  "checks": 32,
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "baseline_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "records": [
+    {
+      "release": "baseline",
+      "phase": "stationary_neutral",
+      "requested_wheel_yaw": 0.0,
+      "surface_gap_mean_blocks": 0.004426912431039685,
+      "surface_gap_max_blocks": 0.009968578584254293,
+      "path": "direct"
+    },
+    {
+      "release": "baseline",
+      "phase": "stationary_left",
+      "requested_wheel_yaw": 27.44,
+      "surface_gap_mean_blocks": 0.0473264522980744,
+      "surface_gap_max_blocks": 0.07358712907056777,
+      "path": "direct"
+    },
+    {
+      "release": "baseline",
+      "phase": "stationary_right",
+      "requested_wheel_yaw": -27.44,
+      "surface_gap_mean_blocks": 0.047329829606872556,
+      "surface_gap_max_blocks": 0.07359220060641389,
+      "path": "direct"
+    },
+    {
+      "release": "baseline",
+      "phase": "reverse_left",
+      "requested_wheel_yaw": 27.44,
+      "surface_gap_mean_blocks": 0.0473264522980744,
+      "surface_gap_max_blocks": 0.07358712907056777,
+      "path": "direct"
+    },
+    {
+      "release": "baseline",
+      "phase": "reverse_right",
+      "requested_wheel_yaw": -27.44,
+      "surface_gap_mean_blocks": 0.047329829606872556,
+      "surface_gap_max_blocks": 0.07359220060641389,
+      "path": "direct"
+    },
+    {
+      "release": "candidate",
+      "phase": "stationary_neutral",
+      "requested_wheel_yaw": 0.0,
+      "surface_gap_mean_blocks": 0.0044269124812808215,
+      "surface_gap_max_blocks": 0.009968578678507804,
+      "path": "direct",
+      "headset_axis_error_blocks": 9.605860131244829e-09,
+      "front_hub_error_blocks": 1.0866868012959002e-08,
+      "projected_yaw_degrees": 0.0
+    },
+    {
+      "release": "candidate",
+      "phase": "stationary_left",
+      "requested_wheel_yaw": -27.44,
+      "surface_gap_mean_blocks": 0.0044269124812808215,
+      "surface_gap_max_blocks": 0.009968578678507804,
+      "path": "direct",
+      "headset_axis_error_blocks": 9.605860131244829e-09,
+      "front_hub_error_blocks": 6.372625712807734e-09,
+      "projected_yaw_degrees": -27.557421081138262
+    },
+    {
+      "release": "candidate",
+      "phase": "stationary_right",
+      "requested_wheel_yaw": 27.44,
+      "surface_gap_mean_blocks": 0.0044269124812808215,
+      "surface_gap_max_blocks": 0.009968578678507804,
+      "path": "direct",
+      "headset_axis_error_blocks": 1.1644325700309597e-08,
+      "front_hub_error_blocks": 2.818784849489318e-08,
+      "projected_yaw_degrees": 27.55741800663043
+    },
+    {
+      "release": "candidate",
+      "phase": "reverse_left",
+      "requested_wheel_yaw": -28.0,
+      "surface_gap_mean_blocks": 0.0044269124812808215,
+      "surface_gap_max_blocks": 0.009968578678507804,
+      "path": "direct",
+      "headset_axis_error_blocks": 9.645914524012396e-09,
+      "front_hub_error_blocks": 3.1742139949528495e-08,
+      "projected_yaw_degrees": -28.000001539499696
+    },
+    {
+      "release": "candidate",
+      "phase": "reverse_right",
+      "requested_wheel_yaw": 28.0,
+      "surface_gap_mean_blocks": 0.0044269124812808215,
+      "surface_gap_max_blocks": 0.009968578678507804,
+      "path": "direct",
+      "headset_axis_error_blocks": 9.636290360702706e-09,
+      "front_hub_error_blocks": 8.613584922378009e-09,
+      "projected_yaw_degrees": 28.000001539499696
+    }
+  ],
+  "comparison": [
+    {
+      "phase": "stationary_left",
+      "mean_gap_reduction_ratio": 10.69062297892585
+    },
+    {
+      "phase": "stationary_right",
+      "mean_gap_reduction_ratio": 10.691385882826127
+    }
+  ],
+  "method": "Actual submitted full 4x4 bone palettes transform real authored brace contact points, measured against triangle surfaces; actual axle/hub/grip invariants.",
+  "limit": "Numeric submitted-palette proof complements isolated first-person screenshot inspection; it does not replace it."
+}

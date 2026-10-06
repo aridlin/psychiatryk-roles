@@ -1,0 +1,18 @@
+{
+  "verified": true,
+  "baseline": "v33",
+  "base_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "unchanged_entries": {
+    "pl/aridlin/kukirin/ScooterControl.class": "3a36cbb2fd0a732ab7af3746c6e9bacccba2e0cf73991ec5df5abb94f8616635",
+    "pl/aridlin/kukirin/ScooterFlight.class": "baa9713f511cc557dd328b4513ed955dd143b9b358a8eb0a7d606c4dcfb1fb14",
+    "pl/aridlin/kukirin/ScooterOverspeed.class": "a6e7d1bd6f9774d887d4e73768e88b1026cb9927225b064458c6cd350cd4134b",
+    "pl/aridlin/kukirin/ScooterSpearLunge.class": "b22f3ad9337264534167a03062d636d3ddd8df14709f39fa34c0531bbbaec2ad",
+    "pl/aridlin/kukirin/mixin/ScooterSpearStabMixin.class": "718a487ef5dbb12aaa5dd247058bc655fefd20c0ab6a7857d7c7fb95aed2d83e",
+    "pl/aridlin/kukirin/mixin/ScooterSpearEffectsMixin.class": "a43f62e0731fbe4dd7c3c9772e9614dd9c06e8319c690aadb43fbf69143d25eb",
+    "pl/aridlin/kukirin/mixin/ScooterSpearCompatPlugin.class": "58828e8e0e44df40f4da6bba59afade4224809a37738cef9977d322c99277a61",
+    "psychiatryk-scooter-spears.mixins.json": "f56808281ac4327f1967fab288d3f208948a9e72a7b59ebdf5874e59e55b1319"
+  },
+  "lunge_source_methods_unchanged": true,
+  "scope": "Inherited v33 spear/boost compatibility; historical 28 checks are not relabeled as v34 runtime tests"
+}

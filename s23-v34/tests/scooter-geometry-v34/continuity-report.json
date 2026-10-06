@@ -1,0 +1,66 @@
+{
+  "success": true,
+  "contact_samples": 43,
+  "surface_method": "Exact nearest point-to-triangle distance for sampled fixed-frame contact points; not nearest-vertex distance",
+  "records": [
+    {
+      "steering_yaw_degrees": -28,
+      "projected_wheel_yaw_degrees": -28.000000000000004,
+      "baseline_deck_brace_mean_surface_gap_blocks": 0.04992658418636847,
+      "baseline_deck_brace_max_surface_gap_blocks": 0.07605741634686028,
+      "corrected_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "corrected_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "headset_axis_attachment_error_blocks": 1.3010426069826053e-17,
+      "fixed_headset_to_rotating_tube_max_surface_gap_blocks": 0.008927742780171936
+    },
+    {
+      "steering_yaw_degrees": -14,
+      "projected_wheel_yaw_degrees": -13.999999999999998,
+      "baseline_deck_brace_mean_surface_gap_blocks": 0.004304245696488148,
+      "baseline_deck_brace_max_surface_gap_blocks": 0.010076005228676792,
+      "corrected_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "corrected_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "headset_axis_attachment_error_blocks": 4.336808689942018e-18,
+      "fixed_headset_to_rotating_tube_max_surface_gap_blocks": 0.008975502515741725
+    },
+    {
+      "steering_yaw_degrees": 0,
+      "projected_wheel_yaw_degrees": 0.0,
+      "baseline_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "baseline_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "corrected_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "corrected_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "headset_axis_attachment_error_blocks": 0.0,
+      "fixed_headset_to_rotating_tube_max_surface_gap_blocks": 0.008949044762853044
+    },
+    {
+      "steering_yaw_degrees": 14,
+      "projected_wheel_yaw_degrees": 13.999999999999998,
+      "baseline_deck_brace_mean_surface_gap_blocks": 0.00430384814508107,
+      "baseline_deck_brace_max_surface_gap_blocks": 0.010076005241649751,
+      "corrected_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "corrected_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "headset_axis_attachment_error_blocks": 4.336808689942018e-18,
+      "fixed_headset_to_rotating_tube_max_surface_gap_blocks": 0.008966818630395947
+    },
+    {
+      "steering_yaw_degrees": 28,
+      "projected_wheel_yaw_degrees": 28.000000000000004,
+      "baseline_deck_brace_mean_surface_gap_blocks": 0.04992276777608926,
+      "baseline_deck_brace_max_surface_gap_blocks": 0.0760523116086428,
+      "corrected_deck_brace_mean_surface_gap_blocks": 0.004426912481280821,
+      "corrected_deck_brace_max_surface_gap_blocks": 0.009968578678507804,
+      "headset_axis_attachment_error_blocks": 1.3010426069826053e-17,
+      "fixed_headset_to_rotating_tube_max_surface_gap_blocks": 0.00894038109145546
+    }
+  ],
+  "rest_geometry_uv_materials_preserved": true,
+  "fallback_transform_equivalent": true,
+  "limit": "Actual rendered palette/image continuity still requires isolated client QA",
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "resource_files": {
+    "assets/goplanska_kukirin/models/kukirin_g2.glb": "2ec32a2ec90196a3fd46c02f37a3f57b994f79cdde464eeb09e3ee47e41c36e5",
+    "assets/goplanska_kukirin/models/kukirin_g2.mesh": "f2bec1d7793ed562e9bc5a85de461d85eb14f8d3db20e8ff4272b21ae14b3756",
+    "assets/goplanska_kukirin/models/scooter-rig.json": "f89bd8bbf4049789f13b51894b30118203a4842f36db6efb41d5da293542e0df"
+  }
+}

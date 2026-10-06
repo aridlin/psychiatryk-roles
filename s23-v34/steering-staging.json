@@ -1,0 +1,47 @@
+{
+  "release": "2026-10-06-S23-v34",
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "verifiedAt": "2026-10-06T14:45:08.235538+00:00",
+  "success": false,
+  "stagingVerified": true,
+  "activationPerformed": false,
+  "restartPerformed": false,
+  "restartPolicy": {
+    "voteRequired": true,
+    "eligiblePlayers": 2,
+    "requiredYesVotes": 1,
+    "yesVotes": 0,
+    "noVotes": 2,
+    "proposalAt": "2026-10-06T14:43:13.453Z",
+    "rejectedAt": "2026-10-06T14:43:16.795Z",
+    "command": "execute as @a[limit=1] run restartin vote 3m",
+    "result": "rejected"
+  },
+  "stagedFiles": [
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/README-STEERING.txt",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar"
+  ],
+  "stagedFileCount": 7,
+  "productionRelease": "2026-10-06-S23-v33",
+  "websiteCurrentRelease": "2026-10-06-S23-v33",
+  "prismCurrentRelease": "2026-10-06-S23-v33",
+  "versionedWebsiteArtifactsVerified": true,
+  "websiteCurrentPointerChanged": false,
+  "prismFilesChanged": false,
+  "mainGameRestartedByTools": false,
+  "rollbackRelease": "v33",
+  "tests": {
+    "checks": 546,
+    "samples": 3617,
+    "runtimeVerified": true
+  },
+  "limitations": [
+    "Production activation requires a permitted restart; current player ballot was rejected.",
+    "New versioned downloads and Git source are prepared; production updater, current website links and existing Prism profile still select v33."
+  ]
+}

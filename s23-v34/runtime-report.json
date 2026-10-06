@@ -1,0 +1,98 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "passed": 546,
+  "components": {
+    "reverse_pure": {
+      "success": true,
+      "checks": 98,
+      "report": "outputs/steering-v34/reverse-handling-report.json",
+      "report_sha256": "b5e3f62f12719ddd98d216f64d18c5e343627ca3767f482fe4fb367a755d17e4"
+    },
+    "geometry_compiled": {
+      "success": true,
+      "checks": 231,
+      "report": "work/scooter-geometry-v34/compiled-qa/report.json",
+      "report_sha256": "ca866241dc95a32b4b6eeabb8bb7bb1d19ff500961720f3affd4e80c6815eab5"
+    },
+    "geometry_actual": {
+      "success": true,
+      "checks": 32,
+      "report": "work/scooter-geometry-v34/runtime-continuity-report.json",
+      "report_sha256": "3de945cf436b1fa3a3354d329457bcbf70e36c5ed3aee32a670f042888a07b76"
+    },
+    "controls_actual": {
+      "success": true,
+      "checks": 145,
+      "report": "outputs/steering-v34-qa/v34-final/analysis.json",
+      "report_sha256": "07e65dac415657779364b2ad1d431f62fb11251a9a6c43894d70b5460199fbaa"
+    },
+    "closeup_actual": {
+      "success": true,
+      "checks": 40,
+      "report": "outputs/steering-v34-qa/v34-closeup/analysis.json",
+      "report_sha256": "92330fdfefc0c974186fdb33151d5b8af7aa76b4c7fdd32234a8eabb8121a346"
+    }
+  },
+  "actual_control_phases": 21,
+  "targeted_closeup_phases": 5,
+  "samples": 3617,
+  "checks_scope": [
+    "real camera-basis A/D direction in first-person and Shoulder Surfing",
+    "real mouse steering direction with Shoulder Surfing",
+    "actual zero horizontal progress and zero chassis yaw on flat/snow/ice/water and blocked walls",
+    "S from rest reverse; forward S brake-stop-reverse; reverse W brake-stop-forward; W+S brake-only",
+    "reverse steering preserves wheel direction and reverses chassis curvature",
+    "actual submitted front-wheel axle projection compared to interpolated physical steering",
+    "raked headset seam-axis/body attachment, hub/triangle surface distances and actual grip targets",
+    "first-person downward full-turn left/right screenshot inspection"
+  ],
+  "measurement_limits": {
+    "server_control_latency": "four-tick send interval plus one processing/sampling tick; exact earlier client wheel value required",
+    "broad_render": "actual submitted front-wheel axle normal compared with measured physical interpolation endpoints plus .24-degree pose quantization bound",
+    "closeup_render": "exact render partial-tick wheel compared to actual submitted front-wheel axle normal",
+    "not_claimed": [
+      "production deployment",
+      "sound retesting",
+      "long-duration boosted high-speed run",
+      "unchanged live main-process PID"
+    ]
+  },
+  "private_fixture_cleanup": {
+    "states": {
+      "v34-final": {
+        "source_unchanged": true,
+        "isolated_java_seen": true,
+        "helper_sha256": "1a7839f96ccc74eab8a74c474811a64ff92b5ba605b26976af471e4e5f61c135",
+        "state_report": "outputs/steering-v34-qa/v34-final/state.json"
+      },
+      "v34-closeup": {
+        "source_unchanged": true,
+        "isolated_java_seen": true,
+        "helper_sha256": "c969ce820a8c03188dcffbf067bcc62e1afd708f659eb83dd1b61bce3e458dac",
+        "state_report": "outputs/steering-v34-qa/v34-closeup/state.json"
+      }
+    },
+    "own_isolated_clients_stopped": true,
+    "main_not_launched_stopped_or_mutated_by_fixture": true,
+    "main_process_present_at_read_only_cleanup_scan": false
+  },
+  "visual_acceptance": {
+    "reviewer": "root agent",
+    "accepted": true,
+    "left": "outputs/steering-v34-qa/v34-closeup/stationary_left.png",
+    "right": "outputs/steering-v34-qa/v34-closeup/stationary_right.png",
+    "result": "fixed deck brace remains connected beneath rotating stem through both full A/D turns"
+  },
+  "baseline_control": {
+    "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+    "raw_report": "outputs/steering-v34-qa/v33-control/runtime-report.json",
+    "observed_failures": [
+      "A turned camera-right and D camera-left, including Shoulder Surfing",
+      "S stopped forward motion but did not drive in reverse"
+    ],
+    "zero_motion_limit": "settled truly stationary and fully blocked baseline samples did not reproduce sustained in-place yaw; transient phase carryover was corrected in the QA fixture, not claimed as product evidence"
+  },
+  "total": 546
+}

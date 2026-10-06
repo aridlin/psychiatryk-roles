@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "compiled_helper_checks": 231,
+  "compiled_classes": {
+    "pl/aridlin/kukirin/ScooterSteeringRig.class": "547e8c10002af3a363db205b2e96d974e5187e142ba7335ec9d3167c73df9cd7",
+    "pl/aridlin/kukirin/G2Mesh.class": "4389b469682d9231e70ff10ecdb77d9f40a24ae87ccc5d0ff59edfbae8bedebc"
+  },
+  "source_sha256": "55402a9f32af6e19a0d8924ceaf71f13e92248c8448fc2d58430d907405b5129",
+  "actual_glb_quaternion_endpoints_match_cached_axis": true,
+  "native_pose_bucket_max_projected_yaw_error_degrees": 0.21637678060124088,
+  "resource_files": {
+    "assets/goplanska_kukirin/models/kukirin_g2.glb": "2ec32a2ec90196a3fd46c02f37a3f57b994f79cdde464eeb09e3ee47e41c36e5",
+    "assets/goplanska_kukirin/models/kukirin_g2.mesh": "f2bec1d7793ed562e9bc5a85de461d85eb14f8d3db20e8ff4272b21ae14b3756",
+    "assets/goplanska_kukirin/models/scooter-rig.json": "f89bd8bbf4049789f13b51894b30118203a4842f36db6efb41d5da293542e0df"
+  },
+  "limits": "Minecraft/resource-manager objects are isolated cached fixtures allocated without launching a client. Full submitted GPU palettes and visible seams require the separate isolated runtime gate.",
+  "runtime": "openjdk version \"21.0.7\" 2025-04-15 LTS"
+}

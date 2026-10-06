@@ -1,0 +1,400 @@
+{
+  "success": true,
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "checks": [
+    {
+      "name": "S backs north at bounded speed 0",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 1",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 2",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 3",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 4",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 5",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 6",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 7",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 8",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 9",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 10",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 11",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 12",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 13",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 14",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 15",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 16",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 17",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 18",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 19",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 20",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 21",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 22",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 23",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 24",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 25",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 26",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 27",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 28",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 29",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 30",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 31",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 32",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 33",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 34",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 35",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 36",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 37",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 38",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 39",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 40",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 41",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 42",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 43",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 44",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 45",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 46",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 47",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 48",
+      "passed": true
+    },
+    {
+      "name": "S backs north at bounded speed 49",
+      "passed": true
+    },
+    {
+      "name": "holding S reaches reverse cruise",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 0",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 0",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 1",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 1",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 2",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 2",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 3",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 3",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 4",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 4",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 5",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 5",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 6",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 6",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 7",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 7",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 8",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 8",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 9",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 9",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 10",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 10",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 11",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 11",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 12",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 12",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 13",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 13",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 14",
+      "passed": true
+    },
+    {
+      "name": "S reduces forward speed 14",
+      "passed": true
+    },
+    {
+      "name": "S brakes before reversing 15",
+      "passed": true
+    },
+    {
+      "name": "S transitions through stop into reverse",
+      "passed": true
+    },
+    {
+      "name": "W brakes reverse before forward 0",
+      "passed": true
+    },
+    {
+      "name": "W brakes reverse before forward 1",
+      "passed": true
+    },
+    {
+      "name": "W brakes reverse before forward 2",
+      "passed": true
+    },
+    {
+      "name": "W brakes reverse before forward 3",
+      "passed": true
+    },
+    {
+      "name": "W transitions through stop into forward",
+      "passed": true
+    },
+    {
+      "name": "brake-only never propels stopped scooter -1.0",
+      "passed": true
+    },
+    {
+      "name": "brake-only never propels stopped scooter 0.0",
+      "passed": true
+    },
+    {
+      "name": "brake-only never propels stopped scooter 1.0",
+      "passed": true
+    },
+    {
+      "name": "HUD-zero progress keeps chassis fixed 0.0",
+      "passed": true
+    },
+    {
+      "name": "HUD-zero progress keeps chassis fixed 0.001",
+      "passed": true
+    },
+    {
+      "name": "HUD-zero progress keeps chassis fixed 0.0069",
+      "passed": true
+    },
+    {
+      "name": "reverse flips chassis curvature -28.0",
+      "passed": true
+    },
+    {
+      "name": "reverse preserves wheel direction -28.0",
+      "passed": true
+    },
+    {
+      "name": "reverse flips chassis curvature 28.0",
+      "passed": true
+    },
+    {
+      "name": "reverse preserves wheel direction 28.0",
+      "passed": true
+    }
+  ],
+  "passed": 98,
+  "scope": "Actual candidate Handling bytecode: brake-before-direction-change, reverse cap, brake-only and signed zero-progress curvature"
+}

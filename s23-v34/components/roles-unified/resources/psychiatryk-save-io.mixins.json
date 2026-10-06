@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.io.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "SableStorageIoMixin",
+    "PlayerDataStorageMixin",
+    "SaveFlushMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

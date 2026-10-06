@@ -1,0 +1,46 @@
+{
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "base_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "changed_existing_entries": [
+    "assets/goplanska_kukirin/models/kukirin_g2.glb",
+    "assets/goplanska_kukirin/models/kukirin_g2.mesh",
+    "assets/goplanska_kukirin/models/scooter-rig.json",
+    "pl/aridlin/kukirin/G2Mesh.class",
+    "pl/aridlin/kukirin/Scooter.class",
+    "pl/aridlin/kukirin/ScooterGripPose.class",
+    "pl/aridlin/kukirin/ScooterHandling$Steering.class",
+    "pl/aridlin/kukirin/ScooterHandling.class",
+    "pl/aridlin/kukirin/ScooterRenderer.class",
+    "pl/aridlin/kukirin/ScooterVisual.class"
+  ],
+  "added_entries": [
+    "pl/aridlin/kukirin/ScooterSteeringRig.class"
+  ],
+  "classes": {
+    "pl/aridlin/kukirin/Scooter.class": "aa57b1ee60b707be9526743b5feed5725200379f5ff04bdf7026318235dcf4ff",
+    "pl/aridlin/kukirin/ScooterHandling$Motion.class": "9b194e92943fc508179db1af15dcbd6704a5ca79a2abc2f9ffd2bdaea82f5977",
+    "pl/aridlin/kukirin/ScooterHandling$Steering.class": "b15dc5bd03221496adaff84034dd729ca1734511fd12209d45ef8a3f0f51c3e5",
+    "pl/aridlin/kukirin/ScooterHandling.class": "b4fbe10c17eabd21326b10169503a688ce582eb2b64a6aaf2b4842e27444b97f",
+    "pl/aridlin/kukirin/ScooterGripPose.class": "dc8ad271cfba449263cee30da6f2f3ae2baf889c46560dd4264bcbd7cb09639a",
+    "pl/aridlin/kukirin/ScooterVisual.class": "b03da810b60c3fe790bc19d0f7deb22c87b95f4d166719c1b10129ee64abe367",
+    "pl/aridlin/kukirin/ScooterRenderer$Events.class": "8e61f09959ee419e429bb3d014ccb42ecc9c74134e8efddabf72c8032927cee6",
+    "pl/aridlin/kukirin/ScooterRenderer.class": "582c348e654b68553414b6ec92b071d7d8e3913a93b16e1b024f6e79175804ba",
+    "pl/aridlin/kukirin/G2Mesh.class": "4389b469682d9231e70ff10ecdb77d9f40a24ae87ccc5d0ff59edfbae8bedebc",
+    "pl/aridlin/kukirin/ScooterSteeringRig.class": "547e8c10002af3a363db205b2e96d974e5187e142ba7335ec9d3167c73df9cd7"
+  },
+  "source_files": {
+    "kukirin/src/pl/aridlin/kukirin/Scooter.java": "4b800eaf70fd65698155269e62760051abf3a6ee869d01899db2b25465103bbb",
+    "kukirin/src/pl/aridlin/kukirin/ScooterHandling.java": "06cd060851c4723bf20eaa874937cbe7b9ba052ac274084b8f48478d78ebad99",
+    "kukirin/src/pl/aridlin/kukirin/ScooterGripPose.java": "59a91a991660466876dbaef1413eb8c34c214c189aa11235c75d0c7d0958ed9c",
+    "kukirin/src/pl/aridlin/kukirin/ScooterVisual.java": "5424fd85a8616be2d7c0f4f69343529d5bfe2da57ee36231bce7273d5f39ba62",
+    "kukirin/src/pl/aridlin/kukirin/ScooterRenderer.java": "78d8904e39b235514de7fdb8a6a0e14f19e9d356581481986e4ca1f89bd1b1e9",
+    "kukirin/src/pl/aridlin/kukirin/G2Mesh.java": "316fe9842e709283e314e702b98c22e1870212b849fa3ef0a1266c71dc19bf52",
+    "kukirin/src/pl/aridlin/kukirin/ScooterSteeringRig.java": "28009addd02efc06162bd3aa33ab0115b83c5c2054dc1e5a113cf7ea3d222a6f"
+  },
+  "resource_files": {
+    "assets/goplanska_kukirin/models/kukirin_g2.glb": "2ec32a2ec90196a3fd46c02f37a3f57b994f79cdde464eeb09e3ee47e41c36e5",
+    "assets/goplanska_kukirin/models/kukirin_g2.mesh": "f2bec1d7793ed562e9bc5a85de461d85eb14f8d3db20e8ff4272b21ae14b3756",
+    "assets/goplanska_kukirin/models/scooter-rig.json": "f89bd8bbf4049789f13b51894b30118203a4842f36db6efb41d5da293542e0df"
+  },
+  "unrelated_v33_entries_preserved": true
+}

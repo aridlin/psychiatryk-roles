@@ -1,0 +1,13 @@
+Active game model: kukirin_g2.glb and kukirin_g2.mesh
+Original G2-style geometry by the Aridlin project, GPL-3.0-or-later.
+Source: work/kukirin/build_clean_g2.py and export_g2_glb.py.
+
+Archived imported model source (not the active game geometry):
+KuKirin G2 model
+Author: Thingsiminterestedin
+Source: https://www.thingiverse.com/thing:7377244
+License: Creative Commons Attribution-ShareAlike 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+Changes by Aridlin: normalized for Minecraft, intersecting print shells remeshed and simplified, duplicate triangles removed, gray/orange materials and tire/steering partitions added. The adapted model is distributed under the same CC BY-SA 4.0 license.
+Original STL: assets/goplanska_kukirin/models/kukirin_g2-source.stl
+Conversion source: work/kukirin/convert_g2_model.py in the source archive.

@@ -1,0 +1,6 @@
+{
+  "success": true,
+  "candidate_sha256": "965392449a2b91432712d4f844b078074d6b660a3f3c00e4915e5f5904dc0a20",
+  "checks": 98,
+  "scope": "S brake-before-reverse, W brake-before-forward, capped reverse, brake-only guards and stopped/signed curvature; candidate first on runtime classpath"
+}

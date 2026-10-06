@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.kukirin.mixin",
+  "plugin": "pl.aridlin.kukirin.mixin.ScooterSpearCompatPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["ScooterSpearStabMixin", "ScooterSpearEffectsMixin"],
+  "injectors": {"defaultRequire": 1}
+}

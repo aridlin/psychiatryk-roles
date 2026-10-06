@@ -1,0 +1,120 @@
+{
+  "success": true,
+  "checks": [
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "registered diamond spear and actual data tags are present"
+    },
+    {
+      "passed": true,
+      "description": "normal PiercingWeapon.stab invokes one scooter boost"
+    },
+    {
+      "passed": true,
+      "description": "real synchronized target is 100 km/h and taper is 40 ticks"
+    },
+    {
+      "passed": true,
+      "description": "level II charges original durability once and original exhaustion once"
+    },
+    {
+      "passed": true,
+      "description": "player receives no direct spear impulse while riding"
+    },
+    {
+      "passed": true,
+      "description": "immediate normal stab cooldown consumes no extra costs"
+    },
+    {
+      "passed": true,
+      "description": "compat effects route on same cooldown does not duplicate boost or item cost"
+    },
+    {
+      "passed": true,
+      "description": "common steering helper is safe with Shoulder Surfing absent on dedicated server"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "compat effects route independently boosts and charges level III exactly once"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "empty battery rejects boost without extra costs"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "unenchant spear keeps ordinary stab without scooter boost"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "hunger cutoff rejects boost without extra costs"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "water guard rejects boost without extra costs"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "rental rejects private-scooter spear boost without extra costs"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "real passenger can mount saddle-upgraded scooter"
+    },
+    {
+      "passed": true,
+      "description": "passenger attack cannot boost driver scooter or pay extra costs"
+    },
+    {
+      "passed": true,
+      "description": "real player can mount the synthetic scooter"
+    },
+    {
+      "passed": true,
+      "description": "already above 100 km/h rejects unnecessary impulse and costs"
+    },
+    {
+      "passed": true,
+      "description": "unmounted normal spear Lunge retains original player impulse and cost"
+    },
+    {
+      "passed": true,
+      "description": "actual Soul Speed III terrain cap is constant across repeated evaluations and absent off soul ground or airborne"
+    }
+  ],
+  "error": "",
+  "normal_server_stopped": true,
+  "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b"
+}
