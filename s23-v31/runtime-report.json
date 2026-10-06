@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "different_bytes": 0,
+  "unfiltered_entities": 64,
+  "filtered_entities": 8,
+  "full_gpu_ms": 0.30139733333333335,
+  "filtered_gpu_ms": 0.08669866666666666,
+  "full_cpu_ms": 1.2425756666666667,
+  "filtered_cpu_ms": 0.46876233333333334,
+  "candidate_sha256": "5570300cb5fa3cdb3cd29e7e1c2f87b136db8d30dcaf89e1246a46f19bca8e95",
+  "changed_entries": [
+    "pl/aridlin/partymarkers/ChamsPass$Cache.class",
+    "pl/aridlin/partymarkers/ChamsPass.class",
+    "pl/aridlin/partymarkers/ChamsEffect.class"
+  ],
+  "server_behavior_unchanged": true,
+  "scope": "Isolated 64-cow framebuffer and GPU/CPU comparison, not base FPS benchmark"
+}

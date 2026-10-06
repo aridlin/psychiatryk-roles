@@ -1,0 +1,24 @@
+package pl.aridlin.coverqa;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.phys.*;
+import pl.aridlin.partymarkers.*;
+import org.lwjgl.opengl.*;
+import com.mojang.blaze3d.pipeline.TextureTarget;
+@Mod("goplanska_cover_perf_qa")
+public class CoverPerfQA {
+ static boolean setup,done;static int ticks;static final java.nio.file.Path OUT=java.nio.file.Path.of("/tmp/chams-cover-perf.json");
+ public CoverPerfQA(){NeoForge.EVENT_BUS.addListener(this::login);NeoForge.EVENT_BUS.addListener(this::render);}
+ void login(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e){if(!(e.getEntity() instanceof net.minecraft.server.level.ServerPlayer p))return;var l=p.serverLevel();for(var entity:l.getAllEntities())if(!(entity instanceof net.minecraft.world.entity.player.Player))entity.discard();p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);p.stopRiding();p.teleportTo(l,.5,1,.5,0,0);l.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_DAYLIGHT).set(false,l.getServer());l.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_DOMOBSPAWNING).set(false,l.getServer());l.setDayTime(12000);for(int x=-12;x<=12;x++)for(int z=-28;z<=18;z++){l.setBlock(new net.minecraft.core.BlockPos(x,0,z),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);for(int y=1;y<5;y++)l.setBlock(new net.minecraft.core.BlockPos(x,y,z),net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);}for(int i=0;i<64;i++){var cow=EntityType.COW.create(l);cow.setNoAi(true);cow.setNoGravity(true);cow.moveTo(i<8?-2+(i%4)*1.3:-4+(i%8)*1.1,1,i<8?5+(i/4)*2:-20-(i/8),0,0);l.addFreshEntity(cow);}setup=true;}
+ void render(RenderLevelStageEvent e){if(done||!setup||e.getStage()!=RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS||++ticks<200||!ChamsEffect.ready())return;done=true;var mc=Minecraft.getInstance();try{
+  mc.renderBuffers().bufferSource().endBatch();var main=mc.getMainRenderTarget();var snapshot=new TextureTarget(main.width,main.height,true,Minecraft.ON_OSX);GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,main.frameBufferId);GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER,snapshot.frameBufferId);GL30.glBlitFramebuffer(0,0,main.width,main.height,0,0,main.width,main.height,GL11.GL_COLOR_BUFFER_BIT,GL11.GL_NEAREST);main.bindWrite(true);
+  var field=ChamsPass.class.getDeclaredField("entityCoverFrame");field.setAccessible(true);var id=new java.util.UUID(103,107);var box=new AABB(-.2,1,10,.8,2.8,11);byte[] previous=null;int differences=0;long fullGpu=0,cullGpu=0,fullCpu=0,cullCpu=0;int fullCount=0,cullCount=0;
+  for(int n=0;n<10;n++){boolean enabled=n%2==1;ChamsPass.cullOffscreenCover=enabled;field.setLong(null,-1);restore(snapshot,main);int q=GL15.glGenQueries();GL15.glBeginQuery(GL33.GL_TIME_ELAPSED,q);long start=System.nanoTime();ChamsEffect.box(e,id,box,0xffff00);long cpu=System.nanoTime()-start;GL15.glEndQuery(GL33.GL_TIME_ELAPSED);long gpu=GL33.glGetQueryObjecti64(q,GL15.GL_QUERY_RESULT);GL15.glDeleteQueries(q);if(n>=4){if(enabled){cullGpu+=gpu;cullCpu+=cpu;cullCount=ChamsPass.lastCoverRendered;}else{fullGpu+=gpu;fullCpu+=cpu;fullCount=ChamsPass.lastCoverRendered;}}if(n<2){byte[] current=read(main.width,main.height);if(n==0)previous=current;else for(int i=0;i<current.length;i++)if(current[i]!=previous[i])differences++;}}
+  ChamsPass.cullOffscreenCover=true;restore(snapshot,main);snapshot.destroyBuffers();boolean pass=differences==0&&fullCount==64&&cullCount<fullCount;String result="{\"success\":"+pass+",\"different_bytes\":"+differences+",\"unfiltered_entities\":"+fullCount+",\"filtered_entities\":"+cullCount+",\"full_gpu_ms\":"+fullGpu/3e6+",\"filtered_gpu_ms\":"+cullGpu/3e6+",\"full_cpu_ms\":"+fullCpu/3e6+",\"filtered_cpu_ms\":"+cullCpu/3e6+"}";java.nio.file.Files.writeString(OUT,result);System.out.println("COVER PERF QA "+result);
+ }catch(Throwable ex){ex.printStackTrace();try{java.nio.file.Files.writeString(OUT,"{\"success\":false,\"error\":\""+ex.getClass().getName()+"\"}");}catch(Exception ignored){}}finally{mc.stop();}}
+ static byte[] read(int w,int h){var b=org.lwjgl.system.MemoryUtil.memAlloc(w*h*4);try{GL11.glReadPixels(0,0,w,h,GL11.GL_RGBA,GL11.GL_UNSIGNED_BYTE,b);byte[] out=new byte[b.remaining()];b.get(out);return out;}finally{org.lwjgl.system.MemoryUtil.memFree(b);}}
+ static void restore(com.mojang.blaze3d.pipeline.RenderTarget from,com.mojang.blaze3d.pipeline.RenderTarget to){GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,from.frameBufferId);GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER,to.frameBufferId);GL30.glBlitFramebuffer(0,0,to.width,to.height,0,0,to.width,to.height,GL11.GL_COLOR_BUFFER_BIT,GL11.GL_NEAREST);to.bindWrite(true);}
+}
