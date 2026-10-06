@@ -1,0 +1,19 @@
+{
+  "files": [
+    "goplanska-release.json",
+    "mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/goplanska-release.json",
+    "automodpack/host-modpack/main/README-SCOOTER.txt",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+    "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip"
+  ],
+  "serverRestarted": true,
+  "restartRequired": true,
+  "network_protocol_unchanged": true,
+  "bootVerified": true,
+  "candidate_sha256": "b0deb49b3f8affed030e76b065f076d61cc65ef0d53e678ccd5325c534bd3436",
+  "autoModpackInventoryMatches": true,
+  "websiteCurrentReleaseMatches": true,
+  "restartPolicy": "No vote: server empty before 10-second countdown",
+  "bootTimeUTC": "2026-10-06T06:13:34Z"
+}
