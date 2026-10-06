@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "actual_method_checks": 16,
+  "bytecode_checks": [
+    "travel no longer multiplies velocity by soul_speed",
+    "travel uses normalCruiseSpeed cap",
+    "normalCruiseSpeed checks ground terrain and soul enchant",
+    "normalCruiseSpeed never reads current velocity"
+  ],
+  "scope": "Actual candidate pure handling/flight/taper execution plus javap inspection of compiled Scooter terrain-cap path; no game/world launch"
+}

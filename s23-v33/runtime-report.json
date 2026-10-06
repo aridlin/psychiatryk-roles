@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "passed": 233,
+  "total": 233,
+  "pure_checks": 75,
+  "live_checks": 158,
+  "sample_count": 1067,
+  "samples": {
+    "client": 358,
+    "server": 356,
+    "render": 353
+  },
+  "source_profile_unchanged": true,
+  "isolated_clients_stopped": true,
+  "ephemeral_account_caches_removed": true,
+  "scope": "grounded non-drifting constant-speed actual A/D and Shoulder mouse controls, submitted GemRender model, integrated server synchronization",
+  "reports": {
+    "pure": "work/steering-v33-qa/unit-report.json",
+    "live": "outputs/steering-v33-qa/corrected/analysis.json",
+    "observations": "outputs/steering-v33-qa/corrected/runtime-report.json",
+    "failed_control": "outputs/steering-v33-qa/final/analysis.json"
+  },
+  "limitations": [
+    "No production or main-client launch; retained Flywheel backend not used because installed pack uses direct renderer",
+    "Spear attack/cost/cooldown hook covered by separate dedicated-server fixture; this report checks its pure forty-tick taper only",
+    "Actual motion is constant-speed grounded non-drifting steering, not complete ride handling"
+  ]
+}

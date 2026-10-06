@@ -1,0 +1,1 @@
+{"required":true,"package":"pl.aridlin.psychiatrykroles.mixin","compatibilityLevel":"JAVA_21","mixins":["VillagerSaveMixin","UnlimitedVillagerOfferMixin"],"injectors":{"defaultRequire":1}}

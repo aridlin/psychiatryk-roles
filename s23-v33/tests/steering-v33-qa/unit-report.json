@@ -1,0 +1,326 @@
+{
+  "success": true,
+  "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "glb_sha256": "6770cc7e3155d09eab293a2aa0430884d1df4593228daee9495482db4cb0096f",
+  "passed": 75,
+  "checks": [
+    {
+      "name": "signed ground steering 0.01 7.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.01 7.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.01 7.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.01 7.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.01, wheel 28",
+      "passed": true,
+      "world_wheel_degrees": 28.00000065151864
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.01, wheel -28",
+      "passed": true,
+      "world_wheel_degrees": -28.00000065151864
+    },
+    {
+      "name": "signed ground steering 0.01 28.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.01 28.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.01 28.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.01 28.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.01, wheel 28",
+      "passed": true,
+      "world_wheel_degrees": 28.00000065151864
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.01, wheel -28",
+      "passed": true,
+      "world_wheel_degrees": -28.00000065151864
+    },
+    {
+      "name": "signed ground steering 0.15 7.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.15 7.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.15 7.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.15 7.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.15, wheel 18.3919",
+      "passed": true,
+      "world_wheel_degrees": 18.391870819951656
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.15, wheel -18.3919",
+      "passed": true,
+      "world_wheel_degrees": -18.391869979951636
+    },
+    {
+      "name": "signed ground steering 0.15 28.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.15 28.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.15 28.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.15 28.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.15, wheel 28",
+      "passed": true,
+      "world_wheel_degrees": 28.00000065151864
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.15, wheel -28",
+      "passed": true,
+      "world_wheel_degrees": -28.00000065151864
+    },
+    {
+      "name": "signed ground steering 0.72 7.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.72 7.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.72 7.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.72 7.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.72, wheel 1.47943",
+      "passed": true,
+      "world_wheel_degrees": 1.4794330664242217
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.72, wheel -1.47943",
+      "passed": true,
+      "world_wheel_degrees": -1.4794330664242186
+    },
+    {
+      "name": "signed ground steering 0.72 28.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 0.72 28.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 0.72 28.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 0.72 28.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.72, wheel 5.89723",
+      "passed": true,
+      "world_wheel_degrees": 5.897232905219896
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 0.72, wheel -5.89723",
+      "passed": true,
+      "world_wheel_degrees": -5.897231225219855
+    },
+    {
+      "name": "signed ground steering 2.7777777777777777 7.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 2.7777777777777777 7.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 2.7777777777777777 7.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 2.7777777777777777 7.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 2.77778, wheel 0.143834",
+      "passed": true,
+      "world_wheel_degrees": 0.14383342734678978
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 2.77778, wheel -0.143834",
+      "passed": true,
+      "world_wheel_degrees": -0.1438350513468298
+    },
+    {
+      "name": "signed ground steering 2.7777777777777777 28.0",
+      "passed": true
+    },
+    {
+      "name": "left/right mirror symmetry 2.7777777777777777 28.0",
+      "passed": true
+    },
+    {
+      "name": "actual chord curvature agrees with rig wheel angle 2.7777777777777777 28.0",
+      "passed": true
+    },
+    {
+      "name": "bounded physical and visible steering 2.7777777777777777 28.0",
+      "passed": true
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 2.77778, wheel 0.575305",
+      "passed": true,
+      "world_wheel_degrees": 0.575305261386501
+    },
+    {
+      "name": "GLB front-wheel world direction and angle at distance 2.77778, wheel -0.575305",
+      "passed": true,
+      "world_wheel_degrees": -0.5753035813864633
+    },
+    {
+      "name": "stationary front wheel turns without spinning chassis",
+      "passed": true
+    },
+    {
+      "name": "nonfinite motion fails closed",
+      "passed": true
+    },
+    {
+      "name": "nonfinite motion fails closed",
+      "passed": true
+    },
+    {
+      "name": "boost does not snap to cruising cap true 0.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper midpoint true 0.0",
+      "passed": true
+    },
+    {
+      "name": "all hundred boost-taper ticks are monotonic true 0.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper reaches normal cap true 0.0",
+      "passed": true
+    },
+    {
+      "name": "boost does not snap to cruising cap true 1.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper midpoint true 1.0",
+      "passed": true
+    },
+    {
+      "name": "all hundred boost-taper ticks are monotonic true 1.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper reaches normal cap true 1.0",
+      "passed": true
+    },
+    {
+      "name": "boost does not snap to cruising cap false 0.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper midpoint false 0.0",
+      "passed": true
+    },
+    {
+      "name": "all hundred boost-taper ticks are monotonic false 0.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper reaches normal cap false 0.0",
+      "passed": true
+    },
+    {
+      "name": "boost does not snap to cruising cap false 1.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper midpoint false 1.0",
+      "passed": true
+    },
+    {
+      "name": "all hundred boost-taper ticks are monotonic false 1.0",
+      "passed": true
+    },
+    {
+      "name": "five-second taper reaches normal cap false 1.0",
+      "passed": true
+    },
+    {
+      "name": "spear gets one 100 km/h impulse without instant cap",
+      "passed": true
+    },
+    {
+      "name": "one-shot spear tapers at one second",
+      "passed": true
+    },
+    {
+      "name": "spear returns to normal cap after forty ticks",
+      "passed": true
+    },
+    {
+      "name": "held throttle never re-applies spear impulse",
+      "passed": true
+    },
+    {
+      "name": "brake overrides boost taper and removes speed",
+      "passed": true
+    },
+    {
+      "name": "rocket branch does not snap preexisting overspeed to its cap",
+      "passed": true
+    },
+    {
+      "name": "flight branch does not snap preexisting overspeed to its cap",
+      "passed": true
+    },
+    {
+      "name": "Candidate rig wheelbase after exact render scale",
+      "passed": true,
+      "blocks": 1.189106963466319
+    }
+  ],
+  "scope": "Candidate bytecode and actual authored GLB; live steering remains a separate gate"
+}

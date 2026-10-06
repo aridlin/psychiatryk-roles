@@ -1,7 +1,7 @@
-# Current release: Goplanska S23 v32
+# Current release: Goplanska S23 v33
 
-The NeoForge 1.21.1 release is in **[s23-v32](s23-v32/README.md)**.
-Previous release: [s23-v31](s23-v31/README.md). The project below is the
+The NeoForge 1.21.1 release is in **[s23-v33](s23-v33/README.md)**.
+Previous release: [s23-v32](s23-v32/README.md). The project below is the
 historical Forge 1.20.1 edition.
 
 ---

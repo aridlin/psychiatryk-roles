@@ -1,0 +1,114 @@
+{
+  "release": "2026-10-06-S23-v33",
+  "candidate_sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+  "verifiedAt": "2026-10-06T13:26:08.202713+00:00",
+  "success": true,
+  "restartVerified": true,
+  "startupDone": "2026-10-06T13:21:33.616Z",
+  "restartPolicy": {
+    "onlineCountBeforeActivation": 0,
+    "checkedAt": "2026-10-06T13:18:12.090Z",
+    "voteRequired": false,
+    "command": "execute unless entity @a run restartin 10s",
+    "conditionalEmptyServerRestartCompleted": true
+  },
+  "installedFiles": [
+    {
+      "path": "mods/psychiatryk_roles-2.1.1.jar",
+      "sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+      "matches": true
+    },
+    {
+      "path": "goplanska-release.json",
+      "sha256": "0e8567b6ee7860c66e13a6d52859f430829cc134f6c5aa24ff71c7d82b81c8da",
+      "matches": true
+    },
+    {
+      "path": "automodpack/host-modpack/main/mods/psychiatryk_roles-2.1.1.jar",
+      "sha256": "fb6794deda990eb9df51e409728b308bfc5376d0fd5a01b1b59c82d81a68418b",
+      "matches": true
+    },
+    {
+      "path": "automodpack/host-modpack/main/goplanska-release.json",
+      "sha256": "0e8567b6ee7860c66e13a6d52859f430829cc134f6c5aa24ff71c7d82b81c8da",
+      "matches": true
+    },
+    {
+      "path": "automodpack/host-modpack/main/README-SCOOTER.txt",
+      "sha256": "704e4e9ecbc6cd01c8a78186bd866273599904f5d2ac2cb837958d56d46869f9",
+      "matches": true
+    },
+    {
+      "path": "automodpack/host-modpack/main/README-STEERING.txt",
+      "sha256": "1a73cf40b6a1c9b74c43ed43102bae24a10ff77cc7e90dc1ad221ebc0d308ea6",
+      "matches": true
+    },
+    {
+      "path": "automodpack/host-modpack/main/licenses/psychiatryk-roles-unified-source.zip",
+      "sha256": "ec300ddd1c9db3d5e4e6dc259a1437ad4ae2ad28ed2979ea0a410649b8339bcf",
+      "matches": true
+    }
+  ],
+  "installedFileCount": 7,
+  "automodpackIndexVerified": true,
+  "automodpackIndexFiles": {
+    "mods/psychiatryk_roles-2.1.1.jar": {
+      "sha1": "fa4ed5316f3bc260c772c7bdae163df01270a34f",
+      "bytes": 11721292,
+      "verified": true
+    },
+    "goplanska-release.json": {
+      "sha1": "f291f322ad0afea3d142ac018bbe0377794973f9",
+      "bytes": 53345,
+      "verified": true
+    },
+    "README-SCOOTER.txt": {
+      "sha1": "f7234f5600ce82397701ffef25959b0099ae5c8a",
+      "bytes": 14443,
+      "verified": true
+    },
+    "README-STEERING.txt": {
+      "sha1": "6c39fca8a6ad9d8a8c771bcf39d11ef84d5f5a30",
+      "bytes": 979,
+      "verified": true
+    },
+    "licenses/psychiatryk-roles-unified-source.zip": {
+      "sha1": "66958e9c6595aace67a388a00f943942b216155e",
+      "bytes": 10173673,
+      "verified": true
+    }
+  },
+  "noMixinInjectionFailures": true,
+  "rollbackDirectory": "goplanska-releases/v33/before-steering",
+  "saveFormatUnchanged": true,
+  "website": {
+    "release": "2026-10-06-S23-v33",
+    "artifacts": {
+      "psychiatryk-s23-20261006-klient-v33-curseforge.zip": {
+        "sha256": "84e0a57d830f4cb9ce478893e24ccd4ca57d93730248e2a077337a6a9780a94b",
+        "bytes": 593119588,
+        "verified": true
+      },
+      "psychiatryk-s23-20261006-klient-v33.mrpack": {
+        "sha256": "3c998b85567a267241bb2d242ee193e47a1c308ca17bfe506037e649d4894378",
+        "bytes": 288080888,
+        "verified": true
+      }
+    },
+    "current_pointer_verified": true,
+    "website_sha256": "a4713012c7c049c92e618653fe326cbabd706bf7da2b1a609cc07c5521713a28",
+    "rollback_link_verified": true
+  },
+  "prismFilesVerified": true,
+  "downloadsVerified": true,
+  "mainGameRestarted": false,
+  "tests": {
+    "clientAndPure": 233,
+    "dedicatedSpear": 28,
+    "focusedSoulSpeed": 16
+  },
+  "limitations": [
+    "Isolated tests do not measure production FPS or every terrain/input/network case.",
+    "Main client must fully relaunch when the user is ready; live main JVM was preserved."
+  ]
+}
