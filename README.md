@@ -1,9 +1,8 @@
-# Latest tested source: Goplanska S23 v34
+# Current source: Better MC5 v53 + reduced Roles
 
-The NeoForge 1.21.1 release is in **[s23-v34](s23-v34/README.md)**.
-Production remains on [s23-v33](s23-v33/README.md) pending an approved restart.
-Previous source release: [s23-v33](s23-v33/README.md). The project below is the
-historical Forge 1.20.1 edition.
+[Addon and installation](bmc5-v53/README.md) · [Portable Scooters](portable-modules/scooter/README.md) · [Portable Chams SDK](portable-modules/chams/README.md).
+
+Official Better MC5 base stays with its original publisher. This tree prepares our own addon/source only; live deployment is recorded separately. Earlier S23 v34/v33 source remains available below.
 
 ---
 

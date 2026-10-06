@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="portable_chams"
+version="1.0.0"
+displayName="Portable Chams"
+description="Standalone outline and per-pixel occluded halftone renderer with a public client highlight API. No automatic scanning."
+[[dependencies.portable_chams]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,22)"
+ordering="NONE"
+side="CLIENT"
+[[dependencies.portable_chams]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="CLIENT"

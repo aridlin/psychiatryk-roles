@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/sinkillerj/ProjectE",
+  "branch": "mc1.21.1",
+  "commit": "f432b0c66837759fb0731c9144dc53176b949c5d",
+  "files": [
+    "src/datagen/generated/data/projecte/pe_custom_conversions/defaults.json",
+    "src/datagen/generated/data/projecte/pe_custom_conversions/metals.json"
+  ]
+}

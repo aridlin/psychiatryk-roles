@@ -1,0 +1,88 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "sha256": "5aeabce370b6ec653b53eb6a572d46dfc3586a1624da2334c2251f9e1505c6b7",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.252",
+  "java": 21,
+  "pure_checks": 17,
+  "runtime_checks": 15,
+  "total_checks": 32,
+  "required_runtime_mods": [
+    "minecraft",
+    "neoforge"
+  ],
+  "main_game_actions": [],
+  "production_actions": [],
+  "source_profile_unchanged": true,
+  "private_client_stopped": true,
+  "scope": "minimal Minecraft+NeoForge+standalone chams; private offline integrated world",
+  "renderer": "llvmpipe (LLVM 23.1.1, 256 bits)",
+  "runtime_check_results": [
+    {
+      "name": "all five shaders compiled on minimal NeoForge stack",
+      "passed": true
+    },
+    {
+      "name": "no Roles/scooter/party/render-library mods loaded",
+      "passed": true
+    },
+    {
+      "name": "default has only explicit empty manual provider",
+      "passed": true
+    },
+    {
+      "name": "safe default draws no automatic targets",
+      "passed": true
+    },
+    {
+      "name": "no GL error in phase 0",
+      "passed": true
+    },
+    {
+      "name": "API renders living entity, item silhouette, block shape, plane and glyph",
+      "passed": true
+    },
+    {
+      "name": "actual through-wall yellow outline/halftone pixels are visible",
+      "passed": true
+    },
+    {
+      "name": "escaped collector rejected after provider callback",
+      "passed": true
+    },
+    {
+      "name": "no GL error in phase 1",
+      "passed": true
+    },
+    {
+      "name": "file hot reload disables all drawing without restart",
+      "passed": true
+    },
+    {
+      "name": "no GL error in phase 2",
+      "passed": true
+    },
+    {
+      "name": "hot reload changes spacing and enforces nearest-target cap",
+      "passed": true
+    },
+    {
+      "name": "no GL error in phase 3",
+      "passed": true
+    },
+    {
+      "name": "closing adapter removes all its highlights",
+      "passed": true
+    },
+    {
+      "name": "no GL error in phase 4",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "No automatic target or ore scans, party networking, distant dots, or server authority.",
+    "Bare-runtime proof excludes optional portal/shader integrations.",
+    "Actual entity API covers living entities and dropped items."
+  ]
+}

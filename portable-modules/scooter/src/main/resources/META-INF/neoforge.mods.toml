@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-or-later; original bundled music CC0-1.0"
+[[mods]]
+modId="goplanska_kukirin"
+version="1.0.0-portable-v34"
+displayName="Portable Scooters"
+description='''Standalone scooter riding, upgrades, storage, music and optional integrations. No Psychiatryk Roles, Create or rendering library required.'''
+[[dependencies.goplanska_kukirin]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.goplanska_kukirin]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+ordering="NONE"
+side="BOTH"
+[[mixins]]
+config="goplanska-scooter.mixins.json"

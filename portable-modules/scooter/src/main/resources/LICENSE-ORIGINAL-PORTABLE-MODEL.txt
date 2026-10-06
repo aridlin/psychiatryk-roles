@@ -1,0 +1,1 @@
+Original portable primitive scooter geometry and white texture. Copyright Aridlin / Portable Scooters contributors, GPL-3.0. Generated from tools/generate_model.py without any third-party model, texture or UV input. This is not the licensed Sketchfab asset used on the existing Goplanska server.

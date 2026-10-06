@@ -1,0 +1,137 @@
+{
+  "kukirin_scooter": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+      "IDI",
+      " E ",
+      "IRI"
+    ],
+    "key": {
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "D": {
+        "item": "psychiatryk_roles:dragon_egg_shard"
+      },
+      "E": {
+        "item": "minecraft:elytra"
+      },
+      "R": {
+        "item": "minecraft:redstone_block"
+      }
+    },
+    "result": {
+      "id": "goplanska_kukirin:kukirin_scooter",
+      "count": 1,
+      "components": {
+        "minecraft:custom_data": "{GoplanskaBoundScooter:1b}"
+      }
+    },
+    "show_notification": true
+  },
+  "dragon_egg_shards": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "minecraft:dragon_egg"
+      }
+    ],
+    "result": {
+      "id": "psychiatryk_roles:dragon_egg_shard",
+      "count": 9
+    }
+  },
+  "loot_lens": {
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+      {
+        "item": "minecraft:spyglass"
+      },
+      {
+        "item": "minecraft:glowstone_dust"
+      },
+      {
+        "item": "minecraft:gold_ingot"
+      }
+    ],
+    "result": {
+      "id": "psychiatryk_roles:loot_lens",
+      "count": 1
+    }
+  },
+  "return_mirror": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+      "G",
+      "S"
+    ],
+    "key": {
+      "G": {
+        "item": "minecraft:glass"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "id": "minecraft:echo_shard",
+      "components": {
+        "minecraft:custom_data": "{psychiatrykConsultantItem:1b,psychiatrykReturnMirror:1b}"
+      }
+    },
+    "show_notification": true
+  },
+  "void_door": {
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "pattern": [
+      "WW ",
+      "WE ",
+      "WW "
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "E": {
+        "item": "minecraft:ender_pearl"
+      }
+    },
+    "result": {
+      "count": 2,
+      "id": "minecraft:dark_oak_door",
+      "components": {
+        "minecraft:custom_data": "{psychiatrykVoidDoor:1b}"
+      }
+    },
+    "show_notification": true
+  },
+  "void_trapdoor": {
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "pattern": [
+      "   ",
+      "WEW",
+      "WWW"
+    ],
+    "key": {
+      "W": {
+        "tag": "minecraft:planks"
+      },
+      "E": {
+        "item": "minecraft:ender_pearl"
+      }
+    },
+    "result": {
+      "count": 2,
+      "id": "minecraft:dark_oak_trapdoor",
+      "components": {
+        "minecraft:custom_data": "{psychiatrykVoidTrapdoor:1b}"
+      }
+    },
+    "show_notification": true
+  }
+}

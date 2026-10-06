@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "b7d2eab422ee61e7c657fd1ffe09e24dd142e9c07f53fc1120466cf97758bc24",
+  "scope": "Isolated Minecraft1.21.1+NeoForge21.1.252+portable scooter/chams and private QA addon, software-rendered native fallback. No Roles/GemRender/Flywheel/Create/Lamb.",
+  "checks": [
+    {
+      "name": "portable scooter native renderer and optional chams adapter draw without GL error, phase 14",
+      "passed": true
+    },
+    {
+      "name": "portable scooter native renderer and optional chams adapter draw without GL error, phase 15",
+      "passed": true
+    },
+    {
+      "name": "native mounted keyboard-left moves steering left",
+      "passed": true
+    },
+    {
+      "name": "portable scooter native renderer and optional chams adapter draw without GL error, phase 16",
+      "passed": true
+    },
+    {
+      "name": "native mounted keyboard-right moves steering right",
+      "passed": true
+    },
+    {
+      "name": "portable scooter spawned and player rides without third-party mods",
+      "passed": true
+    },
+    {
+      "name": "actual native fallback renderer registered",
+      "passed": true
+    },
+    {
+      "name": "authored mesh resource loaded",
+      "passed": true
+    },
+    {
+      "name": "fallback texture loaded",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Chams provider was registered by the fixture, not automatically by scooter core.",
+    "Grip appearance was screenshot inspected; exact animated grip distance was not separately measured."
+  ],
+  "main_game_actions": [],
+  "production_actions": [],
+  "private_client_stopped": true
+}

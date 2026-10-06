@@ -1,0 +1,124 @@
+{
+  "success": true,
+  "client_loaded": true,
+  "scope": "Isolated full BMC client, real dedicated server and network poker packets; no main-profile mutations",
+  "checks": [
+    {
+      "name": "Merged addon loaded in full BMC client",
+      "passed": true
+    },
+    {
+      "name": "Scooter core loaded without old hard dependencies",
+      "passed": true
+    },
+    {
+      "name": "Independent chams SDK loaded",
+      "passed": true
+    },
+    {
+      "name": "Incompatible IP fork removed from final BMC migration",
+      "passed": true
+    },
+    {
+      "name": "AutoModpack omitted only from isolated clone",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe psychiatryk_roles:loot_lens",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe psychiatryk_roles:return_mirror",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe psychiatryk_roles:void_trapdoor",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe goplanska_kukirin:kukirin_scooter",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe psychiatryk_roles:void_door",
+      "passed": true
+    },
+    {
+      "name": "Synced survival recipe psychiatryk_roles:dragon_egg_shards",
+      "passed": true
+    },
+    {
+      "name": "Disabled custom recipes absent from live recipe sync",
+      "passed": true
+    },
+    {
+      "name": "Disabled MoreVillagers workstations absent from recipe sync",
+      "passed": true
+    },
+    {
+      "name": "Synthetic server seeded test deposit inventory",
+      "passed": true
+    },
+    {
+      "name": "Real new PokerScreen registered",
+      "passed": true
+    },
+    {
+      "name": "Poker lobby deposit/cashout action synced",
+      "passed": true
+    },
+    {
+      "name": "Server-wide stock page synced",
+      "passed": true
+    },
+    {
+      "name": "Actual deposit packet removes held five diamonds",
+      "passed": true
+    },
+    {
+      "name": "Deposited amount shown in actual client stock grid",
+      "passed": true
+    },
+    {
+      "name": "Actual withdrawal packet gives one original diamond",
+      "passed": true
+    },
+    {
+      "name": "Actual stock amount reduced by one",
+      "passed": true
+    },
+    {
+      "name": "Actual Shift inventory packet deposits held stack",
+      "passed": true
+    },
+    {
+      "name": "Redeposit returns exact five stock",
+      "passed": true
+    },
+    {
+      "name": "Shift stock cashout only returns actual five deposited items",
+      "passed": true
+    },
+    {
+      "name": "Exhausted stock no longer offers diamonds",
+      "passed": true
+    },
+    {
+      "name": "Poker UI completed without GL errors",
+      "passed": true
+    },
+    {
+      "name": "Full BMC recipe population retained",
+      "passed": true
+    }
+  ],
+  "candidate_sha256": "43868feae389494896b258787cd5305fce43d9d22e595a59b587147f7ff13b53",
+  "neoforge": "21.1.250",
+  "client_mod_jars": 354,
+  "source_unchanged": true,
+  "limits": [
+    "AutoModpack omitted only in disposable clone; remote pack updates not exercised",
+    "Software-rendered20FPS fixture is not a performance benchmark",
+    "Independent chams SDK loaded but party visual/mirror gameplay not exercised in this packet test"
+  ]
+}

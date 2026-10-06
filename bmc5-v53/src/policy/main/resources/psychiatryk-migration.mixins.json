@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.migration.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "RecipePolicyMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

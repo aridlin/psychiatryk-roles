@@ -1,0 +1,13 @@
+{
+  "generator": "Original geometry authored for Portable Scooters; GPL-3.0",
+  "triangles_per_part": [
+    240,
+    408,
+    176,
+    176
+  ],
+  "triangles": 1000,
+  "mesh_sha256": "12e67213373d559256de78b789752d60d8519f7b539bb55eed3405858a7bfd6f",
+  "protected_asset_inputs": [],
+  "bearing_overlap": 0.06
+}

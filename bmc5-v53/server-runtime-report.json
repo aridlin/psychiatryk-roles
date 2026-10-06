@@ -1,0 +1,241 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "43868feae389494896b258787cd5305fce43d9d22e595a59b587147f7ff13b53",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.250",
+  "server_started": true,
+  "server_stopped": true,
+  "production_mutated": false,
+  "checks": [
+    {
+      "passed": true,
+      "description": "actual RecipeManager contains exactly six survival custom recipes: [psychiatryk_roles:loot_lens, goplanska_kukirin:kukirin_scooter, psychiatryk_roles:return_mirror, psychiatryk_roles:void_door, psychiatryk_roles:void_trapdoor, psychiatryk_roles:dragon_egg_shards]"
+    },
+    {
+      "passed": true,
+      "description": "BMC recipes remain present after custom whitelist"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: oceanography_table"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: woodworking_table"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: decayed_workbench"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: purpur_altar"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: blueprint_table"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: gardening_table"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: hunting_post"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: mining_bench"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: gilded_station"
+    },
+    {
+      "passed": true,
+      "description": "workstation recipe removed: chiller"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe matches psychiatryk_roles:return_mirror"
+    },
+    {
+      "passed": true,
+      "description": "mirror output has usable mirror component"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe matches psychiatryk_roles:loot_lens"
+    },
+    {
+      "passed": true,
+      "description": "loot lens output registered"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe matches psychiatryk_roles:dragon_egg_shards"
+    },
+    {
+      "passed": true,
+      "description": "one dragon egg produces nine registered shards"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe matches goplanska_kukirin:kukirin_scooter"
+    },
+    {
+      "passed": true,
+      "description": "endgame scooter recipe is prebound nether-star variant"
+    },
+    {
+      "passed": true,
+      "description": "crafted prebound scooter binds to actual crafter"
+    },
+    {
+      "passed": true,
+      "description": "actual Poker command deposits five diamonds without audit-linkage crash"
+    },
+    {
+      "passed": true,
+      "description": "actual Poker diamond deposit credits exact wallet amount"
+    },
+    {
+      "passed": true,
+      "description": "actual global escrow returns five deposited diamonds without duplication"
+    },
+    {
+      "passed": true,
+      "description": "actual escrow withdrawal restores original wallet balance"
+    },
+    {
+      "passed": true,
+      "description": "actual server has no Immersive Portals mod"
+    },
+    {
+      "passed": true,
+      "description": "synthetic crossing uses actual vanilla teleport listener, not FakePlayer no-op handler"
+    },
+    {
+      "passed": true,
+      "description": "classic VoidDoors recipe output recognized without IP"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidDoors placement handler accepts classic endpoint"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidDoors placement handler accepts classic endpoint"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidDoors placement transaction creates paired saved endpoints without IP"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidDoors crossing teleports to linked endpoint without IP"
+    },
+    {
+      "passed": true,
+      "description": "classic VoidTrapdoors recipe output recognized without IP"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidTrapdoors placement handler accepts classic endpoint"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidTrapdoors placement handler accepts classic endpoint"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidTrapdoors placement transaction creates paired saved endpoints without IP"
+    },
+    {
+      "passed": true,
+      "description": "actual VoidTrapdoors crossing teleports to linked endpoint without IP"
+    },
+    {
+      "passed": true,
+      "description": "actual classic trapdoor crossing applies upward escape boost"
+    },
+    {
+      "passed": true,
+      "description": "ordinary player can create persistent party"
+    },
+    {
+      "passed": true,
+      "description": "party uses persistent goplanska_party scoreboard objective"
+    },
+    {
+      "passed": true,
+      "description": "leader sends invitation"
+    },
+    {
+      "passed": true,
+      "description": "invited player accepts same group"
+    },
+    {
+      "passed": true,
+      "description": "nonleader cannot alter party color"
+    },
+    {
+      "passed": true,
+      "description": "leader can set exact hex party color"
+    },
+    {
+      "passed": true,
+      "description": "party color shared with member"
+    },
+    {
+      "passed": true,
+      "description": "nonleader cannot invite"
+    },
+    {
+      "passed": true,
+      "description": "nonleader cannot kick"
+    },
+    {
+      "passed": true,
+      "description": "actual SavedData NBT roundtrip retains party leader/color"
+    },
+    {
+      "passed": true,
+      "description": "leader can kick offline member; scoreboard membership removed"
+    },
+    {
+      "passed": true,
+      "description": "Wie\u015bniuk receives finite25% stock bonus (12\u219215)"
+    },
+    {
+      "passed": true,
+      "description": "reopening Wie\u015bniuk trade does not compound bonus"
+    },
+    {
+      "passed": true,
+      "description": "trade uses, price, item components and offer count unchanged"
+    },
+    {
+      "passed": true,
+      "description": "ordinary player retains finite vanilla limit"
+    },
+    {
+      "passed": true,
+      "description": "Wie\u015bniuk apple alone begins actual zombie cure and consumes one apple"
+    },
+    {
+      "passed": true,
+      "description": "ordinary player does not gain apple-only cure"
+    },
+    {
+      "passed": true,
+      "description": "actual fresh player login receives no legacy custom items"
+    }
+  ],
+  "checks_passed": 56,
+  "checks_total": 56,
+  "process_exit_code": 0,
+  "all_dimensions_saved": true,
+  "scope": "Actual full Better MC5 v53 dedicated startup; recipes/output components and whitelist; classic Void Door/trapdoor placement/pairing/vanilla teleport/escape boost; actual Poker deposit and global-stock withdrawal; party SavedData NBT roundtrip and leader permissions; finite vanilla-villager Wie\u015bniuk; real full-client login without legacy items; console stop, all dimensions saved, Java exit0. Temporary flat crossing fixture; client GUI/render evidence reported separately."
+}

@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.gradle.userdev' version '7.0.165'
+}
+group = 'pl.aridlin.portablechams'
+version = '1.0.0'
+base { archivesName = 'portable-chams' }
+java { toolchain.languageVersion = JavaLanguageVersion.of(21); withSourcesJar() }
+repositories { mavenCentral() }
+dependencies { implementation 'net.neoforged:neoforge:21.1.219' }
+runs {
+    configureEach { modSource project.sourceSets.main }
+    client {}
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.withType(Jar).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
