@@ -1,0 +1,52 @@
+{
+  "success": true,
+  "at_utc": "2026-10-07T07:45:36.998103+00:00",
+  "mode": "built-in image_gen",
+  "tool": "image_gen.imagegen",
+  "call": {
+    "transparent_background": true,
+    "new_image": true,
+    "referenced_images": false
+  },
+  "prompt_file": "prompt.txt",
+  "prompt_sha256": "2b5f5edaf55e8b6801eba6c490f0c95c9bd6d403b65f265ef316cc78b317253d",
+  "generated_original": {
+    "sha256": "b54bc2ab496ab66430c63a0066e3b09058383b0822ae292e981564a202010d9e",
+    "width": 1254,
+    "height": 1254,
+    "channels": "sRGBA"
+  },
+  "final_asset": {
+    "path": "../src/egg-shard-texture/main/resources/assets/psychiatryk_roles/textures/item/dragon_egg_shard.png",
+    "sha256": "4a3a64476e2dc4e45fdd3cae08898aa1ae46e774a6312544604c75700cc38920",
+    "width": 32,
+    "height": 32,
+    "channels": "sRGBA",
+    "bytes": 1559,
+    "transparent_background": true,
+    "corner_rgba": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "postprocess": {
+    "tool": "ImageMagick",
+    "operation": "nearest-neighbor downscale only",
+    "command": "magick <generated-original.png> -filter point -resize 32x32 PNG32:dragon_egg_shard.png",
+    "alpha_preserved": true,
+    "python_image_editing": false
+  },
+  "inspection": {
+    "generated_original_viewed": true,
+    "final_32px_nearest_zoom_viewed": true,
+    "zoom_dimensions": [
+      512,
+      512
+    ],
+    "subject": "Single jagged curved black/deep-violet eggshell shard with purple fractured rim; no text, background or exterior glow"
+  },
+  "jar_model_package_git_production_changed": false,
+  "local_generation_paths_excluded": true
+}

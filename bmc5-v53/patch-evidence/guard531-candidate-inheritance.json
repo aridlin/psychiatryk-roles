@@ -1,19 +1,17 @@
 {
   "success": true,
-  "candidate_sha256": "f510fa2dd1b5bc111277315b5323bbff21d95f2f4f9e60618b7a2892c9e43239",
-  "inherited_candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
-  "client_native_tested_candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
-  "guard_tested_candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
+  "candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
+  "inherited_candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
   "added_entries": [
-    "assets/psychiatryk_roles/textures/item/dragon_egg_shard.png"
+    "pl/aridlin/psychiatrykroles/testing/mixin/PokerBankMixin.class"
   ],
   "modified_entries": [
-    "assets/psychiatryk_roles/models/item/dragon_egg_shard.json"
+    "psychiatryk-testing-worlds.mixins.json"
   ],
   "removed_entries": [],
-  "runtime_bytecode_changed": false,
+  "server_only_registration": true,
   "all_existing_classes_byte_identical": true,
-  "unchanged_existing_classes": 372,
+  "unchanged_existing_classes": 371,
   "unchanged_existing_entries": {
     "LICENSE-CODE-GPL-3.0.txt": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
     "LICENSE-KUKIRIN-MODEL.txt": "6df59b005f62e21f6e0df9aca1651734e634dbe1b2903da598e9b3e50a59c06a",
@@ -79,6 +77,7 @@
     "assets/psychiatryk_roles/models/block/marking_torch.json": "11503ce07cae1d3f2bcb6b2d8d3f7852ce318e3268d2062bb3229cb7dfc8bcbb",
     "assets/psychiatryk_roles/models/item/build_corner_first.json": "4191f9ab040ac8b9d2c5d2958e5a2bd75c87eed868dead5cc125eaa6a7889b51",
     "assets/psychiatryk_roles/models/item/build_corner_second.json": "c8a37821f8c1ea381508ddc9f044b3aa1e3a6b3e4190f9868d95bf3b6cbb7791",
+    "assets/psychiatryk_roles/models/item/dragon_egg_shard.json": "f5ef884b6d179df88936cce481c4b5ef226926de38cbf9633b8570c218fea38e",
     "assets/psychiatryk_roles/models/item/loot_lens.json": "28dc42fea0597f152e57b4ae4e0d89ad3827790db72a1eacdd9fd0d0ea3097ed",
     "assets/psychiatryk_roles/models/item/marking_torch.json": "126b15dfbdcb9b6b808e5ae19f45b4c7cafcdebf0f19ce63705d1595392033ec",
     "assets/psychiatryk_roles/models/item/phase_charm.json": "0b6e5d1d37c5260f1687e25c819de71cf11738119bb98812db81e6991d7cb2a9",
@@ -524,50 +523,34 @@
     "pl/aridlin/psychiatrykroles/testing/TestBanks.class": "365d74d355068270ac60558e6b7001e8638537071e0b50bc1e6463c7466f0f63",
     "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class": "499de5a3142514dfb1aa1bd9b72b1b9b15ea5ef81bab458fdda7209e5ccede61",
     "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class": "fa60c9b6fd9ce81ae79854e784679abdf1ebcb133f0408cabd88ac80456999c2",
-    "pl/aridlin/psychiatrykroles/testing/mixin/PokerBankMixin.class": "26ef631d6ebfa4878c74e274076d8b28594a3947cc3cb6c9184d051e1d83b8e1",
     "pl/aridlin/psychiatrykroles/testing/mixin/TestingSeedMixin.class": "17bed4743452e06c4f6deb07e02c5260c86defc63f58ad52f659d3e83731ea1f",
     "pl/aridlin/starter/MirrorKey$Registration.class": "b83a304c801ab94118b687e45210dbf03abc4c1b2081dbc4866c6a509dab626f",
     "pl/aridlin/starter/MirrorKey.class": "fced1d55d795343162dd7691fc7e9d1df1338238478a2129bdce49ce8c234c99",
     "pl/aridlin/starter/MirrorPacket.class": "e56eb7b2764b95c3f384766554eb3946ab62d0d63bd5b340f5eab77bb49fda1f",
     "psychiatryk-bmc-survival.mixins.json": "32cb4e7c5f19e4930d6952f29ad907e2b6ab88f019e809a6f627166670bcb014",
     "psychiatryk-migration.mixins.json": "02f9e88635f237884fc2d95472f1e31584a532a585072cd8ab6bccf5f5b640a6",
-    "psychiatryk-testing-worlds.mixins.json": "271c13ab912fbab111882855644f63783fd7964c9dce40b4a2d6dda0bbf27efd",
     "psychiatryk_roles.mixins.json": "503e3285f39217fa6251e0c526c404fe8665220ff164a6ac165e4af5d3bda18a",
     "shouldersurfing_plugin.json": "190cc37990fa2d7d5217ea4cfe871bd2d218f6901682b1798c90f6209c582c0d"
   },
-  "texture_sha256": "4a3a64476e2dc4e45fdd3cae08898aa1ae46e774a6312544604c75700cc38920",
-  "model_sha256": "df229ba1fbf920ad643661efcfcd30f39864842ecfe577c93d4afc0b47224934",
-  "texture_dimensions": [
-    32,
-    32
-  ],
-  "texture_alpha_preserved": true,
-  "asset_visually_inspected": true,
-  "prior_stage_inheritance_report": "guard531-candidate-inheritance.json",
-  "prior_stage_inheritance_report_sha256": "cac23485af901ee9381098b33a0937e46bcf2f589301b91718437c2751290087",
-  "asset_build_report": "egg-shard-asset-build.json",
-  "asset_build_report_original_sha256": "fa86738c1a7e1c3715543a7f8bde95070deba1f6fc5bc4c619c560cdbe289605",
-  "combined_verification_report": "final-verification.json",
-  "combined_verification_report_original_sha256": "f5d22902943d2c42a151999e1a0eec871e7402408803576a6da85db5810f74a2",
-  "inherited_verification_checks": {
-    "poker_testing_bank_guard": 31,
-    "music_client": 24,
-    "music_server": 19,
-    "bank_client": 33,
-    "bank_server": 58,
-    "earlier_bank_client": 55,
-    "music_cache": 21,
-    "bank_pure": 26,
-    "chams_render": 25,
-    "activation": 15
-  },
-  "inherited_verification_checks_total": 307,
   "prior_receipts_retain_original_candidate_ids": true,
-  "runtime_gates_rerun_after_asset_change": false,
-  "scope": "Final f510 changes only the inspected 32px egg shard PNG and its model layer0. All 372 guarded531 classes remain identical. The 307 collected checks are inherited component checks; no f510 native downloader/client/render cycle is claimed.",
-  "production_activation_user_authorized": true,
-  "production_activated": true,
-  "production_activation_report": "production-activation.json",
-  "production_activation_report_sha256": "7474e7b532071366b074723a3b15558239b43926740f546440ed5fb870b4b302",
-  "production_applied_at": "2026-10-07T08:06:53.624448822Z"
+  "native_client_music_render_gates_rerun_after_guard": false,
+  "final_guard_runtime_report": "poker-bank-guard-runtime.json",
+  "final_guard_runtime_report_original_sha256": "0a29dda594f4e7ef62143832d3941aea9c1d5f49ecf7d9d121a6aaca994ac75e",
+  "final_guard_build_report": "poker-bank-guard-build.json",
+  "final_guard_build_report_original_sha256": "ac8e38ab7b3e71c0c9cac8a94c04402f124f3e734041ee009f96af060d37b353",
+  "final_guard_qualification_report": "poker-bank-guard-qualification.json",
+  "final_guard_qualification_report_original_sha256": "c6ee2500052afd78732c1a9e35b4b5c28f8c0e0d3ad3dc021b273cc8415b9e6a",
+  "prior_frozen_receipts": {
+    "work/bmc5-migration/testing-worlds/build/build-proof.json": "d95c6d216a7ac93296d306cb4984db092b05b50c73382be77580d88f7878dc4f",
+    "work/bmc5-migration/music/build-proof.json": "f1663e9b80caf158e9ee282f531e790c0f1c4edfc620518b1a94f196e44e6452",
+    "work/bmc5-migration/music/stop-fix-build-proof.json": "5c024fa3105b66e1d8a161b1833f8df4270186890de0d5560321b49a2a30ded2",
+    "work/bmc5-migration/chams-render-qa/render-qualification.json": "8591f040fc39382e1b1c7de05d72573e09b75147be9beb2495e7dfe83cb95573",
+    "work/bmc5-migration/music-client-qa/outputs/final/runtime-report.json": "d7f80ca1d83d81d63caf3812bdd45d63e13582a11ceb66bdf6e5eb287e719678",
+    "work/bmc5-migration/music-client-qa/outputs/final/server-runtime-report.json": "d77f5c682d872c091d9c539a6d14f5a174b88f2b0fbcbb732758816e7ef74a1b",
+    "work/bmc5-migration/testing-worlds/qa/live/outputs/focused-death/runtime-report.json": "0d8e83943b7558efe264f0367a58737cf35380c032f3d38378b5af3155100160",
+    "work/bmc5-migration/testing-worlds/qa/live/outputs/focused-death/server-runtime-report.json": "6fb7fbb96736ea29c6e642738cf895f256feeb759a860f144a8cf11eb243911c",
+    "work/bmc5-migration/automodpack-native-qa/runtime-report.json": "9760f520258d213ae32228886449ec05ac6d8a64e3ff385b8d06d7831417788a"
+  },
+  "scope": "The final candidate inherits every f6 class and all resources except the dedicated-server mixin registration. Its new guard passed a separate dedicated-server fixture; previous client and downloader receipts remain f6, and the renderer receipt remains cc78.",
+  "production_activated": false
 }

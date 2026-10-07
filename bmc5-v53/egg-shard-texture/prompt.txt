@@ -1,0 +1,9 @@
+Use case: stylized-concept
+Asset type: one Minecraft inventory item texture, final native logical resolution 32×32 pixels.
+Primary request: a single jagged broken dragon eggshell shard. It must read as a curved piece of broken eggshell, not a whole egg and not an amethyst crystal.
+Subject: one asymmetrical curved shell plate with three or four angular chipped points along its broken upper edge, a thick visibly purple fractured inner rim, and a broad black/deep-violet outer shell face with a few muted purple square flecks. Small dark-purple stepped highlight and shadow facets give the shell subtle thickness.
+Style/medium: authentic crisp Minecraft pixel art, chunky square pixels, limited palette, simple strong silhouette that remains readable at both 16 and 32 pixels. Draw on a strict logical 32×32 grid enlarged with nearest-neighbor blocks; each logical pixel is a solid uniform square. No smooth gradients, antialiasing, painterly detail or subpixel strokes.
+Composition: square canvas, isolated centered shard, fills roughly 26×26 logical pixels with fully transparent margin on all sides. Diagonal lower-left to upper-right orientation, jagged fractured rim facing upper-right. One object only.
+Palette: near-black, deep plum, dark violet, medium purple, and a small restrained lavender broken-edge highlight. Purple detail must stay inside the shell silhouette.
+Background: actual transparent alpha channel, empty outside the sprite.
+Constraints: no text, no border, no background, no checkerboard drawn into the image, no floor, no shadow outside the sprite, no glow or particles outside the silhouette, no extra objects. Preserve hard pixel edges and genuine transparency.

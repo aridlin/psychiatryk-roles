@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "base_candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
+  "candidate_sha256": "f510fa2dd1b5bc111277315b5323bbff21d95f2f4f9e60618b7a2892c9e43239",
+  "added_entries": [
+    "assets/psychiatryk_roles/textures/item/dragon_egg_shard.png"
+  ],
+  "modified_entries": [
+    "assets/psychiatryk_roles/models/item/dragon_egg_shard.json"
+  ],
+  "removed_entries": [],
+  "texture_sha256": "4a3a64476e2dc4e45fdd3cae08898aa1ae46e774a6312544604c75700cc38920",
+  "model_sha256": "df229ba1fbf920ad643661efcfcd30f39864842ecfe577c93d4afc0b47224934",
+  "dimensions": [
+    32,
+    32
+  ],
+  "channels": "RGBA",
+  "asset_visually_inspected": true,
+  "all_372_existing_classes_byte_identical": true,
+  "runtime_bytecode_changed": false,
+  "production_changed": false
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "psychiatryk_roles:item/dragon_egg_shard"
+  }
+}

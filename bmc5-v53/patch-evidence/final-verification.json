@@ -1,0 +1,80 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "f510fa2dd1b5bc111277315b5323bbff21d95f2f4f9e60618b7a2892c9e43239",
+  "base_sha256": "43868feae389494896b258787cd5305fce43d9d22e595a59b587147f7ff13b53",
+  "checks": {
+    "poker_testing_bank_guard": 31,
+    "music_client": 24,
+    "music_server": 19,
+    "bank_client": 33,
+    "bank_server": 58,
+    "earlier_bank_client": 55,
+    "music_cache": 21,
+    "bank_pure": 26,
+    "chams_render": 25,
+    "activation": 15
+  },
+  "report_sha256": {
+    "next-patch/build-proof.json": "3ae95e46b2621847cd7ba659bbe37573263cb693db7cb625a3e59ccae894eee2",
+    "poker-bank-guard/build-proof.json": "ac8e38ab7b3e71c0c9cac8a94c04402f124f3e734041ee009f96af060d37b353",
+    "poker-bank-guard/qa/runtime-report.json": "0a29dda594f4e7ef62143832d3941aea9c1d5f49ecf7d9d121a6aaca994ac75e",
+    "egg-shard-texture/build-proof.json": "fa86738c1a7e1c3715543a7f8bde95070deba1f6fc5bc4c619c560cdbe289605",
+    "music/runtime-report.json": "2423decd40b519f129bb0303d8fab829af0920300d87f2daf5b2fa4c36e98631",
+    "testing-worlds/qa/genuine-client-report.json": "9b18acce02d8b687632995b6eb323ae6c57b9c6690c60577dccdc3f75c773bb6",
+    "music-client-qa/outputs/final/runtime-report.json": "d7f80ca1d83d81d63caf3812bdd45d63e13582a11ceb66bdf6e5eb287e719678",
+    "music-client-qa/outputs/final/server-runtime-report.json": "d77f5c682d872c091d9c539a6d14f5a174b88f2b0fbcbb732758816e7ef74a1b",
+    "testing-worlds/qa/live/outputs/focused-death/runtime-report.json": "0d8e83943b7558efe264f0367a58737cf35380c032f3d38378b5af3155100160",
+    "testing-worlds/qa/live/outputs/focused-death/server-runtime-report.json": "6fb7fbb96736ea29c6e642738cf895f256feeb759a860f144a8cf11eb243911c",
+    "testing-worlds/qa/live/outputs/sixth/runtime-report.json": "b508db341c0de29a680971ded2f60fa826ddbc0477b86b2895269e59779c83ad",
+    "music/qa/cache-report.json": "6c117bbfff9e40ad44851347799ab97e00e49f86a1be294a3375bb1a7c960e63",
+    "testing-worlds/qa/pure-report.json": "2ba8e56d9f5b20c3990c403bb3088cab60c2ec688ed747baed7d9c7150baa55c",
+    "chams-render-qa/outputs/owned-render/runtime-report.json": "9cc02f9434028d1934700589cd8c72c8d97963570771ef4700c506750076f63e",
+    "chams-render-qa/f6-render-inheritance-proof.json": "52700a9e4ccbf23c14c0700c2903fe505fff513b4ec4f38d17f538bb612de924",
+    "testing-worlds/build/build-proof.json": "d95c6d216a7ac93296d306cb4984db092b05b50c73382be77580d88f7878dc4f",
+    "bootstrap/patch-test-report.json": "284a83c59374f1e52ade85be9844708c1a964ebbed37b2628dfbad6f8cf056eb",
+    "automodpack-native-qa/runtime-report.json": "9760f520258d213ae32228886449ec05ac6d8a64e3ff385b8d06d7831417788a",
+    "sophisticated-backpacks/release-mods.json": "aebb7a8d9d327f493472b50d5cf01f7592e022229a85d40448b008bf2d786746",
+    "next-patch/goplanska-release.json": "3e4db396e244de1f14b6aa46cb8f3c640dd498db8927a8daeb30e0ca88b24678"
+  },
+  "release_mods": [
+    {
+      "project_id": 422301,
+      "modrinth_version_id": "fgL0T3wx",
+      "file": "sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
+      "bytes": 1142226,
+      "sha256": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+      "download_url": "https://cdn.modrinth.com/data/TyCTlI4b/versions/fgL0T3wx/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar"
+    },
+    {
+      "project_id": 618298,
+      "modrinth_version_id": "QSOgsVqQ",
+      "file": "sophisticatedcore-1.21.1-1.4.70.2131.jar",
+      "bytes": 1654111,
+      "sha256": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+      "download_url": "https://cdn.modrinth.com/data/nmoqTijg/versions/QSOgsVqQ/sophisticatedcore-1.21.1-1.4.70.2131.jar"
+    }
+  ],
+  "native_update_runtime_verified": true,
+  "native_tested_candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "native_531_cycle_claimed": false,
+  "native_f510_cycle_claimed": false,
+  "guard_tested_candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
+  "all_372_guarded_candidate_classes_exactly_inherited": true,
+  "egg_shard_asset_validated": true,
+  "final_guard_dedicated_server_verified": true,
+  "all_371_preexisting_classes_exactly_inherited": true,
+  "render_inherited_exact_bytes": true,
+  "testing_classes_resources_exact": true,
+  "production_changed": false,
+  "queued": false,
+  "limits": [
+    "Software-rendered isolated full BMC fixtures; not a production FPS benchmark.",
+    "Music engine uses an authored silent synthetic WAV; no physical listening claim.",
+    "Earlier sixth server receipt retains its invalid non-PlayerPersisted fixture failure; corrected real death passed.",
+    "Native/client fixtures exercised f6; guard531 differs only by dedicated-server guard class and registration.",
+    "Finalf510 adds only the inspected egg-shard PNG/model; all372 guarded candidate classes are byte-identical.",
+    "Invalid synthetic packet-listener guard fixture reports are preserved; no client delivery assertion is claimed.",
+    "Native test uses a separate loopback TLS identity; production identity is retained and verified separately."
+  ]
+}
