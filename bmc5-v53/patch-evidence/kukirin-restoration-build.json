@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "base_candidate_sha256": "f510fa2dd1b5bc111277315b5323bbff21d95f2f4f9e60618b7a2892c9e43239",
+  "candidate_sha256": "ea63b4c4fa3287861d2066c3b636d80772d162a01e6a643e92ec55a526329ad6",
+  "triangles_per_part": [
+    1344,
+    6510,
+    636,
+    636
+  ],
+  "triangles": 9126,
+  "uv_vertex_count": 27378,
+  "glb_to_original_mesh_max_position_delta": 6.185710299533298e-08,
+  "original_mesh_byte_identical": true,
+  "original_rig_byte_identical": true,
+  "dye_atlases": 17,
+  "rental_atlases": 3,
+  "native_static_vertex_buffers": 4,
+  "vertices_baked_once_per_resource_reload": true,
+  "light_and_normal_uniforms_per_draw": true,
+  "trim_selection_cached_once": true,
+  "gemrender_flywheel_dependencies_added": false,
+  "scooter_physics_pickup_storage_grip_bytecode_unchanged": true,
+  "existing_custom_recipe_entries_byte_identical": true,
+  "carryon_entity_exclusion": "goplanska_kukirin:scooter",
+  "carryon_entity_and_stacking_tags_packaged": true,
+  "model_license": "Sketchfab Standard; kovsh; attribution retained; asset derivatives not GPL"
+}

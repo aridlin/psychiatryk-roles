@@ -16,7 +16,11 @@ public final class PatchActivation {
         "mods/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
         "mods/sophisticatedcore-1.21.1-1.4.70.2131.jar",
         "automodpack/host-modpack/main/mods/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
-        "automodpack/host-modpack/main/mods/sophisticatedcore-1.21.1-1.4.70.2131.jar");
+        "automodpack/host-modpack/main/mods/sophisticatedcore-1.21.1-1.4.70.2131.jar",
+        "config/carryon-common.toml", "config/veinmining-server.toml", "config/veinmining-client.toml",
+        "automodpack/host-modpack/main/config/carryon-common.toml",
+        "automodpack/host-modpack/main/config/veinmining-server.toml",
+        "automodpack/host-modpack/main/config/veinmining-client.toml");
     static final Set<String> REMOVABLE = Set.of();
     static String sha(Path path) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -41,7 +45,7 @@ public final class PatchActivation {
             if (!ALLOWED.contains(name)) throw new IOException("Invalid transaction journal path");
             Path current = root.resolve(name);
             if ("absent".equals(before.getProperty(name))) {
-                Files.deleteIfExists(current);
+                if (Files.exists(current)) move(current, root.resolve("bmc5-patch-rollback-new-" + System.currentTimeMillis()).resolve(name));
             } else {
                 Path saved = journal.resolve(name);
                 if (!sha(saved).equals(before.getProperty(name))) throw new IOException("Rollback snapshot SHA mismatch");
@@ -50,18 +54,48 @@ public final class PatchActivation {
                 replace(temporary, current);
             }
         }
+        Path activeStage = root.resolve("bmc5-patch-verified-stage");
+        if (Files.exists(activeStage.resolve("activation-in-progress.properties"))) {
+            Path failedReceipts = root.resolve("bmc5-patch-recovered-receipts-" + System.currentTimeMillis());
+            for (String name : List.of("bmc5-patch-applied.json", "bmc5-patch-applied.properties"))
+                if (Files.exists(root.resolve(name))) move(root.resolve(name), failedReceipts.resolve(name));
+        }
         Files.move(journal, root.resolve("bmc5-patch-recovered-" + System.currentTimeMillis()));
         Path stage = root.resolve("bmc5-patch-verified-stage");
         if (Files.exists(stage)) Files.move(stage, root.resolve("bmc5-patch-unused-stage-" + System.currentTimeMillis()));
         System.out.println("[Patch] Previous interrupted transaction restored before starting Minecraft.");
     }
+    static boolean ownPending(Path stage, Properties options) throws Exception {
+        Path marker = stage.resolve("activation-in-progress.properties");
+        if (!Files.isRegularFile(marker)) return false;
+        Properties previous = new Properties();
+        try (Reader reader = Files.newBufferedReader(marker)) { previous.load(reader); }
+        return Objects.equals(previous.getProperty("addonSha256"), options.getProperty("addonSha256"))
+            && Objects.equals(previous.getProperty("zipSha256"), options.getProperty("zipSha256"));
+    }
+    static void commit(Path root, Path flag, Properties options, Instant now) throws Exception {
+        Files.writeString(root.resolve("bmc5-patch-applied.json"),
+            "{\"release\":\"3.0.2\",\"addonSha256\":\"" + options.getProperty("addonSha256") + "\",\"appliedAt\":\"" + now + "\",\"journalRetained\":true}\n", StandardOpenOption.CREATE_NEW);
+        Files.move(flag, root.resolve("bmc5-patch-applied.properties"));
+    }
     public static void apply(Path root, Instant now) throws Exception {
         Path flag = root.resolve("bmc5-patch.properties");
-        if (!Files.exists(flag)) return;
+        if (!Files.exists(flag)) {
+            Path completed = root.resolve("bmc5-patch-applied.properties");
+            Path oldJournal = root.resolve("bmc5-patch-journal");
+            if (Files.exists(oldJournal) && Files.isRegularFile(completed) && !Files.exists(root.resolve("bmc5-patch-applied.json"))) {
+                Properties incomplete = new Properties();
+                try (Reader reader = Files.newBufferedReader(completed)) { incomplete.load(reader); }
+                if (ownPending(root.resolve("bmc5-patch-verified-stage"), incomplete)) recover(root, oldJournal);
+            }
+            return;
+        }
         Properties options = new Properties();
         try (Reader reader = Files.newBufferedReader(flag)) { options.load(reader); }
         Path stage = root.resolve("bmc5-patch-verified-stage");
         Path journal = root.resolve("bmc5-patch-journal");
+        if (Files.exists(journal) && !ownPending(stage, options) && (Files.exists(root.resolve("bmc5-patch-applied.json")) || Files.exists(root.resolve("bmc5-patch-applied.properties"))))
+            throw new IOException("Completed prior patch artifacts must be preserved by the queue transaction");
         if (Files.exists(journal)) {
             try { recover(root, journal); }
             catch(Exception fatal) { throw new IllegalStateException("Interrupted patch cannot be recovered safely", fatal); }
@@ -71,11 +105,17 @@ public final class PatchActivation {
             return;
         }
         if (!"true".equals(options.getProperty("runtimeVerified"))) throw new IOException("Runtime proof required");
+        if (Files.exists(root.resolve("world/serverconfig/veinmining-server.toml"))) throw new IOException("World VeinMining override appeared after queue verification");
         Path zip = root.resolve("bmc5-patch.zip");
         if (!sha(zip).equals(options.getProperty("zipSha256"))) throw new IOException("Patch ZIP SHA mismatch");
         if (!sha(root.resolve("mods/psychiatryk_roles-3.0.0-bmc5.jar")).equals(options.getProperty("baselineSha256")))
             throw new IOException("Current addon differs from verified patch baseline");
-        if (Files.exists(stage) || Files.exists(journal)) throw new IOException("Previous patch journal requires recovery");
+        if (Files.exists(stage) || Files.exists(journal) || Files.exists(root.resolve("bmc5-patch-applied.json")) || Files.exists(root.resolve("bmc5-patch-applied.properties"))) throw new IOException("Previous completed patch artifacts require preservation");
+        for (String name : ALLOWED) {
+            Path current = root.resolve(name); String expected = options.getProperty("baseline." + name);
+            if (expected == null || ("absent".equals(expected) ? Files.exists(current) : !Files.isRegularFile(current) || !sha(current).equals(expected)))
+                throw new IOException("Live baseline differs: " + name);
+        }
         Files.createDirectory(stage);
         LinkedHashMap<String, String> hashes = new LinkedHashMap<>();
         try (ZipFile archive = new ZipFile(zip.toFile())) {
@@ -89,12 +129,13 @@ public final class PatchActivation {
                     throw new IOException("This patch does not permit removals");
                 hashes.put(name, manifest.getProperty(name));
             }
+            if (!hashes.keySet().equals(ALLOWED)) throw new IOException("Exactly fifteen allowlisted entries required");
             String server = "mods/psychiatryk_roles-3.0.0-bmc5.jar";
             String client = "automodpack/host-modpack/main/" + server;
             if (!Objects.equals(hashes.get(server), options.getProperty("addonSha256")) ||
                 !Objects.equals(hashes.get(server), hashes.get(client))) throw new IOException("Server/client addon differs");
             for (String name : hashes.keySet()) {
-                if (name.startsWith("mods/")) {
+                if (name.startsWith("mods/") || name.startsWith("config/") && !name.equals("config/goplanska-scooter/music-sources.json") || name.equals("goplanska-release.json")) {
                     String paired = "automodpack/host-modpack/main/" + name;
                     if (!Objects.equals(hashes.get(name), hashes.get(paired))) throw new IOException("Server/client dependency differs");
                 }
@@ -136,6 +177,7 @@ public final class PatchActivation {
         try (Writer writer = Files.newBufferedWriter(building.resolve("before.properties"))) { before.store(writer, "Small addon transaction snapshots"); }
         // Only a complete journal can request recovery on the next startup.
         move(building, journal);
+        try (Writer writer = Files.newBufferedWriter(stage.resolve("activation-in-progress.properties"))) { options.store(writer, "Candidate transaction commit witness"); }
         try {
             for (String name : hashes.keySet()) {
                 Path current = root.resolve(name);
@@ -144,9 +186,7 @@ public final class PatchActivation {
                 if (name.equals("config/goplanska-scooter/music-sources.json"))
                     Files.setPosixFilePermissions(current, java.nio.file.attribute.PosixFilePermissions.fromString("rw-------"));
             }
-            Files.writeString(root.resolve("bmc5-patch-applied.json"),
-                "{\"addonSha256\":\"" + options.getProperty("addonSha256") + "\",\"appliedAt\":\"" + now + "\",\"journalRetained\":true}\n");
-            Files.move(flag, root.resolve("bmc5-patch-applied.properties"));
+            commit(root, flag, options, now);
             System.out.println("[Patch] Verified addon patch activated for server and AutoModpack; prior bytes retained in transaction journal.");
         } catch (Exception failure) {
             try { recover(root, journal); }

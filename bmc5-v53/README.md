@@ -1,6 +1,6 @@
 # BMC5 v53 + reduced Psychiatryk Roles 3.0.0
 
-[Prepared 3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
+[Current 3.0.2 restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
 
 This is our addon, not a redistributed Better MC modpack. Use the [official v53
 base](https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge-bmc5/files/8835241)

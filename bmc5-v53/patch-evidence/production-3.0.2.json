@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "activated": true,
+  "candidate_sha256": "ea63b4c4fa3287861d2066c3b636d80772d162a01e6a643e92ec55a526329ad6",
+  "server_and_host_hashes_verified": true,
+  "fresh_done_verified": true,
+  "public_paired_files_sha256": {
+    "automodpack/host-modpack/main/config/carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
+    "automodpack/host-modpack/main/config/veinmining-client.toml": "62455d0d20ed265fed20318cba83662188e2b658528b680ecc98c7905f8b4f4c",
+    "automodpack/host-modpack/main/config/veinmining-server.toml": "fa7c222f073aee8b72c6f090f370e0adad05f50d8e6f10219207a0ff6fe7a1c4",
+    "automodpack/host-modpack/main/goplanska-release.json": "079eb1c9c6710bbf55a65734079a30f72c269f55fdd9335ecdce327590d51415",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-3.0.0-bmc5.jar": "ea63b4c4fa3287861d2066c3b636d80772d162a01e6a643e92ec55a526329ad6",
+    "automodpack/host-modpack/main/mods/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+    "automodpack/host-modpack/main/mods/sophisticatedcore-1.21.1-1.4.70.2131.jar": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+    "config/carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
+    "config/veinmining-client.toml": "62455d0d20ed265fed20318cba83662188e2b658528b680ecc98c7905f8b4f4c",
+    "config/veinmining-server.toml": "fa7c222f073aee8b72c6f090f370e0adad05f50d8e6f10219207a0ff6fe7a1c4",
+    "goplanska-release.json": "079eb1c9c6710bbf55a65734079a30f72c269f55fdd9335ecdce327590d51415",
+    "mods/psychiatryk_roles-3.0.0-bmc5.jar": "ea63b4c4fa3287861d2066c3b636d80772d162a01e6a643e92ec55a526329ad6",
+    "mods/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+    "mods/sophisticatedcore-1.21.1-1.4.70.2131.jar": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934"
+  },
+  "original_jei_dfr_bytes_unchanged": true,
+  "original_private_activation_sha256": "f80a8020bccf31943d4883fd67cd6cc1482679ede967c40c9945646e53484cde"
+}
