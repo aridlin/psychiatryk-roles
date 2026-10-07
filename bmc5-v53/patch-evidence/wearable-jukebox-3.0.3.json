@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "activated": true,
+  "candidate_sha256": "daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4",
+  "base_sha256": "ea63b4c4fa3287861d2066c3b636d80772d162a01e6a643e92ec55a526329ad6",
+  "private_qualification_sha256": "7f4f0054e2b5c4936bb3a3244508d70bb4b9eccdaba5e367695cf561051b84a5",
+  "native_scope": "Wearable equipment, visible back model, menu networking, moving Sound Physics and lifecycle; dedicated registration; native ores-only VeinMining configuration",
+  "human_listening_claimed": false,
+  "original_scooter_model_render_physics_storage_recipes_preserved": true,
+  "soundphysics_global_config_unchanged": true,
+  "veinminer_ores_only": true,
+  "veinminer_without_enchantment_preserved": true,
+  "public_paired_files_sha256": {
+    "automodpack/host-modpack/main/config/veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a",
+    "automodpack/host-modpack/main/goplanska-release.json": "bf81dabf8f45793c6364f3fe13ae77192add896ffb9d8bf73dd77fc55523dd0b",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-3.0.0-bmc5.jar": "daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4",
+    "config/veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a",
+    "goplanska-release.json": "bf81dabf8f45793c6364f3fe13ae77192add896ffb9d8bf73dd77fc55523dd0b",
+    "mods/psychiatryk_roles-3.0.0-bmc5.jar": "daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4"
+  },
+  "server_and_host_hashes_verified": true,
+  "fresh_done_verified": true,
+  "private_catalog_excluded": true
+}

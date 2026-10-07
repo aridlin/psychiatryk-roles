@@ -1,0 +1,112 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-or-later; main scooter model under Sketchfab Standard (bundled notice)"
+
+[[mods]]
+modId="psychiatryk_roles"
+version="3.0.3-bmc5"
+displayName="Psychiatryk Roles"
+logoFile="pack-icon.png"
+description="Reduced BMC survival roles, mirror, loot lens, void doors, server-stock poker and parties."
+[[dependencies.psychiatryk_roles]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+[[dependencies.psychiatryk_roles]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+side="BOTH"
+
+[[mods]]
+modId="goplanska_kukirin"
+version="3.0.3-bmc5"
+displayName="KuKirin"
+logoFile="pack-icon.png"
+description="Scooter core with server recipe restrictions."
+[[dependencies.goplanska_kukirin]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+[[dependencies.goplanska_kukirin]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+side="BOTH"
+
+[[mods]]
+modId="goplanska_parties"
+version="3.0.3-bmc5"
+displayName="Goplanska Parties"
+logoFile="pack-icon.png"
+description="Persistent parties with invitations, kicks, color, chat and waypoints."
+[[dependencies.goplanska_parties]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+[[dependencies.goplanska_parties]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+side="BOTH"
+
+[[mods]]
+modId="goplanska_party_markers"
+version="3.0.3-bmc5"
+displayName="Goplanska Party Markers"
+logoFile="pack-icon.png"
+description="Server-authorized party dots and highlights."
+[[dependencies.goplanska_party_markers]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+[[dependencies.goplanska_party_markers]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+side="BOTH"
+
+[[mods]]
+modId="portable_chams"
+version="3.0.3-bmc5"
+displayName="Portable Chams"
+logoFile="pack-icon.png"
+description="Independent client highlight API."
+[[dependencies.portable_chams]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="BOTH"
+[[dependencies.portable_chams]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.248,22)"
+side="BOTH"
+
+[[dependencies.psychiatryk_roles]]
+modId="accessories"
+type="required"
+versionRange="[1.1.0-beta.53,)"
+side="BOTH"
+
+[[mixins]]
+config="goplanska-scooter.mixins.json"
+
+[[mixins]]
+config="psychiatryk-bmc-survival.mixins.json"
+
+[[mixins]]
+config="psychiatryk-migration.mixins.json"
+
+[[mixins]]
+config="psychiatryk_roles.mixins.json"
+
+[[mixins]]
+config="psychiatryk-testing-worlds.mixins.json"
+
+[[mixins]]
+config="psychiatryk-wearable-jukebox.mixins.json"

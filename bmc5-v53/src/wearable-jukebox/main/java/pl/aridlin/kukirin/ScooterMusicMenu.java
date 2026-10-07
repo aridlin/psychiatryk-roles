@@ -1,0 +1,37 @@
+package pl.aridlin.kukirin;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+public final class ScooterMusicMenu {
+ public record Request(String action,String song) implements CustomPacketPayload {
+  public static final Type<Request> TYPE=new Type<>(ResourceLocation.parse("goplanska_kukirin:music_menu"));
+  public static final StreamCodec<RegistryFriendlyByteBuf,Request> CODEC=new StreamCodec<>(){public Request decode(RegistryFriendlyByteBuf b){return new Request(b.readUtf(16),b.readUtf(256));}public void encode(RegistryFriendlyByteBuf b,Request p){b.writeUtf(p.action,16);b.writeUtf(p.song,256);}};public Type<Request> type(){return TYPE;}
+ }
+ public record Catalog(java.util.List<String> songs,boolean wav,boolean disc,boolean loop) implements CustomPacketPayload {
+  public static final Type<Catalog> TYPE=new Type<>(ResourceLocation.parse("goplanska_kukirin:music_catalog"));
+  public static final StreamCodec<RegistryFriendlyByteBuf,Catalog> CODEC=new StreamCodec<>(){public Catalog decode(RegistryFriendlyByteBuf b){int n=b.readVarInt();if(n<0||n>1024)throw new IllegalArgumentException("Song catalog limit");var list=new java.util.ArrayList<String>();for(int i=0;i<n;i++)list.add(b.readUtf(256));return new Catalog(java.util.List.copyOf(list),b.readBoolean(),b.readBoolean(),b.readBoolean());}public void encode(RegistryFriendlyByteBuf b,Catalog p){b.writeVarInt(p.songs.size());for(var s:p.songs)b.writeUtf(s,256);b.writeBoolean(p.wav);b.writeBoolean(p.disc);b.writeBoolean(p.loop);}};public Type<Catalog> type(){return TYPE;}
+ }
+ public static void register(net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent e){
+  var r=e.registrar("2");
+  r.playToServer(Request.TYPE,Request.CODEC,(data,ctx)->ctx.enqueueWork(()->{
+   if(!(ctx.player() instanceof net.minecraft.server.level.ServerPlayer p))return;
+   if(data.action.equals("wear_open")){WearableJukeboxMusic.open(p);return;}
+   if(data.action.equals("open")){ScooterJukeboxMusic.forget(p);WearableJukeboxMusic.forget(p);}
+   else if(WearableJukeboxMusic.handle(p,data.action,data.song)||ScooterJukeboxMusic.handle(p,data.action,data.song))return;
+   var scooter=ScooterStorage.target(p);
+   if(!ScooterMusic.permitted(scooter,p))return;
+   var item=scooter.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET);
+   switch(data.action){
+    case "open"->net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(p,new Catalog(ScooterMusic.songs().stream().filter(s->s.length()<=256).limit(1024).toList(),ScooterUpgradeRecipe.has(item,"noteblock"),ScooterUpgradeRecipe.has(item,"jukebox"),ScooterMusic.looping(scooter)));
+    case "play"->ScooterMusic.wav(p,data.song);
+    case "loop"->ScooterMusic.looping(scooter,data.song.equals("true"));
+    case "stop"->ScooterMusic.stop(scooter);
+    case "disc"->{if(ScooterUpgradeRecipe.has(item,"jukebox")){ScooterMusic.stop(scooter);scooter.startDisc();}}
+    default->{}
+   }
+  }));
+  r.playToClient(Catalog.TYPE,Catalog.CODEC,ScooterMusicClient::receive);
+ }
+ private ScooterMusicMenu(){}
+}
