@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "checks": [
+    "early restart leaves baseline untouched",
+    "exact server/client patch, private file permissions and activation receipt",
+    "completed activation is idempotent",
+    "tampered zip rejected before mutation",
+    "changed baseline rejected",
+    "runtime proof required",
+    "path outside explicit file allowlist rejected",
+    "different server/client bytes rejected",
+    "failure after installation restores both addons and absent configuration",
+    "incomplete snapshot cannot block recovery or alter baseline",
+    "identical backpack and Core pairs installed with original JEI untouched",
+    "dependency rollback removes new pairs and preserves original JEI",
+    "all removals refused before replacement",
+    "mismatched dependency pair refused",
+    "interrupted transaction recovers before early restart"
+  ],
+  "checks_passed": 15,
+  "world_and_player_files_outside_allowlist": true,
+  "production_changed": false
+}

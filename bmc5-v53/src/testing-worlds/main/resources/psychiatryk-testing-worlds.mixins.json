@@ -1,0 +1,1 @@
+{"required":true,"minVersion":"0.8","package":"pl.aridlin.psychiatrykroles.testing.mixin","compatibilityLevel":"JAVA_21","mixins":["PlayerSaveInvoker","TestingSeedMixin"],"injectors":{"defaultRequire":1},"server":["PokerBankMixin"]}

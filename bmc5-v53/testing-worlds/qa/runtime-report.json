@@ -1,0 +1,190 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "server_stopped": true,
+  "production_mutated": false,
+  "candidate_sha256": "306cdca630925ea25963ba36a26e8e1437efc879852703c4d8a255e87a7ad4be",
+  "checks": [
+    {
+      "passed": true,
+      "description": "both authored testing dimensions load"
+    },
+    {
+      "passed": true,
+      "description": "real Accessories inventory populated"
+    },
+    {
+      "passed": true,
+      "description": "real Curios inventory populated"
+    },
+    {
+      "passed": true,
+      "description": "actual Backpacked backpack registered"
+    },
+    {
+      "passed": true,
+      "description": "Framework backpack attachment included in immutable bank"
+    },
+    {
+      "passed": true,
+      "description": "empty target clears inventory armor offhand and ender storage"
+    },
+    {
+      "passed": true,
+      "description": "target XP health hunger restored independently"
+    },
+    {
+      "passed": true,
+      "description": "Backpacked inventories reset without outgoing attachment retention"
+    },
+    {
+      "passed": true,
+      "description": "Accessories emptied for new test bank"
+    },
+    {
+      "passed": true,
+      "description": "Curios emptied for new test bank"
+    },
+    {
+      "passed": true,
+      "description": "survival inventory armor offhand ender roundtrip exact"
+    },
+    {
+      "passed": true,
+      "description": "survival XP health hunger roundtrip exact"
+    },
+    {
+      "passed": true,
+      "description": "global persistent role state remains outside banks"
+    },
+    {
+      "passed": true,
+      "description": "Accessories item restored in original slot"
+    },
+    {
+      "passed": true,
+      "description": "Curios item restored in original slot"
+    },
+    {
+      "passed": true,
+      "description": "Backpacked nested item components restored"
+    },
+    {
+      "passed": true,
+      "description": "actual banked transition to flat world succeeds"
+    },
+    {
+      "passed": true,
+      "description": "survival items absent after real dimension transition"
+    },
+    {
+      "passed": true,
+      "description": "consultant defaults to interactive survival in testing world"
+    },
+    {
+      "passed": true,
+      "description": "consultant cannot self-enable creative"
+    },
+    {
+      "passed": true,
+      "description": "direct creative gamemode escape canceled"
+    },
+    {
+      "passed": true,
+      "description": "normal and flat testing worlds share exact same test inventory"
+    },
+    {
+      "passed": true,
+      "description": "cross-bank portal exit canceled before inventory can leak"
+    },
+    {
+      "passed": true,
+      "description": "back restores survival diamonds rather than test iron"
+    },
+    {
+      "passed": true,
+      "description": "back restores nested backpack storage"
+    },
+    {
+      "passed": true,
+      "description": "reenter restores persisted test items"
+    },
+    {
+      "passed": true,
+      "description": "patient defaults to creative testing"
+    },
+    {
+      "passed": true,
+      "description": "patient can toggle survival and creative"
+    },
+    {
+      "passed": true,
+      "description": "injected journal failure cancels before any inventory or dimension mutation"
+    },
+    {
+      "passed": true,
+      "description": "injected I/O failure leaves last committed ledger intact"
+    },
+    {
+      "passed": true,
+      "description": "unknown attachment rejects restore before outgoing bank is changed"
+    },
+    {
+      "passed": true,
+      "description": "logout callback captures active test inventory without overwriting survival bank"
+    },
+    {
+      "passed": true,
+      "description": "login recovery keeps freshest active player items and correct mode"
+    },
+    {
+      "passed": true,
+      "description": "respawn callbacks return to test dimension without resurrecting dropped test inventory"
+    },
+    {
+      "passed": true,
+      "description": "respawn test inventory cannot replace saved survival items"
+    },
+    {
+      "passed": true,
+      "description": "dropped item portal cross-bank travel canceled"
+    },
+    {
+      "passed": true,
+      "description": "cross-world entity join cannot carry a test-origin container/item into survival"
+    },
+    {
+      "passed": true,
+      "description": "forced atomic disk ledger contains immutable survival inventory"
+    }
+  ],
+  "passed": 38,
+  "total": 38,
+  "backend_only": true,
+  "release_ready": false,
+  "main_client_launched_or_stopped": false,
+  "classes": {
+    "pl/aridlin/psychiatrykroles/testing/BankNbt.class": "18c9bcbd510e3bec5684ca78c2bcded146c1828cc6ef1c6c3b9e87b6b2bc6fe8",
+    "pl/aridlin/psychiatrykroles/testing/TestBanks.class": "365d74d355068270ac60558e6b7001e8638537071e0b50bc1e6463c7466f0f63",
+    "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class": "83b74335d7a52f9e999f3ae22f9d3d1d27d1f59e02920785f2bd0744add3d1a5",
+    "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class": "fa60c9b6fd9ce81ae79854e784679abdf1ebcb133f0408cabd88ac80456999c2"
+  },
+  "source_sha256": {
+    "src/main/resources/psychiatryk-testing-worlds.mixins.json": "041d10ee63aef3c222ab9812f7482029fff47ecbab7cc75e6813422d1a682883",
+    "src/main/resources/data/psychiatryk_roles/dimension/test_normal.json": "a3d3a8bec3eda10e78a9e7d40d1c36022622302c821a05377c414523fc39fc38",
+    "src/main/resources/data/psychiatryk_roles/dimension/test_flat.json": "9552d630d4ad0a0dce2144ff9641a1114449d533950d7aa54f6af621330bb2a4",
+    "src/main/java/pl/aridlin/psychiatrykroles/testing/BankNbt.java": "496edc835a2074a3f994f28c62b25ab0c819a8ebcfc81477b8deff4b903e81b8",
+    "src/main/java/pl/aridlin/psychiatrykroles/testing/TestBanks.java": "1c83f13f5e4f76692d94b0db774deef9c98b74cc08348a51f2b8946ca1948e98",
+    "src/main/java/pl/aridlin/psychiatrykroles/testing/TestingWorlds.java": "2bc7d72e0bb90fab70f96f0bead878dab363064f47ef8812b3c5c354dc923c64",
+    "src/main/java/pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.java": "044f1d63973b043fbb831af85a52d72b657b9489a90a612b69c08e48e1932e2e"
+  },
+  "limitations": [
+    "Synthetic EmbeddedChannel; actual client UI synchronization not verified.",
+    "Login, clone, respawn and portal event callbacks exercised directly; full death/drop and rejoin path remains unverified.",
+    "Independent dimension seed not implemented; current vanilla generators inherit server seed.",
+    "Custom Immersive Portals teleport path requires an additional isolation check if that mod is shipped."
+  ],
+  "component_bytes_exact": true,
+  "private_fixture_cleanup": "normal ServerStopped report confirmed; any remaining exact QA JVM was closed",
+  "remaining_qa_jvms_closed": 0
+}

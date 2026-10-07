@@ -1,0 +1,15 @@
+{
+  "render_candidate_sha256": "cc78aa9250f8d6c192eb7f9e3889bbf1c3d675cdb9ec5349582e96fa6cc3e320",
+  "inherited_candidate": "<workspace>/work/bmc5-migration/music/psychiatryk_roles-3.0.1-music-stop-fix.jar",
+  "inherited_candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "render_report": "<workspace>/work/bmc5-migration/chams-render-qa/outputs/owned-render/runtime-report.json",
+  "render_report_sha256": "9cc02f9434028d1934700589cd8c72c8d97963570771ef4700c506750076f63e",
+  "render_verified": true,
+  "all_chams_entries_identical": true,
+  "chams_entries_count": 35,
+  "changed_entries": [
+    "pl/aridlin/kukirin/ScooterAudioClient$Moving.class",
+    "pl/aridlin/kukirin/ScooterAudioClient$PcmStream.class",
+    "pl/aridlin/kukirin/ScooterAudioClient.class"
+  ]
+}

@@ -1,0 +1,1574 @@
+{
+  "success": true,
+  "native_update_runtime_verified": true,
+  "candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "at_utc": "2026-10-07T07:01:05.479765+00:00",
+  "scope": "Isolated native AutoModpack cold bootstrap, download, close, same-install relaunch and full BMC join",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.250",
+  "automodpack": "4.0.6",
+  "official_automodpack_sha256": "e76570a113ac9cd7fecc85fc6d2323ef2e04318e4b7615d34519843adfe838f5",
+  "future_release_sha256": "429c19ee738b2b68bcd5ccec2b03ec5e75401c3027824b291beb8e30bd00045c",
+  "native_generated_manifest_sha256": "31dbf9d95861afbc1e5db620a4c7cbbdbf2c87d93f02f4cfd690c45b065f157a",
+  "native_downloaded_files": 1127,
+  "native_downloaded_mod_jars": 353,
+  "all_downloaded_feed_hashes_verified": true,
+  "cold_bootstrap_mod_jars": 1,
+  "native_update_elapsed_ms": 26097,
+  "native_restart_close_exit_code": 0,
+  "same_install_relaunch": true,
+  "same_saved_command_sha256": "9f516924734dd1424f8007cbeb91f26250f3761cef0502fcb8b0e170ba91087c",
+  "native_same_install_rejoined": true,
+  "loader_checks_passed": true,
+  "loaded_mod_resource_ids_observed": 460,
+  "required_loaded_mod_ids": [
+    "psychiatryk_roles",
+    "goplanska_kukirin",
+    "goplanska_parties",
+    "goplanska_party_markers",
+    "portable_chams",
+    "sophisticatedbackpacks",
+    "sophisticatedcore",
+    "jei",
+    "distraction_free_recipes",
+    "iris",
+    "sodium",
+    "automodpack_mod"
+  ],
+  "manually_copied_client_mods": false,
+  "real_account_credentials_used": false,
+  "production_changed": false,
+  "source_unchanged": true,
+  "all_test_processes_stopped": true,
+  "process_exit_codes": {
+    "server": 0,
+    "xvfb": 0,
+    "client": 143
+  },
+  "cleanup": "Native cold restart exited 0; final warm client was terminated with SIGTERM after rendered join, server/Xvfb exited 0.",
+  "restart_behavior": "AutoModpack requests normal close; repeat the same launcher command/installation. It does not spawn a replacement JVM.",
+  "checks": [
+    {
+      "name": "Exact combined render/music candidate pinned",
+      "passed": true
+    },
+    {
+      "name": "Cold, native-generated and native-downloaded inventory checks passed",
+      "passed": true
+    },
+    {
+      "name": "Cold client contained only official AutoModpack and plain options, without managed state",
+      "passed": true
+    },
+    {
+      "name": "All 1127 expected native generated/downloaded files match exact SHA1/SHA256 hashes",
+      "passed": true
+    },
+    {
+      "name": "Exact 353-jar selected client payload installed",
+      "passed": true
+    },
+    {
+      "name": "Original 1125 managed source files and manifest remained unchanged",
+      "passed": true
+    },
+    {
+      "name": "Native manifest pins AutoModpack 4.0.6, Minecraft 1.21.1 and NeoForge 21.1.250",
+      "passed": true
+    },
+    {
+      "name": "Native server manifest remained identical through download/relaunch",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/AdvancedCoreInfo-neoforge-1.21.1-1.1.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/AdvancedLootInfo-neoforge-1.21.1-2.1.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/AetherVillages-1.21.1-1.0.8-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Audio Improvements v2.0.2 (NeoForge 1.21.1).jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/AureljPaintings-1.0.5-1.21.x-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/AutochefsDelight-1.21.1-NeoForge-2.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BHMenu-NeoForge-1.21-2.4.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BadOptimizations-2.4.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BarteringStation-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BetterGrassify-1.7.0+neoforge.1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/BetterModsButton-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ClimateRivers-v21.1.3-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Clumps-neoforge-1.21.1-19.0.0.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ConfiguredDefaults-v21.1.3-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ConnectorExtras-1.12.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Controlling-neoforge-1.21.1-19.0.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ConvenientEffects-v21.1.4-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Corgilib-NeoForge-1.21.1-5.0.0.9.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/CrashAssistant-neoforge-1.20.6-1.21.4-1.11.12.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/CutThrough-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DeleteWorldsToTrash-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DiagonalFences-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DiagonalWalls-v21.1.2-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DiagonalWindows-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DnT-ancient-city-overhaul-v2 [NeoForge].jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DnT-swamp-hut-overhaul-v2 [NeoForge].jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DnT-woodland-mansion-replacement-v1.2 [NeoForge].jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Dragon Mounts Remastered-1.21.1-1.9.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DungeonsArise-1.21.1-2.1.68-release.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/DyedFlames-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EasyAnvils-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EasyMagic-v21.1.4-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EnchantmentInsights-v21.1.5-mc1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EpheroLib-1.21.1-NEO-FORGE-1.2.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EternalNether-v21.1.3-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/EuphoriaPatcher-1.10.0-r5.9-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Explorify v1.6.5.mod.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/FallingTree-1.21.1-1.21.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/FarmersDelight-1.21.1-1.3.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/FastItemFrames-v21.1.6-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ForgeConfigAPIPort-v21.1.6-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Geophilic v3.6.mod.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/GeophilicBackported-v1.3.3 1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Hearths v1.0.5.mod.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/HellishTrials-neoforge-1.0.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Highlighter-1.21-neoforge-1.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Iceberg-1.21.1-neoforge-1.3.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/IllagerInvasion-v21.1.6-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ImmediatelyFast-NeoForge-1.6.13+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/IrisSearch-1.7.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Jade-1.21.1-NeoForge-15.10.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/JadeAddons-1.21.1-NeoForge-6.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/JustEnoughProfessions-neoforge-1.21.1-4.0.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Kiwi-1.21.1-NeoForge-15.8.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/L_Ender's Cataclysm 1.21.1-3.33.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/LeaveMyBarsAlone-v21.1.2-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/LeavesBeGone-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/LetMeSleep-v21.1.0-mc1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/LongNBTKiller-NeoForge-1.21.3-1.0.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MagnumTorch-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsEndStructures-1.21-2.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsGlowUp-neoforge-1.21.1-1.2.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsMissingVillages-1.21-2.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsNetherStructures-1.21-3.0.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsStructureLib-neoforge-1.21.1-3.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoogsVoyagerStructures-universal-1.21-5.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MoreVillagers-Re-1.21.1-neoforge-1.25.12.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MouseTweaks-neoforge-mc1.21-2.26.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/MyNethersDelight-1.21.1-1.10.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/NaturesCompass-1.21.1-3.4.0-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/NetherChested-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/NoChatReports-NEOFORGE-1.21.1-v2.9.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Oh-The-Biomes-Weve-Gone-NeoForge-2.6.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Oh-The-Trees-Youll-Grow-neoforge-1.21.1-5.3.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/OverflowingBars-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ParticleEffects-1.5.0+1.21.1+neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Patchouli-1.21.1-93-NEOFORGE.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Paxi-1.21.1-NeoForge-5.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/PickUpNotifier-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Ping-Wheel-1.12.2-neoforge-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Platform-neoforge-1.21.1-1.3.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/PuzzlesLib-v21.1.59-mc1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Quest-Kill-Task-neoforge-0.3.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Raided-1.21.1-0.1.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ResourcePackOverrides-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ScalableLux-0.1.0.1+neoforge.1cb1e91-all.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Searchables-neoforge-1.21.1-1.0.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Seasonal Integration-v1.6.2-Mc1.21.1+.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/SereneSeasons-neoforge-1.21.1-10.1.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/SimpleDiscordRichPresence-neoforge-88.0.1-build.54+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/SkeletonAIFix-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/SnowRealMagic-1.21.1-NeoForge-12.2.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Stoneworks-v21.1.0-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Stony Cliffs FML v1.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Structory_26.2_v1.3.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Structory_Towers_26.1_v1.0.16.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/SubtleEffects-neoforge-1.21.1-1.14.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/TradingPost-v21.1.1-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/Villager-API-1.21.1-neoforge-1.26.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/VisualWorkbench-v21.1.2-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/XaeroPlus-2.36.0+neoforge-1.21.1-WM1.45.0-MM26.4.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsApi-1.21.1-NeoForge-5.1.8.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterDungeons-1.21.1-NeoForge-5.1.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterMineshafts-1.21.1-NeoForge-5.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/YungsMenuTweaks-1.21.1-NeoForge-2.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/abridged-2.0.2-neoforge-21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/accessories-neoforge-1.1.0-beta.53+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/accessories_compat_layer-neoforge-0.1.12+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/accessorify-2.4.0-beta.5+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/adorabuild-structures-2.11.0-neoforge-1.21.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/advancednetherite-neoforge-2.3.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/adventuredungeons-neoforge-1.21-1.3.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/aeroblender-1.21.1-1.0.0-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/aether-1.21.1-1.5.10-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/aether_enhanced_extinguishing-1.21.1-1.0.0-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/aether_protect_your_moa-1.21.1-1.0.0-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/aether_treasure_reforging-1.21.1-1.0.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/alexsmobs-1.22.17.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/alltheleaks-1.1.12+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/alternate_current-mc1.21-1.9.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/amendments-neoforge-1.21-2.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/another_furniture-neoforge-4.0.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/architectury-13.0.11-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/athena-neoforge-1.21.1-4.0.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/azurelib-neo-1.21.1-3.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/backpacked-neoforge-1.21.1-3.0.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/balm-neoforge-1.21.1-21.0.65.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/bedrockoid-0.1.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/better-compatability-checker-neoforge-21.1.8.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/better_client-neoforge-1.10.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/betterbiomeblend-1.5.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/betterworldloadingnf21-1.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/biolith-neoforge-3.0.14.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/biomemusic-1.21.1-4.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/blended-compat-1.1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/bmcpalegardenpatcher-0.3.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/boatiview-neoforge-0.0.6-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/bookshelf-neoforge-1.21.1-21.1.81.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/c2me-neoforge-mc1.21.1-0.4.0-alpha.0.120.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/caelus-neoforge-7.0.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/carryon-neoforge-1.21.1-2.2.6.13.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cataclysmfortresses-1.21.1-NeoForge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/certain_questing_additions-neoforge-1.2.0.4+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cerulean-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/chat_heads-0.15.7-neoforge-1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cherishedworlds-neoforge-10.1.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/chipped-neoforge-1.21.1-4.0.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/chunkactivitytracker-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/chunksending-1.21-3.9.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/citadel-1.21.1-2.7.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/citresewn-neoforge-1.21.1-0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/clientcrafting-1.21-2.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/clientsort-neoforge-3.89.0+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cloth-config-15.0.140-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/collective-1.21.1-8.39.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/colorwheel-neoforge-1.2.9+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/comforts-neoforge-9.0.5+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/configurable-3.5.2+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/configured-neoforge-1.21.1-2.6.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/connectiblechains-neoforge-1.21.1-2.3.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/connectivity-1.21.1-7.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/connector-2.0.0-beta.17+1.21.1-full.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/continuity-3.0.0+1.21.neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/coroutil-neoforge-1.21.0-1.3.9.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cristellib-neoforge-1.21.1-3.1.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/cupboard-1.21.1-4.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/curios-neoforge-9.5.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/darkwindowbar-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/deep_aether-1.21.1-1.1.5.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/deeperdarker-neoforge-1.21.1-1.4.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/despawntweaks-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/disconnect-packet-fix-neoforge-2.0.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/distraction_free_recipes-neoforge-1.2.2-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/does_it_tick-neoforge-1.1.4-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/dolphin_fix-1.1.1-1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/doubledoors-1.21.1-7.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/dragonloot-1.1.15-1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/drippyloadingscreen_neoforge_3.1.5_MC_1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/dummmmmmy-neoforge-1.21-2.1.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/earlybedtime-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/easy-villagers-neoforge-1.21.1-1.1.42.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/easydisenchanting-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/endersdelight-1.3.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/entity_model_features-3.3.5-1.21-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/entity_texture_features-7.2.1-1.21-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/entityculling-neoforge-1.10.5-mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/explorations-neoforge-1.21.1-1.6.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/fancymenu_neoforge_3.9.12_MC_1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/farmers-cutting-oh-the-biomes-weve-gone-1.21.1-2.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/farsight-1.21.1-5.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/fast-ip-ping-v1.0.11-mc1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/fastasyncworldsave-1.21-2.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/fastpaintings-1.21-1.3.0-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ferritecore-7.0.3-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/foolproof-neoforge-1.0.4-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/forgified-fabric-api-0.116.15+2.3.5+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/formations-1.0.4-neoforge-mc1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/formationsnether-1.0.5a-mc1.21+.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/formationsoverworld-1.0.5a-mc1.21+.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/framework-neoforge-1.21.1-0.13.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/friendsandfoes-neoforge-4.0.27+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ftb-filter-system-neoforge-21.1.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ftb-library-neoforge-2101.1.35.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ftb-quests-neoforge-2101.1.34.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ftb-teams-neoforge-2101.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/ftb-xmod-compat-neoforge-21.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/fzzy_config-0.7.6+1.21+neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/gardens-of-the-dead-neoforge-5.0.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/geckolib-neoforge-1.21.1-4.9.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/goblintraders-neoforge-1.21.1-1.11.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/golem_spawn_fix-1.0.2-neoforge-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/gpumemleakfix-1.21-1.8.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/handcrafted-neoforge-1.21.1-4.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/hapi-neoforge-1.21.1-1.0.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/horse-breeding-fix-neoforge-1.21.x-1.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/hrtffix-neoforge-1.0.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/hybrid_aquatic-neoforge-1.21.1-1.7.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/immersivearmorhud-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/immersivelanterns-neoforge-1.0.6-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/immersivemessages-neoforge-1.0.18-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/immersivetips-neoforge-1.0.2-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/improved-village-placement-1.2.0-neoforge-21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/inmis-2.8.1-2.9.3-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/iris-neoforge-1.8.12+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/iris_shader_folder-1.4.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/jamlib-neoforge-1.3.6+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/jei-1.21.1-neoforge-19.27.0.343.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/justenoughbreeding-neoforge-1.21.1-3.2.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/justzoom_neoforge_2.1.0_MC_1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/kleeslabs-neoforge-1.21.1-21.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/konkrete_neoforge_1.9.9_MC_1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/kotlinforforge-5.12.0-all.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/krypton_fnp-neoforge-1.21.1-0.2.28.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/leaderboards-1.21.1-NeoForge-2.0.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lionfishapi-3.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lithium-neoforge-0.15.4+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lithostitched-1.8.0+beta6-neoforge-21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lmft-1.1.1+1.21.9-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/loadingprotection-1.0.2-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/logbegone-neoforge-1.21.1-1.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegration_wda-1.8.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegrations-1.21.1-4.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegrations_formations-1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegrations_lootintegrations_bygonepillage-1.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegrations_moog-2.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lootintegrations_yungs-1.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/lukis-crazy-chambers-1.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/luna_minecraft-neoforge-5.3.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/mc2_interactivefoliage-1.3.0-neoforge+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/melody_neoforge_1.0.10_MC_1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/memorysettings-1.21-6.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/midnightlib-neoforge-1.9.3+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/miningspeedtooltips-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/misctweaks-1.3.0+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/missingmodschecker-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/mixintracereforged-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/modernfix-neoforge-5.27.24+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/modpack-update-checker-1.21.1-neoforge-0.15.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/moonlight-1.21.1-3.6.3-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/mousetweaks-x-accessories-fix-1.4.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/mowziesmobs-1.21.1-1.8.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/neobeefix-1.21.1-2.0.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/neruina-3.3.3+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/netherite_tweaks_luna-1.2.2-neoforge-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/netherportalfix-neoforge-1.21.1-21.1.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/no-report-button-neoforge-1.6.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/nondirectionaldamagetiltfix-3.0.0+neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/notenoughanimations-neoforge-1.12.4-mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/oceansdelight-neoforge-1.0.4-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/open-parties-and-claims-neoforge-1.21.1-0.30.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/owo-lib-neoforge-0.12.15.5-beta.1+1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/packanalytics-neoforge-1.0.5-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/packetfixer-3.3.1-1.20.5-1.21.X-merged.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/particle_core-0.3.3+1.21+neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/piglinproliferation-1.21.1-2.0.15.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/polymorph-neoforge-1.1.0+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/prickle-neoforge-1.21.1-21.1.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/psychiatryk_roles-3.0.0-bmc5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/puffish_biome_dither-1.0.0-1.21-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/randomenchantfix-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/recipeessentials-1.21.1-4.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/redirected-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/reeses-sodium-options-neoforge-1.8.3+mc1.21.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/repurposed_structures-7.5.22+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/repurposed_structures_farmers_delight_compat_v7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/reset_controls_confirmation-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/resourcefulconfig-neoforge-1.21-3.0.11.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/resourcefullib-neoforge-1.21-3.0.12.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/revampedwolf-1.21.1-13.1.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/rewithered-neoforge-1.0.14+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/rightclickharvest-neoforge-4.6.1+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sawmill-1.21-1.8.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/serverbrowser-neoforge-1.4.2-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/simple_snowy_fix-1.21.1-1.21.11-2.2.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/skinlayers3d-neoforge-1.11.2-mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/smarterfarmers-1.21-2.2.4-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/smoothchunk-1.21-4.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/smoothmovement-1.21.1-2.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/snowundertrees-1.21.1-1.5.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodium-neoforge-0.6.13+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodiumdynamiclights-neoforge-1.0.10-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodiumextras-neoforge-1.0.8-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodiumleafculling-neoforge-1.0.1-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodiumoptionsapi-neoforge-1.0.10-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sodiumoptionsmodcompat-neoforge-1.0.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sophisticatedcore-1.21.1-1.4.70.2131.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sound-physics-remastered-neoforge-1.21.1-1.5.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/spark-1.10.124-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sparsestructures-neoforge-1.21.1-3.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/spear-backport-neoforge-1.8.0-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/starcatcher-3.1.3-NEOFORGE-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/starcatcher_delight-3.0.1-NEOFORGE-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/structure_layout_optimizer-neoforge-1.0.12.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/structureessentials-1.21.1-5.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/supplementaries-1.21-3.5.34-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/sway-2.4.4-neoforge+1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/takesapillage-neoforge-1.0.12+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/tfthreadsafetyaddon-0.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/toms_storage-1.21-2.4.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/toofast-1.21.0-0.4.3.6.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/twilightdelight-3.2.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/twilightforest-1.21.1-4.8.3345-universal.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/txnilib-neoforge-1.0.24-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/underlay-1.0.4-hotfix.1-neoforge-mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/vanillin-neoforge-1.21.1-1.1.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/variantsandventures-neoforge-1.0.26+mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/vb-compat-2.2-1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/veinmining-neoforge-5.0.0-beta.2+1.21.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/villagernames-1.21.1-8.5.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/villagesandpillages-neoforge-mc1.21.1-1.0.3.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/wakes-1.21.1-NeoForge-1.4.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/watut-neoforge-1.21.0-1.2.7.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/waveycapes-neoforge-1.11.1-mc1.21.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/waystones-neoforge-1.21.1-21.1.42.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/worldplaytime-1.2.2-1.21-NEOFORGE.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/xaerominimap-neoforge-1.21.1-26.4.2.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/xaeroworldmap-neoforge-1.21.1-1.45.0.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/xptome-1.21.1-2.4.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/yet_another_config_lib_v3-3.8.2+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/youre-in-grave-danger-neoforge-2.0.13.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/zipline-neoforge-1.21.1-1.5.1.jar",
+      "passed": true
+    },
+    {
+      "name": "Native installed jar remains exact: mods/zombieimprovements-1.2.0+1.21.1-neoforge.jar",
+      "passed": true
+    },
+    {
+      "name": "Native first-run certificate verification screen was exercised",
+      "passed": true
+    },
+    {
+      "name": "Native AutoModpack downloader completed and requested restart",
+      "passed": true
+    },
+    {
+      "name": "Native updater selected its newly downloaded managed pack",
+      "passed": true
+    },
+    {
+      "name": "Native Yes-close-game button stopped the cold client normally before relaunch",
+      "passed": true
+    },
+    {
+      "name": "Identical saved command and same gameDir were relaunched and joined the server",
+      "passed": true
+    },
+    {
+      "name": "Native server login, join and list corroborate the synthetic player",
+      "passed": true
+    },
+    {
+      "name": "Warm native full BMC client reached the rendered world",
+      "passed": true
+    },
+    {
+      "name": "Warm client loaded the exact loader/game/AutoModpack versions",
+      "passed": true
+    },
+    {
+      "name": "Native managed pack loaded all addon modules and the full BMC renderer/mod stack",
+      "passed": true
+    },
+    {
+      "name": "Exact stable addon jar was discovered by native AutoModpack locator",
+      "passed": true
+    },
+    {
+      "name": "Original compatible JEI 19.27 and DFR 1.2.2 loaded",
+      "passed": true
+    },
+    {
+      "name": "Exact selected Sophisticated Backpacks/Core jars loaded",
+      "passed": true
+    },
+    {
+      "name": "All owned client/server/Xvfb processes stopped without watchdog failure",
+      "passed": true
+    },
+    {
+      "name": "Disposable server stopped normally through native console stop",
+      "passed": true
+    },
+    {
+      "name": "Native screens and rendered rejoined world captured and inspected",
+      "passed": true
+    }
+  ],
+  "run_directory": "<workspace>/work/bmc5-migration/automodpack-native-qa/outputs/native-20261007T064513Z-21c950",
+  "evidence_sha256": {
+    "prepared-state.json": "3848f1067514e3c9bae41410dc3354a33c698e4f0d911ecb6a14c359d6626c25",
+    "final-gates.json": "9443162da51f0c4026af920140cbd491d8a14e1b04bfecd500ac18ef21e2bc4a",
+    "outputs/inventory-cold.json": "817197a573bed536d5535d5fa523ab19f855f888875ce92f378e04283746f54a",
+    "outputs/inventory-generated.json": "d1aa142b70bd4b50a032cd24d9a3f31b1e821fefdcacc12e43bbc49121f414e3",
+    "outputs/inventory-downloaded.json": "c81fc5e56648c80f542d0e29441e2e77d5622ec28c0b2813545fb7292baff57c",
+    "outputs/source-unchanged.json": "38d9c43bda78ebb42066e74ada4a550b232f664f28c110bfacaa1b1870b5b32a",
+    "outputs/native-20261007T064513Z-21c950/receipt.json": "a4186b591247eb5b98b200d3ac73d914d22d4c13091605e7cddf50b7793cfd5f",
+    "outputs/native-20261007T064513Z-21c950/client-42801-sanitized.log": "ae443a2185c2e2d3f5e959c07db17d1ee234ae77fc3f0ddfc3309e1d5deaa7dc",
+    "outputs/native-20261007T064513Z-21c950/client-43871-sanitized.log": "9437d366673064eb84ab8262198c5943a8f4e16192b46dbb31d13cc4979e620f",
+    "outputs/native-20261007T064513Z-21c950/server-42159-sanitized.log": "5153f213e57bbe7c339614f7bbc21cfd7b373e515f33e64c47975288e9603d95",
+    "outputs/native-20261007T064513Z-21c950/007-certificate-native.png": "45cbbcb1be2b8dd0a1886d7f066c3db39ac92e2e5c86579e9e8773cd635dad4d",
+    "outputs/native-20261007T064513Z-21c950/014-native-install-warning.png": "0d508e0f6acf8c2ff25de14b8126b9fe43df437031f5afedcec225409f00d29b",
+    "outputs/native-20261007T064513Z-21c950/017-native-download-enabled.png": "052970f37870c9b55040c9de2b0f5d070055f493e5656534a49dd1d63be94c50",
+    "outputs/native-20261007T064513Z-21c950/023-native-restart-prompt.png": "11ad52b7e2b52c4fe429d16ff537c8e407fc3df3ea485a49699eab00bae98006",
+    "outputs/native-20261007T064513Z-21c950/028-same-install-rejoined.png": "c54ea62b39aeb32494a92b49d172941aafaf69dad2d40f12f285a03a5234c759"
+  }
+}

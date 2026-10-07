@@ -1,0 +1,427 @@
+{
+  "success": true,
+  "runtime_verified": true,
+  "candidate_sha256": "cc78aa9250f8d6c192eb7f9e3889bbf1c3d675cdb9ec5349582e96fa6cc3e320",
+  "helper_sha256": "e2b79e8f7e2519a3cfacb0a36bfaea8ddc3f3835e16b608d25d8eafecdcf9a7c",
+  "scope": "Disposable full BMC 1.21.1/NeoForge 21.1.250 integrated world; shaders disabled; ordinary entity provider off/on/off",
+  "checks": [
+    {
+      "name": "production chams callback restores raw GL and Minecraft shader state in phase 0",
+      "passed": true
+    },
+    {
+      "name": "actual provider draws no entities in phase 0",
+      "passed": true
+    },
+    {
+      "name": "full BMC renderer stack and exact merged chams addon loaded",
+      "passed": true
+    },
+    {
+      "name": "chams shaders ready in full BMC",
+      "passed": true
+    },
+    {
+      "name": "original BMC JEI version retained",
+      "passed": true
+    },
+    {
+      "name": "selected backpack/core and original BMC JEI stack loaded",
+      "passed": true
+    },
+    {
+      "name": "phase 0 has at least 30 unchanged state frames and world screenshot",
+      "passed": true
+    },
+    {
+      "name": "production chams callback restores raw GL and Minecraft shader state in phase 1",
+      "passed": true
+    },
+    {
+      "name": "actual provider draws one entity in phase 1",
+      "passed": true
+    },
+    {
+      "name": "phase 1 has at least 30 unchanged state frames and world screenshot",
+      "passed": true
+    },
+    {
+      "name": "production chams callback restores raw GL and Minecraft shader state in phase 2",
+      "passed": true
+    },
+    {
+      "name": "actual provider draws no entities in phase 2",
+      "passed": true
+    },
+    {
+      "name": "phase 2 has at least 30 unchanged state frames and world screenshot",
+      "passed": true
+    },
+    {
+      "name": "actual yellow zombie chams pixels visible through fixture wall",
+      "passed": true
+    },
+    {
+      "name": "unhighlighted flowers and diamond/gold drops colors stay stable in phase 1",
+      "passed": true
+    },
+    {
+      "name": "unhighlighted flowers and diamond/gold drops colors stay stable in phase 2",
+      "passed": true
+    },
+    {
+      "name": "sky colors stay stable in phase 1",
+      "passed": true
+    },
+    {
+      "name": "sky colors stay stable in phase 2",
+      "passed": true
+    },
+    {
+      "name": "unhighlighted fixture color 1 is visible in baseline",
+      "passed": true
+    },
+    {
+      "name": "unhighlighted fixture color 2 is visible in baseline",
+      "passed": true
+    },
+    {
+      "name": "unhighlighted fixture color 3 is visible in baseline",
+      "passed": true
+    },
+    {
+      "name": "fixture backpack item synced from integrated server",
+      "passed": true
+    },
+    {
+      "name": "ordinary backpack use opens actual Sophisticated Backpacks GUI",
+      "passed": true
+    },
+    {
+      "name": "actual backpack container synced from integrated server",
+      "passed": true
+    },
+    {
+      "name": "backpack GUI completes without GL errors",
+      "passed": true
+    }
+  ],
+  "gl_state": [
+    {
+      "phase": 0,
+      "stage": "AFTER_TRANSLUCENT_BLOCKS",
+      "interval": "production ChamsClient render callback with ordinary provider",
+      "before": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "after": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "changed_fields": []
+    },
+    {
+      "phase": 1,
+      "stage": "AFTER_TRANSLUCENT_BLOCKS",
+      "interval": "production ChamsClient render callback with ordinary provider",
+      "before": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "after": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "changed_fields": []
+    },
+    {
+      "phase": 2,
+      "stage": "AFTER_TRANSLUCENT_BLOCKS",
+      "interval": "production ChamsClient render callback with ordinary provider",
+      "before": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "after": {
+        "shader_pointer": "rendertype_translucent:1132254134",
+        "shader_program_id": 64,
+        "current_program": 0,
+        "shader_textures": [
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "active_texture": 33985,
+        "caller_active_texture_binding": 7,
+        "texture_bindings_first_four": [
+          24,
+          7,
+          0,
+          0
+        ],
+        "depth_test": false,
+        "depth_write": true,
+        "depth_func": 515,
+        "blend": false,
+        "blend_32969": 770,
+        "blend_32968": 771,
+        "blend_32971": 1,
+        "blend_32970": 0,
+        "blend_32777": 32774,
+        "blend_34877": 32774,
+        "draw_framebuffer": 1,
+        "read_framebuffer": 1,
+        "viewport": [
+          0,
+          0,
+          900,
+          600
+        ]
+      },
+      "changed_fields": []
+    }
+  ],
+  "visuals": [
+    {
+      "name": "unhighlighted flowers and diamond/gold drops",
+      "phase_1_changed_fraction": 0.0,
+      "phase_1_mean_channel_difference": 0.0,
+      "phase_2_changed_fraction": 8.417508417508417E-4,
+      "phase_2_mean_channel_difference": 0.05115470948804282
+    },
+    {
+      "name": "sky",
+      "phase_1_changed_fraction": 0.0,
+      "phase_1_mean_channel_difference": 0.0,
+      "phase_2_changed_fraction": 0.0,
+      "phase_2_mean_channel_difference": 0.0
+    },
+    {
+      "red_flower_baseline_pixels": 2467,
+      "cyan_diamond_baseline_pixels": 273,
+      "gold_baseline_pixels": 1350,
+      "yellow_chams_baseline": 0,
+      "yellow_chams_enabled": 1088
+    }
+  ],
+  "state_frames_per_phase": [
+    109,
+    107,
+    110
+  ]
+}

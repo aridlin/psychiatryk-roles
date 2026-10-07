@@ -97,3 +97,15 @@ from source distribution. Authored QA helper source can be reused separately.
 MIT for this project's authored Java/shaders. See `LICENSE` and
 `THIRD-PARTY-NOTICES.md`. Minecraft and NeoForge are external prerequisites and
 are not redistributed in this project.
+
+## BMC renderer compatibility update
+
+The current source owns immediate per-RenderType mask buffers. Iris replaces
+the world's BufferSource with a deferred implementation whose per-type flush
+can be a no-op; sharing it leaked mask geometry into ordinary world rendering.
+Mask batches now flush while the mask framebuffer is bound and are discarded
+on failure. The outer render pass also restores Minecraft and raw GL state.
+This update adds no dependency on Iris. The merged full BMC/NeoForge21.1.250
+client passed 25 real checks, including through-wall output, provider off/on/off,
+unchanged flower/drop/sky colors and a Sophisticated Backpacks GUI. Shaders were
+disabled for this fixture; arbitrary shader-pack compatibility is not claimed.

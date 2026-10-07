@@ -1,0 +1,85 @@
+{
+  "success": true,
+  "serverStopped": true,
+  "candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "checks": [
+    {
+      "passed": true,
+      "description": "Full BMC music fixture has no Immersive Portals dependency"
+    },
+    {
+      "passed": true,
+      "description": "Hot-loaded private catalog has635 user tracks plus one synthetic fixture"
+    },
+    {
+      "passed": true,
+      "description": "Shared browser includes source tracks and two bundled fallbacks"
+    },
+    {
+      "passed": true,
+      "description": "Actual server registered scootermusic commands"
+    },
+    {
+      "passed": true,
+      "description": "Real Brigadier autocomplete includes remote song IDs"
+    },
+    {
+      "passed": true,
+      "description": "Ordinary jukebox right-click remains vanilla"
+    },
+    {
+      "passed": true,
+      "description": "Offhand does not double-open browser"
+    },
+    {
+      "passed": true,
+      "description": "Registered shift-right-click event opens the jukebox browser"
+    },
+    {
+      "passed": true,
+      "description": "Actual catalog packet uses the same searchable list for jukebox"
+    },
+    {
+      "passed": true,
+      "description": "Jukebox play request creates one shared playback source"
+    },
+    {
+      "passed": true,
+      "description": "Remote playback holds only metadata and no WAV byte buffer on Minecraft server"
+    },
+    {
+      "passed": true,
+      "description": "Jukebox loop request updates authoritative source"
+    },
+    {
+      "passed": true,
+      "description": "Jukebox Stop removes active playback"
+    },
+    {
+      "passed": true,
+      "description": "Out-of-range stale menu cannot remotely start music"
+    },
+    {
+      "passed": true,
+      "description": "Removing jukebox stops its audio source immediately on next tick"
+    },
+    {
+      "passed": true,
+      "description": "Unloaded jukebox checks never force-load chunks"
+    },
+    {
+      "passed": true,
+      "description": "Remembered jukebox sources stay bounded256"
+    },
+    {
+      "passed": true,
+      "description": "Packet diagnostics never print bearer credential"
+    },
+    {
+      "passed": true,
+      "description": "Catalog command IDs reject traversal"
+    }
+  ],
+  "passed": 19,
+  "total": 19
+}

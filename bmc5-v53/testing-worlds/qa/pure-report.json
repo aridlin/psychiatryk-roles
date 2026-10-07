@@ -1,0 +1,5 @@
+{
+  "success": true,
+  "passed": 26,
+  "scope": "immutable NBT filter/merge and real forced atomic file operations; no world/player claim"
+}

@@ -1,0 +1,73 @@
+{
+  "success": true,
+  "runtime_verified": false,
+  "base_candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "candidate_sha256": "5316437d3921aba2296a540b35797fc9ab874f2228d89009f381b44b9b343d00",
+  "candidate_path": "work/bmc5-migration/poker-bank-guard/psychiatryk_roles-3.0.1-poker-bank-guard.jar",
+  "java_release": 21,
+  "new_product_classes": 1,
+  "added_entries": [
+    "pl/aridlin/psychiatrykroles/testing/mixin/PokerBankMixin.class"
+  ],
+  "modified_entries": [
+    "psychiatryk-testing-worlds.mixins.json"
+  ],
+  "removed_entries": [],
+  "unchanged_original_entries": 518,
+  "unchanged_existing_classes": 371,
+  "all_existing_classes_byte_identical": true,
+  "all_existing_methods_inherited": true,
+  "all_existing_resources_byte_identical_except_registration": true,
+  "registration_semantic_change": {
+    "server": [
+      "PokerBankMixin"
+    ]
+  },
+  "registration_before_sha256": "42c6619220179939f262b55b6003b3f01728f1a15d5dcc861ac5efdc41a2a668",
+  "registration_after_sha256": "271c13ab912fbab111882855644f63783fd7964c9dce40b4a2d6dda0bbf27efd",
+  "guard_class_sha256": "26ef631d6ebfa4878c74e274076d8b28594a3947cc3cb6c9184d051e1d83b8e1",
+  "guard_source_sha256": "94378d1578e890068fb90b1d496e404f793c9afcd4365c696d3d0782fe6ba9fe",
+  "poker_commands_before_after_sha256": "094e60f7946d5495d0d0807ae4674adf420be653eb8e6eb6a927a8e45e237fe4",
+  "frozen_testing_classes": {
+    "pl/aridlin/psychiatrykroles/testing/BankNbt.class": "18c9bcbd510e3bec5684ca78c2bcded146c1828cc6ef1c6c3b9e87b6b2bc6fe8",
+    "pl/aridlin/psychiatrykroles/testing/InventorySync.class": "0c8ff05beb362a256ccf70ef26e5cbe0aa0f60ec61d5a049f836cbb14862d53f",
+    "pl/aridlin/psychiatrykroles/testing/TestBanks.class": "365d74d355068270ac60558e6b7001e8638537071e0b50bc1e6463c7466f0f63",
+    "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class": "499de5a3142514dfb1aa1bd9b72b1b9b15ea5ef81bab458fdda7209e5ccede61",
+    "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class": "fa60c9b6fd9ce81ae79854e784679abdf1ebcb133f0408cabd88ac80456999c2",
+    "pl/aridlin/psychiatrykroles/testing/mixin/TestingSeedMixin.class": "17bed4743452e06c4f6deb07e02c5260c86defc63f58ad52f659d3e83731ea1f"
+  },
+  "frozen_dimension_resources": {
+    "data/psychiatryk_roles/dimension/test_normal.json": "a3d3a8bec3eda10e78a9e7d40d1c36022622302c821a05377c414523fc39fc38",
+    "data/psychiatryk_roles/dimension/test_flat.json": "9552d630d4ad0a0dce2144ff9641a1114449d533950d7aa54f6af621330bb2a4"
+  },
+  "preserved_prior_proofs": {
+    "work/bmc5-migration/testing-worlds/build/build-proof.json": "d95c6d216a7ac93296d306cb4984db092b05b50c73382be77580d88f7878dc4f",
+    "work/bmc5-migration/music/build-proof.json": "f1663e9b80caf158e9ee282f531e790c0f1c4edfc620518b1a94f196e44e6452",
+    "work/bmc5-migration/music/stop-fix-build-proof.json": "5c024fa3105b66e1d8a161b1833f8df4270186890de0d5560321b49a2a30ded2",
+    "work/bmc5-migration/chams-render-qa/render-qualification.json": "8591f040fc39382e1b1c7de05d72573e09b75147be9beb2495e7dfe83cb95573",
+    "work/bmc5-migration/music-client-qa/outputs/final/runtime-report.json": "d7f80ca1d83d81d63caf3812bdd45d63e13582a11ceb66bdf6e5eb287e719678",
+    "work/bmc5-migration/music-client-qa/outputs/final/server-runtime-report.json": "d77f5c682d872c091d9c539a6d14f5a174b88f2b0fbcbb732758816e7ef74a1b",
+    "work/bmc5-migration/testing-worlds/qa/live/outputs/focused-death/runtime-report.json": "0d8e83943b7558efe264f0367a58737cf35380c032f3d38378b5af3155100160",
+    "work/bmc5-migration/testing-worlds/qa/live/outputs/focused-death/server-runtime-report.json": "6fb7fbb96736ea29c6e642738cf895f256feeb759a860f144a8cf11eb243911c",
+    "work/bmc5-migration/automodpack-native-qa/runtime-report.json": "9760f520258d213ae32228886449ec05ac6d8a64e3ff385b8d06d7831417788a"
+  },
+  "release_mods": [
+    {
+      "project_id": 422301,
+      "modrinth_version_id": "fgL0T3wx",
+      "file": "sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
+      "bytes": 1142226,
+      "sha256": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+      "download_url": "https://cdn.modrinth.com/data/TyCTlI4b/versions/fgL0T3wx/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar"
+    },
+    {
+      "project_id": 618298,
+      "modrinth_version_id": "QSOgsVqQ",
+      "file": "sophisticatedcore-1.21.1-1.4.70.2131.jar",
+      "bytes": 1654111,
+      "sha256": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+      "download_url": "https://cdn.modrinth.com/data/nmoqTijg/versions/QSOgsVqQ/sophisticatedcore-1.21.1-1.4.70.2131.jar"
+    }
+  ],
+  "registration_scope": "dedicated-server only; existing common mixins unchanged"
+}

@@ -1,0 +1,139 @@
+{
+  "success": true,
+  "real_client": true,
+  "scope": "Disposable full BMC client and dedicated fixture; actual Sophisticated UUID storage, mod inventory menus and death/respawn packets",
+  "checks": [
+    {
+      "name": "Pinned Sophisticated Backpacks loaded in full BMC client",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Actual Curios equipped normal backpack UUID synced",
+      "passed": true
+    },
+    {
+      "name": "Actual Sophisticated normal backpack GUI shows stored items",
+      "passed": true
+    },
+    {
+      "name": "Focused real transition entered test bank",
+      "passed": true
+    },
+    {
+      "name": "Genuine client test bank has no normal backpack UUID item",
+      "passed": true
+    },
+    {
+      "name": "Client test bank clears normal equipped backpack UUID pointer",
+      "passed": true
+    },
+    {
+      "name": "Client equipped test backpack has independent UUID",
+      "passed": true
+    },
+    {
+      "name": "Genuine client new test backpack has independent UUID",
+      "passed": true
+    },
+    {
+      "name": "Actual Sophisticated test backpack GUI has independent contents",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Client normal equipped backpack UUID restored",
+      "passed": true
+    },
+    {
+      "name": "Genuine client ordinary backpack UUID restored",
+      "passed": true
+    },
+    {
+      "name": "Actual ordinary backpack GUI restores exact contents after test edits",
+      "passed": true
+    },
+    {
+      "name": "Client equipped test backpack UUID restored on reentry",
+      "passed": true
+    },
+    {
+      "name": "Genuine client test backpack UUID restored on reentry",
+      "passed": true
+    },
+    {
+      "name": "Focused real death screen reached",
+      "passed": true
+    },
+    {
+      "name": "Focused real respawn retains test bank",
+      "passed": true
+    },
+    {
+      "name": "Focused test death does not resurrect stocked iron diamonds or Sophisticated backpack",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Client normal equipped backpack UUID survives test death",
+      "passed": true
+    },
+    {
+      "name": "Ordinary backpack UUID survives genuine test death",
+      "passed": true
+    },
+    {
+      "name": "Actual ordinary Sophisticated GUI restores exact contents after test death",
+      "passed": true
+    },
+    {
+      "name": "Focused actual backpack and death screens completed without GL errors",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "candidate_sha256": "cc78aa9250f8d6c192eb7f9e3889bbf1c3d675cdb9ec5349582e96fa6cc3e320",
+  "helper_sha256": "e2b79e8f7e2519a3cfacb0a36bfaea8ddc3f3835e16b608d25d8eafecdcf9a7c",
+  "java_release": 21,
+  "verified": true,
+  "screenshots_inspected": true,
+  "evidence": {
+    "runtime-report.json": "9cc02f9434028d1934700589cd8c72c8d97963570771ef4700c506750076f63e",
+    "gl-state.json": "4bc351275087af0dffe9403b583edcb8307d0414ceb13e295b2caa61b89639b7",
+    "00-provider-off.png": "cade0ef61bc30ac1b3beaf748b5a75b7289a803d386dce9a65fa2fd7908b22d4",
+    "01-provider-on.png": "b7c482df9a3391de3ec89cfd7866c83bc28c6ad99f99b13ecc280e6f34ea0f96",
+    "02-provider-off-again.png": "3e08daec717d517ff7f4eab271bdf20f64cd7bd15654d58798edd13c158c8943",
+    "03-backpack-gui.png": "f12fa5d5fb7183d403e5a9ef8f8545aedd09626e0dce1a5b56dd00afc0309505",
+    "state.json": "84a80f7b3e746a211af9ec7ab544de2a5e81238cf3e8d112d785ba6b2db2281d"
+  },
+  "unchanged_resources": true,
+  "other_zip_entries_unchanged": 514,
+  "changed_class_entries": {
+    "pl/aridlin/portablechams/client/ChamsEffect.class": "b23ee9c52a12d2d5380620148561cbe093886958a0b938ea04489ef7fb7c3d20",
+    "pl/aridlin/portablechams/client/ChamsPass$Cache.class": "74bc975bdf9b5e12e4004d0c99775cff8b6de42cb4f37c6bc7415e9dd09698d0",
+    "pl/aridlin/portablechams/client/ChamsPass$MaskBuffers.class": "673da371520c27805c99b857a217f5fc0dfc2339dcb00c9b4568b76fc40a6dae",
+    "pl/aridlin/portablechams/client/ChamsPass.class": "1c4692293c012e5143d869a14ccc105ac53fad91075aa4675c8de90d2a31d941",
+    "pl/aridlin/portablechams/client/ChamsRenderState.class": "9b06c8c98a87d2e9d024d929ac54d3623947b6771f3bfb7a265b73d5df0c1a9d"
+  }
+}

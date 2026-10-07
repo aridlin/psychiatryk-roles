@@ -8,7 +8,7 @@ The mod keeps the `goplanska_kukirin` registry IDs to preserve item/entity data.
 
 ## Included
 
-Server-owned scooter entity, v34 signed controls and raked steering axis, acceleration/boost/brake/drift, battery/coal charging, enchantment effects, bound recall, storage/settings/help/music menus, smithing upgrades/dyes/trims, rental variants, recipes and a scooter-only creative tab. Server WAV streaming is bounded; two original CC0 instrumental tracks are bundled.
+Server-owned scooter entity, v34 signed controls and raked steering axis, acceleration/boost/brake/drift, battery/coal charging, enchantment effects, bound recall, storage/settings/help/music menus, smithing upgrades/dyes/trims, rental variants, recipes and a scooter-only creative tab. WAV playback uses bounded asynchronous HTTPS downloads with SHA-256 checks and a local cache. Two original CC0 instrumental tracks are bundled in the tested binary.
 
 An original 1000-triangle primitive model is rendered using Minecraft's ordinary entity buffer, with the same steering axis/grip/wheel locations. Generate it with `python tools/generate_model.py`. No imported model, UV atlas, Sketchfab texture, or third-party logo is included. Rental variants use colors; the production-specific livery is not distributed. The isolated bare client verified native fallback spawn/mount and neutral/A/D poses without GL errors; this is not a production performance benchmark.
 
@@ -36,3 +36,15 @@ The standard Gradle build compiles with only NeoForge's development dependencies
 Code and authored primitive model: GPL-3.0. Original bundled instrumentals: CC0 (notice next to music). Existing production model is separately licensed and deliberately omitted.
 
 Source publication excludes all audio files. The two original CC0 tracks remain in the tested distributable; a build from this source snapshot omits optional bundled tracks. Gradle builds need Java 21 and dependency downloads.
+
+## URL music source update
+
+The current source includes the tested URL music/jukebox component. Configure
+`config/goplanska-scooter/music-sources.json` on the server only; its schema and
+limits are documented in [the music guide](../../bmc5-v53/music/README.md).
+Shift-right-click a jukebox for the shared search browser. The scooter Music
+button requires its note-block upgrade. Both have Loop and Stop controls.
+Both server and clients must update together because the music protocol changed.
+The merged full-BMC candidate passed 24 client and 19 server music checks; the
+new source was not separately rerun as a bare standalone binary. No private
+catalog, credentials or user-owned audio is part of this source publication.

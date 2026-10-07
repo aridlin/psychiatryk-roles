@@ -1,0 +1,60 @@
+{
+  "success": true,
+  "candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "release_mods": [
+    {
+      "project_id": 422301,
+      "modrinth_version_id": "fgL0T3wx",
+      "file": "sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
+      "bytes": 1142226,
+      "sha256": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+      "download_url": "https://cdn.modrinth.com/data/TyCTlI4b/versions/fgL0T3wx/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar"
+    },
+    {
+      "project_id": 618298,
+      "modrinth_version_id": "QSOgsVqQ",
+      "file": "sophisticatedcore-1.21.1-1.4.70.2131.jar",
+      "bytes": 1654111,
+      "sha256": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+      "download_url": "https://cdn.modrinth.com/data/nmoqTijg/versions/QSOgsVqQ/sophisticatedcore-1.21.1-1.4.70.2131.jar"
+    }
+  ],
+  "baseline_jei": {
+    "file": "jei-1.21.1-neoforge-19.27.0.343.jar",
+    "sha256": "137f60018968a50c6f00e3a8ca9be790391792d2f3e6eff66237f2e9b3bc1353",
+    "bytes": 1529892,
+    "scope": "retained baseline JEI compatible with Distraction Free Recipes 1.2.2"
+  },
+  "real_client": true,
+  "focused_client_checks": 33,
+  "focused_server_checks": 58,
+  "focused_client_report": "live/outputs/focused-death/runtime-report.json",
+  "focused_server_report": "live/outputs/focused-death/server-runtime-report.json",
+  "earlier_genuine_client_checks": 55,
+  "earlier_genuine_client_success": true,
+  "earlier_server_checks_passed": 53,
+  "earlier_server_checks_total": 54,
+  "historical_fixture_failure": "Earlier sixth server run failed a generic persistent NBT marker assertion after death. That marker was outside NeoForge PlayerPersisted, which vanilla clone does not promise to retain. Earlier report remains unmodified. Focused correction puts the marker in PlayerPersisted and separately verifies the real global patient role after genuine death.",
+  "prior_focused_fixture_report": "live/outputs/focused-death-worn-priority-fixture/runtime-report.json",
+  "prior_focused_fixture_correction": "Generic backpack hotkey legitimately prefers the equipped bag; helper now opens main slot 1 explicitly.",
+  "scope": "Final frozen combined candidate with exact compatible backpack/Core pins; actual main-inventory and Curios-equipped normal backpack UUID/SavedData, empty test-bank inventory/equipment pointers, fresh independent test UUIDs, exact ordinary ItemStack components and contents restoration, genuine backpack GUI, actual death/respawn, Accessories/Curios synchronization and persistent global state. Earlier genuine run covers normal/flat transitions, grant policies, portal barrier and disconnect/rejoin.",
+  "inheritance_receipt": "live/final-combined-fixture-receipt.json",
+  "component_byte_equivalence": [
+    "pl/aridlin/psychiatrykroles/testing/BankNbt.class",
+    "pl/aridlin/psychiatrykroles/testing/InventorySync.class",
+    "pl/aridlin/psychiatrykroles/testing/TestBanks.class",
+    "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class",
+    "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class",
+    "pl/aridlin/psychiatrykroles/testing/mixin/TestingSeedMixin.class",
+    "psychiatryk-testing-worlds.mixins.json",
+    "data/psychiatryk_roles/dimension/test_normal.json",
+    "data/psychiatryk_roles/dimension/test_flat.json"
+  ],
+  "server_stopped": true,
+  "console_stop_exit_code": 0,
+  "source_profile_hashes_unchanged": true,
+  "credential_free_direct_launch": true,
+  "real_account_credentials_copied": false,
+  "production_changed": false,
+  "verified_at_utc": "2026-10-07T06:44:19.411961+00:00"
+}

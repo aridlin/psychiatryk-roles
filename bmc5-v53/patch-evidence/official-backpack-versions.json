@@ -1,0 +1,18 @@
+[
+  {
+    "project_id": 422301,
+    "modrinth_version_id": "fgL0T3wx",
+    "file": "sophisticatedbackpacks-1.21.1-3.25.69.1979.jar",
+    "bytes": 1142226,
+    "sha256": "97290db9a053737664cb937c4a40d4bf59a5525881d6fe3ca983d2c6648b05b2",
+    "download_url": "https://cdn.modrinth.com/data/TyCTlI4b/versions/fgL0T3wx/sophisticatedbackpacks-1.21.1-3.25.69.1979.jar"
+  },
+  {
+    "project_id": 618298,
+    "modrinth_version_id": "QSOgsVqQ",
+    "file": "sophisticatedcore-1.21.1-1.4.70.2131.jar",
+    "bytes": 1654111,
+    "sha256": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+    "download_url": "https://cdn.modrinth.com/data/nmoqTijg/versions/QSOgsVqQ/sophisticatedcore-1.21.1-1.4.70.2131.jar"
+  }
+]

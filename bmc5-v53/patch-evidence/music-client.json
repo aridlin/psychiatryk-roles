@@ -1,0 +1,103 @@
+{
+  "success": true,
+  "candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "scope": "Actual disposable full BMC client, real network GUI and authenticated HTTPS synthetic WAV; no main-profile changes",
+  "checks": [
+    {
+      "name": "Combined scooter music addon loaded in full BMC",
+      "passed": true
+    },
+    {
+      "name": "Reduced Roles loaded with testing-world module",
+      "passed": true
+    },
+    {
+      "name": "Real fixture jukebox tracked on client",
+      "passed": true
+    },
+    {
+      "name": "Synthetic HTTP WAV absent before playback",
+      "passed": true
+    },
+    {
+      "name": "Shared browser received635 library tracks plus bundled and synthetic entries",
+      "passed": true
+    },
+    {
+      "name": "Jukebox browser permissions synced",
+      "passed": true
+    },
+    {
+      "name": "Actual search widget narrows catalog",
+      "passed": true
+    },
+    {
+      "name": "HTTP downloaded WAV decoded into actual positional sound",
+      "passed": true
+    },
+    {
+      "name": "Loop packet reached positional sound",
+      "passed": true
+    },
+    {
+      "name": "Audio uses BLOCKS category for Sound Physics",
+      "passed": true
+    },
+    {
+      "name": "Downloaded SHA cache file has expected bytes",
+      "passed": true
+    },
+    {
+      "name": "Real HTTPS WAV cache matches synthetic source SHA",
+      "passed": true
+    },
+    {
+      "name": "Sound engine actively plays decoded WAV",
+      "passed": true
+    },
+    {
+      "name": "Actual cache filesystem exposes stable file identity",
+      "passed": true
+    },
+    {
+      "name": "Actual two-second sound loops into next instance without new session",
+      "passed": true
+    },
+    {
+      "name": "Real Stop GUI packet clears client positional sound",
+      "passed": true
+    },
+    {
+      "name": "Stop leaves no pending URL or decode session",
+      "passed": true
+    },
+    {
+      "name": "Stopped loop stays absent past original track duration",
+      "passed": true
+    },
+    {
+      "name": "Replay creates fresh source session",
+      "passed": true
+    },
+    {
+      "name": "Cached replay retains verified cache file identity and advances LRU timestamp",
+      "passed": true
+    },
+    {
+      "name": "Cached replay is active in actual sound engine",
+      "passed": true
+    },
+    {
+      "name": "Real client command autocomplete returns server song ID",
+      "passed": true
+    },
+    {
+      "name": "Second Stop removes cached playback",
+      "passed": true
+    },
+    {
+      "name": "Full BMC music GUI completed without GL errors",
+      "passed": true
+    }
+  ]
+}

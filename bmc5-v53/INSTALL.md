@@ -2,20 +2,26 @@
 
 Minecraft 1.21.1 · NeoForge 21.1.250 · Java 21.
 
-## Install in Prism or CurseForge
+## Quick first-run installer
+
+Download the Prism .mrpack or CurseForge installer ZIP from https://info.goplanska.pl/.
+Import it, launch and join goplanska.pl; AutoModpack downloads the complete current
+server pack and requests a relaunch. The tiny installer is not an offline full pack.
+
+## Manual install in Prism or CurseForge
 
 1. Download/import the **official unmodified Better MC [NEOFORGE] BMC5 v53**:
    https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge-bmc5/files/8835241
-   In Prism use Add instance → CurseForge → this pack → v53. Keep a backup of an existing instance; make a new instance for this release.
+   In Prism use Add instance → CurseForge → this pack → v53. Then Edit instance → Version → NeoForge → Change version → **21.1.250**. The server requires this exact loader, even if the imported v53 default differs. Keep the old instance for rollback.
 2. Close Minecraft. Open the new instance's Minecraft folder. Copy the JAR
    from this ZIP's `mods` directory into that instance's `mods` folder.
    This ZIP is an addon overlay, not a complete importable CurseForge modpack.
 3. Install AutoModpack **4.0.6 for NeoForge/Minecraft 1.21.1**, from its official
-   project: https://modrinth.com/mod/automodpack . It is not bundled in this
+   version: https://modrinth.com/mod/automodpack/version/e6HhD1Ik . It is not bundled in this
    own-addon archive. Launch and join `goplanska.pl`; follow AutoModpack's
    update/relaunch prompts to obtain the server-selected remaining additions.
-   If an update/fingerprint prompt differs from the server administrator's
-   published instructions, ask the administrator before accepting a new identity.
+   First-connection fingerprint: e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6
+   If it differs, do not accept a different server identity.
 4. Use the same instance for subsequent launches. Do not install the separate
    Portable Scooters/Portable Chams JARs alongside this merged addon: their IDs
    are already included. Do not mix the old S23 v33/v34 modpack into BMC5.

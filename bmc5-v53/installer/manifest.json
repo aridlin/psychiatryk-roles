@@ -1,0 +1,24 @@
+{
+  "minecraft": {
+    "version": "1.21.1",
+    "modLoaders": [
+      {
+        "id": "neoforge-21.1.250",
+        "primary": true
+      }
+    ]
+  },
+  "manifestType": "minecraftModpack",
+  "manifestVersion": 1,
+  "name": "Goplanska — Better MC5 v53",
+  "version": "installer-1",
+  "author": "aridlin",
+  "files": [
+    {
+      "projectID": 639211,
+      "fileID": 8606541,
+      "required": true
+    }
+  ],
+  "overrides": "overrides"
+}

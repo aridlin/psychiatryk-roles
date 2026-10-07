@@ -1,0 +1,227 @@
+{
+  "success": true,
+  "real_client": true,
+  "scope": "Disposable full BMC client and dedicated fixture; actual mod inventory menus, death packets and disconnect/rejoin",
+  "checks": [
+    {
+      "name": "Final no-IP migration client stack loaded",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Actual vanilla inventory screen shows survival items",
+      "passed": true
+    },
+    {
+      "name": "Actual Accessories menu shows Accessories and Curios items",
+      "passed": true
+    },
+    {
+      "name": "Actual backpack GUI shows survival nested storage",
+      "passed": true
+    },
+    {
+      "name": "Real command and network dimension transition reached flat test world",
+      "passed": true
+    },
+    {
+      "name": "Consultant defaults to survival on client",
+      "passed": true
+    },
+    {
+      "name": "Fresh test bank contains no survival inventory",
+      "passed": true
+    },
+    {
+      "name": "Fresh test Accessories containers clear on client",
+      "passed": true
+    },
+    {
+      "name": "Test main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Test Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Actual test Accessories menu has independent bank items",
+      "passed": true
+    },
+    {
+      "name": "Actual test backpack GUI has independent nested storage",
+      "passed": true
+    },
+    {
+      "name": "Real transition reaches independently seeded normal test world",
+      "passed": true
+    },
+    {
+      "name": "Test main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Test Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Normal Void Door teleport path remained blocked cross-bank",
+      "passed": true
+    },
+    {
+      "name": "Back command restores ordinary world",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Test main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Test Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Test main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Test Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Test Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Genuine player-file rejoin restores active test dimension and inventory",
+      "passed": true
+    },
+    {
+      "name": "Aridlin grant creative synced to actual consultant client",
+      "passed": true
+    },
+    {
+      "name": "Aridlin revocation synced to actual consultant client",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Patient defaults to creative after real reentry",
+      "passed": true
+    },
+    {
+      "name": "Patient survival toggle synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Patient creative toggle synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Real death screen opened in test world",
+      "passed": true
+    },
+    {
+      "name": "Actual respawn packet returns to testing world",
+      "passed": true
+    },
+    {
+      "name": "Actual test death does not resurrect either bank stock",
+      "passed": true
+    },
+    {
+      "name": "Survival main inventory synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival armor and offhand synced to genuine client",
+      "passed": true
+    },
+    {
+      "name": "Survival Accessories full attachment snapshot synced",
+      "passed": true
+    },
+    {
+      "name": "Survival Curios inventory synced",
+      "passed": true
+    },
+    {
+      "name": "Inventory and mod screens completed without GL error",
+      "passed": true
+    }
+  ]
+}

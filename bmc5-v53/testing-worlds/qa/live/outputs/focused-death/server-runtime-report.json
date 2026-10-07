@@ -1,0 +1,240 @@
+{
+  "success": true,
+  "candidate_sha256": "f6b413222daf31ed667bae71e90891407456bc21ebccbc0be1f98594d02b4a5a",
+  "server_stopped": true,
+  "real_join_count": 1,
+  "checks": [
+    {
+      "name": "normal and flat dimensions loaded with seed mixin initialized",
+      "passed": true
+    },
+    {
+      "name": "normal test seed is independent and ordinary seed remains unchanged",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 0",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 1",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 2",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 3",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 4",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 5",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 6",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 7",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 8",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 9",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 10",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 11",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 12",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 13",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 14",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 15",
+      "passed": true
+    },
+    {
+      "name": "actual generated density matches independent seed at sample 16",
+      "passed": true
+    },
+    {
+      "name": "actual test terrain differs from same generator with survival seed",
+      "passed": true
+    },
+    {
+      "name": "normal test loot sequences are separate from survival",
+      "passed": true
+    },
+    {
+      "name": "flat test loot sequences are separate from survival",
+      "passed": true
+    },
+    {
+      "name": "genuine client survival stock prepared",
+      "passed": true
+    },
+    {
+      "name": "synthetic profile classified patient using genuine Roles data with a fresh patient preference",
+      "passed": true
+    },
+    {
+      "name": "Sophisticated normal fixture begins in ordinary bank",
+      "passed": true
+    },
+    {
+      "name": "Actual Sophisticated Curios back equipment slot available",
+      "passed": true
+    },
+    {
+      "name": "Normal equipped Sophisticated backpack has its own storage UUID",
+      "passed": true
+    },
+    {
+      "name": "Actual Sophisticated normal wrapper uses UUID SavedData storage",
+      "passed": true
+    },
+    {
+      "name": "Test bank clears normal equipped Sophisticated UUID pointer",
+      "passed": true
+    },
+    {
+      "name": "Entering test leaves equipped normal UUID contents unchanged",
+      "passed": true
+    },
+    {
+      "name": "Test bank has no normal Sophisticated backpack item or UUID pointer",
+      "passed": true
+    },
+    {
+      "name": "Entering test bank leaves normal global UUID contents unchanged",
+      "passed": true
+    },
+    {
+      "name": "test stock added only inside test bank",
+      "passed": true
+    },
+    {
+      "name": "Actual Sophisticated Curios back equipment slot available",
+      "passed": true
+    },
+    {
+      "name": "New equipped test backpack has an independent storage UUID",
+      "passed": true
+    },
+    {
+      "name": "Equipped test writes leave normal worn UUID storage unchanged",
+      "passed": true
+    },
+    {
+      "name": "New test Sophisticated backpack gets independent storage UUID",
+      "passed": true
+    },
+    {
+      "name": "Writing test backpack global storage cannot mutate normal UUID contents",
+      "passed": true
+    },
+    {
+      "name": "Normal equipped Sophisticated components UUID and storage restore exactly",
+      "passed": true
+    },
+    {
+      "name": "Ordinary Sophisticated item components and original UUID restore exactly",
+      "passed": true
+    },
+    {
+      "name": "Ordinary Sophisticated SavedData contents restore exactly after test changes/death",
+      "passed": true
+    },
+    {
+      "name": "Ordinary restoration does not copy test backpack global UUID pointer",
+      "passed": true
+    },
+    {
+      "name": "Reentry restores equipped test UUID and storage",
+      "passed": true
+    },
+    {
+      "name": "Reentering test bank restores its own Sophisticated UUID and contents",
+      "passed": true
+    },
+    {
+      "name": "real player death completed while testing",
+      "passed": true
+    },
+    {
+      "name": "real respawn stays in testing bank",
+      "passed": true
+    },
+    {
+      "name": "post-death inventory cannot resurrect test or survival stock",
+      "passed": true
+    },
+    {
+      "name": "death never modifies durable full survival bank",
+      "passed": true
+    },
+    {
+      "name": "patient role stays global after genuine death",
+      "passed": true
+    },
+    {
+      "name": "survival main items survive real network transition",
+      "passed": true
+    },
+    {
+      "name": "survival armor offhand and ender chest restored",
+      "passed": true
+    },
+    {
+      "name": "survival Accessories and Curios restored after genuine join/transition",
+      "passed": true
+    },
+    {
+      "name": "survival Backpacked nested storage restored",
+      "passed": true
+    },
+    {
+      "name": "NeoForge PlayerPersisted global marker unaffected by banks/death",
+      "passed": true
+    },
+    {
+      "name": "Normal equipped Sophisticated components UUID and storage restore exactly",
+      "passed": true
+    },
+    {
+      "name": "Ordinary Sophisticated item components and original UUID restore exactly",
+      "passed": true
+    },
+    {
+      "name": "Ordinary Sophisticated SavedData contents restore exactly after test changes/death",
+      "passed": true
+    },
+    {
+      "name": "Ordinary restoration does not copy test backpack global UUID pointer",
+      "passed": true
+    }
+  ]
+}
