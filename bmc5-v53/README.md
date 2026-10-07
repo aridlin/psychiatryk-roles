@@ -1,6 +1,6 @@
-# BMC5 v53 + reduced Psychiatryk Roles 3.0.3
+# BMC5 v53 + reduced Psychiatryk Roles 3.0.4
 
-[Current 3.0.3 wearable jukebox](PATCH-3.0.3.md) · [3.0.2 model restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
+[Current 3.0.4 placed jukebox acoustics](PATCH-3.0.4.md) · [3.0.3 wearable jukebox](PATCH-3.0.3.md) · [3.0.2 model restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
 
 This is our addon, not a redistributed Better MC modpack. Use the [official v53
 base](https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge-bmc5/files/8835241)
@@ -20,7 +20,9 @@ private admin-confirm popup, private audio catalog/tracks or conversation logs
 are included. Only authored primitive scooter mesh/texture resources are copied.
 Optional portable adapter source folders are not tested installable adapter mods.
 
-The current 3.0.3 addon is SHA-256 daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4. Wearable equipment, menu/networking, moving Sound Physics and lifecycle have separate native runtime evidence in patch-evidence/wearable-jukebox-3.0.3.json.
+The current 3.0.4 addon is SHA-256 9d5e4271882a6ca112b7cdc859afb962cf3e42921f83a5fec05fba88ad11919e. Its completed placed-source acoustic regression is documented in patch-evidence/jukebox-acoustics-3.0.4.json. The native host distributes 3.0.4 without restarting the server, which continues with 3.0.3 loaded until its next normal restart.
+
+The qualified 3.0.3 baseline was SHA-256 daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4. Wearable equipment, menu/networking, moving Sound Physics and lifecycle have separate native runtime evidence in patch-evidence/wearable-jukebox-3.0.3.json.
 
 The original 3.0.0 baseline was SHA-256 43868feae389494896b258787cd5305fce43d9d22e595a59b587147f7ff13b53. Its historical client-runtime-report.json records27
 actual full-client checks, including server join, synchronized recipe set and

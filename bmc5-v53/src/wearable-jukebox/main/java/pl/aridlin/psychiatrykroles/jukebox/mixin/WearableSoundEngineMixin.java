@@ -23,11 +23,11 @@ public abstract class WearableSoundEngineMixin {
         int evaluated = 0;
         for (var entry : instanceToChannel.entrySet()) {
             if (!(entry.getKey() instanceof ScooterAudioClient.Moving moving)
-                || !moving.isEntitySource() || !moving.physicsActive() || moving.getVolume() <= 0
+                || !moving.physicsActive() || moving.getVolume() <= 0
                 || Math.floorMod(tickCount + moving.hashCode(), 10) != 0) continue;
             WearableSoundPhysics.update(moving, entry.getValue());
-            // This budget also bounds vanilla disc sources on scooters, independently
-            // of the server's four-source WAV/session limit.
+            // Listener movement also changes acoustics for stationary jukeboxes.
+            // The budget covers only our sources, including scooter vanilla discs.
             if (++evaluated == 4) break;
         }
     }

@@ -4,7 +4,7 @@ license="GPL-3.0-or-later; main scooter model under Sketchfab Standard (bundled 
 
 [[mods]]
 modId="psychiatryk_roles"
-version="3.0.3-bmc5"
+version="3.0.4-bmc5"
 displayName="Psychiatryk Roles"
 logoFile="pack-icon.png"
 description="Reduced BMC survival roles, mirror, loot lens, void doors, server-stock poker and parties."
@@ -21,7 +21,7 @@ side="BOTH"
 
 [[mods]]
 modId="goplanska_kukirin"
-version="3.0.3-bmc5"
+version="3.0.4-bmc5"
 displayName="KuKirin"
 logoFile="pack-icon.png"
 description="Scooter core with server recipe restrictions."
@@ -38,7 +38,7 @@ side="BOTH"
 
 [[mods]]
 modId="goplanska_parties"
-version="3.0.3-bmc5"
+version="3.0.4-bmc5"
 displayName="Goplanska Parties"
 logoFile="pack-icon.png"
 description="Persistent parties with invitations, kicks, color, chat and waypoints."
@@ -55,7 +55,7 @@ side="BOTH"
 
 [[mods]]
 modId="goplanska_party_markers"
-version="3.0.3-bmc5"
+version="3.0.4-bmc5"
 displayName="Goplanska Party Markers"
 logoFile="pack-icon.png"
 description="Server-authorized party dots and highlights."
@@ -72,7 +72,7 @@ side="BOTH"
 
 [[mods]]
 modId="portable_chams"
-version="3.0.3-bmc5"
+version="3.0.4-bmc5"
 displayName="Portable Chams"
 logoFile="pack-icon.png"
 description="Independent client highlight API."

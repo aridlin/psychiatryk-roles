@@ -1,0 +1,79 @@
+{
+  "success": true,
+  "candidate_sha256": "9d5e4271882a6ca112b7cdc859afb962cf3e42921f83a5fec05fba88ad11919e",
+  "base_sha256": "daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4",
+  "qualification_sha256": "6716061438de4d5781aa1cb00cbadebe6687f2ea47938f05f66ea3ddb5862362",
+  "native_publication_receipt_sha256": "bcdd7e3daaad709ea1ad3439478cf46649071bb37dfdfa6b162fd1491e9782b6",
+  "public_publication_receipt_sha256": "f65011e5e7bb5e44f57f07066513542757beda4caa3b6338e1128565fd655d67",
+  "completed_scope": "Completed native placed vanilla-jukebox custom-WAV acoustic regression under global update_moving_sounds=false; unchanged compiled10tick/4source budget inherited from qualified3.0.3",
+  "completed_native_checks": 13,
+  "native_openal_samples": [
+    {
+      "label": "placed-open-before-walk",
+      "state": 4114,
+      "direct_hf": 1.0,
+      "al_error": 0,
+      "spr_applications": 2,
+      "smoothing_applications": 5
+    },
+    {
+      "label": "placed-behind-wall-after-walk",
+      "state": 4114,
+      "direct_hf": 0.04983235,
+      "al_error": 0,
+      "spr_applications": 15,
+      "smoothing_applications": 26
+    },
+    {
+      "label": "placed-open-after-return-walk",
+      "state": 4114,
+      "direct_hf": 0.99998504,
+      "al_error": 0,
+      "spr_applications": 28,
+      "smoothing_applications": 48
+    }
+  ],
+  "sample_method": "Real SPR setEnvironment TAIL on the sound executor; AL error zero",
+  "integrated_server_fixture_only": true,
+  "null_audio_output_only": true,
+  "raw_runtime_success": false,
+  "auxiliary_fixture_complete": false,
+  "unfinished_excluded": [
+    "Auxiliary second/fourth placed menu and fifth-source runtime rejection",
+    "Auxiliary four-source runtime tick window",
+    "Native teardown completion"
+  ],
+  "human_listening_claimed": false,
+  "fresh_server_startup_claimed": false,
+  "public_server_join_claimed": false,
+  "vanilla_RECORDS_disc_acoustics_claimed": false,
+  "budget_preserved_by_compiled_equality": {
+    "interval_ticks": 10,
+    "sources_per_tick": 4,
+    "runtime_four_source_claimed": false
+  },
+  "common_server_network_classes_identical": true,
+  "all_other_client_resources_assets_identical": true,
+  "soundphysics_global_config_unchanged": true,
+  "native_published": true,
+  "distributed_release": "3.0.4",
+  "loaded_server_release": "3.0.3",
+  "server_restarted": false,
+  "startup_done_lines_unchanged": true,
+  "native_transport_verified": false,
+  "generated_feed_files": 1127,
+  "generated_feed_mods": 353,
+  "generated_feed_modified_paths": [
+    "/goplanska-release.json",
+    "/mods/psychiatryk_roles-3.0.0-bmc5.jar"
+  ],
+  "generated_feed_unchanged_records": 1125,
+  "native_jar_murmur_verified": true,
+  "original_jei_dfr_feed_records_unchanged": true,
+  "ore_only_config_preserved": true,
+  "bootstrap_installers_unchanged": true,
+  "addon_zip_sha256": "f1c41782942fb39c11a29c59d2e093eea6e0082b4b6c18532a43b34bb56702d6",
+  "public_sftp_http_verified": true,
+  "private_catalog_audio_accounts_worlds_logs_assets_excluded": true,
+  "live_agent_exported": false
+}
