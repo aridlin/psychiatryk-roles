@@ -19,7 +19,9 @@ Prepared 2026-10-06. This is a local submission draft, not a published project o
 - Description: PAGE.md
 - Disclosure: Contains AI-generated content, substantially AI-generated code/model/page text
 - Icon/gallery: do not upload generated branding; include only accurate media permitted by the current rules
-- Source/issues links: use the actual verified GitHub standalone-module path after it is pushed
+- Source: https://github.com/aridlin/psychiatryk-roles/tree/main/portable-modules/scooter
+- Issues: https://github.com/aridlin/psychiatryk-roles/issues
+- Repository release page: https://github.com/aridlin/psychiatryk-roles/releases (this draft does not claim a published standalone binary or release)
 - Binary: ../build/libs/portable-scooters-neoforge-1.21.1-1.0.0-portable-v34.jar
 - Sources: matching sources JAR and source project
 

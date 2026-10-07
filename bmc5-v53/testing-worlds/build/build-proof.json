@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "java_release": 21,
+  "classes": {
+    "pl/aridlin/psychiatrykroles/testing/BankNbt.class": "18c9bcbd510e3bec5684ca78c2bcded146c1828cc6ef1c6c3b9e87b6b2bc6fe8",
+    "pl/aridlin/psychiatrykroles/testing/InventorySync.class": "0c8ff05beb362a256ccf70ef26e5cbe0aa0f60ec61d5a049f836cbb14862d53f",
+    "pl/aridlin/psychiatrykroles/testing/TestBanks.class": "365d74d355068270ac60558e6b7001e8638537071e0b50bc1e6463c7466f0f63",
+    "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class": "499de5a3142514dfb1aa1bd9b72b1b9b15ea5ef81bab458fdda7209e5ccede61",
+    "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class": "fa60c9b6fd9ce81ae79854e784679abdf1ebcb133f0408cabd88ac80456999c2",
+    "pl/aridlin/psychiatrykroles/testing/mixin/TestingSeedMixin.class": "17bed4743452e06c4f6deb07e02c5260c86defc63f58ad52f659d3e83731ea1f"
+  },
+  "resources": {
+    "psychiatryk-testing-worlds.mixins.json": "42c6619220179939f262b55b6003b3f01728f1a15d5dcc861ac5efdc41a2a668",
+    "data/psychiatryk_roles/dimension/test_normal.json": "a3d3a8bec3eda10e78a9e7d40d1c36022622302c821a05377c414523fc39fc38",
+    "data/psychiatryk_roles/dimension/test_flat.json": "9552d630d4ad0a0dce2144ff9641a1114449d533950d7aa54f6af621330bb2a4"
+  },
+  "runtime_verified": false
+}
