@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "queued": true,
+  "activated": false,
+  "production_restarted": false,
+  "release": "3.0.9",
+  "base_sha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
+  "candidate_sha256": "a513a1e338f0651648dfa32ecf9f3049daab312c2304183083337ecbc43572de",
+  "not_before_utc": "2026-10-09T02:00:00Z",
+  "activation_uses_natural_scheduled_restart_only": true,
+  "pending_flag_published_last": true,
+  "active_four_payloads_unchanged_before_and_after_flag": true,
+  "active_native_feed_unchanged": true,
+  "current_crops_and_enabled_peeb_step_unchanged": true,
+  "prior_successful_and_withdrawn_queue_histories_unchanged": true,
+  "wrapper_byte_identical": true,
+  "prepared_queue_report_sha256": "83358cbfacc22f0f9274df702df687ea3cb463286fc7274c0345ecb17926e0bf",
+  "attempt_id": "20261009-0400-rebased-a513-20261008-native",
+  "queued_at_utc": "2026-10-08T18:07:00.578669+00:00",
+  "private_addresses_identities_secrets_exported": false
+}

@@ -6,6 +6,8 @@ Official Better MC5 base stays with its original publisher. The current addon so
 
 The [corrected 3.0.8 client-loader repair](bmc5-v53/PATCH-3.0.8-LOADERFIX.md) fixes the native ModLauncher startup error and includes normal crop growth in every season. Actual corrected full-pack launch/join and native delivery have separate sanitized evidence.
 
+The [fresh 3.0.9 source patch](bmc5-v53/PATCH-3.0.9.md) is queued for the normal 9 October 04:00 Warsaw restart; it is not yet the active production or website release. Its Peeb turning/dye/corner fixes and shared handling, party-pull and music compatibility changes passed native qualification.
+
 ---
 
 # Legacy Psychiatryk Roles — Forge 1.20.1

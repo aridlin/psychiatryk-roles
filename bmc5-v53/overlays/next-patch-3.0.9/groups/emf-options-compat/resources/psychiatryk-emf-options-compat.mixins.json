@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.compat",
+  "plugin": "pl.aridlin.psychiatrykroles.compat.EmfOptionsCompatPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "EmfRenderModeLabelsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

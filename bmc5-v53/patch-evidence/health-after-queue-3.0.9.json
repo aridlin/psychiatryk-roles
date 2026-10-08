@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "queued": true,
+  "activated": false,
+  "production_restarted": false,
+  "queue_report_sha256": "2754004a918ef860b065095961f1779501fa622a466cf63d81737e33d043461e",
+  "candidate_sha256": "a513a1e338f0651648dfa32ecf9f3049daab312c2304183083337ecbc43572de",
+  "current_live_addon_sha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
+  "current_live_release": "3.0.8",
+  "minecraft_status": {
+    "protocol": 767,
+    "version": "1.21.1",
+    "online": 2,
+    "maximum": 20
+  },
+  "minecraft_status_verified": true,
+  "automodpack_native_host_verified": true,
+  "pinned_tls_identity_verified": true,
+  "native_transport_verified": true,
+  "active_native_feed_sha256": "eb28f908306d3d2ceb2c7ef6ecf64deae256a05f8e8a2f868fd84d12bc61f9cf",
+  "current_crop_config_sha256": "ead7a0aead62bcd6b3c6ed3671538ca0c70cef3ff32f30348b4b9adfc6ceeb75",
+  "native_distribution_still_56cc_verified": true,
+  "before_scheduled_activation_verified": true,
+  "not_before_utc": "2026-10-09T02:00:00Z",
+  "host_pause_or_restart_performed": false,
+  "private_addresses_identities_secrets_exported": false,
+  "native_download_proof": {
+    "sha256": "d9af4e7f8bd408dae1ae8908c44675e97496b4337449f270345d0f7336eff412"
+  },
+  "checked_at_utc": "2026-10-08T18:09:10.292046+00:00"
+}

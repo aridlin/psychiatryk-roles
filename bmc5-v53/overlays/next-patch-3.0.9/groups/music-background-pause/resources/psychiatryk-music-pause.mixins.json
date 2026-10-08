@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.music",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["SoundManagerMusicAccessor", "SoundEngineMusicAccessor", "MusicBackgroundMixin"],
+  "injectors": {"defaultRequire": 1}
+}

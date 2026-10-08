@@ -1,0 +1,253 @@
+{
+  "success": true,
+  "candidate_sha256": "a513a1e338f0651648dfa32ecf9f3049daab312c2304183083337ecbc43572de",
+  "baseline_sha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
+  "composition_scope_verified": true,
+  "final_candidate_classpath_first_verified": true,
+  "all_tests_fresh_compilation_and_final_candidate_execution": true,
+  "native_checks": 152021,
+  "tests": {
+    "Native309Test": {
+      "success": true,
+      "checks": 87,
+      "native_target_motion_packet_verified": true,
+      "native_peeb4_music3_codecs_verified": true,
+      "legacy_constructor_compatibility_verified": true,
+      "combined_tuning_party_music_behavior_verified": true,
+      "game_launched": false
+    },
+    "NativeTuningTest": {
+      "success": true,
+      "checks": 358,
+      "native_config_codec_verified": true,
+      "handling_protocol2_verified": true,
+      "global_broadcast_join_sync_verified": true,
+      "native_handler_permission_verified": true,
+      "prediction_server_values_verified": true,
+      "high_speed_turn_floor_verified": true,
+      "geometry_reverse_stationary_verified": true,
+      "game_launched": false
+    },
+    "PartyPullTest": {
+      "success": true,
+      "checks": 151,
+      "native_vec3_force_budget": true,
+      "native_voxel_collision": true,
+      "game_launched": false
+    },
+    "StateCodecTest": {
+      "success": true,
+      "checks": 21,
+      "native_state_codec": true,
+      "legacy_constructors": true,
+      "game_launched": false
+    },
+    "PartyRuntimeTest": {
+      "success": true,
+      "checks": 35,
+      "native_scoreboard_membership": true,
+      "production_lifecycle_handlers": true,
+      "no_damage_handlers": true,
+      "pvp_bypass_rejected": true,
+      "server_facts_and_transport_doubles": true,
+      "game_launched": false
+    },
+    "ClientModeTest": {
+      "success": true,
+      "checks": 10,
+      "actual_transplanted_client_methods": true,
+      "pre_ack_self_pull_absent": true,
+      "acknowledged_self_pull_absent": true,
+      "window_free_singleton_double": true,
+      "game_launched": false
+    },
+    "PeebRenderRegressionTest": {
+      "success": true,
+      "checks": 149369,
+      "poses": 189,
+      "colored_vertices": 19776,
+      "game_launched": false
+    },
+    "GrappleStepTest": {
+      "success": true,
+      "checks": 202,
+      "native_voxel_collision_primitives": true,
+      "ground_and_midair_step_verified": true,
+      "walls_and_ceilings_rejected": true,
+      "game_launched": false
+    },
+    "jei-boundary-old": {
+      "success": true,
+      "mode": "jei",
+      "checks": 4,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "flywheel-boundary-old": {
+      "success": true,
+      "mode": "flywheel",
+      "checks": 5,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "emf-boundary-old": {
+      "success": true,
+      "mode": "emf",
+      "checks": 4,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "jei-native-old": {
+      "success": true,
+      "checks": 29,
+      "mode": "old",
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "jei-native-new": {
+      "success": true,
+      "checks": 7,
+      "mode": "new",
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "jei-native-absent": {
+      "success": true,
+      "checks": 4,
+      "mode": "absent",
+      "no_jei_dependency": true
+    },
+    "flywheel-native-old": {
+      "success": true,
+      "checks": 1448,
+      "mode": "old",
+      "unpatched_tail_failures": 63,
+      "patched_tail_failures": 0,
+      "tail_cases": 128,
+      "random_range_cases": 512,
+      "actual_parallelUpdate_cases": 4,
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "flywheel-native-new": {
+      "success": true,
+      "checks": 5,
+      "mode": "new",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-unknown": {
+      "success": true,
+      "checks": 5,
+      "mode": "unknown",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-off": {
+      "success": true,
+      "checks": 5,
+      "mode": "off",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-server": {
+      "success": true,
+      "checks": 5,
+      "mode": "server",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-absent": {
+      "success": true,
+      "checks": 3,
+      "mode": "absent",
+      "no_flywheel_dependency": true
+    },
+    "emf-native-old": {
+      "success": true,
+      "mode": "old",
+      "checks": 53,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": true,
+      "game_launched": false
+    },
+    "emf-native-fixed": {
+      "success": true,
+      "mode": "fixed",
+      "checks": 18,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": true,
+      "game_launched": false
+    },
+    "emf-native-unknown": {
+      "success": true,
+      "mode": "unknown",
+      "checks": 5,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": false,
+      "game_launched": false
+    },
+    "emf-native-server": {
+      "success": true,
+      "mode": "server",
+      "checks": 5,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": false,
+      "game_launched": false
+    },
+    "emf-native-absent": {
+      "success": true,
+      "mode": "absent",
+      "checks": 4,
+      "no_optional_dependency": true
+    },
+    "BackgroundPauseTest": {
+      "success": true,
+      "checks": 51,
+      "native_music_channel_pause_state_verified": true,
+      "scheduler_and_lifecycle_verified": true,
+      "audibility_verified": true,
+      "game_launched": false
+    },
+    "NativeMusicMixinTest": {
+      "success": true,
+      "checks": 128,
+      "actual_sponge_native_transformation": true,
+      "all_prior_audio_client_methods_preserved": true,
+      "game_launched": false
+    }
+  },
+  "handling_protocol": 2,
+  "peeb_protocol": 4,
+  "music_protocol": 3,
+  "portable_byte_identical": true,
+  "source_export_manifest_sha256": "cc4e1c4ea2cfcb2724833596106df108a8afe628dcde0f7d7aaef9688019bbe4",
+  "composition_proof_sha256": "b32302c924254b098c8f5e299f910dbaa50b61782ce965476e289b0a97202fcc",
+  "fixture_sources_sha256": {
+    "tests/Native309Test.java": "dd42a51f4ff24d141c9a1eb917d6d693845c8db0f49d5e3021dfc301ef2f5db8"
+  },
+  "tools_sha256": {
+    "compose.py": "c81a9b666302b1a29eab050618eefe0eb84733821e2e0e9c0600c53a94f8d581",
+    "qualify.py": "a4e3160e2382b3d136ab380d77cb19620bb00f87016991cd73b7994633537a1a",
+    "export_source.py": "a642c0ce0b5e8354e23ba15a9f0b1d27b5bfe4c0ca6bec7be14018319ee00a95",
+    "portable_build.py": "369a7c4821a09ddae42d420670cda0381435132a34da683ff34b6f2372215dbf"
+  },
+  "game_launched": false,
+  "production_changed": false,
+  "live_multiplayer_tested": false,
+  "limitations": [
+    "Headless native math, geometry, draw-call, collision, codec, handler, lifecycle and Sponge loader/mixin tests. No game window, live visuals or actual player test. Existing admin grappleStep setting remains respected."
+  ]
+}
