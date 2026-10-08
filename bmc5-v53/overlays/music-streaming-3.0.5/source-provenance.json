@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "source_sha256": {
+    "build.py": "4094809f57a59f965e6bc7cb9bdbae5eacd329d7f85f52b2a8ce17ef849b4dad",
+    "README.md": "a96473d898a448706bc8b726030142ebaf3b76f6c59be3ada11eb8b8e7cd877e",
+    "operator_activate.py": "2f8ea5aab13645f1147b21655f8a9f9f1f3694731a0d99685aedc3a67b3c7a4c",
+    "service/common.py": "eab3cb5dd24b3eae5dcdb52aaa6598685153bd476db4bf0814d5179fe3234830",
+    "service/worker.py": "11034e999cbce7d906a8b2975f76cfc787548914706e1afd3f3c10728725389c",
+    "service/service.py": "d6acc83051ddacc79997d92bbc1d72998e0b270f6fa654b3b157911fb3f4365f",
+    "service/requirements.txt": "87655f5177e3512887bcd2db0ab8ead069ef34b0dfc69fbea3ba888c33129f7d",
+    "tests/StreamCheck.java": "d55e72e3ab282a5b6b44d1b7ee6a024e15a98aa422e66cd9e8eaa5e0587c9b11",
+    "tests/service_check.py": "438482eeaee96dd0f05e4717d065751d86d606b911c18e9fecd460d086d887a3",
+    "src/pl/aridlin/kukirin/ScooterHttpAudioStream.java": "4398a6d10ee5a7896911a6788f851c93d4e2bcfc466c262e704b9f496d82b417",
+    "src/pl/aridlin/kukirin/ScooterAudioClient.java": "e264f0c3ce8cfd0ee532beb3cb01ea56771dae7ffd619939897556ae1bb92f62",
+    "src/pl/aridlin/kukirin/MusicImports.java": "3482f567968836058a646783426d866ad8593fa0016aa1fb14f9046298f0c8f4",
+    "src/pl/aridlin/kukirin/ScooterMusicSources.java": "5bfa57b6df976f692e4e1f88a206d9b8e2a03b9e8dbeb65c51d8ff605567c0fa",
+    "src/pl/aridlin/kukirin/MusicNowPlaying.java": "b6440313cd75e6acdaf40dd5a31d752c7b36f169d5ea2fcf7707ba3015da274e"
+  },
+  "original_streaming_source_export_verified": true,
+  "portable_builder_changes": [
+    "explicit output directory",
+    "platform classpath separator"
+  ],
+  "runtime_source_changed_by_export": false,
+  "credentials_binary_audio_or_private_state_included": false
+}

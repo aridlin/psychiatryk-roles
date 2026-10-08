@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "historical_disc_checkpoint_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d",
+  "focused_candidate_sha256": "2f83776f209b598bc3b684b8c46c0d40fc3400002bcf26f253e50395ae493fc9",
+  "source_sha256": {
+    "src/pl/aridlin/psychiatrykroles/peeb/client/PeebBindings.java": "e15188181515cb30bbc09ff0fdc7b2d388c5647a029b26b16b6d1a1dcbd0041a",
+    "src/pl/aridlin/psychiatrykroles/peeb/client/PeebClient.java": "47b9f27f6994993f78b583ceb43593ad30aa4f68fbb74c178a177323dd2a218a",
+    "src/pl/aridlin/psychiatrykroles/peeb/PeebGrapple.java": "914811830461d314a5cdc92d6bc6c6df36732984ef0db0cae8617b1d616ba724",
+    "src/pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.java": "6589f4df8f1bd0353d43d789cc28adbaccf563c895fc2656406389503a868628"
+  },
+  "reconstructed_and_edited_sources_not_original_project": true,
+  "model_audio_world_or_binary_included": false
+}

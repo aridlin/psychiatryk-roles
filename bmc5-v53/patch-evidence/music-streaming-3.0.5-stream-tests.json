@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "assertions": 68,
+  "starts_before_complete_download": true,
+  "bounded_pcm_buffers": true,
+  "rf64_supported": true,
+  "loop_and_cancel_verified": true,
+  "native_game_runtime_claimed": false
+}

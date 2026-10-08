@@ -2,7 +2,7 @@
 
 [Addon and installation](bmc5-v53/README.md) · [Portable Scooters](portable-modules/scooter/README.md) · [Portable Chams SDK](portable-modules/chams/README.md).
 
-Official Better MC5 base stays with its original publisher. This tree prepares our own addon/source only; live deployment is recorded separately. Earlier S23 v34/v33 source remains available below.
+Official Better MC5 base stays with its original publisher. This tree prepares our own addon/source only; Roles 3.0.5 is deployed; [current changes and deployment evidence](bmc5-v53/PATCH-3.0.5-FOLLOWUP.md) are recorded separately. Earlier S23 v34/v33 source remains available below.
 
 ---
 

@@ -1,0 +1,171 @@
+{
+  "scope": "scooter-upgrade-restoration",
+  "base_sha256": "106f9337eb3f567e61e48a762c58e198331ccf95ca36a94e00e8695873469d85",
+  "original_policy_source_sha256": "be95458ac60565d25e8444502f2fe302c4cb8f4efe154c78057344af6ca033ef",
+  "policy_source_sha256": "a9907509db0f1885228f80cc5a7fe465cc8d5a04f853a40d07e45cfc74f5ee91",
+  "typed_recipe_ids": {
+    "goplanska_kukirin:bound_scooter": "goplanska_kukirin:bound_scooter",
+    "goplanska_kukirin:scooter_chest": "goplanska_kukirin:scooter_upgrade",
+    "goplanska_kukirin:scooter_dye_black": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_blue": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_brown": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_cyan": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_gray": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_green": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_light_blue": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_light_gray": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_lime": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_magenta": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_orange": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_pink": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_purple": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_red": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_white": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_dye_yellow": "goplanska_kukirin:scooter_dye",
+    "goplanska_kukirin:scooter_infinite": "goplanska_kukirin:scooter_upgrade",
+    "goplanska_kukirin:scooter_jukebox": "goplanska_kukirin:scooter_upgrade",
+    "goplanska_kukirin:scooter_noteblock": "goplanska_kukirin:scooter_upgrade",
+    "goplanska_kukirin:scooter_saddle": "goplanska_kukirin:scooter_upgrade",
+    "goplanska_kukirin:scooter_upgrade_netherite": "goplanska_kukirin:scooter_upgrade"
+  },
+  "recipes": {
+    "goplanska_kukirin:bound_scooter": {
+      "type": "goplanska_kukirin:bound_scooter",
+      "path": "data/goplanska_kukirin/recipe/bound_scooter.json",
+      "sha256": "f68fe64a200ff73d018f940413bc6897ca949f12b82e2c026e1b03fc5a696164"
+    },
+    "goplanska_kukirin:scooter_chest": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_chest.json",
+      "sha256": "972250adf1977a87e5c3eaab3795a6832b71a42f359e3b878ebfb6749f59f3ef"
+    },
+    "goplanska_kukirin:scooter_dye_black": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_black.json",
+      "sha256": "41733ab4e0e1aea910ec3d45082d0daad8d379c57ce42c0fb97b11994d9d925a"
+    },
+    "goplanska_kukirin:scooter_dye_blue": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_blue.json",
+      "sha256": "0fe4f3b3ffee0ca16818ffe27c8d0fd0397d1010182e894a4d410603cab0ba69"
+    },
+    "goplanska_kukirin:scooter_dye_brown": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_brown.json",
+      "sha256": "6d1cbd60c38a4b25df4fd3126303623757f6cb26c26f33b86a628b9523d5f09f"
+    },
+    "goplanska_kukirin:scooter_dye_cyan": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_cyan.json",
+      "sha256": "1678fc038ce9853a5f652dd0983794f5471f7feff6d54ee4366e7015128d8bcf"
+    },
+    "goplanska_kukirin:scooter_dye_gray": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_gray.json",
+      "sha256": "1376fbd8d0d822f727403db262c08fc8a90602ce1cedd6f2baeb6a66b71de3bc"
+    },
+    "goplanska_kukirin:scooter_dye_green": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_green.json",
+      "sha256": "0e9e95b23e11bf0fff5eabe4484df4cdae0e04f1486526e4c185b149ff43808d"
+    },
+    "goplanska_kukirin:scooter_dye_light_blue": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_light_blue.json",
+      "sha256": "106805a0b035a6758093155e62fe3467c27a3bf3b217dc3311ca90592550cfc7"
+    },
+    "goplanska_kukirin:scooter_dye_light_gray": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_light_gray.json",
+      "sha256": "5b26c6cf6ce16944f3dc515687fe5ad7a003c9f35d7e3bb88e5e4d11bdcea226"
+    },
+    "goplanska_kukirin:scooter_dye_lime": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_lime.json",
+      "sha256": "aef4021556743a7afd5f305022d234957dd837c8420855a88b967f47c713bdaf"
+    },
+    "goplanska_kukirin:scooter_dye_magenta": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_magenta.json",
+      "sha256": "5dbb8345bda65ad6ac30d38c3e0285d1e410bb5524c5b3d34d5b5d1ab56694c8"
+    },
+    "goplanska_kukirin:scooter_dye_orange": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_orange.json",
+      "sha256": "5e1c63d2d1efe5a91db2029f15a6ba67850f4b36fb7b2a23de60edbb3d59701c"
+    },
+    "goplanska_kukirin:scooter_dye_pink": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_pink.json",
+      "sha256": "4670a7120537701d867102364cd403f2f6870b6d07ca6c42b24cca72996bdfc8"
+    },
+    "goplanska_kukirin:scooter_dye_purple": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_purple.json",
+      "sha256": "355ecd78d910b41a3943a75d003df3c2b69c949989154f4cea44ba390d1d418a"
+    },
+    "goplanska_kukirin:scooter_dye_red": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_red.json",
+      "sha256": "e151678cd9c2b3017713b133748be6cf77af25b5f3585e120be3f17c36518321"
+    },
+    "goplanska_kukirin:scooter_dye_white": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_white.json",
+      "sha256": "8e94e0de1dd9819657c2b55bdc9e42706e673b2bf3ea557774b2113f1d7edd87"
+    },
+    "goplanska_kukirin:scooter_dye_yellow": {
+      "type": "goplanska_kukirin:scooter_dye",
+      "path": "data/goplanska_kukirin/recipe/scooter_dye_yellow.json",
+      "sha256": "f2d54ed18c8d578de6c8d23a1217ce683af0d8c051f70749ac87291071eedfdd"
+    },
+    "goplanska_kukirin:scooter_infinite": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_infinite.json",
+      "sha256": "b1b84a1ba3311e6db108aa9a5b460268ec10025a4a9ce2909e2a1d7fdd78a11c"
+    },
+    "goplanska_kukirin:scooter_jukebox": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_jukebox.json",
+      "sha256": "4097b537b3f1e71a3532188d6dfc8c51dcf2d558156467bfcd9a9343e5b6775f"
+    },
+    "goplanska_kukirin:scooter_noteblock": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_noteblock.json",
+      "sha256": "cb9a8ecc9c488b89e5ebf4eb15007fdc4c4a76e4c6b7a97897bd18a9d5017458"
+    },
+    "goplanska_kukirin:scooter_saddle": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_saddle.json",
+      "sha256": "a3220d046fdb029f9cb80c93334ab6f5cb274348295a8a6976988845a056cd40"
+    },
+    "goplanska_kukirin:scooter_upgrade_netherite": {
+      "type": "goplanska_kukirin:scooter_upgrade",
+      "path": "data/goplanska_kukirin/recipe/scooter_upgrade_netherite.json",
+      "sha256": "aee998eb3bfbc2eaa682ecf23dc7e6e0c53fdcfca6d40769a5b953c630de26f3"
+    }
+  },
+  "blocked_custom_recipe_ids": [
+    "goplanska_kukirin:scooter_dismantler"
+  ],
+  "unchanged_endgame_recipe": "data/goplanska_kukirin/recipe/kukirin_scooter.json",
+  "held_peeb_source_sha256": "5c727d64d531b2d97f3706d0919003a2e0f3f9d9a343817c8bcaa09ecf286d33",
+  "authorized_class_families": [
+    "pl/aridlin/psychiatrykroles/migration/MigrationPolicy",
+    "pl/aridlin/psychiatrykroles/peeb/PeebMode"
+  ],
+  "lang_changes": {
+    "assets/psychiatryk_peeb/lang/en_us.json": {
+      "key": "tooltip.psychiatryk_peeb.armor",
+      "before": "Other armour slots must be empty. Natural armour: 7 (full leather).",
+      "after": "When worn, other armour slots must be empty. Natural armour: 7 (full leather).",
+      "sha256": "9e9f5664cd28e2cff62d7ebaf32487aff0cd6c6dc80953fa3d7b4c10d972fae4"
+    },
+    "assets/psychiatryk_peeb/lang/pl_pl.json": {
+      "key": "tooltip.psychiatryk_peeb.armor",
+      "before": "Pozostałe sloty zbroi muszą być puste. Naturalny pancerz: 7 (pełna skórzana zbroja).",
+      "after": "Podczas noszenia Peeba pozostałe sloty zbroi muszą być puste. Naturalny pancerz: 7 (pełna skórzana zbroja).",
+      "sha256": "138fe49a03b9d7e72a706677dd3f7c51aafdfcdcb8946065beaf31aaca0bc001"
+    }
+  }
+}

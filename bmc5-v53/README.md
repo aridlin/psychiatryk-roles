@@ -1,13 +1,14 @@
-# BMC5 v53 + reduced Psychiatryk Roles 3.0.4
+# BMC5 v53 + reduced Psychiatryk Roles 3.0.5
 
-[Current 3.0.4 placed jukebox acoustics](PATCH-3.0.4.md) · [3.0.3 wearable jukebox](PATCH-3.0.3.md) · [3.0.2 model restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
+[Current 3.0.5 Peeb, streaming and scooter upgrade fixes](PATCH-3.0.5-FOLLOWUP.md) · [Player guide](PLAY-3.0.5-FOLLOWUP.md) · [Activation receipt](patch-evidence/production-3.0.5.json) · [3.0.4 placed jukebox acoustics](PATCH-3.0.4.md) · [3.0.3 wearable jukebox](PATCH-3.0.3.md) · [3.0.2 model restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).
 
 This is our addon, not a redistributed Better MC modpack. Use the [official v53
 base](https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge-bmc5/files/8835241)
 and [install steps](INSTALL.md). MC1.21.1 / NeoForge21.1.250 / Java21.
 
-[Exact six recipes](recipes.json): mirror, loot lens, dragon egg shards,
-owner-bound scooter and classic Void Door/trapdoor. Ten MoreVillagers station
+[Original six recipes](recipes.json): mirror, loot lens, dragon egg shards,
+owner-bound scooter and classic Void Door/trapdoor. Peeb and the restored scooter
+smithing recipes are described in the current player guide. Ten MoreVillagers station
 recipes and survival use/place/pickup are restricted. Immersive Portals is removed.
 The standalone scooter uses its original recipe; the BMC addon overrides it with
 iron, dragon-egg shard, elytra and redstone block. Shared poker escrow uses pinned

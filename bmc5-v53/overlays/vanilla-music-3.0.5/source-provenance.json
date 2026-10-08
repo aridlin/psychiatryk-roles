@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "minecraft": "1.21.1",
+  "native_resource_references": 79,
+  "native_tracks": 60,
+  "native_discs": 19,
+  "source_resource_sha256": {
+    "src/pl/aridlin/kukirin/ScooterMusic.java": "eb832399fcb54efe01bcd31bdee6cfee1cfcd89b38d9afc5741549f82b3198ec",
+    "src/pl/aridlin/kukirin/VanillaMusicCatalog.java": "e85436da889fc9b35f6bf24cfc3dff62985ab9ee6bf4e9d0cf1c5ec1c2fece32",
+    "resources/assets/goplanska_kukirin/sounds.json": "332e73766038aa67e2d8e826d94cd3172476e0ceedabbdb076046e3429b0c09d",
+    "resources/data/goplanska_kukirin/vanilla-music.json": "b6572ba50116f9f2f2270e3267fd53f41d67b95bc181c5fa7662afe7b7a005fa"
+  },
+  "runtime_files_sha256": {
+    "pl/aridlin/kukirin/ScooterMusic$Dormant.class": "98f7d04112af8519506a7a92513b84dbf7a0d3cb35db9bf59b30407fc4757294",
+    "pl/aridlin/kukirin/ScooterMusic$Modes.class": "9bcf2efea20020c6399d435332b51a66e37b09d8a138f89502114015c541933e",
+    "pl/aridlin/kukirin/ScooterMusic$Playback.class": "b91b7e883dff076f23416c33e4fb634f9492cb2869c0692e9aa2babf4294db3d",
+    "pl/aridlin/kukirin/ScooterMusic$Source.class": "8b29e9fdcdcc448273f38c30f03117c8ab47dc537ad17d41ba89e2964c6e8daa",
+    "pl/aridlin/kukirin/ScooterMusic.class": "060a133e8c9ae57aa90e2b2d6be1722e4fe3d804bcfa02d77a35e5c6457f9204",
+    "pl/aridlin/kukirin/VanillaMusicCatalog.class": "4efd4b01ebe5f1aaefaad8d06ed071ce3b4cb8fcfba9875f45fde7ad007cc083",
+    "assets/goplanska_kukirin/sounds.json": "332e73766038aa67e2d8e826d94cd3172476e0ceedabbdb076046e3429b0c09d",
+    "data/goplanska_kukirin/vanilla-music.json": "b6572ba50116f9f2f2270e3267fd53f41d67b95bc181c5fa7662afe7b7a005fa"
+  },
+  "audio_copied": false
+}

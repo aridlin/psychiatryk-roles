@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "assertions": 11,
+  "track_input_bytes": 69206060,
+  "fixture_duration_seconds": 1569.297415,
+  "over64MiB_input_accepted": true,
+  "over16MiB_WAV_accepted": true,
+  "over600_second_track_accepted": true,
+  "real_provider_download_tested": false,
+  "production_changed": false
+}

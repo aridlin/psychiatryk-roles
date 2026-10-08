@@ -1,0 +1,1336 @@
+{
+  "success": true,
+  "candidate_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "tested_candidate_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "full_dedicated_launch_performed": true,
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.250",
+  "mod_jar_count": 295,
+  "actual_mod_count": 399,
+  "common_observer_assertions": 63,
+  "common_observer_checks": [
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded psychiatryk_roles"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for psychiatryk_roles"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded goplanska_kukirin"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for goplanska_kukirin"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded goplanska_parties"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for goplanska_parties"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded portable_chams"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for portable_chams"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded psychiatryk_peeb"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for psychiatryk_peeb"
+    },
+    {
+      "passed": true,
+      "description": "Peeb item registered on dedicated server"
+    },
+    {
+      "passed": true,
+      "description": "actual RecipeManager contains Peeb recipe"
+    },
+    {
+      "passed": true,
+      "description": "full BMC RecipeManager retained"
+    },
+    {
+      "passed": true,
+      "description": "Peeb recipe matches string, leather and stick"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe assembles one registered Peeb"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:action SERVERBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:action"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:state CLIENTBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:state"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:config CLIENTBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:config"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:config_edit SERVERBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:config_edit"
+    },
+    {
+      "passed": true,
+      "description": "existing jukebox command registered"
+    },
+    {
+      "passed": true,
+      "description": "Peeb dedicated configuration loaded valid values"
+    },
+    {
+      "passed": true,
+      "description": "native visible in-range attachment accepted"
+    },
+    {
+      "passed": true,
+      "description": "legitimate anchor initially retained"
+    },
+    {
+      "passed": true,
+      "description": "fixture has a real collider obscuring attached anchor"
+    },
+    {
+      "passed": true,
+      "description": "rotated view and obscured attached anchor remain valid"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick retains anchor after view rotation and occlusion"
+    },
+    {
+      "passed": true,
+      "description": "removed supporting collider invalidates tether"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases removed-support anchor"
+    },
+    {
+      "passed": true,
+      "description": "new valid anchor accepted for range case"
+    },
+    {
+      "passed": true,
+      "description": "out-of-range tether invalidates"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases out-of-range anchor"
+    },
+    {
+      "passed": true,
+      "description": "new valid anchor accepted for mode-exit case"
+    },
+    {
+      "passed": true,
+      "description": "Peeb mode exit clears the authoritative session"
+    },
+    {
+      "passed": true,
+      "description": "new attachment through an obstructing collider remains rejected"
+    },
+    {
+      "passed": true,
+      "description": "native visible living enemy attachment accepted"
+    },
+    {
+      "passed": true,
+      "description": "native enemy winch settles before moving-target sync case"
+    },
+    {
+      "passed": true,
+      "description": "connection validation refreshes moving enemy before physics tick"
+    },
+    {
+      "passed": true,
+      "description": "native anchor follows the living target position"
+    },
+    {
+      "passed": true,
+      "description": "settled winch broadcasts refreshed moving-target state after connection validation"
+    },
+    {
+      "passed": true,
+      "description": "removed living target invalidates tether"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases removed living target"
+    },
+    {
+      "passed": true,
+      "description": "fresh enemy hook accepted for contact damage"
+    },
+    {
+      "passed": true,
+      "description": "distant enemy hook deals no immediate damage"
+    },
+    {
+      "passed": true,
+      "description": "actual native contact attack deals wooden-sword base damage of four"
+    },
+    {
+      "passed": true,
+      "description": "held enemy hook never repeats contact damage"
+    },
+    {
+      "passed": true,
+      "description": "early repeat enemy hook attaches normally"
+    },
+    {
+      "passed": true,
+      "description": "release and reattach cannot bypass player twenty-tick attack cooldown"
+    },
+    {
+      "passed": true,
+      "description": "repeat enemy hook accepted after cooldown"
+    },
+    {
+      "passed": true,
+      "description": "new contact hook damages again after cooldown"
+    },
+    {
+      "passed": true,
+      "description": "native attachment rejects a living allied target"
+    },
+    {
+      "passed": true,
+      "description": "native scooter mount accepted while holding Peeb"
+    },
+    {
+      "passed": true,
+      "description": "common helper identifies the controlling root scooter rider"
+    },
+    {
+      "passed": true,
+      "description": "native Peeb attachment accepted from a scooter"
+    },
+    {
+      "passed": true,
+      "description": "actual mounted scooter session remains valid"
+    },
+    {
+      "passed": true,
+      "description": "server scooter winch preserves tangential vehicle momentum and adds pull"
+    },
+    {
+      "passed": true,
+      "description": "mounted server winch applies no duplicate impulse to rider"
+    },
+    {
+      "passed": true,
+      "description": "authoritative native motion packet addresses root scooter"
+    },
+    {
+      "passed": true,
+      "description": "actual Elytra scooter factory and all eleven Loyalty checks passed"
+    },
+    {
+      "passed": true,
+      "description": "all loaded scooter modifications and held/worn Peeb armor checks passed"
+    }
+  ],
+  "endgame_loyalty": {
+    "success": true,
+    "actual_factory_verified": true,
+    "checks": [
+      {
+        "passed": true,
+        "description": "the exact Elytra and egg-shard recipe still matches"
+      },
+      {
+        "passed": true,
+        "description": "actual recipe preview has default Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual recipe factory outputs exactly one scooter"
+      },
+      {
+        "passed": true,
+        "description": "factory retains the bound scooter flag"
+      },
+      {
+        "passed": true,
+        "description": "actual assembled Elytra scooter has Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual crafting hook still binds the result to its crafter"
+      },
+      {
+        "passed": true,
+        "description": "owner binding preserves default Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual chest upgrade preserves Loyalty, binding and owner"
+      },
+      {
+        "passed": true,
+        "description": "existing higher Loyalty is preserved by subsequent upgrades"
+      },
+      {
+        "passed": true,
+        "description": "ordinary scooters do not gain default Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "ordinary Nether Star binding does not gain default Loyalty"
+      }
+    ]
+  },
+  "focused_upgrade_armor_assertions": 243,
+  "focused_upgrade_armor": {
+    "actual_loaded_recipes_verified": true,
+    "assembly_verified": true,
+    "restored_recipe_count": 23,
+    "held_peeb_with_armor_verified": true,
+    "worn_peeb_requires_other_armor_empty_verified": true,
+    "success": true,
+    "checks": [
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_white"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_white"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_white"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_white rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_orange"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_orange"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_orange"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_orange rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_magenta"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_magenta"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_magenta"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_magenta rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_light_blue"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_light_blue"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_light_blue"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_blue rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_yellow"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_yellow"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_yellow"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_yellow rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_lime"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_lime"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_lime"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_lime rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_pink"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_pink"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_pink"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_pink rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_gray"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_gray"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_gray"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_gray rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_light_gray"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_light_gray"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_light_gray"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_light_gray rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_cyan"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_cyan"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_cyan"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_cyan rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_purple"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_purple"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_purple"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_purple rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_blue"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_blue"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_blue"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_blue rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_brown"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_brown"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_brown"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_brown rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_green"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_green"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_green"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_green rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_red"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_red"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_red"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_red rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_dye_black"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_dye_black"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_dye_black"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black uses the registered dye serializer"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black matches an empty template, scooter and correct dye"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black sets the intended accent color"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_dye_black rejects already matching color"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:bound_scooter"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:bound_scooter"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:bound_scooter"
+      },
+      {
+        "passed": true,
+        "description": "loaded Nether Star recipe matches an unbound scooter"
+      },
+      {
+        "passed": true,
+        "description": "Nether Star binding is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "loaded Nether Star assembly sets binding flag"
+      },
+      {
+        "passed": true,
+        "description": "Nether Star binding preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "Nether Star binding preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "Nether Star recipe rejects an already bound scooter"
+      },
+      {
+        "passed": true,
+        "description": "normal owner binding preserves existing Loyalty III"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_chest"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_chest"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_chest"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_chest rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_jukebox"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_jukebox"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_jukebox"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_jukebox rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_noteblock"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_noteblock"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_noteblock"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_noteblock rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_saddle"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_saddle"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_saddle"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_saddle rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_upgrade_netherite"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_upgrade_netherite"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_upgrade_netherite"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_upgrade_netherite preserves the rental restriction"
+      },
+      {
+        "passed": true,
+        "description": "actual loaded RecipeManager contains goplanska_kukirin:scooter_infinite"
+      },
+      {
+        "passed": true,
+        "description": "policy allows exact typed modification goplanska_kukirin:scooter_infinite"
+      },
+      {
+        "passed": true,
+        "description": "policy rejects substituted recipe type at goplanska_kukirin:scooter_infinite"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite matches its original addition and empty template"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite is discoverable through native smithing lookup"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite sets the intended upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite preserves owner, storage, music and other custom state"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite preserves every other component including name and Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite rejects an already installed upgrade"
+      },
+      {
+        "passed": true,
+        "description": "scooter_infinite preserves the rental restriction"
+      },
+      {
+        "passed": true,
+        "description": "all 23 existing modification recipes are loaded and assembled"
+      },
+      {
+        "passed": true,
+        "description": "policy still blocks goplanska_kukirin:scooter_dismantler"
+      },
+      {
+        "passed": true,
+        "description": "loaded RecipeManager has no blocked goplanska_kukirin:scooter_dismantler"
+      },
+      {
+        "passed": true,
+        "description": "policy still blocks goplanska_kukirin:unlisted_upgrade"
+      },
+      {
+        "passed": true,
+        "description": "loaded RecipeManager has no blocked goplanska_kukirin:unlisted_upgrade"
+      },
+      {
+        "passed": true,
+        "description": "policy still blocks psychiatryk_roles:unlisted_custom_creation"
+      },
+      {
+        "passed": true,
+        "description": "loaded RecipeManager has no blocked psychiatryk_roles:unlisted_custom_creation"
+      },
+      {
+        "passed": true,
+        "description": "unrelated external recipe policy remains unchanged"
+      },
+      {
+        "passed": true,
+        "description": "disabled villager workstation output remains blocked"
+      },
+      {
+        "passed": true,
+        "description": "mainhand held Peeb is active with full armor"
+      },
+      {
+        "passed": true,
+        "description": "offhand held Peeb is active with full armor"
+      },
+      {
+        "passed": true,
+        "description": "shift equip is still blocked while other armor slots are occupied"
+      },
+      {
+        "passed": true,
+        "description": "wearing API still rejects other armor"
+      },
+      {
+        "passed": true,
+        "description": "worn Peeb with other armor is inactive"
+      },
+      {
+        "passed": true,
+        "description": "worn Peeb without other armor is active"
+      },
+      {
+        "passed": true,
+        "description": "wearing API accepts empty other armor slots"
+      },
+      {
+        "passed": true,
+        "description": "no held or worn Peeb is inactive"
+      }
+    ]
+  },
+  "actual_loaded_recipes_verified": true,
+  "assembly_verified": true,
+  "held_peeb_with_armor_verified": true,
+  "worn_peeb_requires_other_armor_empty_verified": true,
+  "minecraft_status_responded": true,
+  "minecraft_status": {
+    "version": {
+      "name": "1.21.1",
+      "protocol": 767
+    },
+    "players": {
+      "max": 1,
+      "online": 0
+    }
+  },
+  "normal_stop_command_sent": true,
+  "server_stopped": true,
+  "worlds_saved_before_exit": true,
+  "java_exit": 0,
+  "clean_jvm_exit": true,
+  "bounded_cleanup_signal": null,
+  "new_client_targets": [],
+  "addon_feature_load_errors": [],
+  "fixture_only": true,
+  "world_copied": false,
+  "credentials_used": false,
+  "production_activation_verified": false,
+  "configuration_sha256": {
+    "carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
+    "veinmining-client.toml": "62455d0d20ed265fed20318cba83662188e2b658528b680ecc98c7905f8b4f4c",
+    "veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a"
+  },
+  "retained_jei_sha256": "137f60018968a50c6f00e3a8ca9be790391792d2f3e6eff66237f2e9b3bc1353",
+  "retained_dfr_sha256": "f5cceae8395e7c15275c8c8cddecf52beb225be6a818b0be88aa43160d9305fa",
+  "dfr_loaded_on_dedicated": false,
+  "native_recipe_receipt_sha256": "b97068e717549a12c66a404e9fbb5876abd67d85107fd0d44aa2fd84204fd87a",
+  "dedicated_proof_sha256": "b0037b8018128bc0a2291f365e0ea0cd264e9f9e5610d0dbbb20b4bc8ef5128a",
+  "native_client_transport_negotiation_verified": false
+}

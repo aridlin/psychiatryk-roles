@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "base_jar_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d",
+  "modified_paths": [
+    "data/goplanska_kukirin/recipe/kukirin_scooter.json"
+  ],
+  "recipe_before_sha256": "ab18704cd8ac0e8b5f77a68be1785b03143dcc86971505ab3c99adedfce4d63b",
+  "recipe_after_sha256": "7723b87da80068d7ae7175c07d194d3a98fd042009f4e93aaed909d1b0b9029c",
+  "default_loyalty_level": 1,
+  "ingredients_grid_count_binding_tag_unchanged": true,
+  "ordinary_scooters_changed": false,
+  "standalone_module_changed": false,
+  "upgrades_code_changed": false,
+  "runtime_factory_verified": false,
+  "runtime_fixture": "tests/EndgameLoyaltyQA.java"
+}

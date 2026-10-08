@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "IDI",
+    " E ",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "psychiatryk_roles:dragon_egg_shard"
+    },
+    "E": {
+      "item": "minecraft:elytra"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "goplanska_kukirin:kukirin_scooter",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": "{GoplanskaBoundScooter:1b}",
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:loyalty": 1
+        }
+      }
+    }
+  },
+  "show_notification": true
+}

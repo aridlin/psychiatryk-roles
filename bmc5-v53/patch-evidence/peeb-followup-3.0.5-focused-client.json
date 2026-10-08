@@ -1,0 +1,182 @@
+{
+  "success": true,
+  "candidate_sha256": "106f9337eb3f567e61e48a762c58e198331ccf95ca36a94e00e8695873469d85",
+  "tested_candidate_sha256": "106f9337eb3f567e61e48a762c58e198331ccf95ca36a94e00e8695873469d85",
+  "native_client_launch_performed": true,
+  "native_checks": 40,
+  "actual_openal_playing_samples": 9,
+  "simultaneous_music_sources": 6,
+  "http_loop_requests": 4,
+  "source_profiles_unchanged": true,
+  "fixture_only": true,
+  "physical_left_alt_press_verified": false,
+  "human_grapple_feel_verified": false,
+  "shaderpack_on_verified": false,
+  "audio_output_backend": "OpenAL null backend",
+  "scope": "Focused native key mapping/reservation/inventory, grounded/airborne/mounted mesh classification and actual grounded render, hostile reticle, streaming OpenAL EOF loop, native Aria Math/disc and five concurrent native client sound instances. No full previous195-check rerun, no physical input injection, production or user profile.",
+  "checks": [
+    {
+      "passed": true,
+      "name": "actual full BMC client loaded"
+    },
+    {
+      "passed": true,
+      "name": "held Peeb active in the native client"
+    },
+    {
+      "passed": true,
+      "name": "actual Peeb shader and rendered rig exist"
+    },
+    {
+      "passed": true,
+      "name": "occupied Left Alt remains the Peeb freelook key"
+    },
+    {
+      "passed": true,
+      "name": "other Alt binding and inventory key assignments retained"
+    },
+    {
+      "passed": true,
+      "name": "active Peeb suppresses competing Alt mapping state"
+    },
+    {
+      "passed": true,
+      "name": "actual grounded rendered rig is not hanging"
+    },
+    {
+      "passed": true,
+      "name": "floor support prevents stale onGround from choosing airborne pose"
+    },
+    {
+      "passed": true,
+      "name": "actual mesh selects grounded clip with collision support"
+    },
+    {
+      "passed": true,
+      "name": "unsupported native player selects airborne motion"
+    },
+    {
+      "passed": true,
+      "name": "actual mesh selects midair clip for airborne player"
+    },
+    {
+      "passed": true,
+      "name": "native synchronized scooter rider keeps Peeb active with grounded classification"
+    },
+    {
+      "passed": true,
+      "name": "native inventory key opens E inventory while Peeb active"
+    },
+    {
+      "passed": true,
+      "name": "open UI leaves competing Alt mapping state available"
+    },
+    {
+      "passed": true,
+      "name": "native reticle selects reachable hostile collision surface"
+    },
+    {
+      "passed": true,
+      "name": "real server music-menu packet offers native soundtrack, discs and stream fixture"
+    },
+    {
+      "passed": true,
+      "name": "Aria Math uses installed native Ogg resource without WAV or HTTP PCM"
+    },
+    {
+      "passed": true,
+      "name": "Aria Math resolves the exact Minecraft sound resource"
+    },
+    {
+      "passed": true,
+      "name": "native Aria Math OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "selected native disc resolves installed Minecraft record resource"
+    },
+    {
+      "passed": true,
+      "name": "native Cat disc OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "remote native playback holds an incremental stream instead of full PCM"
+    },
+    {
+      "passed": true,
+      "name": "incremental HTTP stream starts on actual OpenAL"
+    },
+    {
+      "passed": true,
+      "name": "native stream reopens authenticated HTTP after actual EOF for looping"
+    },
+    {
+      "passed": true,
+      "name": "native HTTP stream remains playing after EOF loop"
+    },
+    {
+      "passed": true,
+      "name": "five real jukebox block entities synchronized before playback packets"
+    },
+    {
+      "passed": true,
+      "name": "native client admits concurrent sound 0"
+    },
+    {
+      "passed": true,
+      "name": "native client admits concurrent sound 1"
+    },
+    {
+      "passed": true,
+      "name": "native client admits concurrent sound 2"
+    },
+    {
+      "passed": true,
+      "name": "native client admits concurrent sound 3"
+    },
+    {
+      "passed": true,
+      "name": "native client admits concurrent sound 4"
+    },
+    {
+      "passed": true,
+      "name": "five native sources coexist with streamed source beyond old four-source client cap"
+    },
+    {
+      "passed": true,
+      "name": "concurrent native OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "concurrent native OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "concurrent native OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "concurrent native OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "concurrent native OpenAL channel plays without error"
+    },
+    {
+      "passed": true,
+      "name": "real stop packets clear streamed and native sources"
+    },
+    {
+      "passed": true,
+      "name": "putting Peeb away exits camera ownership"
+    },
+    {
+      "passed": true,
+      "name": "inactive Peeb leaves competing Alt mapping state available"
+    }
+  ],
+  "source_receipt_sha256": "8b32e814013bbf23cb084a4c50fe1bfc8dd6ee24e2b13f53cd46104d26143585",
+  "runtime_receipt_sha256": "931ea8f55efe9835cc068b6695a51798568cc09f5e3a558d3d16bdb253264987",
+  "production_activation_verified": false
+}

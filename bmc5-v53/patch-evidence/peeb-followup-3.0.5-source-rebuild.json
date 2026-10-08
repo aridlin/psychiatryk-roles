@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "candidate_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "historical_base_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d",
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "external_classpath": "Minecraft 1.21.1 / NeoForge 21.1.250",
+  "java_release": 21,
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false,
+  "production_activation_verified": false
+}

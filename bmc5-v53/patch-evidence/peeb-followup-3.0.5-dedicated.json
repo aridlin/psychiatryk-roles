@@ -1,0 +1,353 @@
+{
+  "success": true,
+  "candidate_sha256": "106f9337eb3f567e61e48a762c58e198331ccf95ca36a94e00e8695873469d85",
+  "tested_candidate_sha256": "ea181b1ae5302fa48a83d79030672b1bb1a9bfe11fcb77edb51860440c979e42",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.250",
+  "loaded_mod_count": 399,
+  "mod_jar_count": 295,
+  "observer_check_count": 62,
+  "checks": [
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded psychiatryk_roles"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for psychiatryk_roles"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded goplanska_kukirin"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for goplanska_kukirin"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded goplanska_parties"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for goplanska_parties"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded portable_chams"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for portable_chams"
+    },
+    {
+      "passed": true,
+      "description": "dedicated ModList loaded psychiatryk_peeb"
+    },
+    {
+      "passed": true,
+      "description": "loaded 3.0.5 metadata for psychiatryk_peeb"
+    },
+    {
+      "passed": true,
+      "description": "Peeb item registered on dedicated server"
+    },
+    {
+      "passed": true,
+      "description": "actual RecipeManager contains Peeb recipe"
+    },
+    {
+      "passed": true,
+      "description": "full BMC RecipeManager retained"
+    },
+    {
+      "passed": true,
+      "description": "Peeb recipe matches string, leather and stick"
+    },
+    {
+      "passed": true,
+      "description": "actual recipe assembles one registered Peeb"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:action SERVERBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:action"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:state CLIENTBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:state"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:config CLIENTBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:config"
+    },
+    {
+      "passed": true,
+      "description": "actual PLAY registry contains psychiatryk_peeb:config_edit SERVERBOUND"
+    },
+    {
+      "passed": true,
+      "description": "registered codec roundtrip psychiatryk_peeb:config_edit"
+    },
+    {
+      "passed": true,
+      "description": "existing jukebox command registered"
+    },
+    {
+      "passed": true,
+      "description": "Peeb dedicated configuration loaded valid values"
+    },
+    {
+      "passed": true,
+      "description": "native visible in-range attachment accepted"
+    },
+    {
+      "passed": true,
+      "description": "legitimate anchor initially retained"
+    },
+    {
+      "passed": true,
+      "description": "fixture has a real collider obscuring attached anchor"
+    },
+    {
+      "passed": true,
+      "description": "rotated view and obscured attached anchor remain valid"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick retains anchor after view rotation and occlusion"
+    },
+    {
+      "passed": true,
+      "description": "removed supporting collider invalidates tether"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases removed-support anchor"
+    },
+    {
+      "passed": true,
+      "description": "new valid anchor accepted for range case"
+    },
+    {
+      "passed": true,
+      "description": "out-of-range tether invalidates"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases out-of-range anchor"
+    },
+    {
+      "passed": true,
+      "description": "new valid anchor accepted for mode-exit case"
+    },
+    {
+      "passed": true,
+      "description": "Peeb mode exit clears the authoritative session"
+    },
+    {
+      "passed": true,
+      "description": "new attachment through an obstructing collider remains rejected"
+    },
+    {
+      "passed": true,
+      "description": "native visible living enemy attachment accepted"
+    },
+    {
+      "passed": true,
+      "description": "native enemy winch settles before moving-target sync case"
+    },
+    {
+      "passed": true,
+      "description": "connection validation refreshes moving enemy before physics tick"
+    },
+    {
+      "passed": true,
+      "description": "native anchor follows the living target position"
+    },
+    {
+      "passed": true,
+      "description": "settled winch broadcasts refreshed moving-target state after connection validation"
+    },
+    {
+      "passed": true,
+      "description": "removed living target invalidates tether"
+    },
+    {
+      "passed": true,
+      "description": "normal server tick releases removed living target"
+    },
+    {
+      "passed": true,
+      "description": "fresh enemy hook accepted for contact damage"
+    },
+    {
+      "passed": true,
+      "description": "distant enemy hook deals no immediate damage"
+    },
+    {
+      "passed": true,
+      "description": "actual native contact attack deals wooden-sword base damage of four"
+    },
+    {
+      "passed": true,
+      "description": "held enemy hook never repeats contact damage"
+    },
+    {
+      "passed": true,
+      "description": "early repeat enemy hook attaches normally"
+    },
+    {
+      "passed": true,
+      "description": "release and reattach cannot bypass player twenty-tick attack cooldown"
+    },
+    {
+      "passed": true,
+      "description": "repeat enemy hook accepted after cooldown"
+    },
+    {
+      "passed": true,
+      "description": "new contact hook damages again after cooldown"
+    },
+    {
+      "passed": true,
+      "description": "native attachment rejects a living allied target"
+    },
+    {
+      "passed": true,
+      "description": "native scooter mount accepted while holding Peeb"
+    },
+    {
+      "passed": true,
+      "description": "common helper identifies the controlling root scooter rider"
+    },
+    {
+      "passed": true,
+      "description": "native Peeb attachment accepted from a scooter"
+    },
+    {
+      "passed": true,
+      "description": "actual mounted scooter session remains valid"
+    },
+    {
+      "passed": true,
+      "description": "server scooter winch preserves tangential vehicle momentum and adds pull"
+    },
+    {
+      "passed": true,
+      "description": "mounted server winch applies no duplicate impulse to rider"
+    },
+    {
+      "passed": true,
+      "description": "authoritative native motion packet addresses root scooter"
+    },
+    {
+      "passed": true,
+      "description": "actual Elytra scooter factory and all eleven Loyalty checks passed"
+    }
+  ],
+  "endgame_loyalty": {
+    "success": true,
+    "actual_factory_verified": true,
+    "checks": [
+      {
+        "passed": true,
+        "description": "the exact Elytra and egg-shard recipe still matches"
+      },
+      {
+        "passed": true,
+        "description": "actual recipe preview has default Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual recipe factory outputs exactly one scooter"
+      },
+      {
+        "passed": true,
+        "description": "factory retains the bound scooter flag"
+      },
+      {
+        "passed": true,
+        "description": "actual assembled Elytra scooter has Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual crafting hook still binds the result to its crafter"
+      },
+      {
+        "passed": true,
+        "description": "owner binding preserves default Loyalty I"
+      },
+      {
+        "passed": true,
+        "description": "actual chest upgrade preserves Loyalty, binding and owner"
+      },
+      {
+        "passed": true,
+        "description": "existing higher Loyalty is preserved by subsequent upgrades"
+      },
+      {
+        "passed": true,
+        "description": "ordinary scooters do not gain default Loyalty"
+      },
+      {
+        "passed": true,
+        "description": "ordinary Nether Star binding does not gain default Loyalty"
+      }
+    ]
+  },
+  "minecraft_status_responded": true,
+  "minecraft_status": {
+    "version": {
+      "name": "1.21.1",
+      "protocol": 767
+    },
+    "players": {
+      "max": 1,
+      "online": 0
+    }
+  },
+  "normal_stop_command_sent": true,
+  "server_stopped": true,
+  "worlds_saved_before_exit": true,
+  "java_exit": 143,
+  "bounded_cleanup_signal": "SIGTERM",
+  "baseline_has_same_stuck_thread": true,
+  "new_client_targets": [],
+  "addon_feature_load_errors": [],
+  "fixture_configuration_sha256": {
+    "carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
+    "veinmining-client.toml": "62455d0d20ed265fed20318cba83662188e2b658528b680ecc98c7905f8b4f4c",
+    "veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a"
+  },
+  "retained_jei": "137f60018968a50c6f00e3a8ca9be790391792d2f3e6eff66237f2e9b3bc1353",
+  "retained_dfr": "f5cceae8395e7c15275c8c8cddecf52beb225be6a818b0be88aa43160d9305fa",
+  "dfr_loaded_on_dedicated": false,
+  "fixture_only": true,
+  "world_or_credentials_copied": false,
+  "transport_negotiation_and_player_input_verified": false,
+  "final_artifact_full_dedicated_launch_performed": false,
+  "inheritance": {
+    "changed_entries": [
+      "pl/aridlin/kukirin/ScooterAudioClient.class",
+      "pl/aridlin/kukirin/ScooterHttpAudioStream.class"
+    ],
+    "added_entries": [],
+    "removed_entries": [],
+    "unchanged_entries": 683,
+    "all_common_server_classes_recipes_assets_and_metadata_byte_identical": true,
+    "inheritance_scope": "Successful actual dedicated common-side startup and behavior gate; final artifact changes only two client audio classes"
+  },
+  "production_activation_verified": false
+}

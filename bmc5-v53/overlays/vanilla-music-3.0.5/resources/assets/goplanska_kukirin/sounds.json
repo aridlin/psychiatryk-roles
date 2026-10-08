@@ -1,0 +1,755 @@
+{
+  "motor": {
+    "sounds": [
+      {
+        "name": "goplanska_kukirin:motor",
+        "stream": false
+      }
+    ]
+  },
+  "wind": {
+    "sounds": [
+      {
+        "name": "goplanska_kukirin:wind",
+        "stream": false
+      }
+    ]
+  },
+  "wav": {
+    "sounds": [
+      {
+        "name": "goplanska_kukirin:motor",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "nitro": {
+    "sounds": [
+      {
+        "name": "goplanska_kukirin:nitro",
+        "stream": false
+      }
+    ],
+    "subtitle": "subtitles.goplanska_kukirin.nitro"
+  },
+  "drift": {
+    "sounds": [
+      {
+        "name": "goplanska_kukirin:drift",
+        "stream": false
+      }
+    ]
+  },
+  "vanilla_music/game/a_familiar_room": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/a_familiar_room",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/an_ordinary_day": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/an_ordinary_day",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/ancestry": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/ancestry",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/bromeliad": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/bromeliad",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/clark": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/clark",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/comforting_memories": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/comforting_memories",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/aria_math": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/aria_math",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/biome_fest": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/biome_fest",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/blind_spots": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/blind_spots",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/dreiton": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/dreiton",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/haunt_muskie": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/haunt_muskie",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/creative/taswell": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/creative/taswell",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/crescent_dunes": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/crescent_dunes",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/danny": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/danny",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/deeper": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/deeper",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/dry_hands": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/dry_hands",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/echo_in_the_wind": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/echo_in_the_wind",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/eld_unknown": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/eld_unknown",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/end/alpha": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/end/alpha",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/end/boss": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/end/boss",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/end/the_end": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/end/the_end",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/endless": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/endless",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/featherfall": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/featherfall",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/floating_dream": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/floating_dream",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/haggstrom": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/haggstrom",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/infinite_amethyst": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/infinite_amethyst",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/key": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/key",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/komorebi": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/komorebi",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/left_to_bloom": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/left_to_bloom",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/living_mice": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/living_mice",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/mice_on_venus": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/mice_on_venus",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/minecraft": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/minecraft",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/ballad_of_the_cats": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/ballad_of_the_cats",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/concrete_halls": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/concrete_halls",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/crimson_forest/chrysopoeia": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/crimson_forest/chrysopoeia",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/dead_voxel": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/dead_voxel",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/nether_wastes/rubedo": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/nether_wastes/rubedo",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/soulsand_valley/so_below": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/soulsand_valley/so_below",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/nether/warmth": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/nether/warmth",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/one_more_day": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/one_more_day",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/oxygene": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/oxygene",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/pokopoko": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/pokopoko",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/puzzlebox": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/puzzlebox",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/stand_tall": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/stand_tall",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/subwoofer_lullaby": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/subwoofer_lullaby",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/swamp/aerie": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/swamp/aerie",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/swamp/firebugs": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/swamp/firebugs",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/swamp/labyrinthine": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/swamp/labyrinthine",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/sweden": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/sweden",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/watcher": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/watcher",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/water/axolotl": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/water/axolotl",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/water/dragon_fish": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/water/dragon_fish",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/water/shuniji": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/water/shuniji",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/wending": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/wending",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/wet_hands": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/wet_hands",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/game/yakusoku": {
+    "sounds": [
+      {
+        "name": "minecraft:music/game/yakusoku",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/menu/beginning_2": {
+    "sounds": [
+      {
+        "name": "minecraft:music/menu/beginning_2",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/menu/floating_trees": {
+    "sounds": [
+      {
+        "name": "minecraft:music/menu/floating_trees",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/menu/moog_city_2": {
+    "sounds": [
+      {
+        "name": "minecraft:music/menu/moog_city_2",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_music/menu/mutation": {
+    "sounds": [
+      {
+        "name": "minecraft:music/menu/mutation",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/11": {
+    "sounds": [
+      {
+        "name": "minecraft:records/11",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/13": {
+    "sounds": [
+      {
+        "name": "minecraft:records/13",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/5": {
+    "sounds": [
+      {
+        "name": "minecraft:records/5",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/blocks": {
+    "sounds": [
+      {
+        "name": "minecraft:records/blocks",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/cat": {
+    "sounds": [
+      {
+        "name": "minecraft:records/cat",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/chirp": {
+    "sounds": [
+      {
+        "name": "minecraft:records/chirp",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/creator": {
+    "sounds": [
+      {
+        "name": "minecraft:records/creator",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/creator_music_box": {
+    "sounds": [
+      {
+        "name": "minecraft:records/creator_music_box",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/far": {
+    "sounds": [
+      {
+        "name": "minecraft:records/far",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/mall": {
+    "sounds": [
+      {
+        "name": "minecraft:records/mall",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/mellohi": {
+    "sounds": [
+      {
+        "name": "minecraft:records/mellohi",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/otherside": {
+    "sounds": [
+      {
+        "name": "minecraft:records/otherside",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/pigstep": {
+    "sounds": [
+      {
+        "name": "minecraft:records/pigstep",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/precipice": {
+    "sounds": [
+      {
+        "name": "minecraft:records/precipice",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/relic": {
+    "sounds": [
+      {
+        "name": "minecraft:records/relic",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/stal": {
+    "sounds": [
+      {
+        "name": "minecraft:records/stal",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/strad": {
+    "sounds": [
+      {
+        "name": "minecraft:records/strad",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/wait": {
+    "sounds": [
+      {
+        "name": "minecraft:records/wait",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "vanilla_records/ward": {
+    "sounds": [
+      {
+        "name": "minecraft:records/ward",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  }
+}

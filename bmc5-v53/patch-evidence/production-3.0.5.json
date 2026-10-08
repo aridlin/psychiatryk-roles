@@ -1,0 +1,50 @@
+{
+  "release": "bmc5-v53-roles3.0.5",
+  "addon_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "activated_at_utc": "2026-10-08T09:53:35.336Z",
+  "production_running": true,
+  "mobGriefing": false,
+  "metadata_sha256": "456a7ceb9ac6dbdca0451ecd0e82d7e4e413070b836ad90f77ba14f22713b75e",
+  "native_automodpack": {
+    "downloaded_addon_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+    "feed_sha256": "dfc15d50bbfacde4026cc01cfa1e11b2588e66b0399442a9c897be391f7b78ae",
+    "files": 1127,
+    "mods": 353,
+    "unchanged_feed_records": 1125,
+    "changed_feed_paths": [
+      "/goplanska-release.json",
+      "/mods/psychiatryk_roles-3.0.0-bmc5.jar"
+    ],
+    "certificate_pin": "e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6",
+    "tls_verified": true,
+    "native_download_verified": true
+  },
+  "minecraft": {
+    "protocol": 767,
+    "version": "1.21.1",
+    "connected_address": "96.62.191.34",
+    "online": 0,
+    "maximum": 20
+  },
+  "public_website": "https://info.goplanska.pl/",
+  "published_files": 9,
+  "website_published_at_utc": "2026-10-08T10:03:11.345721+00:00",
+  "server_start_and_readback_verified": true,
+  "fresh_player_join_tested": false,
+  "legacy_world_or_config_replacement": false,
+  "backup": "Previous four addon/metadata files preserved locally and remotely for rollback.",
+  "tests": {
+    "native_common": 63,
+    "native_loyalty": 11,
+    "native_recipe_and_armor": 243,
+    "native_client": 40,
+    "native_client_tested_candidate": "106f9337eb3f567e61e48a762c58e198331ccf95ca36a94e00e8695873469d85",
+    "native_client_inherited_by_reviewed_entry_identity": true,
+    "audible_output_or_shaderpack_or_human_grapple_feel_retested": false
+  },
+  "receipt_fingerprints": {
+    "activation": "ac02e58c5e90b7bb64e1a8983709d0a13cbc1bbabbe80c6d3a3dfdd52324c70e",
+    "external_native_transport": "bcd05cd63acfa4862581c9d87dc00332aa7df719aeb005c4bc3065f9ce6f89d7",
+    "website_publication": "24121e0b6caed2354f11999bc4c229967fb17acbf5e4d9f8ef5d77e9b11e3f47"
+  }
+}
