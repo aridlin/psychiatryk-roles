@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "checks": 9,
+  "native_automodpack_4_0_6_duplicate_match_verified": true,
+  "last_mod_id_only_verified": true,
+  "two_legacy_components_missed_verified": true,
+  "files_mutated": false,
+  "automodpack_sha256": "e76570a113ac9cd7fecc85fc6d2323ef2e04318e4b7615d34519843adfe838f5",
+  "fixture_source_sha256": "1d15af079b7a4990ddfca0ee7ce238020d7e4089a2aa27dc5ebc7ffd41d1e741",
+  "game_launched": false,
+  "remote_mutation_performed": false,
+  "client_files_changed": false
+}

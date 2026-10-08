@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "checks": 12,
+  "all_contained_mod_ids_verified": true,
+  "one_to_many_conflicts_verified": true,
+  "unrelated_components_preserved_verified": true,
+  "prototype_is_read_only_verified": true,
+  "automodpack_patched": false,
+  "sources_sha256": {
+    "prototype/ContainedModConflicts.java": "49a345ac94cf7d11c7e31a55c93ff5a510fcad52a52363a5bd910da28fbe6df9",
+    "tests/ContainedModConflictsTest.java": "ff5f5824786a770497035feb9ebb2d94f3e8624cb0f3efcf5ffc5fd02cad618c"
+  },
+  "game_launched": false,
+  "client_files_changed": false,
+  "remote_mutation_performed": false
+}

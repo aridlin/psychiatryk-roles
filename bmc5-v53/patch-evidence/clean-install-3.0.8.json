@@ -1,0 +1,85 @@
+{
+  "success": true,
+  "documentation_only_revision": true,
+  "candidate_sha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
+  "published_files": [
+    {
+      "remote_name": "goplanska-bmc5-v53-roles-3.0.8-addon.zip",
+      "sha256": "772b8558535290819d9227abdd34b324eae77f8bc0ed86b5b9e2e06bd462b6e7",
+      "bytes": 10062017,
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-roles-3.0.8-addon.zip",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "goplanska-bmc5-v53-installer.mrpack",
+      "sha256": "45efc83d2f984876f7459d6ffacd01c06d0fe1273903796fe98ecac49494ba6f",
+      "bytes": 18700,
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-installer.mrpack",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "goplanska-bmc5-v53-curseforge.zip",
+      "sha256": "8f10de12faeafc5cb35688aff811fda87d5defbcdeb500db329247fd9ef428d9",
+      "bytes": 18425,
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-curseforge.zip",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "INSTALL-3.0.8.md",
+      "sha256": "d9ff84f308070f87564a2fc74fecde11f7c84e7df50f2e8789551cc45c96e427",
+      "bytes": 24284,
+      "url": "https://info.goplanska.pl/INSTALL-3.0.8.md",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "PLAY-3.0.8.md",
+      "sha256": "f79a1566bda00d53130e61cc4ee5cb1c1ef909842b2b62c41f166805baf6d298",
+      "bytes": 19859,
+      "url": "https://info.goplanska.pl/PLAY-3.0.8.md",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "CHANGELOG-3.0.8.md",
+      "sha256": "16109160d9d6f267d1ecc2a4b3c3d004559ef6ca86707bab09b04b0fe9b88690",
+      "bytes": 2547,
+      "url": "https://info.goplanska.pl/CHANGELOG-3.0.8.md",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "goplanska-release.json",
+      "sha256": "39f0b71bf426497b27f762a6fcdc2ffa81fdc79451290bbd57e59a2d5f488791",
+      "bytes": 1983,
+      "url": "https://info.goplanska.pl/goplanska-release.json",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "download-release.json",
+      "sha256": "08de0d1520b1b64cf00d7bf4e954674cf51919269455fecb373ad4320c4134d5",
+      "bytes": 4107,
+      "url": "https://info.goplanska.pl/download-release.json",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "remote_name": "index.html",
+      "sha256": "0cbfd600a2e3e96ba7975f81b9e4a714020bf8b49b1592a8339581c919a9f978",
+      "bytes": 63391,
+      "url": "https://info.goplanska.pl/",
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    }
+  ],
+  "runtime_payloads_metadata_configs_recipes_unchanged": true,
+  "bootstrap_manifests_byte_identical": true,
+  "automatic_client_file_changes": false,
+  "automodpack_binary_patched": false,
+  "native_duplicate_checks": 9,
+  "read_only_prototype_checks": 12
+}

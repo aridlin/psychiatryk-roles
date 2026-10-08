@@ -10,6 +10,10 @@ The original 3.0.8 authored sources are in `overlays/ui-polish-3.0.8/`; the hist
 
 [Client-loader repair and normal crop growth](PATCH-3.0.8-LOADERFIX.md) · [Actual corrected launch/join evidence](patch-evidence/launch-loaderfix-3.0.8.json). The current corrected addon SHA is `56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614`. The original de57e55e source build and production receipt above remain historical. The repair changes only two client compatibility plugins and was published to the running server without a restart.
 
+## Clean installation
+
+Use a new launcher instance. Reused S23 instances can retain old standalone KuKirin and party-marker JARs beside the merged addon. The [installation guide](INSTALL-3.0.8.md) names only those two legacy components and explains a reversible move into a backup. [The exact native AutoModpack audit](tools/clean-install-audit/README.md) documents why AutoModpack 4.0.6 misses these conflicts; no updater binary or friend-PC files were changed.
+
 ## Retained features and earlier releases
 
 [Previous 3.0.5 Peeb, streaming and scooter upgrade fixes](PATCH-3.0.5-FOLLOWUP.md) · [Player guide](PLAY-3.0.5-FOLLOWUP.md) · [Activation receipt](patch-evidence/production-3.0.5.json) · [3.0.4 placed jukebox acoustics](PATCH-3.0.4.md) · [3.0.3 wearable jukebox](PATCH-3.0.3.md) · [3.0.2 model restoration](PATCH-3.0.2.md) · [Retained3.0.1 patch](PATCH-3.0.1.md) · [First-run installers](installer/INSTALL.md).

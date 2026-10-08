@@ -1,5 +1,17 @@
 # Goplanska: Better MC5 v53 + Psychiatryk Roles 3.0.8
 
+## Czysta instalacja / stare osobne mody
+
+Importuj instalator jako **nową instancję** w launcherze. Nie nakładaj go na starą paczkę S23.
+
+Jeśli używasz starej instancji i gra zgłasza duplikaty `goplanska_kukirin` lub `goplanska_party_markers`, zamknij grę. Z jej głównego folderu `minecraft/mods` przenieś **tylko** stare `goplanska-kukirin-1.0.0.jar` i plik zaczynający się od `goplanska-party-markers-2.0.` do folderu kopii obok `minecraft`, poza folderami ładowanych modów. Zachowaj AutoModpack i scalony `psychiatryk_roles-3.0.0-bmc5.jar` — jego nazwa pliku jest celowo starsza niż wersja wewnętrzna. Nie usuwaj wszystkich JAR-ów.
+
+### Clean installation / old separate mods
+
+Import the installer as a **new launcher instance**. Do not overlay it onto the old S23 pack.
+
+If a reused instance reports duplicate `goplanska_kukirin` or `goplanska_party_markers`, close the game. Move **only** the old `goplanska-kukirin-1.0.0.jar` and the file beginning `goplanska-party-markers-2.0.` from its base `minecraft/mods` folder into a backup folder beside `minecraft`, outside every loaded mod folder. Keep AutoModpack and the merged `psychiatryk_roles-3.0.0-bmc5.jar`; its filename intentionally predates its internal version. Do not delete every JAR.
+
 ## Roles 3.0.8 — Role, Peeb i muzyka / Roles, Peeb and music
 
 - Powracają role Ordynator, Pacjent, Konsultant i Kontraktor; ograniczenia przedmiotów i receptur Better MC zostają.
