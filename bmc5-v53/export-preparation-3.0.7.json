@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "candidate_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "reviewed_source_only": true,
+  "public_docs_included": false,
+  "file_count": 40,
+  "portable_rebuild_executed": false,
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false
+}

@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "candidate_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false,
+  "external_baseline_required": true,
+  "baseline_sha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "source_manifest_sha256": "072434a7a4a2870acc4208dd5a365576c83d1b878810934f40e1a7847cf2ac21",
+  "portable_builder_sha256": "7cb876483f4546f008ebcbcb403941ced792d6b8c5ad965655fe77dd4eabae10",
+  "runtime_checkpoint_distributed": false,
+  "unrelated_peebclient_methods_preserved": 37
+}

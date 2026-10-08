@@ -1,8 +1,8 @@
-# BMC5 v53 + reduced Psychiatryk Roles 3.0.6
+# BMC5 v53 + reduced Psychiatryk Roles 3.0.7 source
 
-[Install](INSTALL-3.0.6.md) · [Player guide](PLAY-3.0.6.md) · [Patch and verification](PATCH-3.0.6.md)
+[3.0.7 patch and checks](PATCH-3.0.7.md) · [Install guide](INSTALL-3.0.7.md) · [Player guide](PLAY-3.0.7.md) · [Production receipt](patch-evidence/production-3.0.7.json)
 
-Previous/Skip controls, a shared playback clock, wearable source continuity and progressive imports without the one-minute cooldown are included. Peeb's elastic grapple retains launch/swing momentum and its head look is corrected. Source-only overlays and their reproducible builder are in `overlays/import-fix-3.0.6/` and `build-import-fix-3.0.6.py`. No game was launched for these checks; live listening and player-visible grapple feel need normal gameplay confirmation.
+Peeb now pulls to its anchor with a live configurable stopping distance and geometric camera tug. Mounted grappling adds scooter momentum, and the body follows the scooter rotation. The music menu adds Pause/Resume, shared source volume, current-song artwork/title/artist/Like, grey panels and control icons; the HUD leaves room for the minimap. Xaero death waypoints are hidden only in the world HUD. Source-only overlays and their reproducible builder are in `overlays/pull-distance-3.0.7/` and `build-pull-distance-3.0.7.py`. The actual portable build reproduced the complete candidate SHA. Native/headless checks do not establish live listening or player-visible gameplay; 3.0.7 activation and public install documents are recorded separately.
 
 ## Retained features and earlier releases
 
@@ -27,7 +27,7 @@ private admin-confirm popup, private audio catalog/tracks or conversation logs
 are included. Only authored primitive scooter mesh/texture resources are copied.
 Optional portable adapter source folders are not tested installable adapter mods.
 
-The historical 3.0.4 addon was SHA-256 9d5e4271882a6ca112b7cdc859afb962cf3e42921f83a5fec05fba88ad11919e. Its placed-source acoustic regression is documented in patch-evidence/jukebox-acoustics-3.0.4.json. That receipt describes the earlier activation state; the server and native host now distribute 3.0.6.
+The historical 3.0.4 addon was SHA-256 9d5e4271882a6ca112b7cdc859afb962cf3e42921f83a5fec05fba88ad11919e. Its placed-source acoustic regression is documented in patch-evidence/jukebox-acoustics-3.0.4.json. That receipt describes the earlier activation state; the recorded 3.0.6 activation is preserved as the previous deployment checkpoint.
 
 The qualified 3.0.3 baseline was SHA-256 daa891b2f6e7c50fa9663efd13fc66e43bb9c1b6682c66833f0a30d4d1ca51a4. Wearable equipment, menu/networking, moving Sound Physics and lifecycle have separate native runtime evidence in patch-evidence/wearable-jukebox-3.0.3.json.
 
@@ -35,11 +35,11 @@ The original 3.0.0 baseline was SHA-256 43868feae389494896b258787cd5305fce43d9d2
 actual full-client checks, including server join, synchronized recipe set and
 real escrow GUI actions. Server counterpart passes55 checks; no production/
 remote updater/performance result is inferred from isolated fixtures.
-Historical preparation receipts are kept unchanged. Current activation and publication are recorded separately in patch-evidence/production-3.0.6.json.
+Historical preparation receipts are kept unchanged. The previous 3.0.6 activation and publication remain in patch-evidence/production-3.0.6.json; the new 3.0.7 source checks are in PORTABLE-REBUILD-3.0.7.json; live 3.0.7 startup, AutoModpack delivery and public downloads are recorded in patch-evidence/production-3.0.7.json.
 
 ## Historical 3.0.5 source preparation
 
-[Peeb and music 3.0.5](PATCH-3.0.5.md) contains recovered implementation source, an exact-checkpoint Peeb rope/dither overlay and focused tests. That document records an earlier source preparation. The subsequent 3.0.5 activation and current 3.0.6 activation have separate receipts. See [source and asset provenance](overlays/peeb-music-3.0.5/README.md).
+[Peeb and music 3.0.5](PATCH-3.0.5.md) contains recovered implementation source, an exact-checkpoint Peeb rope/dither overlay and focused tests. That document records an earlier source preparation. The subsequent 3.0.5 and 3.0.6 activations have separate historical receipts. See [source and asset provenance](overlays/peeb-music-3.0.5/README.md).
 
 The [spinning jukebox-disc follow-up](overlays/jukebox-disc-3.0.5/README.md)
 preserves the approved Peeb checkpoint and renders missing-cover tracks too.

@@ -1,0 +1,9601 @@
+{
+  "success": true,
+  "base_sha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "candidate_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "composition_order": [
+    "config",
+    "physics",
+    "pause",
+    "music-hud",
+    "music-menu",
+    "mounted-render",
+    "waypoints"
+  ],
+  "compilation_order": [
+    "config",
+    "physics",
+    "mounted-render",
+    "pause",
+    "music-hud",
+    "music-menu",
+    "waypoints"
+  ],
+  "superseded_entries": [
+    "pl/aridlin/kukirin/ScooterMusicScreen$VolumeSlider.class",
+    "pl/aridlin/kukirin/ScooterMusicScreen.class"
+  ],
+  "groups": [
+    {
+      "name": "config",
+      "source_root": "overlays/pull-distance-3.0.7/config",
+      "runtime_entries_sha256": {
+        "pl/aridlin/psychiatrykroles/peeb/PeebConfig$Values.class": "7c429b1aa6f73b6ff4fd36e1353c406c9cce270ec0cd35bb63ec3cc7bd3c2611",
+        "pl/aridlin/psychiatrykroles/peeb/PeebConfig.class": "4fa5da484618347e9dcea7c56a2fa8c132f6c305c1253d586074e3f22a476043",
+        "pl/aridlin/psychiatrykroles/peeb/PeebConfigEditPayload.class": "a7166ac92dfa9b47cc375546c8513d19e5d532f96a8d4de7f681166af357a04d",
+        "pl/aridlin/psychiatrykroles/peeb/PeebConfigPayload.class": "dbac65ff3963b1df0fc0735870270245c53534d110e4f7fb82e09a7b50dc9087",
+        "pl/aridlin/psychiatrykroles/peeb/PeebPackets.class": "0c06b65d9d2769b1a608fe2e4cded76973e83f7991d7cf34309f6ebab0f4cd75",
+        "pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen$ValueSlider.class": "7f2c83d61385b77d55487e73c5bcdc798ca9d2ee12b9a78385344521e7218d43",
+        "pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen.class": "bc24f20d77c5faf80ce16dde91970484e3ade2c931d117ded76a9fd6d274c7bb"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {}
+    },
+    {
+      "name": "physics",
+      "source_root": "overlays/pull-distance-3.0.7/physics",
+      "runtime_entries_sha256": {
+        "pl/aridlin/psychiatrykroles/peeb/PeebAdventuresPhysics.class": "5ce17e1dd5ddc73a54b6bee3e73ed2225561d2291a15db9acfaac2b9a8bccac8",
+        "pl/aridlin/psychiatrykroles/peeb/PeebGrapple$Session.class": "70e34e527eac54aba1d023db1935dccc0b36e77142b6550e5d322a99947a2d3f",
+        "pl/aridlin/psychiatrykroles/peeb/PeebGrapple.class": "12f4c23d3eac35d35accb9f81baaba5bc36ace2f3ab919bfb0035f0c6ae6ffe4",
+        "pl/aridlin/psychiatrykroles/peeb/client/PeebClient.class": "5d6f32bd126e273a164df5af4418368e3e1ef69cca33c00f254213cb5665f8b1"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {
+        "MethodOverlay.java": "overlays/pull-distance-3.0.7/physics/MethodOverlay.java",
+        "build.py": "overlays/pull-distance-3.0.7/physics/build.py"
+      }
+    },
+    {
+      "name": "pause",
+      "source_root": "overlays/pull-distance-3.0.7/pause",
+      "runtime_entries_sha256": {
+        "pl/aridlin/kukirin/MusicSessionClock.class": "732beb88778588992a6e8825e5478ac42d4215b5e4e1e875e42253b0bc47255b",
+        "pl/aridlin/kukirin/MusicTimeline.class": "0d36c95bdaaebe1c76fbf69a4363c002d838c82103d262a83f90a557ca650dc6",
+        "pl/aridlin/kukirin/ScooterAudioClient$1.class": "12287b7f1cd46208ab5cf4fa4e5be522b981078d1fdb2d4c12b7996cc441f376",
+        "pl/aridlin/kukirin/ScooterAudioClient$Cached.class": "b87ef8a4e47016e119dddb4b76d6d0f69101fab0adadf879b66aba8ab7b1bb12",
+        "pl/aridlin/kukirin/ScooterAudioClient$Moving.class": "5f9104106cd7609ee92ce91ebb6b6838268b8cc62524d3a80e1474f87ba3dc89",
+        "pl/aridlin/kukirin/ScooterAudioClient$PcmStream.class": "00d59341480705f2b8219f9e5c4e953c2cf8067c896d560c8821ff07d884d94f",
+        "pl/aridlin/kukirin/ScooterAudioClient$Ready.class": "163125af3b7c4cd3f01677f90c97ae1bd18c9d693be04ae004f4c3e9ba782e9d",
+        "pl/aridlin/kukirin/ScooterAudioClient$Timeline.class": "3e29baed4656fc264a6fffe379a87cb4c3752c7c1cdb4ead27298e4291b60c1d",
+        "pl/aridlin/kukirin/ScooterAudioClient$Transfer.class": "b0f19603eea613c234080769a5c92846799506dd18ccc1ca507f2e9281f767e6",
+        "pl/aridlin/kukirin/ScooterAudioClient.class": "f9d607baa2a8d23603fa4825c3987a3c67114ebba69b7d7275c8f31b141867e6",
+        "pl/aridlin/kukirin/ScooterAudioUrlPacket.class": "70677f80a00148ddc7d633283c3a4cd9d5dedbd9c2735538a97b8b75e4dcc34a",
+        "pl/aridlin/kukirin/ScooterJukeboxMusic$Open.class": "dfb1b5c55e5632e18df204e139b3e9d026b090c472a1dc3368802c3950023a9c",
+        "pl/aridlin/kukirin/ScooterJukeboxMusic.class": "52a3cd950dd2bfff8a4162efe9a5f45fc9116741761d232c986fb0e23be3f73d",
+        "pl/aridlin/kukirin/ScooterMusic$Dormant.class": "a6e0f20d9a1dd7fed15d3304052be450653db08b664655c4064f586fb98cecee",
+        "pl/aridlin/kukirin/ScooterMusic$Modes.class": "c2d5bb45f3b5fac496a5ea456945ef4d91d6e629c38b6f7e7905b8cd0b3c307b",
+        "pl/aridlin/kukirin/ScooterMusic$Playback.class": "12f737989d872c453afba538d6b6f5636e8619bdb0a6c54c76ede315b54dbd93",
+        "pl/aridlin/kukirin/ScooterMusic$Source.class": "66b1564feb758e835028b4d18b2bb8fccdc5d256e5e1a9432ec89268b4673edd",
+        "pl/aridlin/kukirin/ScooterMusic.class": "84ac406f6b282b5448b8f1a9525eee09f10efa208850dbbaa270a712ba0958dc",
+        "pl/aridlin/kukirin/ScooterMusicClient.class": "fef28ae657b1322676c1747b26ee1d4a8bb3d4fda5079c7618f0f1dd83a69c4a",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Catalog$1.class": "1f12ac57fbcaa02aa842c77cf6787c2f2cd574cd10baba40c12d67bc30965194",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Catalog.class": "58ee9f787967e50a5989f10e7ac16578e9d018f794ca010ea96e94c0b3a8cc9b",
+        "pl/aridlin/kukirin/ScooterMusicMenu$CatalogPart$1.class": "30264637ed9fd7d83da64a6b4af2074c3d25c98f0ba68a7e055d8cac1852c0cf",
+        "pl/aridlin/kukirin/ScooterMusicMenu$CatalogPart.class": "c39201be373b1de92e2b4c63cb104daaa9d188fc3ad1f6a91155174f4af2d5f6",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Options$1.class": "88f8ec3cc33e9d38404e435d1f71d26a22409f5e2f359bbd6be50f5dedfc5bbf",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Options.class": "5a095d2c4bdbca4bf0c2e1bd0a0a74c08a0c8f57407813d71656809dfc529287",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Request$1.class": "8f152e5b4a933cd3c2a91babfedf6f55b45f3d14fb0fd25b4d30070c5a0735f8",
+        "pl/aridlin/kukirin/ScooterMusicMenu$Request.class": "f90ceba2bacb8ae2a64020b45f10b536e2e2443081d77cde59a046d026c3b52d",
+        "pl/aridlin/kukirin/ScooterMusicMenu.class": "b888795e2a35f3d5b1cf88f8fd82d1cd3c96338e71838e1effac00ea4b265e66",
+        "pl/aridlin/kukirin/ScooterMusicScreen$VolumeSlider.class": "c913ab5bb1c15d9cbfc9eedf29e6cade749f38bde1d5638ea5b102fe6b890bc2",
+        "pl/aridlin/kukirin/ScooterMusicScreen.class": "d75a7722eaa8624535635c9f08d3064db022c8779ad75ad00ba1a57949bd985d",
+        "pl/aridlin/kukirin/WearableJukeboxMusic$Open.class": "f62d53159239b6f30cdbe47e29988c7a67bdc69ca032277e91975c98c2799650",
+        "pl/aridlin/kukirin/WearableJukeboxMusic.class": "b6f5d62e2a16ab2ba282f8b188448ee6f246968804ffb8fe6020c7c3c5edd1bd"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {}
+    },
+    {
+      "name": "music-hud",
+      "source_root": "overlays/pull-distance-3.0.7/music-hud",
+      "runtime_entries_sha256": {
+        "pl/aridlin/kukirin/MusicNowPlayingClient$Bootstrap.class": "3374fefe123c042a56793ac4f762d9f3c7394fd20cb6f836a87de3a718024e7f",
+        "pl/aridlin/kukirin/MusicNowPlayingClient$Cover.class": "805e129260c7eda9c6db364f152b707d19cb87a1285e6f43d4d2002a0fae4e11",
+        "pl/aridlin/kukirin/MusicNowPlayingClient$Key.class": "46ad8ebca233b17989c61857f44b013baeaa49e2a1971f55a66e99593b648bed",
+        "pl/aridlin/kukirin/MusicNowPlayingClient$SourceView.class": "90ca8f033198ba6909a80d442b07b946221450c257d600a65d0acb50f8f90593",
+        "pl/aridlin/kukirin/MusicNowPlayingClient.class": "9fecc6f8d3bbe4df313e1fb435e5b1fde8a4e336ab4b8e32759aa1517e8198bb"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {}
+    },
+    {
+      "name": "music-menu",
+      "source_root": "overlays/pull-distance-3.0.7/music-menu",
+      "runtime_entries_sha256": {
+        "pl/aridlin/kukirin/ScooterMusicScreen$Icon.class": "18a53567055e2057c278e074a184a2a64f230fb7f0ca4832d2d7bb0477cd3203",
+        "pl/aridlin/kukirin/ScooterMusicScreen$IconButton.class": "93d03dbefcc88e593122c51eea25e47a917eac6e8ac00cec6eb2882252b9fe14",
+        "pl/aridlin/kukirin/ScooterMusicScreen$Layout.class": "a258ee59c1f799d251c3e26d0d61128008b0b8a7403d7be0d74b8dba6b4f983d",
+        "pl/aridlin/kukirin/ScooterMusicScreen$VolumeSlider.class": "fa1f86b717747e9787cc4fcd1035c69a696ae7bfb7348fc1d42ff6c19428ad71",
+        "pl/aridlin/kukirin/ScooterMusicScreen.class": "2b229c96f70c792ae7ce49efb7951ddaf47f95211af3a67959f7a65eaa98180a"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {}
+    },
+    {
+      "name": "mounted-render",
+      "source_root": "overlays/pull-distance-3.0.7/mounted-render",
+      "runtime_entries_sha256": {
+        "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer$Frame.class": "81e98a40ab1f19c00620b23ba617f6d22767a702ae13af36fd858e4485f2a712",
+        "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.class": "dc075d7d53b8273dffd5cffba908ed7dd2ec1fd5c81816293fdc03afba5874c7"
+      },
+      "resources_utf8": {},
+      "method_transplant_tools": {}
+    },
+    {
+      "name": "waypoints",
+      "source_root": "overlays/pull-distance-3.0.7/waypoints",
+      "runtime_entries_sha256": {
+        "pl/aridlin/psychiatrykroles/peeb/client/mixin/DeathWaypointHudMixin.class": "1898d753da447086d7e761af1d6224e4c0e419b0febf29bd523a580d7ecc47a9",
+        "psychiatryk-peeb-client.mixins.json": "200985c701224049ff76c9424a2d493a97af4a7dc653e5696103b26d4ad682ce"
+      },
+      "resources_utf8": {
+        "psychiatryk-peeb-client.mixins.json": "{\n  \"required\": true,\n  \"minVersion\": \"0.8\",\n  \"package\": \"pl.aridlin.psychiatrykroles.peeb.client.mixin\",\n  \"compatibilityLevel\": \"JAVA_21\",\n  \"client\": [\n    \"MusicAdminMixin\",\n    \"PeebAdminMixin\",\n    \"PeebCameraMixin\",\n    \"PeebChannelAccessor\",\n    \"PeebLookMixin\",\n    \"PeebNameAccess\",\n    \"PeebSoundEngineMixin\",\n    \"PeebStepMixin\",\n    \"WearableCoverMixin\",\n    \"PeebTravelMixin\",\n    \"DeathWaypointHudMixin\"\n  ],\n  \"injectors\": {\n    \"defaultRequire\": 1\n  }\n}\n"
+      },
+      "method_transplant_tools": {}
+    }
+  ],
+  "zip_metadata": [
+    {
+      "name": "LICENSE-CODE-GPL-3.0.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "LICENSE-KUKIRIN-MODEL.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "LICENSE-ORIGINAL-PORTABLE-MODEL.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "META-INF/MANIFEST.MF",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "META-INF/neoforge.mods.toml",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "NOTICE.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/blockstates/lava_crust.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/blockstates/scooter_dismantler.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/lang/en_us.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/lang/pl_pl.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/block/lava_crust.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/item/kukirin_scooter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/item/scooter_dismantler.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/kukirin_g2.mesh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/kukirin_g2.uvnorm",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/models/scooter-rig.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/shaders/core/scooter_cached.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/shaders/core/scooter_cached.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/sounds.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/sounds/drift.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/sounds/motor.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/sounds/nitro.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/sounds/wind.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/black.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/blue.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/brown.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/cyan.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/default.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/gray.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/green.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/light_blue.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/light_gray.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/lime.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/magenta.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/orange.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/pink.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/purple.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/red.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/white.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/dyes/yellow.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/rentals/bolt.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/rentals/city.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_kukirin/textures/model/rentals/lime.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/entity_occlusion_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/entity_occlusion_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/entity_occlusion_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/item_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/item_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/item_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/occlusion_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/occlusion_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/occlusion_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_composite.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_composite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_composite.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_halftone.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_halftone.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_party_markers/shaders/core/party_halftone.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_starter/lang/en_us.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_starter/lang/pl_pl.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/goplanska_starter/models/item/kinker_starter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/entity_occlusion_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/entity_occlusion_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/entity_occlusion_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/item_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/item_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/item_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/occlusion_mask.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/occlusion_mask.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/occlusion_mask.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_composite.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_composite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_composite.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_halftone.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_halftone.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/portable_chams/shaders/core/party_halftone.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/lang/en_us.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/lang/pl_pl.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/models/idle-animation-30fps.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/models/item/peeb.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/models/midair-animation-30fps.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/models/peeb-model.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/models/run-animation-30fps.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/shaders/core/peeb_ps1.fsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/shaders/core/peeb_ps1.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/shaders/core/peeb_ps1.vsh",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/grapple_begin.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/grapple_end.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/grapple_hold.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/jump.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/land.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/sounds/step.ogg",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/textures/entity/white.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/textures/gui/grapple-inner.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/textures/gui/grapple-outer.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_peeb/textures/item/peeb.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/blockstates/build_corner_first.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/blockstates/build_corner_second.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/blockstates/marking_torch.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/lang/en_us.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/lang/pl_pl.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/block/build_corner_first.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/block/build_corner_second.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/block/marking_torch.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/build_corner_first.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/build_corner_second.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/dragon_egg_shard.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/loot_lens.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/marking_torch.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/models/item/phase_charm.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "assets/psychiatryk_roles/textures/item/dragon_egg_shard.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "bip39-english.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/accessories/tags/item/back.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/accessories/tags/item/face.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/carryon/tags/entity_type/entity_blacklist.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/carryon/tags/entity_type/stacking_blacklist.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/carryon/tags/entity_types/entity_blacklist.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/carryon/tags/entity_types/stacking_blacklist.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/bound_scooter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_chest.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dismantler.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_black.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_blue.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_brown.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_cyan.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_gray.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_green.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_light_blue.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_light_gray.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_lime.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_magenta.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_orange.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_pink.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_purple.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_red.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_white.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_dye_yellow.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_infinite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_jukebox.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_noteblock.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_saddle.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/admin_presets/scooter_upgrade_netherite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/enchantment/lunge.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/loot_table/blocks/scooter_dismantler.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/music/LICENSE.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/music/chiki_ride.wav",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/music/night_motor.wav",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/bound_scooter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/kukirin_scooter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_chest.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_black.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_blue.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_brown.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_cyan.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_gray.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_green.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_light_blue.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_light_gray.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_lime.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_magenta.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_orange.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_pink.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_purple.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_red.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_white.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_dye_yellow.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_infinite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_jukebox.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_noteblock.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_saddle.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/recipe/scooter_upgrade_netherite.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/tags/item/scooters.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_kukirin/vanilla-music.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/goplanska_starter/admin_presets/kinker_starter.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/minecraft/tags/enchantment/in_enchanting_table.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/minecraft/tags/enchantment/on_random_loot.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/minecraft/tags/enchantment/tradeable.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/minecraft/tags/item/enchantable/foot_armor.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/minecraft/tags/item/trimmable_armor.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_peeb/recipe/peeb.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/chat_book.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/cleanup_bag.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/consultant_item_extractor.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/consultant_pickaxe.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/consultant_sword.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/escort_compass.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_door_1.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_door_2.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_door_3.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_trapdoor_1.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_trapdoor_2.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/immersive_void_trapdoor_3.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/importer.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/marking_torch.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/phase_charm.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/poker_menu.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/recipe_book.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/temporary_chalk.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/admin_presets/travel_staff.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/dimension/test_flat.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/dimension/test_normal.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/loot_table/blocks/build_corner_first.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/loot_table/blocks/build_corner_second.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/loot_table/blocks/marking_torch.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/poker/official-emc.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/recipe/dragon_egg_shards.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/recipe/loot_lens.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/recipe/return_mirror.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/recipe/void_door.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "data/psychiatryk_roles/recipe/void_trapdoor.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "goplanska-scooter.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "goplanska-unified-components.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "licenses/admin-spectate-GPL-3.0.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "licenses/kukirin-production-assets.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "licenses/peeb-assets.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "licenses/sketchfab-scooter.txt",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pack-icon.png",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pack.mcmeta",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/BoundScooterRecipe$Serializer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/BoundScooterRecipe.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/CoalChargePolicy.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/CreateCharging.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/G2Mesh.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/Kukirin$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/Kukirin$2.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/Kukirin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryConfig$Edit$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryConfig$Edit.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryConfig$Settings$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryConfig$Settings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicCategoryScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicHudSettings$Corner.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicHudSettings$Values.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicHudSettings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImportClientBootstrap.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Completed.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Configuration.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Imported.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Progress.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Request$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Request.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Status$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports$Status.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicImports.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlaying$Info.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlaying.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlayingClient$Bootstrap.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlayingClient$Cover.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlayingClient$Key.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlayingClient$SourceView.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicNowPlayingClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicSessionClock.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicTimeline.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicTrackDetails$Details.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicTrackDetails$Row.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/MusicTrackDetails.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/PortableOptions.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/PsychiatrykCreative.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalBrandingVisual.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalConfig$Settings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalParking.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalParkingConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalPayments$InventoryCurrency.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalPayments$Provider.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalPayments.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalPolicy.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalSnow.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalTrip.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalTripClient$Trip.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalTripClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalTripPacket$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/RentalTripPacket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/Scooter.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAdmin$Edit.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAdmin$State.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAdmin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAdminScreen$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAdminScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$Cached.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$Moving.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$PcmStream.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$Ready.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$Timeline.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient$Transfer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioPacket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioSeekStream.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterAudioUrlPacket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBattery.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBatteryPolicy$Drain.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBatteryPolicy.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBoost.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBreach$Motion.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterBreach.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient$Motor.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient$Nitro.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient$RiderHead.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient$TyreScrub.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient$Wind.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterClientOptions.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterControl.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDial.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantler$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantler$Result.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantler.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantlerClient$1$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantlerClient$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDismantlerClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDyeRecipe$Serializer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterDyeRecipe.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterEasterEggs.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterEnchants$Landing.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterEnchants$Recall.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterEnchants.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterFlight.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterFrostLanding.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterFrostWalker.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterGripPose.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterGuideScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterHandling$Motion.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterHandling$Steering.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterHandling.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterHeadlights.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterHttpAudioStream.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterImpact.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterIndex$Entry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterIndex.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterInventoryButtons.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterJukeboxMusic$Open.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterJukeboxMusic.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterLavaCrust.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterLore.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterLunge.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMarkerColor.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMenus.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusic$Dormant.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusic$Modes.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusic$Playback.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusic$Source.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusic.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicFavorites.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicHttpCache.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Catalog$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Catalog.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$CatalogPart$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$CatalogPart.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Options$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Options.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Request$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu$Request.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicMenu.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicScreen$Icon.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicScreen$IconButton.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicScreen$Layout.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicScreen$VolumeSlider.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicSources$Song.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterMusicSources.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterOverspeed.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterPassengerSetting.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterPassengers.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterPresets.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRecallKey$Tick.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRecallKey.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRenderer$Events.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRenderer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRental.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRentalClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRentalSeen$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRentalSeen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRentalSpawner.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRocket$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRocket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterRocketVisual.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSettingsScreen$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSettingsScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSmithingPreview.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSteeringInput$Client.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSteeringInput$Shoulder.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSteeringInput.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterSteeringRig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterStorage$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterStorage.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterStorageButtons.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterStorageOpen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterThermal.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterTooltipClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterTrim.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterTuning$Values.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterTuning.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterUpgradeRecipe$Serializer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterUpgradeRecipe.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterWav$Pcm.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/ScooterWav.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/SoundEnvironmentSmoothing$State.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/SoundEnvironmentSmoothing.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/VanillaMusicCatalog.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/WallKickMomentum.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/WearableJukeboxMusic$Open.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/WearableJukeboxMusic.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/YouTubeMusicScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/MobTripRendererMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/RentalTripRendererMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/ScooterAirStepMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/ScooterCameraMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/ScooterEnchantMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/ScooterRiderPoseMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/ScooterSmithingPreviewMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/kukirin/mixin/SoundPhysicsSmoothingMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/GoplanskaParties$Invitation.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/GoplanskaParties.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/MemberSync$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/MemberSync$Member.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/MemberSync.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/PartyData$Waypoint.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/PartyData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/WaypointSync$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/parties/WaypointSync.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsCategories$Hover.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsCategories$Kind.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsCategories$Target.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsCategories.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsEffect$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsEffect.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsPass$Cache.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsPass.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ChamsRenderOptions.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/ClientWaypoints.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/HalftoneChams$Events.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/HalftoneChams$Shaders.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/HalftoneChams.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/HighlightsAdapter.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/MarkChams.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/OreColors.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/PartyMarkers$Dot.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/PartyMarkers.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/PixelCover$Data.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/PixelCover.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/PortalGuard.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/Projection.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/partymarkers/mixin/StorageOutlineMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/PortableChams.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/api/HighlightCollector.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/api/HighlightStyle.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/api/Highlights$Provider.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/api/Highlights.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsClient$Collector.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsClient$Shape.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsClient$Target.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsConfig$Settings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsEffect$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsEffect.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsPass$Cache.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsPass$MaskBuffers.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsPass.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ChamsRenderState.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/PixelCover$Data.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/PixelCover.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/PortalGuard.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/portablechams/client/ShaderCompatibility.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferMarkers.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$1Entry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$Begin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$ClientUpload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$Finish.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$Part.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$PasteJob.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$Placement.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork$Upload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferNetwork.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan$Cell.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan$Change.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan$Ground.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan$Origin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan$Paste.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/BuildTransferPlan.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ChatBook.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ClientBuildTransfer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/CodeGenerator.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/CustomJei.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/CustomPresets.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/DroppedItemOwnership.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ImmersiveVoidPortals$Endpoint.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ImmersiveVoidPortals$Link.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ImmersiveVoidPortals.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/ItemTagCompat.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/LootLens$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/LootLens.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkAreaData$Area.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkAreaData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkSync$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkSync$Mark.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkSync.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkingTorches$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkingTorches$Registration.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/MarkingTorches.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OldWorldCommands.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OldWorldImport$Manifest.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OldWorldImport.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OldWorldTravelData$ReturnPosition.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OldWorldTravelData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/OwnershipMetadata.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PacketLocalization$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PacketLocalization.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseCharm$CharmItem.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseCharm$Registration.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseCharm$Session.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseCharm.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseConfig$Settings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseKey$Registration.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhaseKey.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PhasePacket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerActivity.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerCard$Suit.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerCard.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerCommands$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerCommands$PlayerAction.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerCommands.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerData$StockLot.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerData$StockView.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerDepositPolicy.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame$CashOut.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame$Phase.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame$PlayerState.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame$PokerException.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame$ShowdownEntry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerGame.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerHandEvaluator$HandValue.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerHandEvaluator.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerInventoryPlan.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerItemValues.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerMenu$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerMenu.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerMenus.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PokerScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PortalFrameOcclusion$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PortalFrameOcclusion.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PortalSweep.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykHelpCommands.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykRoles$BlockDropKey.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykRoles$ContainerSnapshot.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykRoles$PendingBlockDrop.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykRoles$Provocation.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/PsychiatrykRoles.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RentalPayment.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartCountdown.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartHistory.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartManager.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartVote.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartVoteScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartVoteUI$Choice.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartVoteUI$State.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RestartVoteUI.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData$AuditEntry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData$ChalkMarker.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData$ContractorRule.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData$OwnedChalkMarker.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData$TravelPosition.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/RoleData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/SeasonProgression$Settings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/SeasonProgression.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VillagerTradeRebalance$WrappedListing.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VillagerTradeRebalance.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorAnvilInputState$Update.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorAnvilInputState.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorCodeMenu.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorData$DoorPosition.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorGeometry$Contact.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoorGeometry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors$PendingPlacement.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors$Placement.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors$PlaneSection.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors$PortalExit.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors$Sample.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidDoors.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidExitDirections.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidGive.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoorData$DoorPosition.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoorData.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$Contact.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$ExitGuard.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$Pending.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$Placement.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$PlaneBounds.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors$Sample.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/VoidTrapdoors.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/Wiesniuk.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$2.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache$EntityAccess.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/SnapshotReflectionCache.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/mixin/IdlePayloadCaptureMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotCacheAccess.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/clientperf/mixin/SnapshotReflectionMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Action.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/OrderedIoOwner$Job.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/OrderedIoOwner.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/PlayerSaves$Owner.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/PlayerSaves$Snapshot.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/PlayerSaves.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/SableIoBarrier$Store.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/SableIoBarrier.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/SaveIoLifecycle.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/mixin/PlayerDataStorageMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/mixin/SableStorageIoMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/io/mixin/SaveFlushMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukebox$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukebox$Lifecycle.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukebox$Setup.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukebox.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukeboxInventoryButtons.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukeboxRenderer$Setup.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableJukeboxRenderer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableSoundPhysics$Adapter.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/WearableSoundPhysics.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverGeometry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer$Draw.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/mixin/WearableChannelAccessor.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/jukebox/mixin/WearableSoundEngineMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/migration/DragonEggShards.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/migration/MigrationPolicy.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/migration/mixin/MerchantStockAccessor.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/migration/mixin/RecipePolicyMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/migration/mixin/ZombieCureInvoker.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/ModernFoundryEnchantmentLookupMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/UnlimitedVillagerOfferMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VillagerSaveMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VoidDoorAnvilScreenMixin$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VoidDoorAnvilScreenMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VoidDoorDropsMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VoidDoorRecipeMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/mixin/VoidDoorStackMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebActionPayload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebAdventuresPhysics.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebAttachment$Tilt.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebAttachment.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebConfig$Values.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebConfig.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebConfigEditPayload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebConfigPayload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebEquipment.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebGrapple$Session.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebGrapple.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebMode$PeebItem.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebMode.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebPackets.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/PeebStatePayload.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebAudio$Hold.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebAudio$Motion.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebAudio.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebBindings$Conflict.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebBindings.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraFrame.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraProfile.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Grapple.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Motion.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Received.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Target.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClient.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebClientBootstrap.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebHud.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebMesh$Clip.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebMesh$Pose.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebMesh.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebMovement.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer$Frame.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebRopeGeometry$Curve.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebRopeGeometry.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen$1.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen$ValueSlider.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebSoundPhysics$Adapter.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebSoundPhysics.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/PeebStyle.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/DeathWaypointHudMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/MusicAdminMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebAdminMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebCameraMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebChannelAccessor.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebLookMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebNameAccess.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebSoundEngineMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebStepMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/PeebTravelMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/client/mixin/WearableCoverMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/mixin/PeebServerConnectionMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/peeb/mixin/ScooterBatteryAccess.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/pointblankfix/MountShotFilter.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/pointblankfix/mixin/HitScanMountMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/pointblankfix/mixin/SlowProjectileMountMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeGlowStencilMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/pointblankstencil/mixin/ScopeStencilMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/BankNbt.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/InventorySync.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/TestBanks.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/TestingWorlds.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/mixin/PlayerSaveInvoker.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/mixin/PokerBankMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/psychiatrykroles/testing/mixin/TestingSeedMixin.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/starter/MirrorKey$Registration.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/starter/MirrorKey.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "pl/aridlin/starter/MirrorPacket.class",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-bmc-survival.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-migration.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-peeb-client.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-peeb-common.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-testing-worlds.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk-wearable-jukebox.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "psychiatryk_roles.mixins.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    },
+    {
+      "name": "shouldersurfing_plugin.json",
+      "date_time": [
+        2026,
+        10,
+        8,
+        15,
+        0,
+        0
+      ],
+      "compress_type": 8,
+      "external_attr": 25165824
+    }
+  ],
+  "source_files_sha256": {
+    "overlays/pull-distance-3.0.7/config/src/pl/aridlin/psychiatrykroles/peeb/PeebConfig.java": "a82d0d5bf832811565e005ea684de8f4812b9daed9559dc4af95002e35387cb2",
+    "overlays/pull-distance-3.0.7/config/src/pl/aridlin/psychiatrykroles/peeb/PeebConfigEditPayload.java": "02567f306f5ad4c15ccc5e2a7e17e4073bf54a9416815aa028dffd64e63bede4",
+    "overlays/pull-distance-3.0.7/config/src/pl/aridlin/psychiatrykroles/peeb/PeebConfigPayload.java": "b83ff07c0468b79c72b8463760b75780691f3a673208d8723f1836bbaf5aa6b8",
+    "overlays/pull-distance-3.0.7/config/src/pl/aridlin/psychiatrykroles/peeb/PeebPackets.java": "c3e0c2fc6389d7d9687581457240b4fde26d4e360c3d0d18e85a917f9372a1b3",
+    "overlays/pull-distance-3.0.7/config/src/pl/aridlin/psychiatrykroles/peeb/client/PeebSettingsScreen.java": "4d0a5ab3270d5e7ad62c273df2a78d86648b2d145ea68399f86f89d10dd8ab28",
+    "overlays/pull-distance-3.0.7/config/tests/ConfigCodecTest.java": "9ebcef953ad281b597dc787c0ec6eaaf4050bf72b32113b1d96fc6382bd9e40f",
+    "overlays/pull-distance-3.0.7/config/tests/test_gui.py": "61f1a939b8650a4724e88cd4f71de742a0b75481efb66a2d8a12648c3ee02a37",
+    "overlays/pull-distance-3.0.7/physics/src/pl/aridlin/psychiatrykroles/peeb/PeebAdventuresPhysics.java": "600a3b290cba98c3e8d73727b17dfa3ef554dba56f020bbeec7aebc51c32a4b0",
+    "overlays/pull-distance-3.0.7/physics/src/pl/aridlin/psychiatrykroles/peeb/PeebGrapple.java": "220183cce3ec62ba8cb9eb86d6c575e5c71933ee36626a24a07b174aa090674b",
+    "overlays/pull-distance-3.0.7/physics/src/pl/aridlin/psychiatrykroles/peeb/client/PeebClient.java": "6477db86be0d54e850c6a4c0a7ed3cd82861fe9ed6305e3a0b9b6c717b56a9df",
+    "overlays/pull-distance-3.0.7/physics/tests/CameraTugTest.java": "d30469a516c108237b0f944bd3d4351628a15354caeb534a56f5363de697f400",
+    "overlays/pull-distance-3.0.7/physics/tests/GrappleDistanceTest.java": "ffd96c23b41eeb45b8261c877c52dd6e68b4c3eb725d75c666605ba522fdecf1",
+    "overlays/pull-distance-3.0.7/physics/tests/MountedCombatTest.java": "cfb174731c87fb946ed514ff6cc1cfeb104a7d0dc932b9dd93aeaad882676581",
+    "overlays/pull-distance-3.0.7/physics/tests/PullDistanceTest.java": "29f99fe0a1d92a38fb173a40810e8f7a96ad050f5fcbb8b599c0a617428ffc42",
+    "overlays/pull-distance-3.0.7/physics/MethodOverlay.java": "65cce7387dae5518d2acbbef533fe71a3af25ff0fa9abfd2927d1b46c36a483c",
+    "overlays/pull-distance-3.0.7/physics/build.py": "05760bb696fd8c4815db25a10abb37b27a24d7217eaad4a81c81b575c0719413",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/MusicSessionClock.java": "f15241b9eb67c64055e594e3c0b5ff5bcb5fa9b52c726687ec26d40797f2eeec",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/MusicTimeline.java": "1fecde0b28ea26842b6e524824ac8b4407011a45519ebd071d97f81c5c5f1bd2",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterAudioClient.java": "4db823e1ea9ea953c3abc3481454e8912018e3c395311da05f2c1381ab616827",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterAudioUrlPacket.java": "8ee9ebe5ee56c5fe6b1cbcc47a0bba26e03e55c7405b5c28cc9ef076a41cae33",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterJukeboxMusic.java": "da018239058301cac36768b8045c89315dd31d0014e0c4b63e8ba4f26c4e41f3",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterMusic.java": "8ae77d004c1570ad474e958b7a3aeae01b2e5d8bbdd19e1bb88f13f9556ae917",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterMusicClient.java": "525c29a6eb4e1f2ab28f6aa8d9774d547cc8c093dab2b605bf2c6be9e55a4eb4",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterMusicMenu.java": "d1f5eec4ca058ed2f1350f8a14242f279766fa57b248fe7e54c6771a2d1aeb28",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/ScooterMusicScreen.java": "89adaa5663847d19aa07e3501d5c0070a18e8a8d97751ba97e0a14451d98cd9f",
+    "overlays/pull-distance-3.0.7/pause/src/pl/aridlin/kukirin/WearableJukeboxMusic.java": "8376cdd04c448fa05faf64cafcb3318f493cacc922639c2b9c8bf3a0e58e61d9",
+    "overlays/pull-distance-3.0.7/pause/tests/PauseCodecCheck.java": "3d376fa84a0d4953686d52cf36ff4838da0a2b1db77acfc59487ab60e2ae1240",
+    "overlays/pull-distance-3.0.7/pause/tests/make_lifecycle_fixture.py": "0f1400c4d97f077b29bab930b8d9bc2398ad69b598d273512683d5a1ae7b7043",
+    "overlays/pull-distance-3.0.7/pause/tests/run_codec.py": "2af1233a5cac95a09f1db377f054de2085ad18552e44eea6c32bcbaa36ee946c",
+    "overlays/pull-distance-3.0.7/pause/tests/test_ui.py": "a5919d0650c0a7db7cee7260b2e8a7a58e9f5a11f60c7acfe6b137ac9d54864c",
+    "overlays/pull-distance-3.0.7/music-hud/src/pl/aridlin/kukirin/MusicNowPlayingClient.java": "f0de524af5a17086ff7606011b259bc5d7704c68a0f62ea9839fe7b9557f9347",
+    "overlays/pull-distance-3.0.7/music-menu/src/pl/aridlin/kukirin/ScooterMusicScreen.java": "4a8bb1ca1e27a9154232e4e6ac0418d9759b5e77351c1b60c62c0524c0e58564",
+    "overlays/pull-distance-3.0.7/music-menu/tests/test_ui.py": "3bf58672f1b3fb433e4b39dc4516e4588e2fdb1420fcee89094dd48e1eb96090",
+    "overlays/pull-distance-3.0.7/mounted-render/src/pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.java": "088c16cc986bf69e59349116681435f70ebb080b20d1103d8933c54fb2d78df9",
+    "overlays/pull-distance-3.0.7/mounted-render/tests/MountedRenderTest.java": "e9f1ca92bd9e8e6ea9a3ed0dc3201d91600563a3061b539c50edfd52cc678b15",
+    "overlays/pull-distance-3.0.7/waypoints/src/pl/aridlin/psychiatrykroles/peeb/client/mixin/DeathWaypointHudMixin.java": "fb98984be35c706854cfb2a1e659c31fe3d19a29a0263b37a82e230303eceb76",
+    "overlays/pull-distance-3.0.7/waypoints/tests/DeathWaypointHudTest.java": "32ef283348eb97faa4ef6d38bad0d10fc1d910e04f612168f7580d86bc376da7"
+  },
+  "game_assets_runtime_checkpoints_and_private_catalogs_distributed": false
+}

@@ -1,6 +1,6 @@
 {
-  "release": "bmc5-v53-roles3.0.6",
-  "addonSha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "release": "bmc5-v53-roles3.0.7",
+  "addonSha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
   "managedFilename": "mods/psychiatryk_roles-3.0.0-bmc5.jar",
   "minecraft": "1.21.1",
   "neoforge": "21.1.250",
@@ -53,20 +53,46 @@
   },
   "notes": "Installers resolve official AutoModpack; the server distributes this exact addon on first connection. Existing instances use AutoModpack updates.",
   "musicTransport": {
-    "protocol": "2",
+    "protocol": "3",
     "previousAndSkip": true,
     "sharedSessionClock": true,
     "importCooldownSeconds": 0,
-    "importProgressVisible": true
+    "importProgressVisible": true,
+    "pauseAndResume": true,
+    "sourceVolumeSlider": true,
+    "sharedSourceVolume": true,
+    "sourceVolumeRangePercent": [
+      0,
+      100
+    ],
+    "minecraftStyleMenu": true,
+    "menuControlIcons": true,
+    "nowPlayingArtTitleArtist": true,
+    "currentSongLike": true,
+    "nowPlayingHudClearOfMinimap": true
   },
   "peebGrapple": {
     "springPhysics": true,
-    "headLookIndependent": true
+    "headLookIndependent": true,
+    "fullPull": true,
+    "stopDistanceDefaultBlocks": 0.0,
+    "stopDistanceConfigurable": true,
+    "stopDistanceLiveReload": true,
+    "geometricCameraTug": true,
+    "mountedBodyRotation": true,
+    "mountedAdditiveMomentum": true,
+    "grappleAttachDamage": 2,
+    "grappleBodyContactDamage": 6,
+    "teamPvpRulesPreserved": true
   },
   "existingSongMetadata": {
     "catalogSongCount": 637,
     "coveredEntries": 564,
     "artistEntries": 552,
     "albumEntries": 314
+  },
+  "deathWaypoints": {
+    "worldHudVisible": false,
+    "mapPreserved": true
   }
 }

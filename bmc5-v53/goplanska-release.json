@@ -1,11 +1,11 @@
 {
-  "release": "bmc5-v53-roles3.0.6",
+  "release": "bmc5-v53-roles3.0.7",
   "minecraft": "1.21.1",
   "neoforge": "21.1.250",
   "seed": 46204253,
   "base": "Better MC5 v53",
   "inventories": "fresh",
-  "addonSha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "addonSha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
   "features": [
     "separate-admin-worlds",
     "url-music",
@@ -33,6 +33,18 @@
     "music-previous-and-skip",
     "music-transport-protocol-2",
     "peeb-adventures-spring-physics",
-    "peeb-head-look"
+    "peeb-head-look",
+    "peeb-full-grapple-pull",
+    "peeb-live-grapple-stop-distance",
+    "peeb-camera-geometric-tug",
+    "peeb-mounted-body-rotation",
+    "peeb-mounted-additive-momentum",
+    "peeb-grapple-contact-combat",
+    "death-waypoint-world-hud-hidden",
+    "music-pause-and-resume",
+    "music-source-volume",
+    "music-menu-minecraft-style",
+    "music-now-playing-hud-clear-of-minimap",
+    "music-transport-protocol-3"
   ]
 }

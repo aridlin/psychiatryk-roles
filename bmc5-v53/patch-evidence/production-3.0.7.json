@@ -1,0 +1,91 @@
+{
+  "success": true,
+  "activated": true,
+  "candidate_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "loaded_server_release": "3.0.7",
+  "distributed_release": "3.0.7",
+  "server_restarted_verified": true,
+  "fresh_done_verified": true,
+  "peeb_common_mod_loaded": true,
+  "native_feed_sha256": "a262cbefad68ba2055f2eeb4f6de86bdc04f305ed09a64ba405e5adcc63138b2",
+  "generated_feed_files": 1127,
+  "generated_feed_mods": 353,
+  "generated_feed_modified_paths": [
+    "/goplanska-release.json",
+    "/mods/psychiatryk_roles-3.0.0-bmc5.jar"
+  ],
+  "generated_feed_unchanged_records": 1125,
+  "ore_only_and_carryon_and_dependencies_unchanged": true,
+  "private_music_sources_unchanged": true,
+  "headless_fixture_gate_verified": true,
+  "checked_at_utc": "2026-10-08T13:45:20.026934+00:00",
+  "native_transport_verified": true,
+  "tls_verified": true,
+  "certificate_sha256": "e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6",
+  "downloaded_jar_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "minecraft_protocol": 767,
+  "public_downloads_verified": true,
+  "published_files": [
+    {
+      "remote_name": "goplanska-bmc5-v53-roles-3.0.7-addon.zip",
+      "sha256": "3e506e1c1c7810c42dd23cf55bcd5f6d5d4072b3f52064427cceb83874833c2a",
+      "bytes": 10018749,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "goplanska-bmc5-v53-installer.mrpack",
+      "sha256": "d32fc1c7cc6480ab9a5435517ecff1dce479a7dbb1aeb865d356a00098c61e9c",
+      "bytes": 15111,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "goplanska-bmc5-v53-curseforge.zip",
+      "sha256": "9d57e45a79e62d59054bb38d82b6a51387e2df9a51757b8451850b1d340c81dc",
+      "bytes": 14836,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "INSTALL-3.0.7.md",
+      "sha256": "21185b06cb515a7c35b221bc3ab556b86ca61ad9e6c8f08ba3a2426e2586b957",
+      "bytes": 20563,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "PLAY-3.0.7.md",
+      "sha256": "1fe687608b7f0586fc6601ff5d7b8bf33b3d3828f81346524c62592969e7cea1",
+      "bytes": 16138,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "CHANGELOG-3.0.7.md",
+      "sha256": "7026c16d986074bd08710562fbb94fdb26a70c237c8731ba8a797521bd6d881f",
+      "bytes": 2833,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "goplanska-release.json",
+      "sha256": "adc9b41ddf2ce462c03249b3456f7dfe5440e20440f756b0563296a7d89d6c6f",
+      "bytes": 1488,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "download-release.json",
+      "sha256": "1d495154d08802eed185db59a2525f91592df1f00db287d65bf74ea603a6b990",
+      "bytes": 2961,
+      "public_http_verified": true
+    },
+    {
+      "remote_name": "index.html",
+      "sha256": "b3d1c71192e2b24deabb6aaa20af4c2f74312bd0c4291f033842290d76171507",
+      "bytes": 60079,
+      "public_http_verified": true
+    }
+  ],
+  "source_only_git_export": true,
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "game_client_launched": false,
+  "player_join_verified": false,
+  "human_grapple_feel_verified": false,
+  "multiplayer_listening_verified": false,
+  "protected_world_data_replaced": false
+}
