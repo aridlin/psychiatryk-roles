@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "source_only": true,
+  "private_data_absent": true,
+  "files_sha256": {
+    "native-proof.json": "44c5acd478acc25ede6ba86d8aed1150886296074f9e4d7a540095e07d413cc3",
+    "build.py": "5af845ab144e0b06a254e0864a57c4ff4ccbe6a840af7321059d0332c5a332f3",
+    "README.md": "157431af4585759a5650b520b5659516ac58b17fe0611d044884e5aa419ebeb8",
+    "tests/FixtureMixinService.java": "3c4baca5487084a036bae774b45503ea7801fd52637719cc6d71c9a1890a9dd1",
+    "tests/FixtureProperties.java": "5707b1730215028605bbe2b89f3d7f8881097977c4b55f1cb35766221a851376",
+    "tests/pl/aridlin/psychiatrykroles/compat/EmfNativeMixinTest.java": "734cf2eee2fa7f95d0353c42fb95383a95e5eb7e8bf52359cf596e6a143ee0e4",
+    "tests/pl/aridlin/psychiatrykroles/compat/FlywheelNativeMixinTest.java": "5d6a4123a451d7beb35d648fcc64f63f9702c77c4b3ba542b6fb4d199c733fe5",
+    "tests/pl/aridlin/psychiatrykroles/compat/JeiNativeMixinTest.java": "9bfc91719483a4b4f4332aa34586254db600983e6bc398316e9a484057387100",
+    "tests/pl/aridlin/psychiatrykroles/compat/ModLauncherBoundaryTest.java": "9eff79bad975c8dd3c8d1df208fdf28497b9f80e12a034b5b6741fcd0ecc12b2",
+    "src/pl/aridlin/psychiatrykroles/compat/EmfOptionsCompatPlugin.java": "1f504f1472136018b0fe94b0426efc3f4536c0e1aa1557fa8529d62f8be02666",
+    "src/pl/aridlin/psychiatrykroles/compat/FlywheelLegacyCompatPlugin.java": "8acbcfa6d246745379ee0d55e65d1471b45aa464f45b594babdfaabfa265759a",
+    "src/pl/aridlin/psychiatrykroles/compat/JeiTransferCompatPlugin.java": "a135b62f9f07a5a8454df2ab5b311e6b48038492a4570ee6279370670e4b0776"
+  },
+  "remote_mutation_performed": false,
+  "git_mutation_performed": false
+}

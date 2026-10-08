@@ -1,5 +1,14 @@
 # Goplanska: Better MC5 v53 + Psychiatryk Roles 3.0.8
 
+## Poprawka uruchamiania 3.0.8 / 3.0.8 launch fix
+
+- Naprawiono wywołanie dostawcy klas ModLauncher w poprawkach zgodności JEI i Flywheel, które uniemożliwiało uruchomienie klienta.
+- Uprawy rosną normalnie o każdej porze roku; pozostałe ustawienia pór roku pozostają bez zmian.
+- Corrected the ModLauncher class-provider call in the JEI and Flywheel compatibility fixes that prevented client startup.
+- Crops grow normally in every season; other season settings remain unchanged.
+
+This is a corrected build of Roles 3.0.8. AutoModpack and these downloads select the same addon SHA-256. Server common code, packet protocols and recipes match the original 3.0.8 build.
+
 ## Roles 3.0.8 — Role, Peeb i muzyka / Roles, Peeb and music
 
 - Powracają role Ordynator, Pacjent, Konsultant i Kontraktor; ograniczenia przedmiotów i receptur Better MC zostają.
@@ -181,7 +190,7 @@ stack. Original item components are retained; unsupported EMC items are refused.
 
 ## Evidence and license
 
-The included addon SHA-256 is de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f.
+The included addon SHA-256 is 56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614.
 This release restores the original detailed scooter mesh, UVs, lighting normals and texture variants using cached native Minecraft geometry. The isolated full BMC client checks cover the actual rendering and resource reload, unenchanted vein mining and scooter item pickup with preserved upgrades/storage. Existing unrelated runtime receipts retain their original measured candidate IDs.
 No production activation or performance benchmark is asserted by this ZIP alone. Code/component license notices remain inside the JAR. The restored scooter model uses the user-supplied Sketchfab Standard licensed model by kovsh (https://sketchfab.com/3d-models/fddbc46d599240bba8258e6d2c4daa59); the Peeb/game assets retain their original notices and are not relicensed by the code license.
 Source: https://github.com/aridlin/psychiatryk-roles

@@ -1,5 +1,14 @@
 # Roles 3.0.8
 
+## Poprawka uruchamiania 3.0.8 / 3.0.8 launch fix
+
+- Naprawiono wywołanie dostawcy klas ModLauncher w poprawkach zgodności JEI i Flywheel, które uniemożliwiało uruchomienie klienta.
+- Uprawy rosną normalnie o każdej porze roku; pozostałe ustawienia pór roku pozostają bez zmian.
+- Corrected the ModLauncher class-provider call in the JEI and Flywheel compatibility fixes that prevented client startup.
+- Crops grow normally in every season; other season settings remain unchanged.
+
+This is a corrected build of Roles 3.0.8. AutoModpack and these downloads select the same addon SHA-256. Server common code, packet protocols and recipes match the original 3.0.8 build.
+
 ## Roles 3.0.8 — Role, Peeb i muzyka / Roles, Peeb and music
 
 - Powracają role Ordynator, Pacjent, Konsultant i Kontraktor; ograniczenia przedmiotów i receptur Better MC zostają.
@@ -17,4 +26,4 @@
 
 AutoModpack distributes the matching addon. Existing inventory, world, music selections, recipes and unrelated settings are retained. Build-transfer, seasons and old-world migration commands remain disabled.
 
-Addon SHA-256: `de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f`
+Addon SHA-256: `56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614`

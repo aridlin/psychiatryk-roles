@@ -4,6 +4,8 @@
 
 Official Better MC5 base stays with its original publisher. The current addon source update is Roles 3.0.8; [changes and reproducible build](bmc5-v53/PATCH-3.0.8.md) are recorded separately. The role framework is restored while Better MC survival restrictions remain. The exact portable source build reproduced the complete candidate SHA. Earlier deployment receipts, including the [3.0.7 production checkpoint](bmc5-v53/patch-evidence/production-3.0.7.json), remain historical evidence. The [3.0.8 production receipt](bmc5-v53/patch-evidence/production-3.0.8.json) confirms startup, paired payloads, pinned AutoModpack delivery and matching public installers. Earlier S23 source remains available below.
 
+The [corrected 3.0.8 client-loader repair](bmc5-v53/PATCH-3.0.8-LOADERFIX.md) fixes the native ModLauncher startup error and includes normal crop growth in every season. Actual corrected full-pack launch/join and native delivery have separate sanitized evidence.
+
 ---
 
 # Legacy Psychiatryk Roles — Forge 1.20.1

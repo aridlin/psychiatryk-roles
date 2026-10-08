@@ -1,6 +1,6 @@
 {
   "release": "bmc5-v53-roles3.0.8",
-  "addonSha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "addonSha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
   "managedFilename": "mods/psychiatryk_roles-3.0.0-bmc5.jar",
   "minecraft": "1.21.1",
   "neoforge": "21.1.250",
@@ -22,7 +22,8 @@
   },
   "selectedConfigurations": {
     "config/carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
-    "config/veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a"
+    "config/veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a",
+    "config/sereneseasons/fertility.toml": "ead7a0aead62bcd6b3c6ed3671538ca0c70cef3ff32f30348b4b9adfc6ceeb75"
   },
   "restoredScooterSmithing": {
     "dyes": true,
@@ -109,7 +110,8 @@
   },
   "compatibilityFixes": {
     "legacyJeiSophisticatedUnitTransfers": true,
-    "conditionalLegacyFlywheelRangeClear": true
+    "conditionalLegacyFlywheelRangeClear": true,
+    "modLauncherClassProviderApi": true
   },
   "rolesRestoration": {
     "enabled": true,
@@ -122,5 +124,9 @@
     "eyeBodyClippingCorrected": true,
     "optionalStepHeightBlocks": 1.3,
     "steppingDefault": false
+  },
+  "cropGrowth": {
+    "normalInEverySeason": true,
+    "otherSeasonSettingsPreserved": true
   }
 }

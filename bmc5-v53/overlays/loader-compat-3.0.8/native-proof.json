@@ -1,0 +1,192 @@
+{
+  "success": true,
+  "baseline308_sha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "baseline309_sha256": "47a72bada730d9e6a7a2ae74ef813c0ea22a35ea97f13952d90a31f2357dc8e4",
+  "candidate308_sha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
+  "overlay308_sha256": "79460ba19fabf7d47640641a4960692a106f3181331d461845884d159335a36f",
+  "overlay309_sha256": "a9c25fcbad7dba060f06d3fa78054efc6c77ea84e1d581af37550c7a02b95be3",
+  "runtime_sha256": {
+    "pl/aridlin/psychiatrykroles/compat/EmfOptionsCompatPlugin.class": "4a14c3a514a9f915eeb4896a5ab80bb83103e9da8dd881abf811d5e81f5e4577",
+    "pl/aridlin/psychiatrykroles/compat/FlywheelLegacyCompatPlugin.class": "cd5d396a8bc96fe83c8b39600620dbb38c31f3c3c8482b39dc50c5ea1eae130b",
+    "pl/aridlin/psychiatrykroles/compat/JeiTransferCompatPlugin.class": "516dc4a7e38d80046a5642e4066ac9b56cce93819f4ef1f3ed1e4df83fbbe566"
+  },
+  "sources_sha256": {
+    "src/pl/aridlin/psychiatrykroles/compat/EmfOptionsCompatPlugin.java": "1f504f1472136018b0fe94b0426efc3f4536c0e1aa1557fa8529d62f8be02666",
+    "src/pl/aridlin/psychiatrykroles/compat/FlywheelLegacyCompatPlugin.java": "8acbcfa6d246745379ee0d55e65d1471b45aa464f45b594babdfaabfa265759a",
+    "src/pl/aridlin/psychiatrykroles/compat/JeiTransferCompatPlugin.java": "a135b62f9f07a5a8454df2ab5b311e6b48038492a4570ee6279370670e4b0776"
+  },
+  "fixtures_sha256": {
+    "tests/FixtureMixinService.java": "3c4baca5487084a036bae774b45503ea7801fd52637719cc6d71c9a1890a9dd1",
+    "tests/FixtureProperties.java": "5707b1730215028605bbe2b89f3d7f8881097977c4b55f1cb35766221a851376",
+    "tests/pl/aridlin/psychiatrykroles/compat/EmfNativeMixinTest.java": "734cf2eee2fa7f95d0353c42fb95383a95e5eb7e8bf52359cf596e6a143ee0e4",
+    "tests/pl/aridlin/psychiatrykroles/compat/FlywheelNativeMixinTest.java": "5d6a4123a451d7beb35d648fcc64f63f9702c77c4b3ba542b6fb4d199c733fe5",
+    "tests/pl/aridlin/psychiatrykroles/compat/JeiNativeMixinTest.java": "9bfc91719483a4b4f4332aa34586254db600983e6bc398316e9a484057387100",
+    "tests/pl/aridlin/psychiatrykroles/compat/ModLauncherBoundaryTest.java": "9eff79bad975c8dd3c8d1df208fdf28497b9f80e12a034b5b6741fcd0ecc12b2"
+  },
+  "tests": {
+    "jei-boundary-old": {
+      "success": true,
+      "mode": "jei",
+      "checks": 4,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "flywheel-boundary-old": {
+      "success": true,
+      "mode": "flywheel",
+      "checks": 5,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "emf-boundary-old": {
+      "success": true,
+      "mode": "emf",
+      "checks": 4,
+      "actual_modlauncher_provider": true,
+      "old_false_failure_reproduced": true,
+      "supported_true_flags0_shape_verified": true,
+      "self_processing_skipped": true,
+      "file_transport_double": true,
+      "game_launched": false
+    },
+    "jei-native-old": {
+      "success": true,
+      "checks": 29,
+      "mode": "old",
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "jei-native-new": {
+      "success": true,
+      "checks": 7,
+      "mode": "new",
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "jei-native-absent": {
+      "success": true,
+      "checks": 4,
+      "mode": "absent",
+      "no_jei_dependency": true
+    },
+    "flywheel-native-old": {
+      "success": true,
+      "checks": 1448,
+      "mode": "old",
+      "unpatched_tail_failures": 63,
+      "patched_tail_failures": 0,
+      "tail_cases": 128,
+      "random_range_cases": 512,
+      "actual_parallelUpdate_cases": 4,
+      "actual_sponge_transformer": true,
+      "game_launched": false
+    },
+    "flywheel-native-new": {
+      "success": true,
+      "checks": 5,
+      "mode": "new",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-unknown": {
+      "success": true,
+      "checks": 5,
+      "mode": "unknown",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-off": {
+      "success": true,
+      "checks": 5,
+      "mode": "off",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-server": {
+      "success": true,
+      "checks": 5,
+      "mode": "server",
+      "byte_unchanged": true,
+      "actual_sponge_transformer": true
+    },
+    "flywheel-native-absent": {
+      "success": true,
+      "checks": 3,
+      "mode": "absent",
+      "no_flywheel_dependency": true
+    },
+    "emf-native-old": {
+      "success": true,
+      "mode": "old",
+      "checks": 53,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": true,
+      "game_launched": false
+    },
+    "emf-native-fixed": {
+      "success": true,
+      "mode": "fixed",
+      "checks": 18,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": true,
+      "game_launched": false
+    },
+    "emf-native-unknown": {
+      "success": true,
+      "mode": "unknown",
+      "checks": 5,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": false,
+      "game_launched": false
+    },
+    "emf-native-server": {
+      "success": true,
+      "mode": "server",
+      "checks": 5,
+      "actual_sponge_transformer": true,
+      "actual_control_factory": false,
+      "game_launched": false
+    },
+    "emf-native-absent": {
+      "success": true,
+      "mode": "absent",
+      "checks": 4,
+      "no_optional_dependency": true
+    }
+  },
+  "actual_modlauncher_provider_boundary_verified": true,
+  "actual_false_launch_failure_reproduced": true,
+  "supported_true_flags0_gate_shape_verified": true,
+  "actual_self_processing_skipped_verified": true,
+  "native_sponge_and_real_target_behavior_verified": true,
+  "all_structural_guards_unchanged": true,
+  "all_308_bytes_except_two_plugins_unchanged": true,
+  "packet_protocols_and_toml_unchanged": true,
+  "frozen_308_309_unchanged": true,
+  "game_launched": false,
+  "live_files_mutated": false,
+  "transport_limit": "Actual installed Sponge ModLauncher provider with bounded file-only ITransformerLoader. Real game-layer startup still requires Prism confirmation.",
+  "fixture_dependencies_sha256": {
+    "sponge-mixin-0.15.2+mixin.0.8.7.jar": "1d45cfe3ae4a2eab38dc74276803748cf799088986260d6d912e50ddb35d15c5",
+    "modlauncher-11.0.5.jar": "fd9b9fc7cf043d2264ea0113eac6b258f0a71fece5b00e831bfbdf9726c78a24",
+    "jei-1.21.1-neoforge-19.27.0.343.jar": "137f60018968a50c6f00e3a8ca9be790391792d2f3e6eff66237f2e9b3bc1353",
+    "jei-1.21.1-neoforge-19.51.0.418.jar": "8bc3936d869e4040a5649c58b7e8be1c78c82a245c0dc07bdd68ab49121a222c",
+    "sophisticatedcore-1.21.1-1.4.70.2131.jar": "eb604fb5475a85da66385bbf75f062fdfba2cc98a2fb41a845e306273f815934",
+    "flywheel-neoforge-1.21.1-1.0.4.jar": "e198f598d6a999c217b466cc90aab59bab4c267424f66a34f93c64ed88e44e56",
+    "flywheel-neoforge-1.21.1-1.0.6.jar": "31dda15c205eb596d3b3449ef03f6af7363a6cd35b3da4bfe916b304f9e5337e",
+    "sodiumoptionsmodcompat-neoforge-1.0.0-1.21.1.jar": "a4eda890c1793d2e414babff209a3ac45a5046095f584a81f82e4ecf9c78ae03",
+    "entity_texture_features-7.2.1-1.21-neoforge.jar": "20d550603624a9702de92287d151536d6b98484de6ccdda23ea4452e1066264a",
+    "sodium-neoforge-0.6.13+mc1.21.1.jar": "7acd7af2ef75ec883a6872c17494ead65e38025151eb08a1d60e36d34377f403",
+    "sodiumoptionsapi-neoforge-1.0.10-1.21.1.jar": "a6b9114615e2fff97e1a99fbf9fae17b87baacb26b69dde2f423867b5932bc02",
+    "entity_model_features-3.3.5-1.21-neoforge.jar": "68d185eeadb63f6669f2040cc35c4d2abaae7619c311d7b541d31628785e45db"
+  },
+  "private_logs_paths_accounts_tokens_roster_catalog_absent": true
+}

@@ -5,7 +5,7 @@
   "seed": 46204253,
   "base": "Better MC5 v53",
   "inventories": "fresh",
-  "addonSha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "addonSha256": "56cc13966c2ed202ff54ac9e0b401fce32325842d93fff2be22b1ee14de9b614",
   "features": [
     "separate-admin-worlds",
     "url-music",
@@ -57,6 +57,7 @@
     "music-stream-retry-auth-reliability",
     "jei-legacy-unit-transfer-compat",
     "peeb-max-range-initiation-synchronized",
-    "flywheel-legacy-range-clear-compat"
+    "flywheel-legacy-range-clear-compat",
+    "client-compat-loader-provider-fix"
   ]
 }

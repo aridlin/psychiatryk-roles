@@ -1,5 +1,14 @@
 # Roles 3.0.8 — player guide
 
+## Poprawka uruchamiania 3.0.8 / 3.0.8 launch fix
+
+- Naprawiono wywołanie dostawcy klas ModLauncher w poprawkach zgodności JEI i Flywheel, które uniemożliwiało uruchomienie klienta.
+- Uprawy rosną normalnie o każdej porze roku; pozostałe ustawienia pór roku pozostają bez zmian.
+- Corrected the ModLauncher class-provider call in the JEI and Flywheel compatibility fixes that prevented client startup.
+- Crops grow normally in every season; other season settings remain unchanged.
+
+This is a corrected build of Roles 3.0.8. AutoModpack and these downloads select the same addon SHA-256. Server common code, packet protocols and recipes match the original 3.0.8 build.
+
 ## Roles 3.0.8 — Role, Peeb i muzyka / Roles, Peeb and music
 
 - Powracają role Ordynator, Pacjent, Konsultant i Kontraktor; ograniczenia przedmiotów i receptur Better MC zostają.
