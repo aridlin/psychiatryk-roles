@@ -1,0 +1,55 @@
+{
+  "timezone": "Europe/Warsaw",
+  "items": {
+    "morevillagers:gardening_table": {
+      "name": "Florysta / Florist",
+      "unlockAt": "2026-10-08",
+      "profession": "morevillagers:florist"
+    },
+    "morevillagers:woodworking_table": {
+      "name": "Stolarz / Woodworker",
+      "unlockAt": "2026-10-08",
+      "profession": "morevillagers:woodworker"
+    },
+    "morevillagers:chiller": {
+      "name": "Lodziarz / Iceman",
+      "unlockAt": "2026-10-08",
+      "profession": "morevillagers:iceman"
+    },
+    "morevillagers:hunting_post": {
+      "name": "Łowca / Hunter",
+      "unlockAt": "2026-10-08",
+      "profession": "morevillagers:hunter"
+    },
+    "morevillagers:blueprint_table": {
+      "name": "Inżynier / Engineer",
+      "unlockAt": "2026-10-10",
+      "profession": "morevillagers:engineer"
+    },
+    "morevillagers:mining_bench": {
+      "name": "Górnik / Miner",
+      "unlockAt": "2026-10-12",
+      "profession": "morevillagers:miner"
+    },
+    "morevillagers:decayed_workbench": {
+      "name": "Netherolog / Netherologist",
+      "unlockAt": "2026-10-14",
+      "profession": "morevillagers:netherian"
+    },
+    "morevillagers:oceanography_table": {
+      "name": "Oceanograf / Oceanographer",
+      "unlockAt": "2026-10-16",
+      "profession": "morevillagers:oceanographer"
+    },
+    "morevillagers:gilded_station": {
+      "name": "Pozłacane stanowisko / Gilded Station",
+      "unlockAt": "2026-10-18",
+      "profession": "morevillagers:ascended"
+    },
+    "morevillagers:purpur_altar": {
+      "name": "Enderolog / Enderologist",
+      "unlockAt": "2026-11-01",
+      "profession": "morevillagers:enderian"
+    }
+  }
+}
