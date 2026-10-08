@@ -147,6 +147,18 @@ odrębne prawa i informacje o autorach w pakiecie wydania.
 2. Verify redistribution rights for the bundled Peeb art/audio. The source
    license does **not** grant those assets GPL rights. Choose the project
    license/disclosures only after reviewing the actual published artifact.
+   The tested 3.0.10 JAR contains Peeb model/animation JSON and OGG sounds.
+   The [original creator's page](https://feverdreamjohnny.itch.io/peeb-adventures-hps1-demodisk-edition)
+   credits John Ellis for 3D art and Aaron for Peeb's design but publishes no
+   asset-redistribution grant on that page. For modpacks,
+   [Modrinth's permission guide](https://support.modrinth.com/en/articles/8797527-obtaining-modpack-permissions)
+   asks authors to establish a redistribution license, an explicit project
+   statement, or author permission for third-party content. We infer that the
+   same underlying rights question applies to assets bundled in this JAR.
+   Credit alone does not establish
+   those rights. Keep the public Modrinth version unpublished until rights
+   evidence is recorded or the affected assets are replaced; choosing GPL
+   for the authored Java source would not license the bundled artwork.
 3. Upload a real version with exact NeoForge/Java/dependency requirements,
    then add the applicable content disclosures, including AI-assisted work if
    required by Modrinth's current interface.
