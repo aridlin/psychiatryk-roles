@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "checks": 154,
+  "simultaneousAuthenticatedListeners": 32,
+  "apiResponsiveDuringAudioSaturation": true,
+  "explicit503RetryAfter": true,
+  "authorizationPreserved": true,
+  "audioRangeBytesIdentical": true,
+  "productionMutation": false,
+  "gameLaunched": false
+}

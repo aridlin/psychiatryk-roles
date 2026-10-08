@@ -1,0 +1,120 @@
+{
+  "success": true,
+  "activated": true,
+  "candidate_sha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "base_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "matching_server_and_distributed_release_verified": true,
+  "server_restarted_verified": true,
+  "fresh_done_verified": true,
+  "native_startup_transaction_verified": true,
+  "peeb_common_mod_loaded": true,
+  "pending_flag_absent": true,
+  "paired_files_sha256": {
+    "goplanska-release.json": "ee7f0db2621bcd930d6675cedefd7bc3a2d422ba92d858f70d9f8dba8949f1d2",
+    "mods/psychiatryk_roles-3.0.0-bmc5.jar": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+    "automodpack/host-modpack/main/goplanska-release.json": "ee7f0db2621bcd930d6675cedefd7bc3a2d422ba92d858f70d9f8dba8949f1d2",
+    "automodpack/host-modpack/main/mods/psychiatryk_roles-3.0.0-bmc5.jar": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f"
+  },
+  "native_feed_sha256": "0190c1c0f6dbc82664d15cf7f8e7653d3474088303c7ecb743fddf8315914b5d",
+  "generated_feed_files": 1127,
+  "generated_feed_mods": 353,
+  "generated_feed_modified_records": 2,
+  "generated_feed_unchanged_records": 1125,
+  "generated_feed_added_paths": 0,
+  "generated_feed_removed_paths": 0,
+  "protected_configs_dependencies_and_private_music_unchanged": true,
+  "original_jei_dfr_feed_records_unchanged": true,
+  "private_catalog_client_excluded": true,
+  "private_roster_persisted_verified": true,
+  "native_roster_receipt_sha256": "7226799d669731a1babbc2de6c965cfd85663fdfc99fb2d3b12b3eb5b1170940",
+  "native_download_verified": true,
+  "tls_pin_verified": true,
+  "certificate_sha256": "e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6",
+  "downloaded_jar_sha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "downloaded_jar_bytes": 10128537,
+  "minecraft_protocol": 767,
+  "public_downloads_verified": true,
+  "published_files": [
+    {
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-roles-3.0.8-addon.zip",
+      "sha256": "18ad8c35a1764126c51d07739a45eeacb2ad5232ce2433ca092c80ff1e947398",
+      "bytes": 10059426,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-installer.mrpack",
+      "sha256": "6408103e6c3f67f20850c8ce318def78737828d5148a90f94cf1726bcdae3f89",
+      "bytes": 15877,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/goplanska-bmc5-v53-curseforge.zip",
+      "sha256": "7ee27467acdda567bff8eab25185786598f5ea0cffb9f23dcd0857b2fbdcf4ab",
+      "bytes": 15602,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/INSTALL-3.0.8.md",
+      "sha256": "438a40156ca0f3c02ae4d689b67b37f80c6aaac2516b0d16593ebe31cb2df558",
+      "bytes": 22334,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/PLAY-3.0.8.md",
+      "sha256": "b6e8fb24dec44bee73e58b5f3f38a9aed8af6f977583867c421dcf773037a013",
+      "bytes": 17909,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/CHANGELOG-3.0.8.md",
+      "sha256": "1c124df6c750d57b10379b431c81bbc5e45a0ff616bc9c75ba2b7e97aebf53ee",
+      "bytes": 1868,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/goplanska-release.json",
+      "sha256": "ee7f0db2621bcd930d6675cedefd7bc3a2d422ba92d858f70d9f8dba8949f1d2",
+      "bytes": 1942,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/download-release.json",
+      "sha256": "31204577794deec13d2555095c6cb595e0f657a25191cfb15d5b8b62e11f8215",
+      "bytes": 3858,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    },
+    {
+      "url": "https://info.goplanska.pl/",
+      "sha256": "4321e50bb44d3ebb91d85c293708bb6e97b96f81c03d2890353ca239dbbe43b3",
+      "bytes": 61515,
+      "public_http_verified": true,
+      "sftp_readback_verified": true
+    }
+  ],
+  "source_only_git_export": true,
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "native_signature_checks": 1369,
+  "changed_scope_native_fixture_gate_verified": true,
+  "game_client_launched": false,
+  "player_join_verified": false,
+  "live_visual_confirmation": false,
+  "multiplayer_listening_verified": false,
+  "protected_world_data_replaced": false,
+  "private_roster_personal_data_exported": false,
+  "receipts_sha256": {
+    "activation": "42b4f4093f488c1899e7e0766f9cab1ee71b2811f3db47b28ca7939b2d51ce61",
+    "external": "45cc2ae3d7e8802aeb4aca0449be2a286f38f8d16dffcd2682d5609559970969",
+    "publication": "23c1d86f583f7f882d4159935eb32f0ad3fb73252c480136d07a1fa5053a5269",
+    "portable": "a91d0379ed752a38efd2be2de6010dc0b7d67b734353d44185b2331713ce382b",
+    "gate": "76f36b412463e926473d1b3a822cce312f15319c7644231abc092018c516e7a0",
+    "signatures": "df59e03c3e0dbda8ba1249089f7df407cfc87d53089416255cf29493372fb505"
+  }
+}

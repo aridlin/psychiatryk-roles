@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "candidate_sha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
+  "base_sha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "compilation_order": [
+    "music-hud-compact",
+    "music-menu",
+    "peeb-dye",
+    "roles-restore",
+    "peeb-step",
+    "roster-startup",
+    "music-stream-reliability",
+    "jei-compat",
+    "grapple-initiation",
+    "flywheel-compat"
+  ],
+  "only_reviewed_groups": true,
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false
+}

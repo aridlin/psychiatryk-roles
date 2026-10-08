@@ -1,0 +1,3 @@
+# Derived from reviewed imports; not a recovered or runtime-version-pinned file.
+# The installed yt-dlp version was not inspected during source recovery.
+yt-dlp

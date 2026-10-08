@@ -1,6 +1,23 @@
-# Goplanska: Better MC5 v53 + Psychiatryk Roles 3.0.7
+# Goplanska: Better MC5 v53 + Psychiatryk Roles 3.0.8
 
-## Roles 3.0.7 — Pełne przyciąganie Peeba / Peeb full grapple pull
+## Roles 3.0.8 — Role, Peeb i muzyka / Roles, Peeb and music
+
+- Powracają role Ordynator, Pacjent, Konsultant i Kontraktor; ograniczenia przedmiotów i receptur Better MC zostają.
+- Peeba można farbować zwykłymi barwnikami na stole rzemieślniczym. Poprawiono przecinanie oczu i ciała.
+- Opcjonalne pokonywanie przeszkód Peebem do 1,3 bloku działa na ziemi i w powietrzu; administrator włącza je w ustawieniach, domyślnie jest wyłączone.
+- Karta muzyki pozostaje ostra. Oba HUD-y utworu są o połowę mniejsze i ustawiają się obok rzeczywistej minimapy Xaero.
+- Poprawiono strumieniowanie współdzielonej muzyki i ponawianie po chwilowych błędach; naprawiono przenoszenie receptur JEI do plecaków.
+- Rozpoczynanie chwytu blisko maksymalnego zasięgu jest spójne z serwerem; poprawiono błąd czyszczenia zakresu starszego Flywheel.
+- Ordynator, Pacjent, Konsultant and Contractor roles are restored; Better MC item and recipe restrictions remain.
+- Dye Peeb with ordinary dyes in the crafting grid. Eye/body clipping is corrected.
+- Optional 1.3-block Peeb stepping works on the ground and in midair; administrators can enable it in settings, and it defaults off.
+- Music menu artwork and text stay sharp. Both song cards are half size and sit beside Xaero's actual minimap bounds.
+- Shared music streaming and recovery after transient errors are improved; JEI recipe transfers into backpacks are repaired.
+- Grapple initiation near the configured range is consistent with the server; a legacy Flywheel range-clearing defect is repaired.
+
+AutoModpack distributes the matching addon. Existing inventory, world, music selections, recipes and unrelated settings are retained. Build-transfer, seasons and old-world migration commands remain disabled.
+
+## Roles 3.0.8 — Pełne przyciąganie Peeba / Peeb full grapple pull
 
 - Hak Peeba daje geometryczne szarpnięcie kamery i przyciąga aż do punktu zaczepienia, zachowując pęd. Domyślna odległość zatrzymania wynosi 0 bloków; przeszkody nadal blokują ruch.
 - Odległość zatrzymania można zmienić w `/scooteradmin` → Peeb albo w pliku `config/psychiatryk-peeb.properties`, pole `stopDistance`. Po aktywacji kodu zmiany ustawienia nie wymagają restartu serwera.
@@ -22,7 +39,7 @@ Matching server and client addons are required; AutoModpack distributes the upda
 Sprawdzono odizolowane testy ruchu i konfiguracji bez uruchamiania pełnego klienta. Odczucie przyciągania w grze wymaga jeszcze potwierdzenia gracza.
 Isolated movement and configuration fixtures were checked without launching a full game client. Grapple feel still needs a player check in game.
 
-## Roles 3.0.7 — Peeb i muzyka / Peeb and music
+## Roles 3.0.8 — Peeb i muzyka / Peeb and music
 
 - Import publicznych utworów YouTube/YT Music nie ma minutowego cooldownu. Postęp pobierania pojawia się w menu; utwór trafia do wspólnej biblioteki, gdy jest gotowy.
 - Menu muzyki ma przyciski poprzedniego i następnego utworu. Źródła korzystają ze wspólnego zegara odtwarzania: otwarcie menu nie uruchamia piosenki od początku.
@@ -37,7 +54,7 @@ The protocol change requires the matching server and client addon. AutoModpack d
 Sprawdzenie aktualizacji obejmuje izolowane testy kodeków, streamingu i ruchu bez uruchamiania pełnego klienta. Odsłuch i odczucie haka w grze wymagają jeszcze sprawdzenia przez gracza.
 This update was checked with isolated codec, streaming and movement fixtures without launching a full game client. Listening and grapple feel still need a player check in game.
 
-## Peeb i muzyka — Roles 3.0.7
+## Peeb i muzyka — Roles 3.0.8
 
 - **Peeb:** połącz nić, skórę i patyk. Trzymaj przedmiot, aby się przemienić; zwykły pancerz może pozostać założony. Shift+PPM zakłada Peeb w slot klatki piersiowej i wymaga pustego hełmu, nogawek i butów. Peeb daje siedem punktów pancerza i chroni przed upadkiem.
 - **Hak i kamera:** przytrzymaj LPM, gdy celownik wskazuje osiągalną powierzchnię; puszczenie zwalnia hak. Sprężyste ciągnięcie liny zachowuje pęd przy zaczepieniu i puszczeniu haka, pozwalając się bujać. Przytrzymaj **lewy Alt**, aby swobodnie rozglądać się podczas przemiany w Peeb; klawisz działa również przy innym przypisaniu w Better MC. E otwiera ekwipunek. `/peebcamera 2..10` zmienia odległość kamery.
@@ -49,7 +66,7 @@ This update was checked with isolated codec, streaming and movement fixtures wit
 - **Kolory i ulepszenia:** ponownie można barwić i ulepszać hulajnogę w stole kowalskim. Przy barwieniu zostaw pierwszy slot (szablon) pusty, włóż hulajnogę jako bazę, a barwnik jako dodatek. Barwienie zachowuje właściciela i istniejące ulepszenia.
 - **Elytra i Loyalty:** hulajnoga wytworzona według dotychczasowej receptury z elytrą i odłamkiem jaja smoka dostaje Loyalty I. Nadal wiąże się z właścicielem; ulepszenia zachowują zaklęcie. `/scooterrecall` przywołuje wolną hulajnogę właściciela.
 
-## Peeb and music — Roles 3.0.7
+## Peeb and music — Roles 3.0.8
 
 - **Peeb:** combine string, leather and a stick. Hold the item to transform while keeping ordinary armour equipped. Shift+right-click wears Peeb in the chest slot and requires helmet, leggings and boots to be empty. Peeb provides seven armour points and prevents fall damage.
 - **Grapple and camera:** hold left-click when the target ring points to a reachable surface; release to let go. Elastic rope pull preserves momentum when attaching and releasing the grapple, allowing you to swing. Hold **Left Alt** to freelook while transformed into Peeb, including when Better MC assigns that key to another action. E opens inventory. `/peebcamera 2..10` adjusts camera distance.
@@ -69,7 +86,7 @@ Postawiony jukebox z utworem z listy serwera (np. Barka) aktualizuje teraz tłum
 
 A placed jukebox playing a server song (such as Barka) now refreshes wall muffling and reverb as the listener moves. Scooter and worn jukebox songs retain the same processing. AutoModpack downloads this patch on the next game launch.
 
-## Szafa grająca na plecach — Roles 3.0.7
+## Szafa grająca na plecach — Roles 3.0.8
 
 - Załóż zwykły jukebox do istniejącego slotu **back / plecy**. Zajmuje ten sam slot co plecak i jest widoczny na plecach.
 - Otwórz ekwipunek → **Muzyka z pleców**, albo użyj `/jukebox`. Wybierz utwór z tej samej listy, z której korzysta hulajnoga. Dostępne są Loop i Stop.
@@ -78,7 +95,7 @@ A placed jukebox playing a server song (such as Barka) now refreshes wall muffli
 - Token przedmiotu jukeboxa zachowuje sesję i pozycję utworu przez śmierć, zmianę wymiaru i ponowne założenie. Dźwięk podąża za wyrzuconym przedmiotem, gdy jest on załadowany. Wylogowanie lub umieszczenie przedmiotu w niezaładowanym pojemniku wycisza źródło, aż przedmiot wróci do załadowanego źródła odtwarzania; nie wymusza to ładowania świata ani obecności gracza offline.
 - Veinminer działa tylko na połączonych rudach, także bez zaklęcia. Zwykłe bloki i budowle nie są masowo kopane; ścinanie drzew nadal obsługuje FallingTree.
 
-## Wearable jukebox — Roles 3.0.7
+## Wearable jukebox — Roles 3.0.8
 
 - Equip a vanilla jukebox in the existing **back** slot. It occupies the backpack slot and is visible on your back.
 - Open the inventory → **Jukebox music**, or use `/jukebox`. Choose from the scooter's existing song library. Loop and Stop are available.
@@ -101,7 +118,7 @@ server pack and requests a relaunch. The tiny installer is not an offline full p
    https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge-bmc5/files/8835241
    In Prism use Add instance → CurseForge → this pack → v53. Then Edit instance → Version → NeoForge → Change version → **21.1.250**. The server requires this exact loader, even if the imported v53 default differs. Keep the old instance for rollback.
 2. Close Minecraft. Open the new instance's Minecraft folder. Copy the JAR
-   `mods/psychiatryk_roles-3.0.0-bmc5.jar` from this ZIP into that instance's `mods` folder. Replace an earlier merged Roles JAR; do not keep both versions. The server-managed filename is retained; the installed mod version is 3.0.7.
+   `mods/psychiatryk_roles-3.0.0-bmc5.jar` from this ZIP into that instance's `mods` folder. Replace an earlier merged Roles JAR; do not keep both versions. The server-managed filename is retained; the installed mod version is 3.0.8.
    Also copy `config/carryon-common.toml` for the scooter exclusion, then `config/veinmining-server.toml` from the ZIP into the instance's `config` folder for the ores-only preset.
    This ZIP is an addon overlay, not a complete importable CurseForge modpack.
 3. Install AutoModpack **4.0.6 for NeoForge/Minecraft 1.21.1**, from its official
@@ -164,7 +181,7 @@ stack. Original item components are retained; unsupported EMC items are refused.
 
 ## Evidence and license
 
-The included addon SHA-256 is ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303.
+The included addon SHA-256 is de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f.
 This release restores the original detailed scooter mesh, UVs, lighting normals and texture variants using cached native Minecraft geometry. The isolated full BMC client checks cover the actual rendering and resource reload, unenchanted vein mining and scooter item pickup with preserved upgrades/storage. Existing unrelated runtime receipts retain their original measured candidate IDs.
 No production activation or performance benchmark is asserted by this ZIP alone. Code/component license notices remain inside the JAR. The restored scooter model uses the user-supplied Sketchfab Standard licensed model by kovsh (https://sketchfab.com/3d-models/fddbc46d599240bba8258e6d2c4daa59); the Peeb/game assets retain their original notices and are not relicensed by the code license.
 Source: https://github.com/aridlin/psychiatryk-roles

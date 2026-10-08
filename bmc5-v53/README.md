@@ -1,8 +1,10 @@
-# BMC5 v53 + reduced Psychiatryk Roles 3.0.7 source
+# BMC5 v53 + Psychiatryk Roles 3.0.8 source
 
-[3.0.7 patch and checks](PATCH-3.0.7.md) · [Install guide](INSTALL-3.0.7.md) · [Player guide](PLAY-3.0.7.md) · [Production receipt](patch-evidence/production-3.0.7.json)
+[3.0.8 patch](PATCH-3.0.8.md) · [Install guide](INSTALL-3.0.8.md) · [Player guide](PLAY-3.0.8.md) · [Production receipt](patch-evidence/production-3.0.8.json)
 
-Peeb now pulls to its anchor with a live configurable stopping distance and geometric camera tug. Mounted grappling adds scooter momentum, and the body follows the scooter rotation. The music menu adds Pause/Resume, shared source volume, current-song artwork/title/artist/Like, grey panels and control icons; the HUD leaves room for the minimap. Xaero death waypoints are hidden only in the world HUD. Source-only overlays and their reproducible builder are in `overlays/pull-distance-3.0.7/` and `build-pull-distance-3.0.7.py`. The actual portable build reproduced the complete candidate SHA. Native/headless checks do not establish live listening or player-visible gameplay; 3.0.7 activation and public install documents are recorded separately.
+The existing Ordynator, Pacjent, Konsultant and Contractor role framework is restored; Better MC survival item/recipe restrictions remain. Peeb supports ordinary dyes and corrected eye/body geometry, optional 1.3-block grapple stepping defaults off, and initiation near maximum range is synchronized. Music cards stay sharp, are half size and sit beside the actual Xaero minimap. Shared streaming retries transient failures. Conditional client fixes bridge legacy JEI unit transfers and repair the exact legacy Flywheel range clear defect while skipping fixed or unknown variants.
+
+Reviewed authored sources are in `overlays/ui-polish-3.0.8/`; the portable builder is `build-ui-polish-3.0.8.py`. The actual portable build reproduced the complete candidate SHA `de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f`. Native signature and focused fixtures do not establish live listening or player-visible gameplay. [Production verification](patch-evidence/production-3.0.8.json) confirms fresh startup, paired server/client payloads, pinned AutoModpack delivery and matching public downloads. The [previous 3.0.7 receipt](patch-evidence/production-3.0.7.json) remains historical. A separate authored ProLiant capacity service source is in `services/proliant-capacity-3.0.8/`; no private roster plan, audio catalog or deployment logs are included.
 
 ## Retained features and earlier releases
 

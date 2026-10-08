@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "purpose": "Separate bounded audio/API admission; explicit 503 retry responses",
+  "files_sha256": {
+    "common.py": "eab3cb5dd24b3eae5dcdb52aaa6598685153bd476db4bf0814d5179fe3234830",
+    "service.py": "0dffe011903e562c520240d274f93c8fbf6caa6795976ffc7af811257ce63813",
+    "worker.py": "dd0b394954d7e7bab16f7d4ca18aed4da313bbc61c2ba649b3378da1936636d3",
+    "requirements.txt": "87655f5177e3512887bcd2db0ab8ead069ef34b0dfc69fbea3ba888c33129f7d"
+  },
+  "baseline_release": "b105376e0d84fadeb615",
+  "scheduled_not_before_utc": "2026-10-08T15:37:27Z",
+  "activation_authorization": "User authorized immediate two-minute Minecraft countdown, replacing 04:00 plan"
+}

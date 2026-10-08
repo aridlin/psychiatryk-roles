@@ -1,8 +1,8 @@
-# Current source: Better MC5 v53 + reduced Roles
+# Current source: Better MC5 v53 + Psychiatryk Roles
 
 [Addon and installation](bmc5-v53/README.md) · [Portable Scooters](portable-modules/scooter/README.md) · [Portable Chams SDK](portable-modules/chams/README.md).
 
-Official Better MC5 base stays with its original publisher. The current addon source update is Roles 3.0.7; [changes, checks and reproducible build](bmc5-v53/PATCH-3.0.7.md) are recorded separately. The [3.0.7 production receipt](bmc5-v53/patch-evidence/production-3.0.7.json) confirms live startup, the pinned AutoModpack download and matching public installers. Earlier deployment receipts remain historical evidence. Earlier S23 v34/v33 source remains available below.
+Official Better MC5 base stays with its original publisher. The current addon source update is Roles 3.0.8; [changes and reproducible build](bmc5-v53/PATCH-3.0.8.md) are recorded separately. The role framework is restored while Better MC survival restrictions remain. The exact portable source build reproduced the complete candidate SHA. Earlier deployment receipts, including the [3.0.7 production checkpoint](bmc5-v53/patch-evidence/production-3.0.7.json), remain historical evidence. The [3.0.8 production receipt](bmc5-v53/patch-evidence/production-3.0.8.json) confirms startup, paired payloads, pinned AutoModpack delivery and matching public installers. Earlier S23 source remains available below.
 
 ---
 

@@ -1,11 +1,11 @@
 {
-  "release": "bmc5-v53-roles3.0.7",
+  "release": "bmc5-v53-roles3.0.8",
   "minecraft": "1.21.1",
   "neoforge": "21.1.250",
   "seed": 46204253,
   "base": "Better MC5 v53",
   "inventories": "fresh",
-  "addonSha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "addonSha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
   "features": [
     "separate-admin-worlds",
     "url-music",
@@ -45,6 +45,18 @@
     "music-source-volume",
     "music-menu-minecraft-style",
     "music-now-playing-hud-clear-of-minimap",
-    "music-transport-protocol-3"
+    "music-transport-protocol-3",
+    "music-menu-sharp-background",
+    "music-now-playing-half-size-xaero-adjacent",
+    "peeb-vanilla-dyes",
+    "peeb-eye-body-clipping-fix",
+    "role-framework-restored",
+    "peeb-config-protocol3",
+    "optional-peeb-grapple-step-1.3",
+    "private-roster-startup-assignments",
+    "music-stream-retry-auth-reliability",
+    "jei-legacy-unit-transfer-compat",
+    "peeb-max-range-initiation-synchronized",
+    "flywheel-legacy-range-clear-compat"
   ]
 }

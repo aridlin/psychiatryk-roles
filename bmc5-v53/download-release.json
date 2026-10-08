@@ -1,6 +1,6 @@
 {
-  "release": "bmc5-v53-roles3.0.7",
-  "addonSha256": "ff773260893687f62a1c7dfd570a5c374110e972ce84f6fd51952620a7e7f303",
+  "release": "bmc5-v53-roles3.0.8",
+  "addonSha256": "de57e55ed0171644758b2c82689c1fcfa680ad6a8bc7d4ba72b86d3b4ae16c0f",
   "managedFilename": "mods/psychiatryk_roles-3.0.0-bmc5.jar",
   "minecraft": "1.21.1",
   "neoforge": "21.1.250",
@@ -69,7 +69,13 @@
     "menuControlIcons": true,
     "nowPlayingArtTitleArtist": true,
     "currentSongLike": true,
-    "nowPlayingHudClearOfMinimap": true
+    "nowPlayingHudClearOfMinimap": true,
+    "sharpUnblurredMenu": true,
+    "compactNowPlayingHud": true,
+    "halfSizeSongCards": true,
+    "adjacentToActualXaeroMap": true,
+    "sharedPacketAuthorization": true,
+    "boundedTransientFailureRetries": true
   },
   "peebGrapple": {
     "springPhysics": true,
@@ -83,7 +89,13 @@
     "mountedAdditiveMomentum": true,
     "grappleAttachDamage": 2,
     "grappleBodyContactDamage": 6,
-    "teamPvpRulesPreserved": true
+    "teamPvpRulesPreserved": true,
+    "configProtocol": "3",
+    "optionalGrappleStepBlocks": 1.3,
+    "grappleStepDefault": false,
+    "grappleStepLiveReload": true,
+    "synchronizedInitiationYaw": true,
+    "boundedInitialAttachmentGrace": true
   },
   "existingSongMetadata": {
     "catalogSongCount": 637,
@@ -94,5 +106,21 @@
   "deathWaypoints": {
     "worldHudVisible": false,
     "mapPreserved": true
+  },
+  "compatibilityFixes": {
+    "legacyJeiSophisticatedUnitTransfers": true,
+    "conditionalLegacyFlywheelRangeClear": true
+  },
+  "rolesRestoration": {
+    "enabled": true,
+    "contractorFramework": true,
+    "bmcSurvivalRestrictionsRetained": true,
+    "unrelatedBuildSeasonOldWorldModulesEnabled": false
+  },
+  "peebPolish": {
+    "vanillaDyes": true,
+    "eyeBodyClippingCorrected": true,
+    "optionalStepHeightBlocks": 1.3,
+    "steppingDefault": false
   }
 }
