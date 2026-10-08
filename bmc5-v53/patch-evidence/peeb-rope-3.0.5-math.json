@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "checks": 8218,
+  "ground_final_distance": 1.702653519723764,
+  "ground_travel": 6.292097268722467,
+  "ground_arrival_ticks": 16,
+  "first_taut_tick_speed": 0.24,
+  "overhead_final_distance": 2.0,
+  "overhead_max_speed": 0.8,
+  "native_game_launch_verified": false,
+  "human_grapple_feel_verified": false
+}

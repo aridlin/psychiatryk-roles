@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "runtime_verified": false,
+  "checkpoint_sha256": "4173799b5497e2f7c3183b96a3550adcc7a3893968ff3311265d6c2d06e49a29",
+  "candidate_sha256": "f03a1a2856e3ce9d62de6797ce2fcf49825373252d733e6f69d9f5f60b57fa53",
+  "source_sha256": {
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/PeebGrapple.java": "6fc83d271e3a68dc3fad56b2b8688d9fcacb87b9501f3045a17030e28d86fa6e",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebClient.java": "db624e9566873b412a79019c02e7ee05ced9d05307de65c9a7ac4b4c670bf67e",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.java": "3e8856a41ae272a4f04a3d70cffb3b4bcd424a0ae9ef2de1efd1ec51037f56e7",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebStyle.java": "10b7fea22ebe3167c6030f55da091f3e77fe435717868eb7626c0dd77c036a96",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebHud.java": "6dbc381b4944604c65726e09a5a5dea1ba859e85df1d964f784ebb1866691ec4",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebRopeGeometry.java": "fecf33034de082dba8521e35395166366ad5f4d8b25c19e67983fb4b28a7084c"
+  },
+  "changed_entries": [
+    "assets/psychiatryk_peeb/shaders/core/peeb_ps1.fsh",
+    "assets/psychiatryk_peeb/shaders/core/peeb_ps1.json",
+    "assets/psychiatryk_peeb/shaders/core/peeb_ps1.vsh",
+    "pl/aridlin/psychiatrykroles/peeb/PeebGrapple$Session.class",
+    "pl/aridlin/psychiatrykroles/peeb/PeebGrapple.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraFrame.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraProfile.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Grapple.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Motion.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Received.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Target.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebHud.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer$Frame.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebRenderer.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebStyle.class"
+  ],
+  "unchanged_other_entries": 664,
+  "no_entries_removed": true,
+  "added_entries": [
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebRopeGeometry$Curve.class",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebRopeGeometry.class"
+  ],
+  "unchanged_bindings_bootstrap": true,
+  "music_scooter_and_chams_byte_identical": true,
+  "native_runtime_qualification": "Completed focused 195-assertion gate; see peeb-rope-dither-3.0.5-native.json",
+  "production_deployed": false,
+  "all_source_recovery_packaged_in_runtime": false,
+  "unchanged_source_recovery_byte_identity_claimed": false
+}

@@ -1,0 +1,101 @@
+{
+  "success": true,
+  "recovered_at": "2026-10-08T07:38:36.276968+00:00",
+  "provenance": "Read-only SSH export of explicitly allowlisted Python files from the active user-owned ProLiant goplanska-ytmusic release",
+  "ssh_alias": "proliant",
+  "remote_release_path": "/opt/goplanska-ytmusic/releases/caf33999a66e1fcb22a7",
+  "remote_service_source": "/opt/goplanska-ytmusic/releases/caf33999a66e1fcb22a7/service.py",
+  "remote_service_active": true,
+  "known_api_base": "https://prol.aridlin.pl/scooter-music-api/v1",
+  "source_files": [
+    {
+      "path": "common.py",
+      "remote_sha256": "0cd124b5d89a2cd74b2d8da37455de991592ada8049f089844f3e35f9ee4269b",
+      "export_sha256": "0cd124b5d89a2cd74b2d8da37455de991592ada8049f089844f3e35f9ee4269b",
+      "size": 4617,
+      "byte_identical": true
+    },
+    {
+      "path": "service.py",
+      "remote_sha256": "d9126d0c14ccc04d5dcb9975498d88a1116e4403168f40ff189dcd4ecf256d48",
+      "export_sha256": "d9126d0c14ccc04d5dcb9975498d88a1116e4403168f40ff189dcd4ecf256d48",
+      "size": 20720,
+      "byte_identical": true
+    },
+    {
+      "path": "worker.py",
+      "remote_sha256": "2a1b64a41a7685e98006dce3fd53e5abc24c888819c3e230a2a77459d7f0ce7f",
+      "export_sha256": "2a1b64a41a7685e98006dce3fd53e5abc24c888819c3e230a2a77459d7f0ce7f",
+      "size": 8216,
+      "byte_identical": true
+    }
+  ],
+  "syntax_checked_without_execution": true,
+  "imports": {
+    "service.py": [
+      "argparse",
+      "common",
+      "concurrent.futures",
+      "hmac",
+      "http.server",
+      "json",
+      "math",
+      "os",
+      "pathlib",
+      "re",
+      "shutil",
+      "signal",
+      "socket",
+      "subprocess",
+      "sys",
+      "threading",
+      "time",
+      "urllib.parse",
+      "uuid",
+      "wave"
+    ],
+    "common.py": [
+      "hashlib",
+      "ipaddress",
+      "json",
+      "math",
+      "os",
+      "pathlib",
+      "re",
+      "socket",
+      "tempfile",
+      "urllib.parse"
+    ],
+    "worker.py": [
+      "common",
+      "json",
+      "math",
+      "os",
+      "pathlib",
+      "resource",
+      "shutil",
+      "subprocess",
+      "sys",
+      "urllib.request",
+      "wave",
+      "yt_dlp"
+    ]
+  },
+  "credential_scan": {
+    "passed": true,
+    "potential_secret_findings": 0,
+    "raw_source_persisted_before_scan": false
+  },
+  "private_env_data_cache_config_credentials_exported": false,
+  "service_changed": false,
+  "game_launched": false,
+  "external_publication_performed": false,
+  "license": {
+    "status": "No LICENSE/COPYING file was present in the bounded live-release source inventory; no license was inferred",
+    "relicense_performed": false,
+    "source_spdx_or_license_headers_found": false,
+    "repository_license_not_inferred": true
+  },
+  "excluded": "Environment files and variables, credentials, SSH/account files, service-private config, data, cookies, downloaded media, caches, logs, virtual environments and compiled artifacts were neither exported nor copied",
+  "local_privacy_license_review": "local-review-report.json"
+}

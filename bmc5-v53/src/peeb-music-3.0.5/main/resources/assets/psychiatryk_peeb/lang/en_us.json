@@ -1,0 +1,17 @@
+{
+  "item.psychiatryk_peeb.peeb": "Peeb",
+  "subtitles.psychiatryk_peeb.step": "Peeb footstep",
+  "subtitles.psychiatryk_peeb.jump": "Peeb jumps",
+  "subtitles.psychiatryk_peeb.land": "Peeb lands",
+  "subtitles.psychiatryk_peeb.grapple_begin": "Tusk grapples",
+  "subtitles.psychiatryk_peeb.grapple_hold": "Tusk swings",
+  "subtitles.psychiatryk_peeb.grapple_end": "Tusk releases",
+  "tooltip.psychiatryk_peeb.wear": "Hold Peeb, or wear in your chest slot (Shift + right-click).",
+  "tooltip.psychiatryk_peeb.armor": "Other armour slots must be empty. Natural armour: 7 (full leather).",
+  "tooltip.psychiatryk_peeb.controls": "Hold left-click to grapple; right-click to interact; Left Alt to look around.",
+  "message.psychiatryk_peeb.remove_armor": "Remove your helmet, leggings and boots to wear Peeb.",
+  "key.psychiatryk_peeb.freelook": "Peeb freelook",
+  "key.psychiatryk_peeb.interact": "Peeb: interact",
+  "key.categories.psychiatryk_peeb": "Peeb Adventures",
+  "command.psychiatryk_peeb.camera.current": "Peeb camera distance: %s blocks (use /peebcamera 2..10)."
+}

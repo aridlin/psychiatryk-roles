@@ -1,0 +1,56 @@
+{
+  "step": {
+    "subtitle": "subtitles.psychiatryk_peeb.step",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:step",
+        "stream": false
+      }
+    ]
+  },
+  "jump": {
+    "subtitle": "subtitles.psychiatryk_peeb.jump",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:jump",
+        "stream": false
+      }
+    ]
+  },
+  "land": {
+    "subtitle": "subtitles.psychiatryk_peeb.land",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:land",
+        "stream": false
+      }
+    ]
+  },
+  "grapple_begin": {
+    "subtitle": "subtitles.psychiatryk_peeb.grapple_begin",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:grapple_begin",
+        "stream": false
+      }
+    ]
+  },
+  "grapple_hold": {
+    "subtitle": "subtitles.psychiatryk_peeb.grapple_hold",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:grapple_hold",
+        "stream": false
+      }
+    ]
+  },
+  "grapple_end": {
+    "subtitle": "subtitles.psychiatryk_peeb.grapple_end",
+    "sounds": [
+      {
+        "name": "psychiatryk_peeb:grapple_end",
+        "stream": false
+      }
+    ]
+  }
+}

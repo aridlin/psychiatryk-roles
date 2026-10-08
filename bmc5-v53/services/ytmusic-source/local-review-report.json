@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "source_sha256": {
+    "common.py": "0cd124b5d89a2cd74b2d8da37455de991592ada8049f089844f3e35f9ee4269b",
+    "service.py": "d9126d0c14ccc04d5dcb9975498d88a1116e4403168f40ff189dcd4ecf256d48",
+    "worker.py": "2a1b64a41a7685e98006dce3fd53e5abc24c888819c3e230a2a77459d7f0ce7f"
+  },
+  "syntax_checked_without_execution": true,
+  "explicit_license_headers_found": false,
+  "license_files_recovered": false,
+  "embedded_credential_scan_passed": true,
+  "source_bytes_changed_for_export": false,
+  "excluded_private_files_exported": false,
+  "third_party_dependencies_not_vendored": true,
+  "external_python_imports": [
+    "yt_dlp"
+  ]
+}

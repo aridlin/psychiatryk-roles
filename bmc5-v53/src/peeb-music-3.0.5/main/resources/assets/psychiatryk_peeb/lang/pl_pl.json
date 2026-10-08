@@ -1,0 +1,17 @@
+{
+  "item.psychiatryk_peeb.peeb": "Peeb",
+  "subtitles.psychiatryk_peeb.step": "Krok Peeba",
+  "subtitles.psychiatryk_peeb.jump": "Peeb skacze",
+  "subtitles.psychiatryk_peeb.land": "Peeb ląduje",
+  "subtitles.psychiatryk_peeb.grapple_begin": "Trąba łapie",
+  "subtitles.psychiatryk_peeb.grapple_hold": "Trąba kołysze",
+  "subtitles.psychiatryk_peeb.grapple_end": "Trąba puszcza",
+  "tooltip.psychiatryk_peeb.wear": "Trzymaj Peeba lub załóż w slocie napierśnika (Shift + PPM).",
+  "tooltip.psychiatryk_peeb.armor": "Pozostałe sloty zbroi muszą być puste. Naturalny pancerz: 7 (pełna skórzana zbroja).",
+  "tooltip.psychiatryk_peeb.controls": "Lewy przycisk: zaczepianie; prawy: użycie; lewy Alt: rozglądanie.",
+  "message.psychiatryk_peeb.remove_armor": "Zdejmij hełm, spodnie i buty, aby założyć Peeba.",
+  "key.psychiatryk_peeb.freelook": "Peeb: swobodne rozglądanie",
+  "key.psychiatryk_peeb.interact": "Peeb: interakcja",
+  "key.categories.psychiatryk_peeb": "Peeb Adventures",
+  "command.psychiatryk_peeb.camera.current": "Odległość kamery Peeba: %s bloków (użyj /peebcamera 2..10)."
+}

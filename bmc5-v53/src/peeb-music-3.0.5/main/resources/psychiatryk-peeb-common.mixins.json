@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pl.aridlin.psychiatrykroles.peeb.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PeebServerConnectionMixin",
+    "ScooterBatteryAccess"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

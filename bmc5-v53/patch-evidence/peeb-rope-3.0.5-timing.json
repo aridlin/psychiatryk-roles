@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "checks": {
+    "server_has_no_additive_pull": true,
+    "server_uses_shared_safety_clamp_once": true,
+    "server_authoritative_reel_once": true,
+    "server_tick_guard_present": true,
+    "client_tick_guard_present": true,
+    "client_single_post_tick_pull_call": true,
+    "client_has_no_second_safety_force_call": true,
+    "client_prediction_is_bound_to_ticks_not_frame": true,
+    "wire_payload_unchanged": true,
+    "no_elastic_spring_coefficients": true
+  },
+  "candidate_base_sha256": "4173799b5497e2f7c3183b96a3550adcc7a3893968ff3311265d6c2d06e49a29",
+  "sources": {
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/PeebGrapple.java": "6fc83d271e3a68dc3fad56b2b8688d9fcacb87b9501f3045a17030e28d86fa6e",
+    "src/peeb-music-3.0.5/main/java/pl/aridlin/psychiatrykroles/peeb/client/PeebClient.java": "db624e9566873b412a79019c02e7ee05ced9d05307de65c9a7ac4b4c670bf67e"
+  },
+  "classes": {
+    "pl/aridlin/psychiatrykroles/peeb/PeebGrapple$Session.class": "91355ac3be7b8b923cf5d6d69572d416275129b9a376b6e8a0f0b982bcc652b7",
+    "pl/aridlin/psychiatrykroles/peeb/PeebGrapple.class": "5078220d24933c5330f007cbbc1edc6bf3af7d422c032f257e7851b28e22bdfa",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraFrame.class": "683833cbc850b5eb05be6e90cd3ab42448d78b2b34eaabb09ca40e6a895a2401",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$CameraProfile.class": "f3d96bafa313dbac3bc00a21ba660a5a3b7151d63b30fc838632dc24ecbd0540",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Grapple.class": "de7d976447ac36f8499986aa116dbf7d052d653fb3bc2608fa5344e9d38c3df3",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Motion.class": "faa611208953a800ae009effe2a03d82c8ff20a5bf6c3d7e6e37275ac9512ea7",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Received.class": "1e7d660698be07caa35e35f83a37503e8f67d7240a3633365134a5a7795d1788",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient$Target.class": "2e321ab12b3abf38b36761bd02060862195b1abc776f6565c994c5b670c1e74c",
+    "pl/aridlin/psychiatrykroles/peeb/client/PeebClient.class": "173516e68b3388e7bd12f2e0b19a56fc9fb1ff6e6b605b566f542f507cecc040"
+  },
+  "native_runtime_verified": false
+}

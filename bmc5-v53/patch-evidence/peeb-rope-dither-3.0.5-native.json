@@ -1,0 +1,833 @@
+{
+  "success": true,
+  "candidate_sha256": "f03a1a2856e3ce9d62de6797ce2fcf49825373252d733e6f69d9f5f60b57fa53",
+  "helper_sha256": "7b2af7c970defb9a3b0bfa41a07e8f50be9fd17eb393161996086a6bac528001",
+  "native_runtime_verified": true,
+  "assertions": 195,
+  "binding_conflict_assertions": 150,
+  "other_assertions": 45,
+  "native_visual_review": {
+    "00-default-above-head-native.png": "Default 2.1-high native camera places aiming circle above the Peeb head.",
+    "01-local-target-dither-native.png": "Deliberately lower fixture camera shows ordered coverage opening the target region on local body; remote remains opaque.",
+    "02-qa-only-opaque-comparison.png": "QA-only fade-disabled local body covers targeting circle.",
+    "03a-quick-pull-after20-native.png": "Character has reached near wall while retaining lateral input after quick winch take-up.",
+    "03-pulling-flexible-rope-native.png": "Rendered character suspended from tusk-side native rope.",
+    "04-floor-rope-native.png": "Actual floor grapple remains above supporting ground."
+  },
+  "quick_pull": {
+    "first_five_ticks_pivot_closure": 1.1130315084129458,
+    "pivot_distance_after_20_steering_ticks": 2.760866335291353,
+    "rest_length_after_20_steering_ticks": 2.0
+  },
+  "default_camera_height": 2.1,
+  "dither_overlap_fixture_camera_height": 1.2,
+  "native_shaderpack_enabled": false,
+  "native_gpu": "software OpenGL",
+  "native_human_grapple_feel_verified": false,
+  "native_shutdown_all_dimensions_saved": true,
+  "native_shutdown_renderer_stopped": true,
+  "source_profiles_unchanged": true,
+  "production_changed": false,
+  "historical_observer_failure": {
+    "label": "quick-pull-f03a-native-1",
+    "success": false,
+    "audit_sha256": "21b66a61abe849ec52d6470c214fff418674e9c7e2714cbbfe76dd3bfa9bd2d7",
+    "reason": "Feet and tusk origins were compared; corrected observer consistently uses tusk-pivot distances. Candidate unchanged."
+  },
+  "untested": [
+    "Human grapple feel",
+    "Shaderpack-enabled materials",
+    "Production activation",
+    "Main-profile visual behavior"
+  ],
+  "raw_receipt_sha256": "53676725e104e78226ce9e74c9dd6f293aa7ff7cff71eb71c01812d938788efb",
+  "runtime_report_sha256": "d048870433e94b485b1e8ff5c49a4274f0772e61ac04453aae6babdb274cff8a",
+  "raw_fixture_paths_logs_worlds_screenshots_excluded": true,
+  "scope": "Focused Peeb rope/dither/camera native gate only; not a full music or production gate",
+  "native_checks": [
+    {
+      "name": "Held Peeb acquires native third-person mode",
+      "passed": true
+    },
+    {
+      "name": "Native back camera enabled",
+      "passed": true
+    },
+    {
+      "name": "Peeb shader compiled by actual OpenGL runtime",
+      "passed": true
+    },
+    {
+      "name": "Actual camera-centered wall reticle has server-eligible target",
+      "passed": true
+    },
+    {
+      "name": "Default Peeb camera pivot is 2.1 blocks above feet",
+      "passed": true
+    },
+    {
+      "name": "Actual native camera is positioned above Peeb head",
+      "passed": true
+    },
+    {
+      "name": "Above-head camera target is aimed over the character",
+      "passed": true
+    },
+    {
+      "name": "Native local draw uploads target-relative dither fade",
+      "passed": true
+    },
+    {
+      "name": "Remote Peeb gets separate opaque shader draw",
+      "passed": true
+    },
+    {
+      "name": "Native Peeb batches retain LEQUAL depth testing",
+      "passed": true
+    },
+    {
+      "name": "Actual local character and target ring both submitted",
+      "passed": true
+    },
+    {
+      "name": "Native fade-on/off frame pair changes the body-over-target region",
+      "passed": true
+    },
+    {
+      "name": "Native mouse look reaches straight up",
+      "passed": true
+    },
+    {
+      "name": "Native mouse look reaches straight down",
+      "passed": true
+    },
+    {
+      "name": "Freelook independently orbits without changing movement yaw",
+      "passed": true
+    },
+    {
+      "name": "Freelook independent pitch reaches requested native orbit",
+      "passed": true
+    },
+    {
+      "name": "Freelook smoothly returns",
+      "passed": true
+    },
+    {
+      "name": "Peeb interaction yields arbitrary mod binding without modifying it",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.attack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.use",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.forward",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.left",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.back",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.right",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jump",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sneak",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sprint",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.drop",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.inventory",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.chat",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.playerlist",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.pickItem",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.command",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.socialInteractions",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.screenshot",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.togglePerspective",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.fullscreen",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.swapOffhand",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.advancements",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.1",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.3",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.4",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.5",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.6",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.7",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.8",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.hotbar.9",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.accessorify.open_widget",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.accessorify.open_ender_chest",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.accessorify.use_spyglass",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with iris.keybind.reload",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with iris.keybind.toggleShaders",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with iris.keybind.shaderPackSelection",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with supplementaries.keybind.quiver",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with accessories.key.open_accessories_screen",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.libtooltips.expand",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.toms_storage.open_terminal",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with dmr.keybind.summon_dragon",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with dmr.keybind.attack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedcore.sort",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedcore.transfer_to_storage",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedcore.transfer_to_inventory",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedbackpacks.open_backpack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedbackpacks.inventory_interaction",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedbackpacks.toggle_upgrade_1",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.sophisticatedbackpacks.toggle_upgrade_2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.cataclysm.ability",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.cataclysm.helmet_ability",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.cataclysm.chestplate_ability",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.cataclysm.boots_ability",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.backpacked.open_backpack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.backpacked.open_management",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.easy_villagers.pick_up",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.easy_villagers.cycle_trades",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with justzoom.keybinds.keybind.zoom",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.clientsort.op.sort",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.goplanska_starter.return_mirror",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.psychiatryk_roles.phase_charm",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.goplanska_kukirin.recall",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.toggleOverlay",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.focusSearch",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.bookmark",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.showRecipe",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.showRecipe2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.showUses",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.showUses2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.transferRecipeBookmark",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.maxTransferRecipeBookmark",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.clearSearchBar",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.previousSearch",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.nextSearch",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.cheatOneItem",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.cheatOneItem2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.cheatItemStack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.cheatItemStack2",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.toggleCheatModeConfigButton",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.toggleHideIngredient",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.toggleWildcardHideIngredient",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.recipeBack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.previousRecipePage",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.nextRecipePage",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.previousCategory",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.nextCategory",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jei.closeRecipeGui",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_minimap_settings",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_new_waypoint",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_waypoints_key",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_enlarge_map",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_instant_waypoint",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.inmis.open_backpack",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.aether.open_accessories.desc",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.aether.gravitite_jump_ability.desc",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.aether.invisibility_toggle.desc",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.deep_aether.stratus_dash_ability.desc",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.deep_aether.slider_eye_ability",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.deep_aether.toggle_skyjade_transparency",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_open_map",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_open_settings",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_quick_confirm",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.twilightforest.zoom",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.twilightforest.swap_hotbar",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.twilightforest.item_display_map_cycle",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.starcatcher.minigame_hit",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.starcatcher.expand_tournament",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.deeperdarker.boost",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.deeperdarker.transmit",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.better_client.bundle_up",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.zoom_in",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.zoom_out",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.zoom_reset",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.next_chapter",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.prev_chapter",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.recenter",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.search",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.extended_info",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.move_up",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.move_down",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.move_left",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.move_right",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui.player_prefs",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.undo",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.redo",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.select_all",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.select_none",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.delete",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.force_delete",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.toggle_crosshairs",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.copy",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.paste",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.reward_tables",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_editor.reload_theme",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.edit_title",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.edit_subtitle",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.edit_desc",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.add_page_break",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.add_line",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.add_image",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.ftbquests.gui_quest_panel.edit_quest_props",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.pingwheel.ping_location",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.config",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.show_overlay",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.toggle_liquid",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.show_recipes",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.show_uses",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.narrate",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with key.jade.show_details",
+      "passed": true
+    },
+    {
+      "name": "Peeb extra binding does not conflict with gui.xaero_pac_key_open_menu",
+      "passed": true
+    },
+    {
+      "name": "Chest-worn Peeb activates native mode",
+      "passed": true
+    },
+    {
+      "name": "Native inventory key opens inventory while Peeb is worn",
+      "passed": true
+    },
+    {
+      "name": "Wall target restored before real grapple input",
+      "passed": true
+    },
+    {
+      "name": "Actual Peeb LMB event owns grapple input action 1",
+      "passed": true
+    },
+    {
+      "name": "Real held mouse input receives server accepted wall tether",
+      "passed": true
+    },
+    {
+      "name": "Quick winch moves toward the anchor within first five native ticks",
+      "passed": true
+    },
+    {
+      "name": "Tether stays attached through tangential steering",
+      "passed": true
+    },
+    {
+      "name": "Actual lateral movement remains during rope pulling",
+      "passed": true
+    },
+    {
+      "name": "Quick winch rest length reaches near two-block resting length within 20 input ticks",
+      "passed": true
+    },
+    {
+      "name": "Quick native pull closes more than two blocks within 20 input ticks with steering",
+      "passed": true
+    },
+    {
+      "name": "Wall tether remains attached while rope reels",
+      "passed": true
+    },
+    {
+      "name": "Authoritative synced rope rest length decreases over actual ticks",
+      "passed": true
+    },
+    {
+      "name": "Actual player is pulled closer to wall anchor",
+      "passed": true
+    },
+    {
+      "name": "Native rope draw submits 24 flexible quad segments",
+      "passed": true
+    },
+    {
+      "name": "Native rope vertex endpoints align with actual rendered tusk tip and anchor",
+      "passed": true
+    },
+    {
+      "name": "Actual character swings from its tusk attachment pivot",
+      "passed": true
+    },
+    {
+      "name": "Actual Peeb LMB event owns grapple input action 0",
+      "passed": true
+    },
+    {
+      "name": "Mouse release clears native client rope",
+      "passed": true
+    },
+    {
+      "name": "Mouse release clears authoritative server rope",
+      "passed": true
+    },
+    {
+      "name": "Native downward camera selects exposed floor",
+      "passed": true
+    },
+    {
+      "name": "Actual Peeb LMB event owns grapple input action 1",
+      "passed": true
+    },
+    {
+      "name": "Floor grapple accepted by actual packet server handler",
+      "passed": true
+    },
+    {
+      "name": "Floor rope does not drive player below supporting ground",
+      "passed": true
+    },
+    {
+      "name": "Floor movement remains finite",
+      "passed": true
+    },
+    {
+      "name": "Actual Peeb LMB event owns grapple input action 0",
+      "passed": true
+    },
+    {
+      "name": "Putting Peeb away clears mode and rope",
+      "passed": true
+    },
+    {
+      "name": "Putaway clears authoritative rope state",
+      "passed": true
+    }
+  ],
+  "rendered_local_batches": 217,
+  "rendered_remote_batches": 16,
+  "rope_endpoint_error": 1.1102230246251565e-16,
+  "rope_vertices": 96
+}

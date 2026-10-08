@@ -1,0 +1,7 @@
+Peeb Adventures V0.05 character, animations, targeting sprites and sound effects
+Original game and 3D art: John Ellis / FeverdreamJohnny. Peeb design: Aaron.
+Official source: https://feverdreamjohnny.itch.io/peeb-adventures-hps1-demodisk-edition
+Selected from the user-provided local V0.05 installation. Original authors retain their rights.
+The source-code license does not grant rights to the original game assets.
+Minecraft conversion preserves source rig and animation; native material lighting, camera collision and movement limits are adaptations.
+Footstep, jump and landing audio downmixed to mono for positional playback; exact source PCM reconstructed through FMOD and reencoded as Ogg Vorbis.
