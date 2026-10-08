@@ -33,3 +33,8 @@ and reports the server import result. Imported tracks appear in the shared song
 list. Metadata/cover art may arrive after audio starts; the overlay updates when
 it becomes available. Nearby players hear positional sources with Sound Physics.
 Unequipping a worn jukebox or stopping playback ends that source.
+
+Custom songs on a placed jukebox display a vinyl spinning at 33⅓ RPM. Tracks
+without a cover still show the vinyl and rotating label; cover art replaces the
+label when it arrives. Stopping playback or breaking the jukebox removes the
+record. This is included in the separate prepared jukebox-disc follow-up.

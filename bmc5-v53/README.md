@@ -33,3 +33,8 @@ This preparation performs no Git commit/push or website publication.
 ## Prepared 3.0.5 source
 
 [Peeb and music 3.0.5](PATCH-3.0.5.md) contains recovered implementation source, an exact-checkpoint Peeb rope/dither overlay and focused tests. This is a source preparation, not evidence of a production release. Current installer/download metadata remains at its existing release until coordinated server and client activation. See [source and asset provenance](overlays/peeb-music-3.0.5/README.md).
+
+The [spinning jukebox-disc follow-up](overlays/jukebox-disc-3.0.5/README.md)
+preserves the approved Peeb checkpoint and renders missing-cover tracks too.
+Its exact e0f6a9df candidate passed actual playback/framebuffer rotation and
+cleanup checks. Historical Peeb source and provenance remain unchanged.

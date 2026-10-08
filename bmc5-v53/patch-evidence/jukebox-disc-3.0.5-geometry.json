@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "checks": 24023,
+  "rim_vertices": 3456,
+  "cover_vertices": 384,
+  "fallback_vertices": 776,
+  "native_pixels_verified": false
+}

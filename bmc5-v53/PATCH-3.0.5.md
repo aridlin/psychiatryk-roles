@@ -61,3 +61,25 @@ qualification is inferred.
 All former recipe grids and the detailed scooter model remain checkpoint bytes.
 The separate portable modules and old root project are preserved. No original
 Peeb/game assets or private music library is made reusable under the code license.
+
+## Spinning-disc follow-up
+
+The user approved Peeb's feel in the isolated f03a test. That implementation is
+preserved byte for byte in the separate [jukebox overlay](overlays/jukebox-disc-3.0.5/README.md).
+Previously, missing cover metadata suppressed the whole placed disc. Every
+active custom-song jukebox now draws a vinyl record, with a rotating fallback
+label while art is absent or loading. Available art remains masked to the disc.
+Texture buffers are submitted sequentially; a raised face and thin edge keep the
+record distinct from the block surface.
+
+Candidate e0f6a9df changes only three jukebox class entries; 679 entries are
+unchanged from f03a. [Build proof](patch-evidence/jukebox-disc-3.0.5-build.json)
+and [24,023 geometry checks](patch-evidence/jukebox-disc-3.0.5-geometry.json)
+are separate from the [38-check native gate](patch-evidence/jukebox-disc-3.0.5-native.json).
+Real audio was playing, and actual framebuffer pixels verified both no-cover
+and cover rotation, stopping, and block removal. Observed 50-degree rotation
+steps were within 1.5 degrees. A camera mismatch in the initial idle/stop pixel
+comparison was corrected using each frame's recorded projection; no candidate
+change or repeat game launch was needed. The original observer failure is retained
+locally. This focused test used software OpenGL with shaders off and does not
+claim production activation or new shaderpack qualification.

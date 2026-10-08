@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "base_sha256": "f03a1a2856e3ce9d62de6797ce2fcf49825373252d733e6f69d9f5f60b57fa53",
+  "candidate_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d",
+  "changed_entries": [
+    "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverGeometry.class",
+    "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer$Draw.class",
+    "pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer.class"
+  ],
+  "added_entries": [],
+  "no_entries_removed": true,
+  "unchanged_other_entries": 679,
+  "source_sha256": {
+    "overlays/jukebox-disc-3.0.5/src/pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer.java": "b1781b30569c6d542ea5eb60372aa20536459db26466fa7eac8e733baecb4b7e",
+    "overlays/jukebox-disc-3.0.5/src/pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverGeometry.java": "ea1853817e6c69d0d66ce77f9c8d0e9fac3a7b474cd88155c976e5c3e1df2e89"
+  },
+  "approved_peeb_and_music_byte_identical": true,
+  "native_runtime_verified": false
+}

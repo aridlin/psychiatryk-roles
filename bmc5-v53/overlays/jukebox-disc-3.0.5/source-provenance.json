@@ -1,0 +1,25 @@
+{
+  "base_candidate_sha256": "f03a1a2856e3ce9d62de6797ce2fcf49825373252d733e6f69d9f5f60b57fa53",
+  "overlay_scope": "two jukebox renderer source families only; preserves all Peeb and other checkpoint entries",
+  "sources": [
+    {
+      "path": "src/pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverRenderer.java",
+      "sha256": "b1781b30569c6d542ea5eb60372aa20536459db26466fa7eac8e733baecb4b7e",
+      "origin": "durable recovered source with targeted jukebox-only rendering changes"
+    },
+    {
+      "path": "src/pl/aridlin/psychiatrykroles/jukebox/client/JukeboxCoverGeometry.java",
+      "sha256": "ea1853817e6c69d0d66ce77f9c8d0e9fac3a7b474cd88155c976e5c3e1df2e89",
+      "origin": "durable recovered source with targeted jukebox-only rendering changes"
+    }
+  ],
+  "geometry_checks": 24023,
+  "native_visual_status": "Qualified exact e0f6 candidate:26 native source/playback checks and12 framebuffer checks; shaders off.",
+  "texture_sources": [
+    "minecraft:textures/item/music_disc_cat.png",
+    "minecraft:textures/block/jukebox_side.png",
+    "psychiatryk_peeb:textures/entity/white.png from the base addon"
+  ],
+  "source_snapshot_note": "The historical bmc5-v53/src/peeb-music-3.0.5 source and provenance are not replaced by this follow-up.",
+  "frozen_candidate_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d"
+}

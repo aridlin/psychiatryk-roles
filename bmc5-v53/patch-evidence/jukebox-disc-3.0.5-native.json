@@ -1,0 +1,210 @@
+{
+  "success": true,
+  "candidate_sha256": "e0f6a9df96d249ff7a6d9477ddcc04bc90e5b446c3210f3cf47e8d887be7e66d",
+  "helper_sha256": "81cb819b9750a378c76f463691ccc928bc5cb0c52534bed471ced237e8d67807",
+  "scope": "Native placed jukebox: real music menu, real playback packets, no-art fallback, synthetic-art packet, actual framebuffer captures, stop and removal cleanup. Excludes Peeb and production.",
+  "checks": [
+    {
+      "name": "Actual full BMC client loaded",
+      "passed": true
+    },
+    {
+      "name": "Actual vanilla jukebox block entity exists",
+      "passed": true
+    },
+    {
+      "name": "Idle placed jukebox has no playback disc",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Native crouch-right-click receives isolated placed-song catalog",
+      "passed": true
+    },
+    {
+      "name": "Real custom WAV uses active placed source",
+      "passed": true
+    },
+    {
+      "name": "Actual first playback has no cover art",
+      "passed": true
+    },
+    {
+      "name": "Renderer emitted missing-art fallback on actual jukebox",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Actual placed WAV native OpenAL channel is playing without error",
+      "passed": true
+    },
+    {
+      "name": "Native playback age advances fallback rotation",
+      "passed": true
+    },
+    {
+      "name": "Fallback reaches subsequent real frames",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Synthetic64PNG fits actual metadata validation",
+      "passed": true
+    },
+    {
+      "name": "Real metadata packet updates existing playing session",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Native playback age advances cover rotation",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Native stop packet clears placed disc",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Actual source block is removed",
+      "passed": true
+    },
+    {
+      "name": "Block removal clears rendered disc without ghost",
+      "passed": true
+    },
+    {
+      "name": "Removing placed source clears live audio view",
+      "passed": true
+    },
+    {
+      "name": "No previous native capture remains pending",
+      "passed": true
+    },
+    {
+      "name": "Music only uses credential-free synthetic loopback fixture",
+      "passed": true
+    },
+    {
+      "name": "All seven real framebuffer captures persisted",
+      "passed": true
+    },
+    {
+      "name": "Projected disc occupies enough framebuffer pixels",
+      "passed": true,
+      "pixels": 6256
+    },
+    {
+      "name": "Playing no-art disc visibly covers idle jukebox top",
+      "passed": true,
+      "changed_pixels": 6160,
+      "disc_pixels": 6256
+    },
+    {
+      "name": "Actual cream disc index pixels present in fallback-frame-a",
+      "passed": true,
+      "count": 46
+    },
+    {
+      "name": "Actual cream disc index pixels present in fallback-frame-b",
+      "passed": true,
+      "count": 41
+    },
+    {
+      "name": "Actual fallback disc pixels rotate with33andone-thirdRPM geometry",
+      "passed": true,
+      "expected_degrees": 50.0,
+      "observed_degrees": 48.51924581631539,
+      "error_degrees": 1.4807541836846099
+    },
+    {
+      "name": "Native fallback frames visibly change",
+      "passed": true,
+      "changed_pixels": 339
+    },
+    {
+      "name": "Actual cyan disc index pixels present in artwork-frame-a",
+      "passed": true,
+      "count": 524
+    },
+    {
+      "name": "Actual cyan disc index pixels present in artwork-frame-b",
+      "passed": true,
+      "count": 541
+    },
+    {
+      "name": "Actual artwork disc pixels rotate with33andone-thirdRPM geometry",
+      "passed": true,
+      "expected_degrees": 50.0,
+      "observed_degrees": 51.34863070861678,
+      "error_degrees": 1.3486307086167812
+    },
+    {
+      "name": "Native artwork frames visibly change",
+      "passed": true,
+      "changed_pixels": 3565
+    },
+    {
+      "name": "Stopping native playback visibly restores idle jukebox wood in common disc-plane coordinates",
+      "passed": true,
+      "idle_wood_fraction": 0.9903381642512077,
+      "playing_wood_fraction": 0.008454106280193236,
+      "stopped_wood_fraction": 0.8628019323671497,
+      "same_world_annulus_pixels": 4140,
+      "camera_projection_normalized": true
+    },
+    {
+      "name": "Removal framebuffer accompanies no live disc or source",
+      "passed": true
+    }
+  ],
+  "native_checks": 26,
+  "pixel_checks": 12,
+  "fixture_only": true,
+  "source_unchanged": true,
+  "production_changed": false,
+  "actual_framebuffer_images": {
+    "baseline-idle": "2627c835c12c1898088d0a0b0dc5bc4c75d09aa96fc017bab042b5a2d5912a0d",
+    "fallback-frame-a": "8da5ca1a963a8ff5c8e4f518f63488d6ece36f480b0fa368b7268197800698e1",
+    "fallback-frame-b": "5d1faf3b42f861333d1c4191c749206eab4e4a4fb4081c40904a4454302263d0",
+    "artwork-frame-a": "c80a1b92a42501cec32c504595b40cd697a5f53de62ad264037bf683a9bfb4b9",
+    "artwork-frame-b": "6ad6724cdec51ea9e6b755e4c8baaf08bfadb2cf5128c4b5623c759021aaf169",
+    "stopped": "fe9a5a7ee31095e42c36be5d38281d23ad1aa510f485a13ea304cd7ad6c4a9fd"
+  },
+  "native_openal_playback": {
+    "source": 1,
+    "state": 4114,
+    "al_error": 0
+  },
+  "observer_correction": "Initial raw-screen idle/stop comparison used different camera projections because crouch in creative flight lowered fixture camera. Original failed report retained. Corrected pixel check samples all frames in common projected world-disc annulus and observes native brown jukebox top restoration; no candidate change or repeat launch.",
+  "shader_gate": "Shaders disabled; no new shader compatibility claim.",
+  "qualified_evidence_sha256": {
+    "runtime-report.json": "9b49198cb46569c49067c2d168138ff36977ae622f4c76dbc45934f730b02dff",
+    "pixel-report.json": "2573181b7f7f27884ba0bc9a0016ac03604e0441c89449fda8ed0473cfae03d2",
+    "native-frames.json": "bf5857683a47d93b93318299986132a75d6f9048d16a472f475b501243a271ce",
+    "state.json": "ea00b47725f1ce8a6ebf62091c16932a34be350b552490ca2bcb240ad79a461b",
+    "pixel-report-initial-camera-mismatch.json": "6f3bff17721a80f506ebe878892c55a5863b4110469a7d743c695f387128cd0b"
+  },
+  "pixel_observer_source_sha256": "955164832e56eeff52a2efa80d4731a6f74cb4fb8c4132c6ecab7bd97a6246f9",
+  "native_platform": "Software OpenGL, Minecraft 1.21.1, NeoForge21.1.250, Better MC5v53",
+  "approved_peeb_preserved": true
+}
