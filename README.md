@@ -2,11 +2,11 @@
 
 [Addon and installation](bmc5-v53/README.md) · [Portable Scooters](portable-modules/scooter/README.md) · [Portable Chams SDK](portable-modules/chams/README.md).
 
-Official Better MC5 base stays with its original publisher. This tree prepares our own addon/source only; Roles 3.0.5 is deployed; [current changes and deployment evidence](bmc5-v53/PATCH-3.0.5-FOLLOWUP.md) are recorded separately. Earlier S23 v34/v33 source remains available below.
+Official Better MC5 base stays with its original publisher. This tree prepares our own addon/source only; Roles 3.0.6 is deployed; [current changes and deployment evidence](bmc5-v53/PATCH-3.0.6.md) are recorded separately. Earlier S23 v34/v33 source remains available below.
 
 ---
 
-# Psychiatryk Roles
+# Legacy Psychiatryk Roles — Forge 1.20.1
 
 Psychiatryk Roles is a Forge 1.20.1 server mod for a role-based Minecraft server. It assigns every new player the restricted **Konsultant** role, preserves privileged **Ordynator** and admitted **Pacjent** players, and provides controlled tools that grant narrowly scoped actions without removing the server's protections.
 

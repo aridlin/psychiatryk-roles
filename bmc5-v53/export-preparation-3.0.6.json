@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "candidate_sha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "historical_base_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "file_count": 135,
+  "reviewed_source_only": true,
+  "sanitation_verified": true,
+  "portable_rebuild_executed": true,
+  "production_activation_verified": false,
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false,
+  "portable_source_build_reproduces_frozen_artifact": true
+}

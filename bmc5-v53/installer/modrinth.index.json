@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "game": "minecraft",
-  "versionId": "bmc5-v53-installer-1",
-  "name": "Goplanska — Better MC5 v53",
+  "versionId": "bmc5-v53-roles-3.0.6-installer",
+  "name": "Goplanska \u2014 Better MC5 v53 / Roles 3.0.6",
   "summary": "First-run installer: join goplanska.pl to download the complete current server pack with AutoModpack.",
   "files": [
     {

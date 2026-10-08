@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "candidate_sha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "base_sha256": "53c622c5b69e1d264eacee2e9b9d686e663d3e08d28a905523dd85fa07f5d509",
+  "portable_source_build_reproduces_frozen_artifact": true,
+  "source_manifest_sha256": "75deaab67ddafe0d6deac3dcbcc5d8825bde1f309ad454165789c2df3a714fc7",
+  "network_access_performed": false,
+  "game_launch_performed": false,
+  "git_mutation_performed": false
+}

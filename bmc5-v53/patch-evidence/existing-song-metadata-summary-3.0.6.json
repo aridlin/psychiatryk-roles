@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "activated": true,
+  "catalogSongCount": 637,
+  "metadataChanged": 635,
+  "coveredEntries": 564,
+  "artistEntries": 552,
+  "albumEntries": 314,
+  "coverFiles": 511,
+  "coverBytes": 3769609,
+  "audioIdentitiesChanged": 0,
+  "audioBytesChanged": 0,
+  "serverControlOperations": 0,
+  "completedAt": "2026-10-08T11:10:25.999780+00:00"
+}

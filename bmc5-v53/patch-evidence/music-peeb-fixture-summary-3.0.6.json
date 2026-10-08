@@ -1,0 +1,71 @@
+{
+  "success": true,
+  "releaseCandidateSha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "records": [
+    {
+      "scope": "lifecycle",
+      "success": true,
+      "assertions": 19,
+      "originalReceiptSha256": "b2c1a7914e9ca9d012758d426aad3e2c9ee6eaf92119d040cd685b956dd663e2",
+      "testedSourceFingerprints": [
+        "23ef74550ccc0bd7bfc25b48becc73ab347cb25d126bab9b7c979776928494b9"
+      ],
+      "allTestedSourcesMatchFinalAuthoredSource": true,
+      "nativeGameLaunched": false,
+      "scopeDescription": "Exact Source class extracted from authored implementation with engine doubles; no native server bootstrap"
+    },
+    {
+      "scope": "stream",
+      "success": true,
+      "assertions": 49,
+      "originalReceiptSha256": "be9af524ecb56af12cbd0351477962ee91a6e820bfc9dd87ce80b2b8c41fef9c",
+      "testedSourceFingerprints": [
+        "bd8f6d4987a2c229f14b22130388bb7835db304c6f7ed8c29575e0e29f584d7f",
+        "c99c768eef9451f956f37a43fdfa357b534482a814bb7a723faf36e703677223",
+        "ab99a3b034362687d78d911fcb5566d7ae4d1378efba298f7718a5f017224d40",
+        "7494c060adf95ab9fc9891aa94e1a37543c7d8ceb1ad2f22a8f21c3936429b12",
+        "dcf1f633d7450adcf96d16284a28b26e37198ae5e2b4bc73089352ffceb77e80",
+        "d85e63dc8499281d7571b03eaa586964c9fe08628cbaef45223402d2f8fff987",
+        "eaeb79a1f485b88855efd491598218db3c2ecb64c6bf6e0c8714f9c0ad68f5f9",
+        "e277d58a30be7e9b7ef3bb59eb791bc32d3e79b4a3da18ab85b63b91ae076463"
+      ],
+      "allTestedSourcesMatchFinalAuthoredSource": false,
+      "nativeGameLaunched": false,
+      "scopeDescription": "Actual compiled audio and native Minecraft codec APIs; no game launch"
+    },
+    {
+      "scope": "codec",
+      "success": true,
+      "assertions": 79,
+      "originalReceiptSha256": "e1f8d8c8ca0b012afe8a59b762a0a39f14d59e1fa4991a4f8f4c416e68d44ec4",
+      "testedSourceFingerprints": [
+        "23ef74550ccc0bd7bfc25b48becc73ab347cb25d126bab9b7c979776928494b9",
+        "c99c768eef9451f956f37a43fdfa357b534482a814bb7a723faf36e703677223",
+        "4b070f643a39eb3e7cc1eb972cd9a67233bcf8d77da95fcab4f9c86bbccc1de0",
+        "7494c060adf95ab9fc9891aa94e1a37543c7d8ceb1ad2f22a8f21c3936429b12",
+        "dcf1f633d7450adcf96d16284a28b26e37198ae5e2b4bc73089352ffceb77e80",
+        "d85e63dc8499281d7571b03eaa586964c9fe08628cbaef45223402d2f8fff987",
+        "eaeb79a1f485b88855efd491598218db3c2ecb64c6bf6e0c8714f9c0ad68f5f9",
+        "e277d58a30be7e9b7ef3bb59eb791bc32d3e79b4a3da18ab85b63b91ae076463"
+      ],
+      "allTestedSourcesMatchFinalAuthoredSource": true,
+      "nativeGameLaunched": false,
+      "scopeDescription": "Actual compiled audio and native Minecraft codec APIs; no game launch"
+    },
+    {
+      "scope": "movement",
+      "success": true,
+      "assertions": 66,
+      "originalReceiptSha256": "68ce25b9b63eb42edd5476905e3f565f746ee4d4d66d58ee968336dd10ce0715",
+      "testedSourceFingerprints": [
+        "3cb9041b9bfd6201f517094d432998eccbe31a6ffb37be384e986a7d2d909d46",
+        "165f8592f5e641dfd703d85ae7ad1a69f0bfc4c7f0f674bac800bba7dec30cc8"
+      ],
+      "allTestedSourcesMatchFinalAuthoredSource": true,
+      "nativeGameLaunched": false,
+      "scopeDescription": "actual authored PeebMovement and physics with lifecycle/collision doubles"
+    }
+  ],
+  "noNewNativeGameplayClaimed": true,
+  "historicalFixtureScopeNotBroadened": true
+}

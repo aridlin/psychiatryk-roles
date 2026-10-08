@@ -1,4 +1,4 @@
-# Goplanska — Better MC5 v53 installer
+# Goplanska — Better MC5 v53 / Roles 3.0.6 installer
 
 ## Polski
 
@@ -35,3 +35,13 @@ The archive contains no third-party mod binaries, private credentials or player 
 AutoModpack is resolved from its original publisher by your launcher.
 Official AutoModpack: https://modrinth.com/mod/automodpack/version/e6HhD1Ik
 Help / exact custom recipes: https://info.goplanska.pl/
+
+## Current addon
+
+Roles **3.0.6** is downloaded by AutoModpack on joining. Expected managed addon
+`mods/psychiatryk_roles-3.0.0-bmc5.jar` SHA-256: `7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d`.
+
+The installed pack keeps Sophisticated Backpacks/Core, JEI, Distraction Free
+Recipes, Carry On scooter exclusion and unenchanted crouch ore-only Vein Mining.
+See PLAY-3.0.6.md and CHANGELOG-3.0.6.md for Peeb, Left Alt freelook, grapple,
+music metadata/HUD, import, and spinning jukebox disc controls.

@@ -1,0 +1,72 @@
+{
+  "release": "bmc5-v53-roles3.0.6",
+  "addonSha256": "7e5f26551d0e3ec0535a9bb94e8c2d6f7452a714f73071ffa147b0b51d0f8a5d",
+  "managedFilename": "mods/psychiatryk_roles-3.0.0-bmc5.jar",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.250",
+  "java": 21,
+  "base": "Better MC5 v53",
+  "autoModpack": {
+    "version": "4.0.6",
+    "fingerprint": "e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6",
+    "firstRunDownloadsServerPack": true,
+    "reuseInstanceForUpdates": true
+  },
+  "selectedAdditions": {
+    "sophisticatedbackpacks": "3.25.69.1979",
+    "sophisticatedcore": "1.4.70.2131"
+  },
+  "retainedMods": {
+    "jei": "19.27.0.343",
+    "distraction_free_recipes": "1.2.2"
+  },
+  "selectedConfigurations": {
+    "config/carryon-common.toml": "ad35c88e8fe6d88b5100c6754cbc39c98d7f31e5956023abbd0f3225cdb7c402",
+    "config/veinmining-server.toml": "9f0fc2fdc453db935231f876961e467dab639a6aeeee09fd80c032ac6a5cd14a"
+  },
+  "restoredScooterSmithing": {
+    "dyes": true,
+    "upgrades": true,
+    "repaintTemplateSlotEmpty": true,
+    "repaintBase": "scooter",
+    "repaintAddition": "dye",
+    "ownerAndUpgradesPreserved": true
+  },
+  "peebArmorPolicy": {
+    "heldWithOrdinaryArmor": true,
+    "wearChestRequiresOtherArmorEmpty": true
+  },
+  "streaming": {
+    "progressiveHttp": true,
+    "fixedTrackDurationOrFileSizeCap": false,
+    "fixedFourSourceClientLimit": false
+  },
+  "minecraftNativeMusic": {
+    "soundtrackTracks": 60,
+    "musicDiscs": 19,
+    "audioFromInstalledMinecraftResources": true
+  },
+  "endgameElytraScooter": {
+    "defaultLoyaltyLevel": 1,
+    "ingredientsAndGridUnchanged": true,
+    "ownerBindingRetained": true
+  },
+  "notes": "Installers resolve official AutoModpack; the server distributes this exact addon on first connection. Existing instances use AutoModpack updates.",
+  "musicTransport": {
+    "protocol": "2",
+    "previousAndSkip": true,
+    "sharedSessionClock": true,
+    "importCooldownSeconds": 0,
+    "importProgressVisible": true
+  },
+  "peebGrapple": {
+    "springPhysics": true,
+    "headLookIndependent": true
+  },
+  "existingSongMetadata": {
+    "catalogSongCount": 637,
+    "coveredEntries": 564,
+    "artistEntries": 552,
+    "albumEntries": 314
+  }
+}
