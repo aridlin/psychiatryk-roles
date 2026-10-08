@@ -1,0 +1,1 @@
+{"required":true,"minVersion":"0.8","package":"pl.aridlin.psychiatrykroles.runtime.mixin","compatibilityLevel":"JAVA_21","mixins":["RuntimeRecipesMixin"],"client":["gui.ScreenBlurMixin"],"injectors":{"defaultRequire":1}}
