@@ -1,0 +1,20 @@
+{
+  "jar_sha256": "e93c7a02db0bf3d74abdf6a2fac7cef44df1f437390a513891d03ebcb8ee1faf",
+  "rules_checks": 39,
+  "native_fixture_pass": true,
+  "heap_mb": 1200,
+  "processors": 2,
+  "player_visible_gui_tested": false,
+  "live_server_started": "2026-10-08T20:14:51Z",
+  "live_recipe_verification": "2026-10-08T20:15:31Z",
+  "unlocked": [
+    "chiller",
+    "gardening_table",
+    "hunting_post",
+    "woodworking_table"
+  ],
+  "locked_recipe_outputs_absent": true,
+  "addon_absent_from_client_feed": true,
+  "website_server_publication_verified": "2026-10-08T20:17:55Z",
+  "queued_roles_309_preserved": true
+}

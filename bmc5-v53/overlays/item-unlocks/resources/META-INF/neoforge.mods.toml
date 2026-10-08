@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL-3.0-or-later"
+[[mods]]
+modId="psychiatryk_unlocks"
+version="1.0.0"
+displayName="Psychiatryk Item Unlocks"
+description="Server-authoritative item calendar and operator GUI."
+[[dependencies.psychiatryk_unlocks]]
+modId="psychiatryk_roles"
+type="required"
+versionRange="[3.0.8,)"
+side="SERVER"
+[[mixins]]
+config="psychiatryk-unlocks.mixins.json"
