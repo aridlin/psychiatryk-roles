@@ -3,8 +3,8 @@
 
 The live 3.0.8 installers are tiny AutoModpack bootstraps, not offline BMC5
 archives. This script preserves that model: first-party Roles is embedded,
-KubeJS/Rhino resolve from their official Modrinth/CurseForge file records, and
-AutoModpack gets the remaining server pack after connecting. Nothing is
+its first-launch dependencies resolve from official Modrinth/CurseForge file
+records, and AutoModpack gets the remaining server pack after connecting. Nothing is
 published or installed by this script.
 """
 
@@ -49,6 +49,28 @@ RHINO = {
     "modrinth_version": "cQ4POTah",
     "curseforge_project": 416294,
     "curseforge_file": 8218748,
+}
+ACCESSORIES = {
+    "filename": "accessories-neoforge-1.1.0-beta.53+1.21.1.jar",
+    "sha256": "10017a3da78ea63e9ece27a1ca32f8cf490362f348778cf8cb759e7282f3beb0",
+    "sha512": "baafa9a5e48c17c243d45b6260095ffef2ad00e4e970aafc5b1ca9ab5f4a542b18b0fb35d4584318791edbaf00a3c44806f62062513d991383192aca4df27a07",
+    "sha1": "77d75c2e13cfdf56a45cdd29806c1c97c3d250fc",
+    "size": 1078697,
+    "modrinth_project": "jtmvUHXj",
+    "modrinth_version": "Fb55Fgjz",
+    "curseforge_project": 938917,
+    "curseforge_file": 7583320,
+}
+OWO = {
+    "filename": "owo-lib-neoforge-0.12.15.5-beta.1+1.21.jar",
+    "sha256": "de6ed336bd80154b7241a7b3276694befc1c94550add8bcdfe7f82e5172fd13d",
+    "sha512": "4de5c5d52139244b8c5260d641087664d992624b822599a32e03c08eb133be854a2f413667dbca1e55772445b04a70210c17b3bc13e3c88e425e7d928104b9fa",
+    "sha1": "48dda11a6710591cf162bdbedf982ea21dd1f2ed",
+    "size": 1221583,
+    "modrinth_project": "ccKDOlHs",
+    "modrinth_version": "NMCHU6DZ",
+    "curseforge_project": 532610,
+    "curseforge_file": 6785734,
 }
 
 
@@ -99,7 +121,8 @@ def readme(roles_sha: str) -> bytes:
    Importuj → plik `.mrpack`; CurseForge → Importuj → plik `.zip`.
 2. Użyj Java 21 i konta Minecraft. Paczka ustawia Minecraft 1.21.1,
    **NeoForge 21.1.252**, AutoModpack 4.0.6, Psychiatryk 3.0.10 oraz
-   KubeJS 2101.7.2-build.377 z Rhino 2101.2.7-build.85.
+   KubeJS 2101.7.2-build.377 z Rhino 2101.2.7-build.85 oraz
+   Accessories 1.1.0-beta.53 z wymaganym oωo 0.12.15.5-beta.1.
 3. Połącz z **goplanska.pl**. Porównaj odcisk AutoModpack:
    `e47e202810281086f31e37c74ec121d611b31e50adb6a4a68131fbabe2f0cee6`.
    Zaczekaj, aż AutoModpack pobierze resztę Better MC5 v53 i dokończ wymagany
@@ -117,14 +140,14 @@ Oficjalna baza: https://www.curseforge.com/minecraft/modpacks/better-mc-neoforge
 Import as a **new instance** in Prism (.mrpack) or CurseForge (.zip). Use Java
 21 and your Minecraft account. The installer pins Minecraft 1.21.1,
 **NeoForge 21.1.252**, AutoModpack 4.0.6, matching Psychiatryk 3.0.10,
-KubeJS build 377 and Rhino build 85. Join **goplanska.pl**, confirm the
+KubeJS build 377, Rhino build 85, Accessories beta.53 and oωo beta.1. Join **goplanska.pl**, confirm the
 AutoModpack fingerprint above, let it fetch the remaining Better MC5 v53
 files, and complete any requested game relaunch. Reuse the same instance for
 later updates and keep the previous instance for rollback.
 
 This is a network bootstrap, **not a complete offline BMC5 pack**. The
-first-party Roles JAR is embedded with its code and asset notices. KubeJS and
-Rhino are fetched from their official project file records. Upstream Better
+first-party Roles JAR is embedded with its code and asset notices. KubeJS,
+Rhino, Accessories and oωo are fetched from their official project file records. Upstream Better
 MC5 content remains with its original distributors. No world, player data,
 server secrets or forced resource pack are included.
 """.encode("utf-8")
@@ -216,6 +239,8 @@ def main() -> None:
     parser.add_argument("--queued-zip", type=Path, default=private / "queued.zip")
     parser.add_argument("--kubejs", type=Path, default=private / f"kubejs-stage/mods/{package_release.KUBEJS_NAME}")
     parser.add_argument("--rhino", type=Path, default=private / f"kubejs-stage/mods/{package_release.RHINO_NAME}")
+    parser.add_argument("--accessories", type=Path, default=private / f"live-mod-qa/mods/{ACCESSORIES['filename']}")
+    parser.add_argument("--owo", type=Path, default=private / f"live-mod-qa/mods/{OWO['filename']}")
     args = parser.parse_args()
     if len(args.roles_sha256) != 64 or any(c not in "0123456789abcdef" for c in args.roles_sha256):
         raise ValueError("roles SHA-256 must be a lowercase 64-character hexadecimal string")
@@ -233,6 +258,8 @@ def main() -> None:
                 raise ValueError(f"Roles JAR lacks {notice}")
     verify_dependency(args.kubejs, KUBEJS)
     verify_dependency(args.rhino, RHINO)
+    verify_dependency(args.accessories, ACCESSORIES)
+    verify_dependency(args.owo, OWO)
 
     mr = source_files(args.base_dir / "base-live-installer.mrpack", BASE_MR_SHA)
     cf = source_files(args.base_dir / "base-live-curseforge.zip", BASE_CF_SHA)
@@ -264,7 +291,7 @@ def main() -> None:
         "addonSha256": args.roles_sha256,
         "neoforge": "21.1.252",
         "clientUpdateRequiredFrom309": True,
-        "notes": "Installer embeds matching Psychiatryk Roles; official launcher references resolve KubeJS/Rhino. AutoModpack downloads remaining BMC5 server files on first connection.",
+        "notes": "Installer embeds matching Psychiatryk Roles; official launcher references resolve KubeJS/Rhino/Accessories/oωo. AutoModpack downloads remaining BMC5 server files on first connection.",
     })
     dependency_manifest = {
         "purpose": "official upstream launcher file references, not redistributed JARs",
@@ -295,9 +322,9 @@ def main() -> None:
     index.update({
         "versionId": "bmc5-v53-roles-3.0.10-installer",
         "name": "Goplanska — Better MC5 v53 / Roles 3.0.10",
-        "summary": "NeoForge 21.1.252 first-run installer with Roles, KubeJS and Rhino; AutoModpack fetches the remaining BMC5 server pack.",
+        "summary": "NeoForge 21.1.252 first-run installer with Roles and required libraries; AutoModpack fetches the remaining BMC5 server pack.",
         "dependencies": {"minecraft": "1.21.1", "neoforge": "21.1.252"},
-        "files": [index["files"][0], modrinth_entry(KUBEJS), modrinth_entry(RHINO)],
+        "files": [index["files"][0], *(modrinth_entry(spec) for spec in (KUBEJS, RHINO, ACCESSORIES, OWO))],
     })
     curseforge.update({
         "name": "Goplanska — Better MC5 v53 / Roles 3.0.10",
@@ -310,6 +337,8 @@ def main() -> None:
             curseforge["files"][0],
             {"projectID": KUBEJS["curseforge_project"], "fileID": KUBEJS["curseforge_file"], "required": True},
             {"projectID": RHINO["curseforge_project"], "fileID": RHINO["curseforge_file"], "required": True},
+            {"projectID": ACCESSORIES["curseforge_project"], "fileID": ACCESSORIES["curseforge_file"], "required": True},
+            {"projectID": OWO["curseforge_project"], "fileID": OWO["curseforge_file"], "required": True},
         ],
     })
     mr["modrinth.index.json"] = json_bytes(index)
@@ -344,7 +373,7 @@ def main() -> None:
         "neoforge": "21.1.252",
         "rolesSha256": args.roles_sha256,
         "sourceLiveInstallersSha256": {"prism": BASE_MR_SHA, "curseforge": BASE_CF_SHA, "addon": BASE_ADDON_SHA},
-        "upstream": {"kubejs": KUBEJS, "rhino": RHINO},
+        "upstream": {"kubejs": KUBEJS, "rhino": RHINO, "accessories": ACCESSORIES, "owo": OWO},
         "artifacts": {},
         "limitations": ["No full client launch or real join", "Not an offline full BMC5 pack", "Publish only after matching server/AutoModpack feed is verified"],
     }
