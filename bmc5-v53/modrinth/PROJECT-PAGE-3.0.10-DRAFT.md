@@ -4,7 +4,12 @@ Project: https://modrinth.com/project/psychiatryk-aridlin
 
 Observed 9 October 2026: the existing project is a draft, visible only to its
 members pending moderation. The short summary and English/Polish description
-below were saved in its editor; both showed a success notice. The custom
+were saved in its editor; both showed a success notice. The description
+was updated after the server cutover to identify the live 3.0.10 server,
+NeoForge 21.1.252, the public client installers and the remaining in-game
+client check. The source link points to the exact
+[`feature/stable-client-runtime` branch](https://github.com/aridlin/psychiatryk-roles/tree/feature/stable-client-runtime),
+and the links editor confirmed that update. The custom
 `Mixed-license` entry now links to [the code/asset rights split](LICENSE-SPLIT.md),
 and Modrinth confirmed **License updated**. There are still no uploaded
 versions or gallery images. The checklist still requires a version; content
@@ -12,11 +17,11 @@ disclosures cannot be selected until a version is uploaded. This truthful
 license label does not establish redistribution permission for Peeb assets.
 Do not create a second project.
 
-The copy below is for the *combined* NeoForge 1.21.1 addon. The existing
-project description presents 3.0.10 as an upcoming foundation. Upload a
-3.0.10 binary and version changelog only after the final binary, exact
-dependencies, in-game screenshots and client/server rollout have passed
-release checks.
+The release copy below is for the *combined* NeoForge 1.21.1 addon. Version 3.0.10
+is running on the Goplanska server; a real 3.0.10 client join, visuals and
+reconnect remain unverified. Upload a 3.0.10 binary and version changelog
+only after the exact dependencies, in-game screenshots and client checks
+have passed release checks and the bundled media rights are resolved.
 The standalone KuKirin/Peeb editions are source-stage work and should not be
 listed as downloadable editions on this project until their own files exist.
 
@@ -54,25 +59,33 @@ features and recipes are available.
 
 ## Updates beginning with 3.0.10
 
-Version 3.0.10 establishes a matching client and server runtime. After this
-one-time client update, the server can distribute bounded menus, HUD layouts,
-visual assets, item and block variants, recipes and selected behaviour changes
+The Goplanska server now runs version 3.0.10. This version establishes a
+matching client and server runtime. After this one-time client update, the
+server can distribute bounded menus, HUD layouts, visual assets, item and
+block variants, recipes and selected behaviour changes
 without replacing the client JAR. Changed assets are checked against a local
 hash cache on join and prepared before use. Some server data and scripts can
 also change while players remain connected. New native Minecraft/NeoForge
 registrations, packet formats or renderer code still require a client update.
+The 3.0.10 client join and rendering checks are still pending, so this
+description is not a claim of verified in-game behavior.
 
 ## Install and compatibility
 
-Use **Minecraft 1.21.1, Java 21 and the matching NeoForge 21.1.x version**
-specified by the release. Install the same Psychiatryk edition on the server
-and every client. For the Goplanska Better MC server, follow its exact modpack
-instructions; the combined addon is not a copy of Better MC and does not
-include the rest of that pack. Accessories is required for the wearable
-features and is supplied separately by the server pack. Do not mix this
-combined addon with older standalone modules that register the same IDs.
+Use **Minecraft 1.21.1, Java 21 and NeoForge 21.1.252** for the current
+Goplanska release. The [Prism Launcher installer](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack)
+and [CurseForge installer](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip)
+include the matching Psychiatryk addon and use AutoModpack to download the
+remaining server pack on first connection; they are not complete offline
+copies of Better MC. A [manual addon ZIP](https://info.goplanska.pl/goplanska-bmc5-v53-roles-3.0.10-addon.zip)
+is also available for an existing compatible pack. Follow the
+[Goplanska installation page](https://info.goplanska.pl/) for current steps;
+the first AutoModpack bootstrap may require a normal game restart. Accessories is required for
+wearable features and is supplied separately by the server pack. Do not mix
+the combined addon with older standalone modules that register the same IDs.
 
-Source and issues: https://github.com/aridlin/psychiatryk-roles
+Source for this release and issues:
+https://github.com/aridlin/psychiatryk-roles/tree/feature/stable-client-runtime
 
 Authored Java code is GPL-3.0-or-later. Some character art and sound are
 third-party works with separate rights and attribution; see the notices in
@@ -97,17 +110,23 @@ administratora. Dostępność funkcji i receptur zależy od ustawień serwera.
 - **Muzyka:** współdzielona biblioteka utworów w szafach grających i
   hulajnogach. Nie oznacza to obsługi linków Spotify.
 
-Wersja **3.0.10** wprowadza wspólną podstawę klienta i serwera. Po tej
-jednorazowej aktualizacji klienta serwer może zmieniać ograniczone menu,
+Serwer Goplanska działa już na wersji **3.0.10**, która wprowadza wspólną
+podstawę klienta i serwera. Po tej jednorazowej aktualizacji klienta serwer
+może zmieniać ograniczone menu,
 układ HUD-u, zasoby graficzne, warianty przedmiotów i bloków, receptury oraz
 wybrane reguły bez wymiany pliku moda na komputerach graczy. Klient sprawdza
 lokalny cache po dołączeniu i pobiera tylko brakujące zasoby. Część zmian
 działa także bez ponownego dołączenia. Nowe typy natywnych bloków, pakietów
 sieciowych lub rendererów nadal wymagają aktualizacji klienta.
+Dołączenie klienta 3.0.10 i wygląd w grze wymagają jeszcze końcowej kontroli.
 
-Wymagane są **Minecraft 1.21.1, Java 21 i wersja NeoForge 21.1.x wskazana
-przy wydaniu**. Klient i serwer muszą mieć zgodne wydanie Psychiatryk.
-Instalację dla serwera Goplanska opisuje osobna instrukcja paczki Better MC.
+Wymagane są **Minecraft 1.21.1, Java 21 i NeoForge 21.1.252**.
+Instalatory [Prism Launcher](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack)
+i [CurseForge](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip)
+zawierają zgodne wydanie Psychiatryk, a AutoModpack pobiera pozostałą część
+paczki serwera przy pierwszym połączeniu. Nie są to pełne paczki offline.
+Na [stronie Goplanska](https://info.goplanska.pl/) jest aktualna instrukcja;
+pierwsze przygotowanie AutoModpack może wymagać zwykłego restartu gry.
 Kod Java jest na licencji GPL-3.0-or-later; materiały Peeb Adventures mają
 odrębne prawa i informacje o autorach w pakiecie wydania.
 
@@ -144,7 +163,8 @@ odrębne prawa i informacje o autorach w pakiecie wydania.
 
 ## Publication gates
 
-1. Do not use this as an uploaded version announcement until the exact final
+1. The Goplanska server rollout is live on NeoForge 21.1.252, but do not use
+   this as an uploaded Modrinth version announcement until the exact final
    JAR passes the full pack/client join, cache, GUI and reconnect checks.
 2. Verify redistribution rights for the bundled Peeb art/audio. The source
    license does **not** grant those assets GPL rights. Choose the project
