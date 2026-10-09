@@ -11,7 +11,7 @@ permission or game state from a client's visual-ready acknowledgement.
 | Change | Operator action | Client action |
 | --- | --- | --- |
 | Menus, controls, signed item variants, recipes, behavior graph | Atomically edit `config/psychiatryk-runtime.json`; the server watches it every two seconds, or run `/psychiatrykruntime reload` | Nothing; existing sessions are invalidated and new screens use the new revision |
-| PNG/JSON visual assets (Peeb clips, scooter rules, generic block appearance) | Edit `config/psychiatryk-runtime-assets/`, then `/psychiatrykruntime assets` | Nothing; only changed hashes transfer, compile before Ready ACK, old visuals survive a rejected update |
+| PNG/JSON visual assets (Peeb clips, scooter rules, generic item/block appearance) | Edit `config/psychiatryk-runtime-assets/`, then `/psychiatrykruntime assets` | Nothing; only changed hashes transfer, compile before Ready ACK, old visuals survive a rejected update |
 | Per-player HUD scenes | Call `HudServer.replace`/`clear` from a server feature | Nothing; client caches prepared scene nodes and renders them in one bounded pass |
 | Grapple force/redstone policy | Edit `config/psychiatryk-runtime/grapple.properties` | Nothing; valid edits apply within one second |
 | KubeJS server event logic, including Peeb hooks | Edit `kubejs/server_scripts`, then `kubejs reload server-scripts` | Nothing; native event listeners were replaced in place on the tested KubeJS build |
@@ -25,6 +25,14 @@ server-defined *variants* without registering a new native ID. This is useful
 for sparse decorated blocks such as a KuKirin display stand. It is not a
 replacement for mass building blocks: its bounded block-entity renderer draws
 up to 16 cuboids per placed block and should be limited to sparse decoration.
+The fixed `psychiatryk_runtime:runtime_item` can also use server-preloaded PNG
+art. `items/runtime.json` maps up to 128 signed variant IDs to verified PNG
+asset IDs. The client compiles that map at asset readiness and performs only a
+variant-tag lookup during item rendering; unknown or unavailable art falls
+back to a static icon. Names, lore, recipes, counts, actions, and artwork can
+change through server data, but a new item registry ID or rendering technique
+still needs a client binary. A client-side visual tag is not permission: the
+server verifies its own variant signature before gameplay actions.
 Gameplay remains server-authoritative. KubeJS and behavior graph commands run
 on the server and must be written by trusted operators. Client asset JSON is
 schema-validated by each feature compiler and cannot execute JavaScript or
@@ -47,7 +55,7 @@ registry change can hot-swap. Full `/reload` was much slower in the constrained
 fixture and is reserved for command-tree/data-pack changes.
 
 This platform directly covers data-driven GUI changes, HUD layout, animated
-Peeb clips, scooter transform corrections, and generic block appearances.
+Peeb clips, scooter transform corrections, and generic item/block appearances.
 Spotify playback is **not** implemented by accepting a link: it would need a
 separate authorized audio source/resolver and a client decoder. Likewise a
 completely new renderer or native registry kind remains a client release.

@@ -152,10 +152,17 @@ public final class RuntimeServer {
             if(e.props()!=null&&e.props().containsKey("value")&&!e.action().equals("setting"))value=Double.parseDouble(e.props().get("value"));
             controls.add(new Schema.Control(e.id(),e.label(),e.kind(),text,value,e.min(),e.max(),e.step(),e.props()));
         }
-        var session=new Session(UUID.randomUUID().toString(),revision,id,System.nanoTime()+900_000_000_000L);sessions.put(p.getUUID(),session);
+        var session=new Session(UUID.randomUUID().toString(),revision,id,System.nanoTime()+900_000_000_000L);
         var view=new Schema.View(1,revision,session.token,id,menu.title(),List.copyOf(controls));
+        if(!viewFits(view)){
+            p.displayClientMessage(Component.literal("This server menu is too large to display safely; ask an operator to shorten it."),false);
+            return;
+        }
+        sessions.put(p.getUUID(),session);
         if(RuntimeNetwork.supported(p))RuntimeNetwork.send(p,view);else FallbackMenu.open(p,view);
     }
+    /** Config documents can fit 64 KiB while their pretty-printed View exceeds the wire cap. */
+    public static boolean viewFits(Schema.View view){return Schema.JSON.toJson(view).length()<=Schema.MAX_DOCUMENT;}
     public static void assetsReady(ServerPlayer p){var pending=pendingAssetMenus.remove(p.getUUID());if(pending!=null)open(p,pending.id(),true);}
     public static void action(ServerPlayer p,String raw){
         try{if(!admit(p.getUUID(),System.nanoTime()))return;var a=Schema.action(raw);var s=sessions.get(p.getUUID());

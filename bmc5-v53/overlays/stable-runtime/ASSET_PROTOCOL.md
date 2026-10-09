@@ -5,6 +5,8 @@ Place `.png` or `.json` files below `config/psychiatryk-runtime-assets/`, for ex
 - `ui/poker/card.png` is asset ID `ui/poker/card`.
 - `peeb/clips.json` is asset ID `peeb/clips`.
 - `scooter/rules.json` is asset ID `scooter/rules`.
+- `items/runtime.json` is asset ID `items/runtime` and maps generic item
+  variant IDs to PNG IDs such as `items/token`.
 
 IDs use lowercase letters, digits, `_`, `-`, and up to four `/`-separated path segments. The client never uses IDs as local filenames. A `.png` and `.json` with the same ID are rejected.
 

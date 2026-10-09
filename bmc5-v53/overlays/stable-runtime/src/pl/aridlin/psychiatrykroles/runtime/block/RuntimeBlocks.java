@@ -22,6 +22,9 @@ public final class RuntimeBlocks {
         ()->new RuntimeVariantBlock(BlockBehaviour.Properties.of().strength(2.0f).noOcclusion()));
     public static final DeferredItem<RuntimeVariantItem> RUNTIME_ITEM=ITEMS.register("runtime_block",
         ()->new RuntimeVariantItem(RUNTIME_BLOCK.get(),new Item.Properties()));
+    /** Fixed registry identity; server data supplies names, recipes, actions, and bounded visual variants. */
+    public static final DeferredItem<Item> RUNTIME_GENERIC_ITEM=ITEMS.register("runtime_item",
+        ()->new Item(new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<RuntimeVariantBlockEntity>> RUNTIME_ENTITY=
         BLOCK_ENTITIES.register("runtime_block",()->BlockEntityType.Builder.of(RuntimeVariantBlockEntity::new,RUNTIME_BLOCK.get()).build(null));
 

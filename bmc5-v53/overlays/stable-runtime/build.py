@@ -2,6 +2,7 @@ from pathlib import Path
 import argparse,subprocess,os,shutil,zipfile,hashlib,json
 p=argparse.ArgumentParser();p.add_argument('--base',type=Path,required=True);p.add_argument('--sdk',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 EXPECTED_BASE_SHA256='a513a1e338f0651648dfa32ecf9f3049daab312c2304183083337ecbc43572de'
+EXPECTED_OUTPUT_SHA256='eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12'
 base_hash=hashlib.sha256(a.base.read_bytes()).hexdigest()
 if base_hash!=EXPECTED_BASE_SHA256:raise SystemExit('Expected the pinned 3.0.9 baseline JAR, got '+base_hash)
 root=Path(__file__).resolve().parent;a.output.mkdir(parents=True,exist_ok=True);classes=a.output/'classes';shutil.rmtree(classes,ignore_errors=True)
@@ -27,5 +28,7 @@ config="psychiatryk-runtime.mixins.json"
 jar=a.output/'psychiatryk_roles-3.0.10-bmc5.jar'
 with zipfile.ZipFile(jar,'w',zipfile.ZIP_DEFLATED) as z:
  for name,data in sorted(entries.items()):
-  entry=zipfile.ZipInfo(name,(2026,10,8,22,0,0));entry.compress_type=zipfile.ZIP_DEFLATED;z.writestr(entry,data)
-print(json.dumps({'jar':str(jar),'sha256':hashlib.sha256(jar.read_bytes()).hexdigest(),'base_sha256':base_hash}))
+  entry=zipfile.ZipInfo(name,(2026,10,9,1,0,0));entry.compress_type=zipfile.ZIP_DEFLATED;z.writestr(entry,data)
+built_hash=hashlib.sha256(jar.read_bytes()).hexdigest()
+if built_hash!=EXPECTED_OUTPUT_SHA256:raise SystemExit('Canonical JAR differs from native-tested item candidate: '+built_hash)
+print(json.dumps({'jar':str(jar),'sha256':built_hash,'base_sha256':base_hash}))
