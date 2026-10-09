@@ -5,16 +5,30 @@ import com.google.gson.JsonParser;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import pl.aridlin.psychiatrykroles.runtime.client.VisualExpressions;
 
 /** Frozen, declarative HUD scene transported inside the optional runtime Snapshot envelope. */
 public final class HudSchema {
     private HudSchema() {}
     public static final int VERSION=1, MAX_MESSAGE=16*1024, MAX_SCENES=8, MAX_NODES=32;
     public static final int MAX_TOTAL_NODES=64, MAX_ITEMS=8, MAX_IMAGES=16;
+    public static final int MAX_EXPRESSION_NODES_PER_SCENE=64, MAX_EXPRESSION_NODES_TOTAL=128;
+    public static final Map<String,Integer> HUD_VARIABLES=Map.ofEntries(
+        Map.entry("time",0),Map.entry("speed",1),Map.entry("yaw",2),Map.entry("pitch",3),
+        Map.entry("airborne",12),Map.entry("vertical_speed",13),Map.entry("health",17),
+        Map.entry("max_health",18),Map.entry("food",19),Map.entry("gui_width",20),
+        Map.entry("gui_height",21),Map.entry("scene_time",22));
     public static final Gson JSON=new Gson();
+    /** Optional expressions keep v1's static coordinates as a fallback for older clients. */
     public record Node(String id,String type,double x,double y,double w,double h,String text,int color,int background,
-                       double value,String item,String asset) {}
+                       double value,String item,String asset,String visibleWhen,String xRule,String yRule,String valueRule) {
+        public Node(String id,String type,double x,double y,double w,double h,String text,int color,int background,
+                    double value,String item,String asset){
+            this(id,type,x,y,w,h,text,color,background,value,item,asset,null,null,null,null);
+        }
+    }
     public record Scene(String id,List<Node> nodes) {}
     public record Message(int schema,String channel,String op,String id,Scene scene) {}
     private static boolean withinMessageLimit(String raw){
@@ -50,7 +64,7 @@ public final class HudSchema {
     public static void validate(Scene scene){
         Schema.require(scene!=null,"Missing HUD scene");id(scene.id());
         Schema.require(scene.nodes()!=null&&scene.nodes().size()<=MAX_NODES,"HUD node limit");
-        Set<String> used=new HashSet<>();
+        Set<String> used=new HashSet<>();int expressions=0;
         for(var n:scene.nodes()){
             Schema.require(n!=null,"Null HUD node");id(n.id());Schema.require(used.add(n.id()),"Duplicate HUD node");
             Schema.require(n.type()!=null&&Set.of("text","rect","progress","item","image").contains(n.type()),"HUD node type");
@@ -66,7 +80,9 @@ public final class HudSchema {
             if(n.type().equals("item"))Schema.require(n.item()!=null&&n.item().length()<=180
                 &&n.item().matches("[a-z0-9_.-]+:[a-z0-9_./-]+"),"HUD item ID");
             if(n.type().equals("image"))AssetSchema.id(n.asset());
+            expressions+=expressionCost(n);
         }
+        Schema.require(expressions<=MAX_EXPRESSION_NODES_PER_SCENE,"HUD expression budget");
         // Gson may expand characters such as '<' to six-byte escapes; check the wire form
         // before a server caller stores the scene or queues it for a later send.
         Schema.require(withinMessageLimit(JSON.toJson(new Message(VERSION,"hud","replace",scene.id(),scene))),
@@ -74,15 +90,29 @@ public final class HudSchema {
     }
     /** Check the complete player HUD after a candidate scene replaces its old version. */
     public static void validateCollection(Iterable<Scene> scenes){
-        int sceneCount=0,nodeCount=0,itemCount=0,imageCount=0;
+        int sceneCount=0,nodeCount=0,itemCount=0,imageCount=0,expressionCount=0;
         for(var scene:scenes){
             validate(scene);sceneCount++;nodeCount+=scene.nodes().size();
             for(var node:scene.nodes()){
                 if(node.type().equals("item"))itemCount++;
                 else if(node.type().equals("image"))imageCount++;
+                expressionCount+=expressionCost(node);
             }
             Schema.require(sceneCount<=MAX_SCENES&&nodeCount<=MAX_TOTAL_NODES
-                &&itemCount<=MAX_ITEMS&&imageCount<=MAX_IMAGES,"HUD total scene budget");
+                &&itemCount<=MAX_ITEMS&&imageCount<=MAX_IMAGES
+                &&expressionCount<=MAX_EXPRESSION_NODES_TOTAL,"HUD total scene budget");
         }
+    }
+    private static int expressionCost(Node node){
+        Schema.require(node.valueRule()==null||node.type().equals("progress"),"HUD value rule needs progress node");
+        var budget=new VisualExpressions.Budget();
+        for(String expression:List.of(node.visibleWhen()==null?"":node.visibleWhen(),
+                node.xRule()==null?"":node.xRule(),node.yRule()==null?"":node.yRule(),
+                node.valueRule()==null?"":node.valueRule())){
+            if(expression.isEmpty())continue;
+            Schema.require(expression.length()<=1024,"HUD expression length");
+            VisualExpressions.compile(JsonParser.parseString(expression),budget,HUD_VARIABLES);
+        }
+        return budget.count();
     }
 }

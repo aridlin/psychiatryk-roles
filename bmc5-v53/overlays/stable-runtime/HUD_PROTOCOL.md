@@ -16,6 +16,14 @@ HudServer.clear(player, "quest");
 
 The server validates IDs, coordinates, item registry keys, PNG availability, node counts, and a 16 KiB serialized message limit. Image scenes wait until the client's ready ACK for the current asset revision. The client parses once per update and precompiles text, item stacks, and texture references; rendering only scales and draws these prepared nodes. HUD state clears on disconnect. The messages use the existing optional runtime `Snapshot` payload with `channel="hud"`; they are sent only when both the runtime and the new asset channel are supported, so the prior runtime-only client never receives an unfamiliar HUD snapshot.
 
+## Optional node expressions for future clients
+
+A node may include `visibleWhen`, `xRule`, `yRule`, or `valueRule` as bounded JSON expression strings. `valueRule` applies only to a progress node. For example, a health bar can set `valueRule` to `{"op":"div","args":[{"var":"health"},{"var":"max_health"}]}`. A client with this extension evaluates it from local player state every frame; a 3.0.10 client ignores the extra fields and displays the static `value` fallback. The server can replace a scene while players remain connected. No new packet channel, game restart, or rejoin is needed once clients have this extension.
+
+The HUD variable whitelist is `time` (seconds since the client HUD runtime initialized), `scene_time` (seconds since this scene was replaced), `speed` (horizontal blocks per tick), `yaw`, `pitch`, `airborne` (0 or 1), `vertical_speed`, `health`, `max_health`, `food`, `gui_width`, and `gui_height`. An unrelated scene update or an asset refresh preserves `scene_time`; replacing the same scene resets it. This uses the same compiled expression engine as scooter visuals, with a feature-specific variable whitelist. An expression cannot execute a command, access arbitrary client objects, load a class, or fetch a URL. The existing static coordinates remain the fallback for every optional expression. Animated positions and progress are clipped to the screen and 0–1 range respectively.
+
+The server validates the expression string before sending: up to 1,024 characters per expression, 64 expression tree nodes per scene, and 128 across all active scenes per player, on top of the existing eight scenes, 64 HUD nodes, and 16 KiB message caps. The client compiles on scene or asset updates; render work evaluates at most 128 bounded tree nodes per frame with no per-node allocation. Updating a scene is atomic: a rejected expression leaves the prior scene active. This source extension is not part of the live 3.0.10 JAR; its actual in-game rendering and frame time still need a client/server test before release.
+
 Integration in existing files:
 
 ```java

@@ -1,6 +1,7 @@
 package pl.aridlin.fixture;
 
 import com.google.gson.JsonParser;
+import java.util.Map;
 import pl.aridlin.psychiatrykroles.runtime.client.VisualExpressions;
 
 public final class VisualExpressionsTest {
@@ -19,6 +20,13 @@ public final class VisualExpressionsTest {
         reject("{\"var\":\"privateField\"}");reject("{\"op\":\"exec\",\"args\":[1]}");
         reject("{\"op\":\"add\",\"args\":[1]}");reject("{\"op\":\"rotate\",\"args\":[1,2]}");
         reject("1000001");reject("{\"op\":\"if\",\"args\":[1,2]}");
+        check(VisualExpressions.compile(JsonParser.parseString("{\"var\":\"health\"}"),
+            new VisualExpressions.Budget(),Map.of("health",17)).evaluate(values)==0);
+        try{
+            VisualExpressions.compile(JsonParser.parseString("{\"var\":\"speed\"}"),
+                new VisualExpressions.Budget(),Map.of("health",17));
+            throw new AssertionError("feature variable leak");
+        }catch(IllegalArgumentException expected){checks++;}
         System.out.println("VISUAL_EXPRESSIONS_PASS checks="+checks);
     }
 }
