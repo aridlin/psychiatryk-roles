@@ -1,0 +1,13 @@
+{
+  "fullSourceCompile": 50,
+  "javacHeapMiB": 384,
+  "tests": {
+    "pl.aridlin.fixture.HudMotionTest": "HUD_MOTION_PASS checks=18",
+    "HudProtocolTest": "HUD_PROTOCOL_PASS checks=24",
+    "pl.aridlin.fixture.VisualExpressionsTest": "VISUAL_EXPRESSIONS_PASS checks=14"
+  },
+  "legacyCompatibility": "HUD_LEGACY_COMPAT_PASS",
+  "baselineJarSha256": "eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12",
+  "inGameRenderVerified": false,
+  "deployed": false
+}

@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "menus": {
+    "main": {
+      "title": "Psychiatryk",
+      "permission": 0,
+      "entries": [
+        {
+          "id": "help",
+          "label": "Pomoc / Help",
+          "kind": "button",
+          "action": "command",
+          "target": "psychiatrykhelp",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 0
+        },
+        {
+          "id": "poker",
+          "label": "Poker",
+          "kind": "button",
+          "action": "command",
+          "target": "poker gui",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 0
+        },
+        {
+          "id": "music",
+          "label": "Muzyka / Music",
+          "kind": "button",
+          "action": "command",
+          "target": "jukebox",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 0
+        },
+        {
+          "id": "admin",
+          "label": "Administracja / Administration",
+          "kind": "button",
+          "action": "open",
+          "target": "admin",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        },
+        {
+          "id": "info",
+          "label": "Menu aktualizowane przez serwer",
+          "kind": "label",
+          "action": "none",
+          "target": "",
+          "text": "Nowe przyciski, receptury i zachowania mogą działać bez aktualizacji klienta.",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 0
+        }
+      ]
+    },
+    "admin": {
+      "title": "Administracja · na żywo",
+      "permission": 2,
+      "entries": [
+        {
+          "id": "scooter",
+          "label": "Ustawienia hulajnogi",
+          "kind": "button",
+          "action": "open",
+          "target": "scooter",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        },
+        {
+          "id": "peeb",
+          "label": "Ustawienia Peeb",
+          "kind": "button",
+          "action": "open",
+          "target": "peeb",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        },
+        {
+          "id": "locks",
+          "label": "Blokady i kalendarz przedmiotów",
+          "kind": "button",
+          "action": "command",
+          "target": "itemlocks",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        },
+        {
+          "id": "reload",
+          "label": "Przeładuj dane menu i przedmiotów",
+          "kind": "button",
+          "action": "command",
+          "target": "psychiatrykruntime reload",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        },
+        {
+          "id": "back",
+          "label": "Wróć",
+          "kind": "button",
+          "action": "open",
+          "target": "main",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        }
+      ]
+    },
+    "scooter": {
+      "title": "scooter · ustawienia serwera",
+      "permission": 2,
+      "entries": [
+        {
+          "id": "steering",
+          "label": "Skręcanie",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.steering",
+          "text": "",
+          "min": 0.25,
+          "max": 2,
+          "step": 0.05,
+          "permission": 2
+        },
+        {
+          "id": "grip",
+          "label": "Przyczepność",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.grip",
+          "text": "",
+          "min": 0.5,
+          "max": 1,
+          "step": 0.01,
+          "permission": 2
+        },
+        {
+          "id": "driftgrip",
+          "label": "Przyczepność driftu",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.driftGrip",
+          "text": "",
+          "min": 0.03,
+          "max": 0.4,
+          "step": 0.01,
+          "permission": 2
+        },
+        {
+          "id": "recovery",
+          "label": "Powrót z driftu",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.recovery",
+          "text": "",
+          "min": 0.05,
+          "max": 1,
+          "step": 0.01,
+          "permission": 2
+        },
+        {
+          "id": "tyrevolume",
+          "label": "Głośność opon",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.tyreVolume",
+          "text": "",
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "permission": 2
+        },
+        {
+          "id": "minimumturnrate",
+          "label": "Minimalna szybkość skrętu",
+          "kind": "number",
+          "action": "setting",
+          "target": "scooter.minimumTurnRate",
+          "text": "",
+          "min": 0.5,
+          "max": 6,
+          "step": 0.1,
+          "permission": 2
+        },
+        {
+          "id": "back",
+          "label": "Wróć",
+          "kind": "button",
+          "action": "open",
+          "target": "admin",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        }
+      ]
+    },
+    "peeb": {
+      "title": "peeb · ustawienia serwera",
+      "permission": 2,
+      "entries": [
+        {
+          "id": "range",
+          "label": "Zasięg",
+          "kind": "number",
+          "action": "setting",
+          "target": "peeb.range",
+          "text": "",
+          "min": 1,
+          "max": 32,
+          "step": 1,
+          "permission": 2
+        },
+        {
+          "id": "horizontalspeed",
+          "label": "Prędkość pozioma",
+          "kind": "number",
+          "action": "setting",
+          "target": "peeb.horizontalSpeed",
+          "text": "",
+          "min": 0.1,
+          "max": 0.7,
+          "step": 0.05,
+          "permission": 2
+        },
+        {
+          "id": "maxspeed",
+          "label": "Prędkość maksymalna",
+          "kind": "number",
+          "action": "setting",
+          "target": "peeb.maxSpeed",
+          "text": "",
+          "min": 0.1,
+          "max": 1.2,
+          "step": 0.05,
+          "permission": 2
+        },
+        {
+          "id": "strength",
+          "label": "Siła przyciągania",
+          "kind": "number",
+          "action": "setting",
+          "target": "peeb.strength",
+          "text": "",
+          "min": 0.05,
+          "max": 1,
+          "step": 0.05,
+          "permission": 2
+        },
+        {
+          "id": "stopdistance",
+          "label": "Odległość zatrzymania",
+          "kind": "number",
+          "action": "setting",
+          "target": "peeb.stopDistance",
+          "text": "",
+          "min": 0,
+          "max": 32,
+          "step": 0.1,
+          "permission": 2
+        },
+        {
+          "id": "fallimmunity",
+          "label": "Odporność na upadek",
+          "kind": "toggle",
+          "action": "setting",
+          "target": "peeb.fallImmunity",
+          "text": "",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "permission": 2
+        },
+        {
+          "id": "grapplestep",
+          "label": "Pokonywanie stopni",
+          "kind": "toggle",
+          "action": "setting",
+          "target": "peeb.grappleStep",
+          "text": "",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "permission": 2
+        },
+        {
+          "id": "back",
+          "label": "Wróć",
+          "kind": "button",
+          "action": "open",
+          "target": "admin",
+          "text": "",
+          "min": 0,
+          "max": 0,
+          "step": 0,
+          "permission": 2
+        }
+      ]
+    }
+  },
+  "items": {
+    "guide": {
+      "base": "minecraft:paper",
+      "name": "Psychiatryk · panel",
+      "lore": [
+        "PPM: menu serwera",
+        "Treść aktualizuje się bez restartu gry."
+      ],
+      "ingredients": [
+        "minecraft:paper",
+        "minecraft:ink_sac"
+      ],
+      "count": 1,
+      "action": "command",
+      "target": "psychiatryk",
+      "amount": 0,
+      "cooldownSeconds": 1,
+      "consume": false
+    }
+  }
+}
