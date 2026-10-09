@@ -37,10 +37,14 @@ the archive by readback. Do not upload this ZIP: many third-party JARs have
 restrictive distribution terms. It is mods-only; the staged QA profile is
 missing 33 exact non-mod feed files and differs in seven configs.
 
-The frozen Roles JAR is `build/psychiatryk_roles-3.0.10-bmc5.jar`, SHA-256
+The original 3.0.10 fallback JAR has SHA-256
 `3d4842404a38b205a3ca0541ae6ba5a4b4423ef0ecc46fcc094baec5f7970964`.
-After the exact 298-JAR server smoke completed a clean stop, the local builds
-were reproduced and checked:
+The current canonical source build at `build/psychiatryk_roles-3.0.10-bmc5.jar`
+adds generic runtime-item artwork and has SHA-256
+`eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12`.
+Both exact JAR hashes and the separate 298-JAR smoke results are recorded in
+`QUALIFICATION.md`. The prior local archives below are kept as rollback
+artifacts and still contain the **original 3d48 JAR**:
 
 | Local artifact | Bytes | SHA-256 |
 | --- | ---: | --- |
@@ -50,23 +54,39 @@ were reproduced and checked:
 | `build/client-installer-3.0.10/ready/goplanska-bmc5-v53-roles-3.0.10-addon.zip` | 10,229,012 | `14e48ee137e62b2f150bdf5b78f422bd20c416cffc4af17db719868d3566ddbb` |
 | `build/client-installer-3.0.10/private/psychiatryk-bmc5-v53-3.0.10-client-mods-PRIVATE.zip` | 683,108,804 | `86d2bbefb7fe646882fdd0afbacb4c69cad56cd59b4b077281e0a7452e50c72b` |
 
-The public artifacts in `ready/` remain **local and unpublished**. The
+The current `eb4b...` source scripts independently reproduced the following
+local-only item-candidate archives, each with the same embedded Roles JAR:
+
+| Item-candidate artifact | SHA-256 |
+| --- | --- |
+| `build/release-3.0.10-item-candidate/psychiatryk-3.0.10-payload.zip` | `55069e77197459e97abafb67d0a8dd0da7215065808656fec95c7294f200346f` |
+| `build/client-installer-3.0.10/item-candidate/goplanska-bmc5-v53-installer-3.0.10-CANDIDATE.mrpack` | `963af4281066f77d1246a2cfa29f4f78494f14cf31fd9a60395870291ae915c3` |
+| `build/client-installer-3.0.10/item-candidate/goplanska-bmc5-v53-curseforge-3.0.10-CANDIDATE.zip` | `583bcde5b360bfdec4db7bf0e54d922561b6193fdd0f58315fe754fb93a27172` |
+| `build/client-installer-3.0.10/item-candidate/goplanska-bmc5-v53-roles-3.0.10-CANDIDATE-addon.zip` | `5ec8135eb57741ec06d254fecf07cd46bc0df4ca4564d1027681addce9f000d0` |
+
+The original public artifacts in `ready/` remain **local and unpublished**. The
 private ZIP must not be uploaded. The server bundle has eight paired payload
 files plus a checksummed manifest; its server and AutoModpack copies match.
 The private ZIP has 356 hashed JARs and exactly one Roles mod ID. The three
 public archives have valid ZIP readback, one Roles JAR each, and no unsafe
 paths or stale 3.0.8/NeoForge 21.1.250 text. A wrong Roles SHA is rejected.
 
-Rebuild from the frozen candidate if any input changes:
+Build the current item candidate into separate directories, leaving the
+original `ready/` and private fallback artifacts untouched:
 
 ```sh
+python bmc5-v53/overlays/stable-runtime/package_release.py \
+  --output-dir bmc5-v53/overlays/stable-runtime/build/release-3.0.10-item-candidate
+
 python bmc5-v53/overlays/stable-runtime/build_client_installers.py \
   --roles-jar bmc5-v53/overlays/stable-runtime/build/psychiatryk_roles-3.0.10-bmc5.jar \
-  --roles-sha256 3d4842404a38b205a3ca0541ae6ba5a4b4423ef0ecc46fcc094baec5f7970964
+  --roles-sha256 eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12 \
+  --output-dir bmc5-v53/overlays/stable-runtime/build/client-installer-3.0.10/item-candidate
 
 python bmc5-v53/overlays/stable-runtime/build_private_client_mods.py \
   --roles-jar bmc5-v53/overlays/stable-runtime/build/psychiatryk_roles-3.0.10-bmc5.jar \
-  --roles-sha256 3d4842404a38b205a3ca0541ae6ba5a4b4423ef0ecc46fcc094baec5f7970964
+  --roles-sha256 eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12 \
+  --output-dir bmc5-v53/overlays/stable-runtime/build/client-installer-3.0.10/item-private
 ```
 
 These scripts never contact the live server, website, or player instance.

@@ -19,7 +19,7 @@ from pathlib import Path
 
 
 BASELINE_SHA = "a513a1e338f0651648dfa32ecf9f3049daab312c2304183083337ecbc43572de"
-CANDIDATE_SHA = "3d4842404a38b205a3ca0541ae6ba5a4b4423ef0ecc46fcc094baec5f7970964"
+CANDIDATE_SHA = "eb4b1685205ba1ac3432b1708572d829e9004193ca8857b8b05798bc48f6ce12"
 KUBEJS_SHA = "df9a8458b1f83fed06ba54684977911795a5153a462b81a610895f5b1f2f0cbf"
 RHINO_SHA = "e0e9b0e78edd380440266c0f4ea8d489dac851ef075a4566a66a6dae2f7bbb66"
 ROLES_NAME = "psychiatryk_roles-3.0.0-bmc5.jar"  # Managed filename is intentionally stable.
@@ -33,6 +33,7 @@ NEW_FEATURES = (
     "server-defined-hud-scenes-and-cached-assets",
     "reloadable-grapple-policy-and-event-hooks",
     "client-join-asset-progress",
+    "generic-runtime-item-preloaded-visuals",
 )
 
 
@@ -122,7 +123,8 @@ def notes(archive_hash: str, members: dict[str, bytes]) -> str:
         "The server and AutoModpack hosted copies of each JAR and release metadata",
         "must match exactly. KubeJS and Rhino are included on both sides because",
         "the selected KubeJS build declares Rhino as a required BOTH-side dependency.",
-        "The 3.0.10 roles JAR adds a native runtime block/item; clients on 3.0.9",
+        "The 3.0.10 roles JAR adds a fixed generic item with bounded, preloaded",
+        "server-defined art as well as the native runtime block/item; clients on 3.0.9",
         "must receive the matching one-time update before their next join.",
         "",
         "Before installation, wait for the separately scheduled 3.0.9 patch to",
@@ -158,7 +160,7 @@ def main() -> None:
     parser.add_argument("--candidate", type=Path, default=Path(__file__).resolve().parent / "build/psychiatryk_roles-3.0.10-bmc5.jar")
     parser.add_argument("--kubejs", type=Path, default=private / f"kubejs-stage/mods/{KUBEJS_NAME}")
     parser.add_argument("--rhino", type=Path, default=private / f"kubejs-stage/mods/{RHINO_NAME}")
-    parser.add_argument("--output-dir", type=Path, default=Path(__file__).resolve().parent / "build/release-3.0.10")
+    parser.add_argument("--output-dir", type=Path, default=Path(__file__).resolve().parent / "build/release-3.0.10-item-candidate")
     args = parser.parse_args()
 
     metadata = release_metadata(args.queued_zip)

@@ -162,6 +162,8 @@ def changelog() -> bytes:
 
 - One matching client update installs the generic runtime item/block,
   renderers and the versioned server/client protocol.
+- This alternate candidate adds a fixed custom item renderer whose bounded
+  variant artwork is preloaded and can hot-update from the server.
 - The server can subsequently send bounded, cached GUI, HUD, Peeb animation,
   scooter visual and decorative-block data without another client update.
 - Server-side event logic and gameplay policies can change through validated
@@ -210,7 +212,7 @@ def main() -> None:
     parser.add_argument("--roles-jar", type=Path, required=True)
     parser.add_argument("--roles-sha256", required=True)
     parser.add_argument("--base-dir", type=Path, default=base)
-    parser.add_argument("--output-dir", type=Path, default=base / "draft")
+    parser.add_argument("--output-dir", type=Path, default=base / "item-candidate")
     parser.add_argument("--queued-zip", type=Path, default=private / "queued.zip")
     parser.add_argument("--kubejs", type=Path, default=private / f"kubejs-stage/mods/{package_release.KUBEJS_NAME}")
     parser.add_argument("--rhino", type=Path, default=private / f"kubejs-stage/mods/{package_release.RHINO_NAME}")
