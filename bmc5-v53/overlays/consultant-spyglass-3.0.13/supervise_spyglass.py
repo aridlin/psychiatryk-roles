@@ -17,7 +17,7 @@ import time
 ROOT = Path(__file__).resolve().parent
 JAVA = Path("/home/aridlin/.local/share/PrismLauncher/java/java-runtime-delta/bin/java")
 CANDIDATE = "psychiatryk_roles-3.0.13-bmc5.jar"
-CANDIDATE_SHA256 = "58968efafbfb46a3d929b5fe2ebbf3baacd495fe5c94802448483d4bcf01014c"
+CANDIDATE_SHA256 = "9d8c6b62c17d4c20b67ea3d208c5adef0a150a899433fb5fe825c0b63e439bed"
 HELPER_SHA256 = "4e57e91706e38a6839a327d44312ca3358a40a53ccfd238f5b8aac18db4f9d1c"
 PORT = 25596
 MAX_SECONDS = 600

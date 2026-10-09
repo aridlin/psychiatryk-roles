@@ -15,6 +15,7 @@ import zipfile
 BASE_SHA256 = "6fbde292e6e88a0fa250966203c173ca06ebf77b36d1530eab4de82763f12566"
 PRESET = "pl/aridlin/psychiatrykroles/CustomPresets.class"
 ROLES = "pl/aridlin/psychiatrykroles/PsychiatrykRoles.class"
+AUDIO = "pl/aridlin/kukirin/ScooterAudioClient.class"
 META = "META-INF/neoforge.mods.toml"
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[2] / "s23-v34/components/roles-unified/src/pl/aridlin/psychiatrykroles/CustomPresets.java"
@@ -43,7 +44,7 @@ def build(base: Path, sdk_file: Path, output: Path) -> dict:
         if len(names) != len(set(names)) or archive.testzip() is not None:
             raise ValueError("Corrupt or ambiguous input JAR")
         entries = {name: archive.read(name) for name in names if not name.endswith("/")}
-    if not {PRESET, ROLES, META} <= entries.keys():
+    if not {PRESET, ROLES, AUDIO, META} <= entries.keys():
         raise ValueError("Input JAR is missing an expected class or metadata")
 
     javac = "/usr/lib/jvm/java-21-openjdk/bin/javac"
@@ -71,13 +72,20 @@ def build(base: Path, sdk_file: Path, output: Path) -> dict:
     shutil.rmtree(patch_classes, ignore_errors=True)
     patch_classes.mkdir()
     run([javac, "-J-Xmx192m", "--release", "21", "-cp", ":".join(asm),
-         "-d", str(patch_classes), str(HERE / "PatchSpyglass.java")], output / "patch-compile.log")
+         "-d", str(patch_classes), str(HERE / "PatchSpyglass.java"),
+         str(HERE / "PatchMusicReference.java")], output / "patch-compile.log")
     original = output / "roles-original.class"
     patched = output / "roles-spyglass.class"
     original.write_bytes(entries[ROLES])
     run([java, "-Xmx128m", "-cp", f"{patch_classes}:{':'.join(asm)}", "PatchSpyglass",
          str(original), str(patched)], output / "patch-run.log")
     entries[ROLES] = patched.read_bytes()
+    old_audio = output / "scooter-audio-original.class"
+    new_audio = output / "scooter-audio-relocated.class"
+    old_audio.write_bytes(entries[AUDIO])
+    run([java, "-Xmx128m", "-cp", f"{patch_classes}:{':'.join(asm)}", "PatchMusicReference",
+         str(old_audio), str(new_audio)], output / "music-patch-run.log")
+    entries[AUDIO] = new_audio.read_bytes()
 
     metadata = entries[META].decode()
     if metadata.count('version="3.0.12-bmc5"') != 6:
@@ -97,8 +105,11 @@ def build(base: Path, sdk_file: Path, output: Path) -> dict:
     with zipfile.ZipFile(base) as archive:
         before = {name: archive.read(name) for name in archive.namelist() if not name.endswith("/")}
     changed = {name for name in before if before[name] != final[name]}
-    if changed != {PRESET, ROLES, META} or set(before) != set(final):
+    if changed != {PRESET, ROLES, AUDIO, META} or set(before) != set(final):
         raise ValueError(f"Unexpected JAR changes: {sorted(changed)}")
+    old_music = b"pl/aridlin/psychiatrykroles/music/MusicAudibility"
+    if any(old_music in data for name, data in final.items() if name.endswith(".class")):
+        raise ValueError("A class still references the mixin-owned old music package")
     proof = {
         "base_sha256": BASE_SHA256,
         "candidate_sha256": sha(destination.read_bytes()),
@@ -107,6 +118,7 @@ def build(base: Path, sdk_file: Path, output: Path) -> dict:
         "unchanged_entries": len(before) - len(changed),
         "preset_source_sha256": sha(SOURCE.read_bytes()),
         "patch_source_sha256": sha((HERE / "PatchSpyglass.java").read_bytes()),
+        "music_patch_source_sha256": sha((HERE / "PatchMusicReference.java").read_bytes()),
         "deployed": False,
         "client_qa": False,
     }
