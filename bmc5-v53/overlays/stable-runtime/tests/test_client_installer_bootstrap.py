@@ -61,6 +61,8 @@ def descriptor(jar: bytes) -> dict:
 class ClientInstallerBootstrapTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        if not MRPACK.is_file() or not CF_ZIP.is_file():
+            raise unittest.SkipTest("build both client installers or set PSYCHIATRYK_MRPACK and PSYCHIATRYK_CF_ZIP")
         with zipfile.ZipFile(MRPACK) as prism, zipfile.ZipFile(CF_ZIP) as curseforge:
             cls.mr_index = json.loads(prism.read("modrinth.index.json"))
             cls.cf_manifest = json.loads(curseforge.read("manifest.json"))
