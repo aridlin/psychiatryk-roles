@@ -4,10 +4,12 @@ Project: https://modrinth.com/project/psychiatryk-aridlin
 
 Observed 9 October 2026: the existing project is a draft, visible only to its
 members pending moderation. The short summary and English/Polish description
-below were saved in its editor; both showed a success notice. There are still
-no uploaded versions or gallery images, and its license field reads
-**Unknown**. Modrinth's publishing checklist still requires a license and a
-version; content disclosures cannot be selected until a version is uploaded.
+below were saved in its editor; both showed a success notice. The custom
+`Mixed-license` entry now links to [the code/asset rights split](LICENSE-SPLIT.md),
+and Modrinth confirmed **License updated**. There are still no uploaded
+versions or gallery images. The checklist still requires a version; content
+disclosures cannot be selected until a version is uploaded. This truthful
+license label does not establish redistribution permission for Peeb assets.
 Do not create a second project.
 
 The copy below is for the *combined* NeoForge 1.21.1 addon. The existing
