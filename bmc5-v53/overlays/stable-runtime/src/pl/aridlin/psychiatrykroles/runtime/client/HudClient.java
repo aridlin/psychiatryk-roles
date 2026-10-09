@@ -89,7 +89,8 @@ public final class HudClient {
             expression(n.yRule(),budget),expression(n.valueRule(),budget));
     }
     private static VisualExpressions.Expression expression(String raw,VisualExpressions.Budget budget){
-        return raw==null||raw.isEmpty()?null:VisualExpressions.compile(JsonParser.parseString(raw),budget,HudSchema.HUD_VARIABLES);
+        return raw==null||raw.isEmpty()?null:VisualExpressions.compile(JsonParser.parseString(raw),budget,
+            HudSchema.HUD_VARIABLES,SignalClient::expression);
     }
     @SubscribeEvent public static void render(RenderGuiEvent.Post event){
         var active=drawList;if(active.length==0)return;

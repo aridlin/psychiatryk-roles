@@ -9,7 +9,7 @@ import pl.aridlin.psychiatrykroles.runtime.*;
 @EventBusSubscriber(modid="psychiatryk_runtime",bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class RuntimeClient {
  @SubscribeEvent public static void setup(FMLClientSetupEvent e){e.enqueueWork(()->{
-  RuntimeNetwork.receiver=raw->{if(!HudClient.tryAccept(raw))RuntimeClient.receive(raw);};
+  RuntimeNetwork.receiver=raw->{if(!SignalClient.tryAccept(raw)&&!HudClient.tryAccept(raw))RuntimeClient.receive(raw);};
   AssetClient.onProgress(JoinProgressOverlay::accept);
   AssetClient.onReady(()->{
    String revision=AssetClient.revision();

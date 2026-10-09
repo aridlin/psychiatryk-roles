@@ -57,6 +57,8 @@ public final class HudServer {
         return RuntimeNetwork.supported(player)&&AssetNetwork.supported(player);
     }
     private static void send(ServerPlayer player,HudSchema.Message message){
+        if("replace".equals(message.op())&&!SignalServer.acknowledged(player))
+            message=HudSchema.replace(HudSchema.legacyScene(message.scene()));
         String raw=HudSchema.JSON.toJson(message);HudSchema.parse(raw);
         PacketDistributor.sendToPlayer(player,new RuntimeNetwork.Snapshot(raw));
     }

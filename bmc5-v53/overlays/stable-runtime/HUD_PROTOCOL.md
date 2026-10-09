@@ -24,6 +24,8 @@ The HUD variable whitelist is `time` (seconds since the client HUD runtime initi
 
 The server validates the expression string before sending: up to 1,024 characters per expression, 64 expression tree nodes per scene, and 128 across all active scenes per player, on top of the existing eight scenes, 64 HUD nodes, and 16 KiB message caps. The client compiles on scene or asset updates; render work evaluates at most 128 bounded tree nodes per frame with no per-node allocation. Updating a scene is atomic: a rejected expression leaves the prior scene active. This source extension is not part of the live 3.0.10 JAR; its actual in-game rendering and frame time still need a client/server test before release.
 
+The next source layer also accepts bounded server-owned numeric and boolean variables named `signal.<id>` in HUD expressions. See [SIGNAL_PROTOCOL.md](SIGNAL_PROTOCOL.md) for the capability handshake, typed deltas, limits, and the static fallback sent to older clients.
+
 Integration in existing files:
 
 ```java

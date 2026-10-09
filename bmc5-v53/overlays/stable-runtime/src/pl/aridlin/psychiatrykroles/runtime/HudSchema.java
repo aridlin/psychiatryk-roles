@@ -1,6 +1,7 @@
 package pl.aridlin.psychiatrykroles.runtime;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
@@ -103,6 +104,29 @@ public final class HudSchema {
                 &&expressionCount<=MAX_EXPRESSION_NODES_TOTAL,"HUD total scene budget");
         }
     }
+    /** Keep static fallbacks visible on clients whose expression compiler predates signals. */
+    public static Scene legacyScene(Scene scene){
+        validate(scene);var nodes=new java.util.ArrayList<Node>();boolean changed=false;
+        for(Node node:scene.nodes()){
+            String visible=legacyRule(node.visibleWhen()),x=legacyRule(node.xRule());
+            String y=legacyRule(node.yRule()),value=legacyRule(node.valueRule());
+            if(visible!=node.visibleWhen()||x!=node.xRule()||y!=node.yRule()||value!=node.valueRule())changed=true;
+            nodes.add(new Node(node.id(),node.type(),node.x(),node.y(),node.w(),node.h(),node.text(),
+                node.color(),node.background(),node.value(),node.item(),node.asset(),visible,x,y,value));
+        }
+        return changed?new Scene(scene.id(),List.copyOf(nodes)):scene;
+    }
+    private static String legacyRule(String raw){
+        if(raw==null||raw.isEmpty())return raw;
+        return hasSignalVariable(JsonParser.parseString(raw))?null:raw;
+    }
+    private static boolean hasSignalVariable(JsonElement element){
+        if(!element.isJsonObject())return false;
+        var object=element.getAsJsonObject();
+        if(object.has("var"))return object.get("var").getAsString().startsWith("signal.");
+        if(object.has("args"))for(var argument:object.getAsJsonArray("args"))if(hasSignalVariable(argument))return true;
+        return false;
+    }
     private static int expressionCost(Node node){
         Schema.require(node.valueRule()==null||node.type().equals("progress"),"HUD value rule needs progress node");
         var budget=new VisualExpressions.Budget();
@@ -111,7 +135,9 @@ public final class HudSchema {
                 node.valueRule()==null?"":node.valueRule())){
             if(expression.isEmpty())continue;
             Schema.require(expression.length()<=1024,"HUD expression length");
-            VisualExpressions.compile(JsonParser.parseString(expression),budget,HUD_VARIABLES);
+            VisualExpressions.compile(JsonParser.parseString(expression),budget,HUD_VARIABLES,name->{
+                SignalSchema.variable(name);return ignored->0;
+            });
         }
         return budget.count();
     }

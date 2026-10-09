@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.Map;
+import java.util.function.Function;
 
 /** A bounded data expression, compiled on asset or scene update and evaluated without parsing per frame. */
 public final class VisualExpressions {
@@ -23,9 +24,15 @@ public final class VisualExpressions {
     public static Expression compile(JsonElement element,Budget budget){return compile(element,budget,VARIABLES);}
     /** Each feature supplies its own variable whitelist; no expression can inspect other client state. */
     public static Expression compile(JsonElement element,Budget budget,Map<String,Integer> variables){
-        return compile(element,budget,variables,0);
+        return compile(element,budget,variables,ignored->null);
     }
-    private static Expression compile(JsonElement element,Budget budget,Map<String,Integer> variables,int depth){
+    /** Optional feature-owned variables are resolved once at compile time. */
+    public static Expression compile(JsonElement element,Budget budget,Map<String,Integer> variables,
+                                     Function<String,Expression> dynamic){
+        return compile(element,budget,variables,dynamic,0);
+    }
+    private static Expression compile(JsonElement element,Budget budget,Map<String,Integer> variables,
+                                      Function<String,Expression> dynamic,int depth){
         if(element==null||element.isJsonNull()||depth>12||++budget.count>256)throw new IllegalArgumentException("Visual expression budget");
         if(element.isJsonPrimitive()&&element.getAsJsonPrimitive().isNumber()){
             double value=element.getAsDouble();if(!Double.isFinite(value)||Math.abs(value)>1_000_000.0)throw new IllegalArgumentException("Visual expression constant");
@@ -35,14 +42,16 @@ public final class VisualExpressions {
         JsonObject object=element.getAsJsonObject();
         if(object.has("var")){
             if(object.size()!=1)throw new IllegalArgumentException("Visual variable fields");
-            Integer index=variables.get(object.get("var").getAsString());
-            if(index==null)throw new IllegalArgumentException("Unknown visual variable");
-            return values->index<values.length?finite(values[index]):0;
+            String name=object.get("var").getAsString();Integer index=variables.get(name);
+            if(index!=null)return values->index<values.length?finite(values[index]):0;
+            Expression resolved=dynamic.apply(name);
+            if(resolved==null)throw new IllegalArgumentException("Unknown visual variable");
+            return values->finite(resolved.evaluate(values));
         }
         if(!object.has("op")||!object.has("args")||object.size()!=2)throw new IllegalArgumentException("Visual operation fields");
         String operation=object.get("op").getAsString();JsonArray json=object.getAsJsonArray("args");
         if(json.size()>4)throw new IllegalArgumentException("Visual operation arity");
-        Expression[] args=new Expression[json.size()];for(int i=0;i<args.length;i++)args[i]=compile(json.get(i),budget,variables,depth+1);
+        Expression[] args=new Expression[json.size()];for(int i=0;i<args.length;i++)args[i]=compile(json.get(i),budget,variables,dynamic,depth+1);
         int min,max;switch(operation){
             case "neg","abs","sin","cos","floor","not" -> {min=1;max=1;}
             case "clamp","if" -> {min=3;max=3;}
