@@ -73,15 +73,16 @@ description is not a claim of verified in-game behavior.
 ## Install and compatibility
 
 Use **Minecraft 1.21.1, Java 21 and NeoForge 21.1.252** for the current
-Goplanska release. The [Prism Launcher installer](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack)
-and [CurseForge installer](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip)
+Goplanska release. The [Prism Launcher installer](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack?bootstrap=cfd869ee41c3)
+and [CurseForge installer](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip?bootstrap=b4cd1504765b)
 include the matching Psychiatryk addon and use AutoModpack to download the
 remaining server pack on first connection; they are not complete offline
 copies of Better MC. A [manual addon ZIP](https://info.goplanska.pl/goplanska-bmc5-v53-roles-3.0.10-addon.zip)
 is also available for an existing compatible pack. Follow the
 [Goplanska installation page](https://info.goplanska.pl/) for current steps;
-the first AutoModpack bootstrap may require a normal game restart. Accessories is required for
-wearable features and is supplied separately by the server pack. Do not mix
+the first AutoModpack bootstrap may require a normal game restart. The
+installers fetch Accessories and its required oωo library before first launch;
+manual installations need matching versions. Do not mix
 the combined addon with older standalone modules that register the same IDs.
 
 Source for this release and issues:
@@ -121,12 +122,14 @@ sieciowych lub rendererów nadal wymagają aktualizacji klienta.
 Dołączenie klienta 3.0.10 i wygląd w grze wymagają jeszcze końcowej kontroli.
 
 Wymagane są **Minecraft 1.21.1, Java 21 i NeoForge 21.1.252**.
-Instalatory [Prism Launcher](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack)
-i [CurseForge](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip)
+Instalatory [Prism Launcher](https://info.goplanska.pl/goplanska-bmc5-v53-installer-3.0.10.mrpack?bootstrap=cfd869ee41c3)
+i [CurseForge](https://info.goplanska.pl/goplanska-bmc5-v53-curseforge-3.0.10.zip?bootstrap=b4cd1504765b)
 zawierają zgodne wydanie Psychiatryk, a AutoModpack pobiera pozostałą część
 paczki serwera przy pierwszym połączeniu. Nie są to pełne paczki offline.
 Na [stronie Goplanska](https://info.goplanska.pl/) jest aktualna instrukcja;
 pierwsze przygotowanie AutoModpack może wymagać zwykłego restartu gry.
+Instalatory pobierają też Accessories i wymagane oωo przed pierwszym
+uruchomieniem; instalacja ręczna potrzebuje zgodnych wersji tych bibliotek.
 Kod Java jest na licencji GPL-3.0-or-later; materiały Peeb Adventures mają
 odrębne prawa i informacje o autorach w pakiecie wydania.
 
